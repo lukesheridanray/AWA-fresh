@@ -1,0 +1,74 @@
+/**
+ * Real Madrid Mens Shirts Experiment
+ * @version 0.2
+ */
+
+.ksp_printing_title {
+    position: relative;
+    text-transform: none !important;
+}
+
+.help_icon_viewer,
+.help_icon_viewer:active,
+.help_icon_viewer:visited,
+.help_icon_viewer:hover {
+    display: block;
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 16px;
+    height: 16px;
+    text-decoration: none;
+    background: url('http://www.awa-digital.com/optimizely/kitbag/help.png') 0 0 no-repeat transparent;
+}
+
+.ksp_printing_title {
+    padding: 6px;
+    margin-bottom: 5px;
+}
+
+.printing_title_sub {
+    margin-top: 15px;
+    margin-bottom: 7px;
+}
+
+.ksp_printing_subtitle {
+    font-size: 1.1em;
+    padding-top: 5px;
+    padding-left: 0;
+}
+
+#ctl00_ContentMain_kit_selector1_product_selector1_rdbtLst_badges {
+    margin-top: 8px;
+}
+
+#ksp_printing_info .content {
+    height: 250px !important;
+    border: 0 !important;
+}
+
+#ksp_printing_info p,
+#ksp_printing_info ul {
+    font-size: 1.1em !important;
+    padding-bottom: 10px !important;
+}
+
+#ksp_printing_info ul {
+    font-size: 1.1em !important;
+    padding-left: 20px !important;
+}
+
+.printing_popup_title {
+    font-size: 1.4em !important;
+    font-weight: bold;
+}
+
+.printing_disc {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.ksp_printing {
+    border: 1px solid #CCC;
+    padding: 5px;
+}
