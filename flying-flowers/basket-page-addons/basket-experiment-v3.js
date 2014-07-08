@@ -152,12 +152,13 @@ customUpgradeOption();
                 $('.addAddonIcon').each(function(){
                     var current_addon = $(this);
                     var _this_addon_sku = current_addon.prev('input').val();
-                    console.log(_this_addon_sku);
                     current_addon.html('<img src="//cdn.optimizely.com/img/174847139/506530dbdc014eacb0671faed2314062.gif" alt="">');
                     $('.addOnRow td:nth-child(even)').each(function(){
-                        if($(this).html() === _this_addon_sku ) {
-                            current_addon.html('<img src="//cdn.optimizely.com/img/174847139/cf65de90fbf648fea95b6ea9adecf95a.gif" alt="">');
-                            return false;
+                        if($(this).find('.pCode').length) {
+                          if($(this).find('.pCode').text() === _this_addon_sku ) {
+                              current_addon.html('<img src="//cdn.optimizely.com/img/174847139/cf65de90fbf648fea95b6ea9adecf95a.gif" alt="">');
+                             return false;
+                          }
                         }
                     });
                     
@@ -190,10 +191,12 @@ customUpgradeOption();
                         var addon_sku = $(this).prev('input').val();
                         var addon_id;
                         $('.addOnRow td:nth-child(even)').each(function(){
-                            if($(this).html() === addon_sku ) {
+                        if($(this).find('.pCode').length) {
+                            if($(this).find('.pCode').text() === addon_sku ) {
                                 addon_id = $(this).parent('tr').find('.td_addOnDel').find('input').val();
                                 return false;
                             }
+                        }
                         });
                         var currentRef = jQuery(this), params = ["action=removeAddon"], mainContainer = $(".productInCart");
                         params.push("order_item_id="+mainContainer.find("input[name='order_item_id']").val());
@@ -323,7 +326,7 @@ window.setTimeout(function(){
 
 };
 
-console.log('v3.0.8');
+console.log('v3.0.9');
 
 // Run the experiment
 FlyingFlowersBasketPage.run();
