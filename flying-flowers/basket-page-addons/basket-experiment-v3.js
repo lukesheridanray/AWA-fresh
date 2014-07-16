@@ -63,6 +63,10 @@ var FlyingFlowersBasketPage = {
                p_code === 'C00281PS' ||
                p_code === 'C00281BS' ||
                p_code === 'C04872VS' ||
+               p_code === 'C00281PS' ||
+               p_code === 'C04871VS' ||
+               p_code === 'C00281BS' ||
+               p_code === 'C04871PS' ||
                p_code === 'C04872PS'
            ) {
                blocked_product = true;
@@ -326,7 +330,7 @@ window.setTimeout(function(){
 
 };
 
-console.log('v3.0.9');
+console.log('v3.0.10');
 
 // Run the experiment
 FlyingFlowersBasketPage.run();
