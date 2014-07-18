@@ -20,9 +20,9 @@ position: relative!important; \
 left: 60px!important; \
 } \
 .add-item-btn i::after { \
-content: "Add to Basket"; \
+content: 'Add to Basket'; \
 color: white; \
-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; \
+font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; \
 font-size: 16px; \
 font-weight: bold; \
 margin-left: 6px; \
@@ -30,13 +30,13 @@ margin-left: 6px; \
 .product-top-container { \
   padding-bottom:26px!important; \
 } \
-.picker-or { \
+.product-shop .picker-or { \
   display:none!important; \
 } \
-.picker-suom { \
+.product-shop .picker-suom { \
   display:none!important; \
 } \
-.picker-extra-container { \
+.product-shop .picker-extra-container { \
   position:absolute!important; \
 } \
 .tile-calculator-btn { \
@@ -55,7 +55,7 @@ left: 214px!important; \
 } \
 #availability_btn::after { \
   color:#428bca!important; \
-  content: "Buying instore? Check stock."!important; \
+  content: 'Buying instore? Check stock.'!important; \
   position: relative!important; \
   left: -90px!important; \
 } \
