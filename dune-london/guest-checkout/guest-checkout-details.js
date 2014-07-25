@@ -5,7 +5,7 @@ var exp = (function($) {
 
 var exp = {};
 
-console.log('Guest checkout - dev - details page v0.1');
+console.log('Guest checkout - dev - details page v0.2');
 
 exp.condition = $('.bsryitems');
 
@@ -39,7 +39,7 @@ exp.vars.processHeader = ' \
 // Styles
 exp.css = ' \
 .chkotLeftSect { float: none; margin: 0 auto; width: 352px; overflow:hidden; } \
-.custregiwrapper { border: 0; width: 1062px; position: relative; left: 0; \
+.custregiwrapper { border: 0; width: 1062px; position: relative; left: 0; background: #fff !important; \
 -webkit-transition: left 0.5s ease; \
 -moz-transition: left 0.5s ease; \
 transition: left 0.5s ease; \

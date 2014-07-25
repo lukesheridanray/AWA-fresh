@@ -5,7 +5,7 @@ var exp = (function($) {
 
 var exp = {};
 
-console.log('Guest checkout - dev - login page v0.1');
+console.log('Guest checkout - dev - login page v0.2');
     
 exp.condition = location.search.indexOf('target=payment_PAGE');
 
@@ -27,7 +27,8 @@ exp.css = ' \
 #holderARTICLE .forgotPasslink ul li { line-height: 28px; } \
 .loginCONTAINER h2 { border-bottom: 0; } \
 .o-login-note { float: right; width: 167px; padding: 5px 0 0 0; display: inline-block; } \
-.chkoutviewbasketbtn { position: static; margin-right: 10px; } \
+.chkoutviewbasketbtn { display: none !important; position: static; margin-right: 10px; } \
+.loginCONTAINER { background-color: #fff !important; } \
 /* #holderARTICLE .errormessageinline { width: 710px !important; text-align: center; padding: 0 10px 10px 10px !important; } */ ';
 
 // Functions

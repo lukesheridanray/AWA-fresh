@@ -5,7 +5,7 @@ var exp = (function($) {
 
 var exp = {};
 
-console.log('Guest checkout - dev - delivery page v0.1');
+console.log('Guest checkout - dev - delivery page v0.3');
 
 exp.condition = $('.bsryitems');
 
@@ -39,7 +39,7 @@ exp.vars.processHeader = ' \
 // Styles
 exp.css = ' \
 .termstext, .pmytlogos { display: none; } \
-.tabWrapper { float: none; margin: 0 auto; width: 352px; overflow:hidden; } \
+.tabWrapper { float: none; margin: 0 auto; width: 376px; overflow:hidden; } \
 .paymentpageholder { border: 0; width: 1062px; position: relative; left: 0; } \
 .paymentpageholder.next { left: -352px !important; } \
 .paymentpageholder.extra { left: -704px; } \
@@ -90,7 +90,7 @@ transition: left 0.5s ease; \
 #holderARTICLE .o-help-blurb p { color: #666; margin: 0 0 10px 10px; } \
 #holderARTICLE .o-help-blurb { margin: 20px 0 0 10px; } \
 .chkotLeftSect { width: 347px; } \
-.deloptwrapper { padding: 10px 20px 0 0 !important; width: 290px !important; float: left !important; overflow: hidden !important; \
+.deloptwrapper { padding: 10px 20px 0 0 !important; width: 290px !important; float: left !important; overflow: visible !important; \
 border: 1px solid #ddd !important; margin: 0 10px !important; min-height: 162px !important; background: #f5f5f5 !important;} \
 .logform ul li.button { width: 167px; } \
 .forgotPasslink { float: left; } \
