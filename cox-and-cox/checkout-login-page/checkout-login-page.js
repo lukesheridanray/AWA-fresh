@@ -10,7 +10,7 @@ var checkout_login_page = (function($) {
     var exp = {};
 
     // Log the experiment, useful when multiple experiments are running
-    console.log('Checkout Login Page - v1.1.0');
+    console.log('Checkout Login Page - v1.1.1');
 
     // Condition
     // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -110,6 +110,7 @@ var checkout_login_page = (function($) {
         #checkout-step-login > .col2-set > .col-1 #guest_container_supplementary_text { margin-top: 3em; } \
         \
         .opc #checkout-step-billing #co-billing-form #billing-new-address-form { height: auto; } \
+        .opc { height: auto; min-height: 800px; } \
         ';
 
     // Functions
@@ -245,25 +246,6 @@ var checkout_login_page = (function($) {
         });
 
     };
-
-    // Currently does not work correctly - the 'Find an address' feature on the site enforces the client-side validation
-    // // ------------------------------------------------------------------------
-    // // Billing & shipping page tweaks
-    // // ------------------------------------------------------------------------
-
-    // // Change label text
-    // exp.vars.billing_county_label.text(
-    //     exp.vars.billing_county_label_text
-    // );
-    // exp.vars.shipping_county_label.text(
-    //     exp.vars.shipping_county_label_text
-    // );
-
-    // // Remove required class
-    // exp.vars.billing_county_select.removeClass('required-entry');
-    // exp.vars.billing_county_input.removeClass('required-entry');
-    // exp.vars.shipping_county_select.removeClass('required-entry');
-    // exp.vars.shipping_county_input.removeClass('required-entry');
 
     // Return the experiment object so we can access it later
     return exp;
