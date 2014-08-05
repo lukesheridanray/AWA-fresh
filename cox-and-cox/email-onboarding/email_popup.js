@@ -27,7 +27,7 @@ var coxandcoxHomepageEmailPopup = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Homepage Email Popup - dev 0.0.4');
+console.log('Homepage Email Popup - dev 0.0.5');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -42,8 +42,8 @@ if(exp.condition && !exp.condition.length) {
 // Variables
 // Object containing variables for use in the experiment, generally these would be strings or jQuery objects
 exp.vars = {
-    'popup_shown_key_name': 'COXANDCOX_EMAILPOPUP_SHOWN',
-    'email_modal': $('<div id="email_popup_modal" class="reveal-modal"> \
+    popup_shown_key_name: 'COXANDCOX_EMAILPOPUP_SHOWN',
+    email_modal: $('<div id="email_popup_modal" class="reveal-modal"> \
             <a class="close-reveal-modal">&#215;</a> \
             <h1>Be first to know about \
             <br/> \
@@ -52,7 +52,7 @@ exp.vars = {
             <ul class="tick-bullet"> \
                 <li>Don\'t miss another sale</li> \
                 <li>Get exclusive subscriber discounts</li> \
-                <li>See our latest collections and products</li> \
+                <li>See our latest collections and products first</li> \
             </ul> \
             <form method="POST" action="http://www.elabs12.com/functions/mailing_list.html"> \
                 <input type="hidden" name="submitaction" value="3"> \
@@ -78,7 +78,8 @@ exp.vars = {
             <p class="footnote"> \
                 Privacy Policy: We respect your privacy and will not share your email address with any 3rd party. \
             </p> \
-            </div>')
+            </div>'),
+    header_email_input: $('#header .form-search input[name="email"]')
 };
 
 // Styles
@@ -151,9 +152,10 @@ exp.css += '#email_popup_modal { \
         } \
      \
         #email_popup_modal p.footnote { \
-            font-size: small; \
-            width: 60%; \
+            font-size: 8pt; \
+            width: 380px; \
             margin-top: 1em; \
+            margin-left: 10px; \
         }';
 
 
@@ -213,6 +215,15 @@ exp.func.clearEmailPopupShownFlag = function(){
 };
 
 exp.func.showModal = function(){
+    // If email address is entered at top of page, load that in.
+    if (exp.vars.header_email_input.val() !== '')
+    {
+        console.log("Email form: Existing email form has some data; copying that data to modal.");
+        exp.vars.email_modal.find('input[name="email"]').val(
+            exp.vars.header_email_input.val()
+        );
+    }
+
     // Show modal
     exp.vars.email_modal.reveal({
         animation: "fade"
@@ -277,18 +288,15 @@ exp.init = function() {
 
     // Check whether this visitor has interacted with the popup previously
     console.log("Email popup: Checking whether or not to pop up.");
-    if (!window.localStorage.getItem(this.vars.popup_shown_key_name))
-    {
+    if (!window.localStorage.getItem(this.vars.popup_shown_key_name)) {
         console.log("Email popup: Flag not set, opening popup.");
 
         // Show popup
         this.func.showModal();
-        
     }
     else {
         console.log("Email popup: Flag is set, not opening popup.");
     }
-
 };
 
 // Return the experiment object so we can access it later
