@@ -13,7 +13,18 @@ modal.bind("reveal:close",function(){if(!locked){lockModal();if(options.animatio
 function(){modal.css({"opacity":1,"visibility":"hidden","top":topMeasure});unlockModal()})}if(options.animation=="none"){modal.css({"visibility":"hidden","top":topMeasure});modalBG.css({"display":"none"})}}modal.unbind("reveal:close")});modal.trigger("reveal:open");var closeButton=$("."+options.dismissmodalclass).bind("click.modalEvent",function(){modal.trigger("reveal:close")});if(options.closeonbackgroundclick){modalBG.css({"cursor":"pointer"});modalBG.bind("click.modalEvent",function(){modal.trigger("reveal:close")})}$("body").keyup(function(e){if(e.which===
 27)modal.trigger("reveal:close")});function unlockModal(){locked=false}function lockModal(){locked=true}})}})(jQuery);
 
-
+/* Snippet to extend jQuery to parse the page's GET params */
+(function($){
+    $.urlParam = function(name){
+        var results = new RegExp('([\?&]' + name + ')(=([^&#]*))?').exec(window.location.href);
+        if (results === null){
+           return false;
+        }
+        else{
+           return results[3] || true|| 0;
+        }
+    };
+})(jQuery);
 
 // Code should be ran through JSHint: http://www.jshint.com/ the settings below prevent unnecessary warnings
 // jshint multistr: true
@@ -27,7 +38,7 @@ var coxandcoxHomepageEmailPopup = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Homepage Email Popup - dev 0.0.5');
+console.log('Homepage Email Popup - dev 0.0.6');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -54,19 +65,7 @@ exp.vars = {
                 <li>Get exclusive subscriber discounts</li> \
                 <li>See our latest collections and products first</li> \
             </ul> \
-            <form method="POST" action="http://www.elabs12.com/functions/mailing_list.html"> \
-                <input type="hidden" name="submitaction" value="3"> \
-                <input type="hidden" name="mlid" value="3458"> \
-                <input type="hidden" name="siteid" value="2012000798"> \
-                <input type="hidden" name="tagtype" value="q2"> \
-                <input type="hidden" name="demographics" value="40465,1,2,-1,9,41872,40464,43440,40922"> \
-                <input type="hidden" name="redirection" value="http://www.coxandcox.co.uk/thank-you"> \
-                <input type="hidden" name="uredirection" value=""> \
-                <input type="hidden" name="append" value="on"> \
-                <input type="hidden" name="update" value="on"> \
-                <input type="hidden" name="activity" value="submit"> \
-                <input type="hidden" name="val_40464[]" value="website_emailform"> \
-                <input type="hidden" name="val_40922" value="101"> <input type="hidden" name="val_43314" value="04/08/2014"> \
+            <form method="GET" action="http://www.coxandcox.co.uk/email-sign-up"> \
                 <input \
                     type="text" \
                     name="email" \
@@ -79,7 +78,8 @@ exp.vars = {
                 Privacy Policy: We respect your privacy and will not share your email address with any 3rd party. \
             </p> \
             </div>'),
-    header_email_input: $('#header .form-search input[name="email"]')
+    header_email_input: $('#header .form-search input[name="email"]'),
+    is_dev_script: $.urlParam('dev') !== false
 };
 
 // Styles
@@ -256,35 +256,40 @@ exp.init = function() {
 
     // TODO: Remove reset and showModal buttons when going live.
 
-    // Add a hidden reset link, to reset the shown flag state
-    $reset_link = $('<a>Reset</a>');
-    $reset_link.css({
-        display: 'block',
-        position: 'absolute',
-        top: '24px',
-        left: 0,
-        height: '24px',
-        color: 'black',
-        cursor: 'pointer'
-    });
-    $reset_link.click(this.func.clearEmailPopupShownFlag);
+    if (this.vars.is_dev_script) {
+        // Add a hidden reset link, to reset the shown flag state
+        $reset_link = $('<a>Reset</a>');
+        $reset_link.css({
+            display: 'block',
+            position: 'absolute',
+            top: '24px',
+            left: 0,
+            height: '24px',
+            color: 'black',
+            cursor: 'pointer'
+        });
+        $reset_link.click(this.func.clearEmailPopupShownFlag);
 
-    $('body').append($reset_link);
+        $('body').append($reset_link);
 
-    // Add a hidden "Show modal" link
-    $show_modal = $('<a>Show popup</a>');
-    $show_modal.css({
-        display: 'block',
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        height: '24px',
-        color: 'black',
-        cursor: 'pointer'
-    });
-    $show_modal.click(this.func.showModal);
+        // Add a hidden "Show modal" link
+        $show_modal = $('<a>Show popup</a>');
+        $show_modal.css({
+            display: 'block',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            height: '24px',
+            color: 'black',
+            cursor: 'pointer'
+        });
+        $show_modal.click(this.func.showModal);
 
-    $('body').append($show_modal);
+        $('body').append($show_modal);
+
+        // Make the modal form go to the dev email-sign-up page.
+        this.vars.email_modal.find('form').append($('<input type="hidden" name="dev" value="1"/>'));
+    }
 
     // Check whether this visitor has interacted with the popup previously
     console.log("Email popup: Checking whether or not to pop up.");
