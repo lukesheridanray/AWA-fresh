@@ -1,0 +1,22 @@
+
+
+scrape prduct page
+var form = $('.addToBasketForm:visible');
+
+var queryVars = 'storeId=10001&catalogId=10051"&langId=100&calculateOrder=1&updatePrices=1&doPrice=Y&calculationUsageId=-1&calculationUsageId=-2&calculationUsageId=-7&errorViewName=qs_product_tbp&catEntryId=502495&productId=502495&URL=qs_addedToBasket_tbp&topCatId=85207&categoryId=91725"&quantity=1'
+
+will only work on https
+$.ajax( {
+            'url': 'https://www.thebookpeople.co.uk/webapp/wcs/stores/servlet/OrderItemAddOrUpdate',
+            'type': 'POST',
+            'data': 'storeId=10001&catalogId=10051&langId=100&calculateOrder=1&updatePrices=1&doPrice=Y&calculationUsageId=-1&calculationUsageId=-2&calculationUsageId=-7&errorViewName=qs_product_tbp&catEntryId=502495&productId=502495&URL=qs_addedToBasket_tbp&topCatId=85207&categoryId=91725&quantity=1',
+            'success': function(response) {
+                alert('got a response');
+            },
+            'error': function(response) {
+                //var resp = jQuery(response.responseText);
+                console.log(response.responseText);
+            },
+            'beforeSend': function() {
+            } 
+        });

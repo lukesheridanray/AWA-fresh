@@ -5,7 +5,7 @@ var exp = (function($) {
 
 var exp = {};
 
-console.log('Guest checkout - dev - details page v0.2');
+console.log('Guest checkout - dev - details page v0.4');
 
 exp.condition = $('.bsryitems');
 
@@ -16,11 +16,11 @@ exp.vars = {
     'processImgOff': '//cdn.optimizely.com/img/174847139/9673716578b44a2e914cae8a1f390005.png',
     'custregiwrapper': $('.custregiwrapper'),
     'continueButton': $('<div class="sectbox"><ul style="float:right"> \
-	                      <li class="button"><a class="corebtn o-continue-button">Continue</a></li> \
+                          <li class="button"><a class="corebtn o-continue-button">Continue</a></li> \
                        </ul></div>'),
     'helpBlurb': $('<div class="o-help-blurb"> \
                       <p>NEED HELP?</p> \
-                      <p>Phone us on 0116 284 7800<br /> \
+                      <p>Phone us on 0333 240 73 06<br /> \
                       Email <a href="mailto:customerservice@dunelondon.com">customerservice@dunelondon.com</a></p> \
                   </div>')
 };
@@ -117,6 +117,9 @@ exp.func.focusOnErrors = function() {
 
 // Init function
 exp.init = function() {
+  
+    // unhide content area
+        $('#holder_CENTREFULL').show(0);
     
     // check condition
     if(!this.condition.length) {
