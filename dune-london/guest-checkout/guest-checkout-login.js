@@ -5,7 +5,7 @@ var exp = (function($) {
 
 var exp = {};
 
-console.log('Guest checkout - dev - login page v0.2');
+console.log('Guest checkout - dev - login page v0.4');
     
 exp.condition = location.search.indexOf('target=payment_PAGE');
 
@@ -36,9 +36,13 @@ exp.func = exp.func || {};
 
 // Init function
 exp.init = function() {
+  
+    // unhide content area
+        $('#holder_CENTREFULL').show(0);
     
     // check condition
     if(this.condition === -1) {
+        console.log('failed');
         return false;
     }
         
