@@ -10,7 +10,7 @@ var checkout_login_page = (function($) {
     var exp = {};
 
     // Log the experiment, useful when multiple experiments are running
-    console.log('Checkout Login Page - v1.1.1');
+    console.log('Checkout Login Page - v1.2.0');
 
     // Condition
     // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -212,9 +212,8 @@ var checkout_login_page = (function($) {
             })
         );
 
-        // Tweak 'Continue' button's behaviour - it previously did AJAXy stuff with the register/guest
-        // selection, but now we simply want to go to the next stage.
-        exp.vars.guest_container.continue_button.attr('onclick', 'checkout.gotoSection(\'billing\');Element.hide(\'register-customer-password\');');
+        // Tick guest by default
+        exp.vars.guest_container.guest_or_register_form.find('input#login\\:guest').prop("checked", true);
 
         // --------------------------------------------------------------------
         // Add "Register?" checkbox on billing page.
@@ -235,13 +234,15 @@ var checkout_login_page = (function($) {
 
             if (checked) {
                 // Show password field, set checkout method to 'register'
-                Element.show('register-customer-password');
+                // Element.show('register-customer-password');
                 exp.vars.guest_container.guest_or_register_form.find('#login\\:register').prop("checked", true);
+                checkout.setMethod();
             }
             else {
                 // Hide password field, set checkout method to 'guest'
-                Element.hide('register-customer-password');
+                // Element.hide('register-customer-password');
                 exp.vars.guest_container.guest_or_register_form.find('#login\\:guest').prop("checked", true);
+                checkout.setMethod();
             }
         });
 
