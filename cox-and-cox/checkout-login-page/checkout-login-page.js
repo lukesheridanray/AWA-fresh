@@ -10,7 +10,7 @@ var checkout_login_page = (function($) {
     var exp = {};
 
     // Log the experiment, useful when multiple experiments are running
-    console.log('Checkout Login Page - v1.2.0');
+    console.log('Checkout Login Page - v1.6.0');
 
     // Condition
     // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -35,23 +35,13 @@ var checkout_login_page = (function($) {
             <div class="field">\
                 <label>&nbsp;</label>\
                 <div class="input-box">\
-                    <label for="OPTIMZELY_LOGIN_FORM_EXP_register_account" style="width:100%;">\
-                        <input type="checkbox" name="OPTIMZELY_LOGIN_FORM_EXP_register_account" value="1" title="Register account" id="OPTIMZELY_LOGIN_FORM_EXP_register_account" style="margin-right: 0.5em">\
+                    <input type="checkbox" name="OPTIMZELY_LOGIN_FORM_EXP_register_account" value="1" title="Register account" id="OPTIMZELY_LOGIN_FORM_EXP_register_account" style="margin-right: 0.5em;">\
+                    <label for="OPTIMZELY_LOGIN_FORM_EXP_register_account" style="width:80%;float:none;">\
                         Create an account for faster checkout next time\
                     </label>\
                 </div>\
             </div>\
-        </li>',
-
-        // 'billing_county_label'       : $('label[for="billing:region_id"]'),
-        // 'billing_county_select'      : $('select#billing\\:region_id'),
-        // 'billing_county_input'       : $('input#billing\\:region'),
-        // 'billing_county_label_text' : "County",
-
-        // 'shipping_county_label'       : $('label[for="shipping:region"]'),
-        // 'shipping_county_select'      : $('select#shipping\\:region_id'),
-        // 'shipping_county_input'       : $('input#shipping\\:region'),
-        // 'shipping_county_label_text' : "County",
+        </li>'
     };
 
     exp.vars.guest_container = {
@@ -246,6 +236,51 @@ var checkout_login_page = (function($) {
             }
         });
 
+        // --------------------------------------------------------------------
+        // Add an artificial delay to billing.save and shipping.save
+        // --------------------------------------------------------------------
+
+        // Recreated original code, but with an artificial delay
+        billing.save = function(){
+            setTimeout(function(){
+                if (checkout.loadWaiting!=false) return;
+
+                var validator = new Validation(billing.form);
+                if (validator.validate()) {
+                    checkout.setLoadWaiting('billing');
+                    var request = new Ajax.Request(
+                        billing.saveUrl,
+                        {
+                            method: 'post',
+                            onComplete: billing.onComplete,
+                            onSuccess: billing.onSave,
+                            onFailure: checkout.ajaxFailure.bind(checkout),
+                            parameters: Form.serialize(billing.form)
+                        }
+                    );
+                }
+            }, 1000);
+        };
+
+        shipping.save = function (){
+            setTimeout(function(){
+                if (checkout.loadWaiting!=false) return;
+                var validator = new Validation(shipping.form);
+                if (validator.validate()) {
+                    checkout.setLoadWaiting('shipping');
+                    var request = new Ajax.Request(
+                        shipping.saveUrl,
+                        {
+                            method:'post',
+                            onComplete: shipping.onComplete,
+                            onSuccess: shipping.onSave,
+                            onFailure: checkout.ajaxFailure.bind(checkout),
+                            parameters: Form.serialize(shipping.form)
+                        }
+                    );
+                }
+            }, 1000);
+        };
     };
 
     // Return the experiment object so we can access it later
