@@ -23,7 +23,7 @@ var simplify_email_form = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Simplify email form - dev 0.0.1');
+console.log('Simplify email form - dev 0.0.3');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -43,7 +43,7 @@ exp.vars = {
         <ul class="tick-bullet"> \
             <li>Don\'t miss another sale</li> \
             <li>Get exclusive subscriber discounts</li> \
-            <li>See our latest collections and products</li> \
+            <li>See our latest collections and products first</li> \
         </ul> \
     </div> \
     ')
