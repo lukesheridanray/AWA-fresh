@@ -10,12 +10,12 @@ var subcat_page_exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Subcategory page experiment - 1.0.0');
+console.log('Subcategory page experiment - 1.1.0');
 
 // Variables
 // Object containing variables for use in the experiment, generally these would be strings or jQuery objects
 exp.vars = {
-    'topLevelCategoriesTitle': $('h2#TopLevelCategoriesTitle a'),
+    'topLevelCategoriesTitle': $('h2 a'),
     'topLevelCategoriesTitle_text': 'Narrow By',
 
     'first_box_title': $('<span>', {
@@ -23,7 +23,7 @@ exp.vars = {
         style: 'color: #000; text-transform: uppercase; padding: 5px 0;display: block;'
         }
     ),
-    'first_box': $('ul#TopLevelCategories2'),
+    'first_box': $('.leftNAVIGATION > ul:nth-of-type(2)'),
     'first_box_links_to_drop': ['Bags', 'Accessories', 'Trend'],
 
     'brands_box': $('ul#facet_brand')
