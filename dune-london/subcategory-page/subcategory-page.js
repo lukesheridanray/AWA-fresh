@@ -10,7 +10,7 @@ var subcat_page_exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Subcategory page experiment - 1.1.0');
+console.log('Subcategory page experiment - 1.2.0');
 
 // Variables
 // Object containing variables for use in the experiment, generally these would be strings or jQuery objects
@@ -20,19 +20,22 @@ exp.vars = {
 
     'first_box_title': $('<span>', {
         text: 'STYLE',
-        style: 'color: #000; text-transform: uppercase; padding: 5px 0;display: block;'
+        style: 'color: #000; text-transform: uppercase; padding: 5px 0;display: block;font-size: 14px;'
         }
     ),
     'first_box': $('.leftNAVIGATION > ul:nth-of-type(2)'),
-    'first_box_links_to_drop': ['Bags', 'Accessories', 'Trend'],
-
-    'brands_box': $('ul#facet_brand')
+    'first_box_links_to_drop': ['Bags', 'Accessories', 'Trend']
 };
+
+exp.styles = 'ul#facet_brand { display: none; }';
 
 // Init function
 // Called to run the actual experiment, will be mostly DOM manipulation, event listeners, etc
 exp.init = function() {
     // DOM manipulation...
+
+    // append styles to head
+    $('head').append('<style type="text/css">'+this.styles+'</style>');
 
     // Change top level category to "Narrow By"
     this.vars.topLevelCategoriesTitle.text(this.vars.topLevelCategoriesTitle_text);
@@ -47,9 +50,6 @@ exp.init = function() {
             $(elem).hide();
         }
     });
-
-    // Hide brands box
-    this.vars.brands_box.hide();
 };
 
 // Return the experiment object so we can access it later
