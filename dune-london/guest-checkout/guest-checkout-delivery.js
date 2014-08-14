@@ -5,7 +5,7 @@ var exp = (function($) {
 
 var exp = {};
 
-console.log('Guest checkout - dev - delivery page v0.4');
+console.log('Guest checkout - dev - delivery page v0.7');
 
 exp.condition = $('.bsryitems');
 
@@ -89,7 +89,7 @@ transition: left 0.5s ease; \
 .selectboxit-container .selectboxit { width: 198px; } \
 #holderARTICLE .o-help-blurb p { color: #666; margin: 0 0 10px 10px; } \
 #holderARTICLE .o-help-blurb { margin: 20px 0 0 10px; } \
-.chkotLeftSect { width: 347px; } \
+.chkotLeftSect { width: 347px; margin-bottom: 10px; } \
 .deloptwrapper { padding: 10px 20px 0 0 !important; width: 290px !important; float: left !important; overflow: visible !important; \
 border: 1px solid #ddd !important; margin: 0 10px !important; min-height: 162px !important; background: #f5f5f5 !important;} \
 .logform ul li.button { width: 167px; } \
@@ -106,6 +106,8 @@ border: 1px solid #ddd !important; margin: 0 10px !important; min-height: 162px 
 .sectbox ul li.chkbx { width: 90px; } \
 .sectbox ul li.chkbx input { float: right; margin-right: 10px; } \
 .sectbox ul li.prefdesc { width: 190px; } \
+#holder_CENTREFULL #collectInStore { margin-bottom: 60px !important; } \
+#collectInStore input.textFieldNoWidth { width: 182px !important; } \
 .paymentprocessheader li:first-child:before { content: ""; position: absolute; top: 0; left: 0; background: #fff; width: 74px; height: 23px; display: block; } \
 /* #holderARTICLE .errormessageinline { width: 710px !important; text-align: center; padding: 0 10px 10px 10px !important; } */ ';
 
