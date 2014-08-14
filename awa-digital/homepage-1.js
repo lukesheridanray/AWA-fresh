@@ -8,17 +8,6 @@
 
 /*
 
-"100% of the traffic should be included in the experiment.
-This should be split so that 80% see the variation and 20% see the original"
-
-"(Numbers as per above & wireframe)
-1. To be emailed to you - file: AWA Digital logo.pdf
-2. Please take from file AWA_Words_1500x500.jpg emailed to you
-5(b). Image of Will to be taken from http://www.zoominfo.com/p/Will-Dymott/1488842853 (will we request better quality one once he approves the use of his image). Lyle & Scott logo as per http://www.awa-digital.com/results/
-5(c). Image of Claudia to be taken from http://www.zoominfo.com/p/Claudia-Vernon/391225873 (will we request better quality one once she approves the use of her image). Richer Sounds logo as per http://www.awa-digital.com/results/
-6(b). Images to be taken from http://www.awa-digital.com/about/#team and designed in a way to get as many people in the space as possible
-8-10. Design to be similar to file design example.png emailed to you"
-
 GA slot 2
 Crazy Egg
 
@@ -36,7 +25,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Home page - dev 0.1');
+console.log('Home page - dev 0.2');
 
 // Variables
 // Object containing variables for use in the experiment, generally these would be strings or jQuery objects
@@ -59,17 +48,20 @@ exp.css = ' \
 .video-l p { font-size: 28px; } \
 .video-r { top: -30px; } \
 .video-left-top, .video-left-bottom { text-align: center; } \
-.video-left-top { width: 420px; margin: 5px auto 10px auto !important; padding-bottom: 10px !important; border-bottom: 2px solid #333; } \
-.video-left-bottom { color: #4C9ED9; } \
+.video-left-top { width: 420px; margin: 15px auto 30px auto !important; padding-bottom: 30px !important; border-bottom: 2px solid #333; } \
+.video-left-bottom { color: #4C9ED9; font-size: 15px !important; } \
 .team-member-wrap { width: 459px; padding-top: 10px; } \
 .team-member-wrap .caption { margin-bottom: 30px; } \
 .team-member-wrap img { width: 100%; } \
 .team-l, .team-r { width: 152px; } \
 .team-l { margin-left: 37px; } \
 .team-r { margin-right: 37px; } \
+.methodology-wrap, .services-wrap { height: 390px !important; } \
 .methodology-wrap p { padding: 2px 10px 0px 10px; } \
 .methodology-wrap:hover, .services-wrap:hover { background: #fff; } \
-.quicklink { width: 313px; height: 349px; border-right: 5px solid #fff; position: relative; left: 5px; background: #2F64C0; color: #fff; } \
+.panel-link { width: 120px !important; color: #333; line-height: 27px; background-position: 92px 0 !important; background-repeat: no-repeat !important; font-size: 14px; } \
+.panel-link:hover { background-position: 92px -29px !important; } \
+.quicklink { width: 313px; height: 349px; border-right: 5px solid #fff; position: relative; left: 5px; background: #4378D3; color: #fff; } \
 .quicklink p, .quicklink h2 a { color: #fff; } \
 .quicklink:hover { background: #4378D3; } \
 .quicklink img { float: right; } \
@@ -79,21 +71,30 @@ exp.css = ' \
 .mini-ajax-form { padding: 0 20px 20px 20px; overflow: auto; } \
 .mini-ajax-form label { float: left; width: 70px; font-size: 15px; color: #fff; line-height: 23px; font-weight: normal; } \
 .mini-ajax-form input[type="text"] { float: left; width: 193px; font-size: 14px; margin: 0 0 9px 0; padding: 4px; font-weight: normal; } \
-.mini-ajax-form input[type="submit"] { margin-top: 8px; float: left; text-transform: uppercase; } \
+.mini-ajax-form input[type="submit"] { width: 274px; margin-top: 8px; float: left; text-transform: uppercase; } \
 .ajax-success, .ajax-error, .form-error, .ajax-loading { -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; font-size: 0.8em; \
-float: right; line-height: 19px !important; width: 155px; text-align: left !important; padding: 0 5px; height: 39px !important; position: relative; top: 8px !important; margin: 0 !important; } \
+float: right; line-height: 19px !important; width: 264px; text-align: center !important; padding: 0 5px; height: 39px !important; position: absolute; left: 20px !important; bottom: -25px !important; margin: 0 !important; } \
 .quicklink .ajax-loading { color: #fff !important; text-align: right !important; } \
 .quicklink .ajax-success { background: #4a4 !important; } \
 .quicklink .ajax-error, .form-error { background: #e44 !important; } \
 .client-testimonial-strapline { display: none; } \
-.client-comments { padding: 30px 0 0 0; margin-bottom: 30px; overflow: auto; width: 100%; margin-top: -80px; border-top: 1px solid #d4d9e2; cursor: pointer; } \
+.client-comments { padding: 0; margin-bottom: 30px; overflow: auto; width: 100%; margin-top: -80px; border-top: 0; cursor: pointer; } \
 .client-comments p { padding-bottom: 0; } \
-.client-comments--col-left,.client-comments--col-right { float: left; width: 480px; } \
-.client-comments--client-images { width: 180px; float: left; position: relative; left: 15px; } \
-.client-comments--client-text { width: 280px; padding-right: 20px; float: right; } \
+.client-comments--col-left,.client-comments--col-right { background: #F1F5FD; float: left; width: 460px; overflow: hidden; margin-left: 13px; } \
+.client-comments--col-left:hover,.client-comments--col-right:hover { background: #E2E8F6; } \
+.client-comments--col-left:hover .client-comments--client-credit,.client-comments--col-right:hover .client-comments--client-credit { background: #F1F5FD; } \
+.client-comments--col-left:hover .client-comments--client-text a,.client-comments--col-right:hover .client-comments--client-text a { color: #F8972B; } \
+.client-comments--col-right { float: right; margin-left: 0; margin-right: 13px; } \
+.client-comments--client-images { width: 160px; float: left; margin: 10px 0 10px 10px; } \
+.client-comments--client-text { width: 260px; padding-top: 35px; padding-right: 20px; float: right; } \
+.client-comments--client-text a { color: #666; } \
+.client-comments--client-text a:hover { } \
+.client-comments--client-credit { background: #fff; overflow: auto; padding-top: 5px; margin: 5px 0 0 0; clear:both; } \
+.client-comments--client-credit p { float: left; } \
+.client-comments--client-credit img { float: right; width: 80px; height: 80px; margin: 0 5px 5px 0; } \
 .cta-button:hover { text-decoration: none; color: #333 !important; background-color: #E07C0E; } \
-.cta-button { border-radius: 28px; border: 0px none; clear: left; float: left; text-transform: uppercase; padding: 10px 20px; margin: 10px 0 20px 0; background: none repeat scroll 0% 0% #F89C36; color: #333; font-size: 14px; font-weight: bold; letter-spacing: 1px; transition: all 0.5s ease 0s; } \
-.client-testimonial-header p { width: 580px; padding: 0 5px; margin-left: auto; margin-right: auto; position: relative; top: -47px; background: #fff; \
+.cta-button { width: 253px; border-radius: 28px; border: 0px none; clear: left; float: left; text-transform: uppercase; text-align: center; padding: 10px; margin: 10px 0 20px 0; background: none repeat scroll 0% 0% #F89C36; color: #333; font-size: 14px; font-weight: bold; letter-spacing: 1px; transition: all 0.5s ease 0s; } \
+.client-testimonial-header p { width: 580px; padding: 0 5px; margin-left: auto; margin-right: auto; position: relative; top: -47px; background: transparent; \
 color: #f8972b; font-size: 20px; text-align: center; } \
 .client-testimonials p { background: none; width: auto; } \ ';
 
@@ -155,15 +156,15 @@ exp.init = function() {
     
     $('.video-l').html('<p class="video-left-top">AWA digital is a full service web optimisation agency</p><p class="video-left-bottom">Watch this 2 minute video to find out why we guarantee to uplift your web sales by 20% or more in 6 months</p>');
 
-    $('.client-testimonial-heading p').html('Some of our B2C and B2B multichannel clients - click to see more');
+    $('.client-testimonial-heading p').html('&nbsp;');
     $('.client-testimonial-heading').addClass('client-testimonial-header').removeClass('client-testimonial-heading');
     
     $('.services-wrap').html(' \
 				<div class="ms-header"> \
 					<img src="/images/home-icon-services.png" alt="services"> \
-					<h2><a href="/what-we-do.php">A full range of services</a></h2> \
+          <h2><a href="/what-we-do.php">A full range of services</a></h2> \
 				</div> \
-				<h4>As a full service CRO agency we offer:</h4> \
+				<h4>Let us help you with:</h4> \
 				<ul> \
           <li>Complete web optimisation</li> \
           <li>International (multilingual) CRO</li> \
@@ -171,7 +172,7 @@ exp.init = function() {
           <li>Research and usability</li> \
           <li>Training & Mentoring</li> \
         </ul> \
-				  <a href="/what-we-do.php" class="panel-link"></a></p>');
+				  <a href="/what-we-do.php" class="panel-link">Find out more</a></p>');
     
     $('.client-testimonial-strapline').html('');
     
@@ -200,28 +201,34 @@ exp.init = function() {
 								</div> \
 							</div> \
 						</div> \
-				<a href="/how-we-do-it.php" class="panel-link"></a>');
+				<a href="/how-we-do-it.php" class="panel-link">Find out more</a>');
     
     $('.client-testimonials').html(' \
         <div class="client-comments"> \
           <div class="client-comments--col-left"> \
               <div class="client-comments--client-images"> \
-                  <img src="/images/split-test/client-richer-sounds-photo.jpg" alt="" width="160" height="172" /> \
-                   <img src="/images/split-test/client-lyle-scott-logo.jpg" style="margin-left: 30px;" width="80" height="77" alt="" /> \
+                  <img src="/images/split-test/client-richer-sounds-photo.png" alt="" width="160" height="160" /> \
               </div> \
               <div class="client-comments--client-text"> \
-                  <p style="font-size:18px"><em>With a 48% increase in just 6 months, Lyle &amp; Scott is delighted with &ldquo;the huge impact this has had on our business&rdquo;</em></p> \
-                  <p><strong>Will Dymott,<br />Head of Ecommerce,<br />Lyle &amp; Scott</strong></p> \
+                  <p style="font-size:17px">A 48% increase in just 6 months, a &ldquo;huge impact on our business&rdquo;</p> \
+                  <p><a href="/results/">Read more case studies &gt;</a></p> \
+              </div> \
+              <div class="client-comments--client-credit"> \
+                  <p>Will Dymott,<br />Head of Ecommerce, Lyle &amp; Scott</p> \
+                   <img src="/images/client-bottomlist-lyleandscott.png" style="margin-left: 30px;" width="80" height="77" alt="" /> \
               </div> \
           </div> \
           <div class="client-comments--col-right"> \
               <div class="client-comments--client-images"> \
-                  <img src="/images/split-test/client-richer-sounds-photo.jpg" alt="" width="160" height="172" /> \
-                  <img src="/images/split-test/client-richer-sounds-logo.jpg" alt="" /> \
+                  <img src="/images/split-test/client-richer-sounds-photo.png" alt="" width="160" height="160" /> \
               </div> \
               <div class="client-comments--client-text"> \
-                  <p style="font-size:18px"><em>It was so successful it has paid<br />for itself many times over.</em></p> \
-                  <p><strong>Claudia Vernon,<br />Marketing Director,<br />Richer Sounds</strong></p> \
+                  <p style="font-size:17px">It was so successful it has paid<br />for itself many times over.</p> \
+                  <p><a href="/results/">Read more testimonials &gt;</a></p> \
+              </div> \
+              <div class="client-comments--client-credit"> \
+                  <p>Claudia Vernon,<br />Marketing Director, Richer Sounds</p> \
+                  <img src="/images/client-bottomlist-sounds.png" alt="" /> \
               </div> \
           </div> \
         </div> \
@@ -232,14 +239,14 @@ exp.init = function() {
     $('.further-links .quicklink:eq(0)').html('<div class="text-wrap"> \
 					<img src="/images/home-icon-resources.png" alt="free resources"> \
 					<h2><a href="/conversion-rate-optimisation-tips/">Free resources</a></h2> \
-					<p><strong>Get free access to a wealth<br />of conversion resources here</strong></p><p>From articles to white papers<br />- all targeted to e-commerce,<br />and all <strong>totally free!</strong>.</p> \
+					<p>Valuable e-books and guides about Conversion Rate Optimisation, AB Split Testing and more - ready to download now. </p> \
 <a href="/conversion-rate-optimisation-tips/" style="position: absolute;bottom: 0;left:20px;" class="cta-button">Get your free resources</a></div>');
     
     $('.further-links .quicklink:eq(2)').html(' \
 				<div class="text-wrap"> \
 					<img src="/images/guarantee-grey-small.png" alt="free resources"> \
 					<h2 class="h2-double-row"><a href="/guarantee.php">AWA Conversion System™</a></h2> \
-					<p>Achieving exceptional results comes from our unique, systematic approach to Conversion Rate Optimisation – the AWA Conversion System™. No-one else uses this technique, but it has been proven to multiply the profits of most e-commerce businesses.</p> \
+					<p>When you ask us to carry out your web optimisation, we follow a 5-step process. This systematic approach uses research, analysis, creativity and testing and is proven to get results. That\'s why we guarantee you\'ll see a sales uplift of 20% or more within 6 months.</p> \
 				  <a href="/guarantee.php" class="cta-button">Our 20% uplift Guarantee</a> \
        </div>');
 
@@ -249,9 +256,9 @@ exp.init = function() {
 <label for="aemail">Email</label> \
 <input value="" name="aemail" id="aemail" type="text"> \
 <input style="display:none;" id="aemail-result" name="aemail-result"> \
-<p style="display: none;" class="ajax-success">Thank you for signing up for Helpful CRO Tips.</p> \
+<p style="display: none;" class="ajax-success">Thank you for signing up for<br />Helpful CRO Tips.</p> \
 <p style="display: none;" class="ajax-error">There was a problem, please try again, if the problem persists please <a href="/contact/">contact us</a>.</p> \
-<p style="display: none;" class="form-error">You must enter both a valid email address and a name.</p> \
+<p style="display: none;" class="form-error">You must enter both a valid email<br />address and a name.</p> \
 <p style="display: none;" class="ajax-loading">... sending ...</p> \
 <input name="submit1" class="cro-tips-submit" id="submit" value="Send" type="submit"> \
 </form></div>');
@@ -261,7 +268,7 @@ exp.init = function() {
     $('.cro-tips-submit').bind('click',exp.formSubmit);
     $('#mini-ajax-form').bind('submit',exp.formSubmit);
     
-    $('.client-comments').bind('click',function(){ window.location = 'http://www.awa-digital.com/results/';})
+    $('.client-comments').bind('click',function(e){ e.preventDefault(); window.location = 'http://www.awa-digital.com/results/'; });
     
 };
 
