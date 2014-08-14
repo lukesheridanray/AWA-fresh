@@ -1,3 +1,16 @@
+/* Snippet to extend jQuery to parse the page's GET params */
+(function($){
+    $.urlParam = function(name){
+        var results = new RegExp('([\?&]' + name + ')(=([^&#]*))?').exec(window.location.href);
+        if (results === null){
+           return false;
+        }
+        else{
+           return results[3] || true || 0;
+        }
+    };
+})(jQuery);
+
 // Code should be ran through JSHint: http://www.jshint.com/ the settings below prevent unnecessary warnings
 // jshint multistr: true
 // jshint jquery: true
@@ -10,7 +23,7 @@ var simplify_email_form = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Simplify email form - dev 0.0.1');
+console.log('Simplify email form - dev 0.0.3');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -30,7 +43,7 @@ exp.vars = {
         <ul class="tick-bullet"> \
             <li>Don\'t miss another sale</li> \
             <li>Get exclusive subscriber discounts</li> \
-            <li>See our latest collections and products</li> \
+            <li>See our latest collections and products first</li> \
         </ul> \
     </div> \
     ')
@@ -199,9 +212,18 @@ exp.init = function() {
         this.vars.email_form.submit_button.parent().html().replace(/&nbsp;/g, '')
     );
 
+    // Move privacy line below the form
     this.vars.email_form.table.after(
         this.vars.email_form.privacy_line
     );
+
+    // If there's an e-mail GET parameter, populate the email input with that value.
+    if ($.urlParam('email') !== false && $.urlParam !== true) {
+        console.log('Prepopulating email field with ' + $.urlParam('email'));
+        this.vars.email_form.email_row.find('input').val(
+            decodeURIComponent($.urlParam('email'))
+        );
+    }
 
 };
 
