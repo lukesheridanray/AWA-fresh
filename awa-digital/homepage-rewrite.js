@@ -6,34 +6,15 @@
 // jshint multistr: true
 // jshint jquery: true
 
-console.log('experiment has begun evaluating');
-
-/*
-
-GA slot 2
-Crazy Egg
-
-"Engagement
-Email sign up (GA event action ""SignUp"")
-Contact us form submitted (GA event action ""ContactUsFormSubmit"")
-Free resources downloaded (GA event action ""DownloadResources"")"
-
-*/
 
 /* _optimizely_evaluate=force */
     $('.video-section,.main-wrap').css({'visibility':'hidden'});
     $('.header').css({'visibility':'hidden'});
-/* _optimizely_evaluate=safe */
 
-// Wrap the experiment code in an IIFE (Immediately Invoked Function Expression)
-// pass in jQuery so we can safely use $. Other global variables could be passed in as needed
-var exp = (function($) {
-
-// Initialise the experiment object, this will be returned by the IIFE
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Home page - dev 0.6');
+console.log('Home page - dev 1.6');
 
 // Variables
 // Object containing variables for use in the experiment, generally these would be strings or jQuery objects
@@ -42,7 +23,53 @@ exp.vars = {
 
 // Styles
 // String containing the CSS for the experiment
-exp.css = ' \
+exp.css = '';
+
+exp.emailValid = function(email) { 
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+};
+    
+exp.formSubmit = function(e){
+      e.preventDefault();
+      var nameVal = $('#afullname').val();
+      var emailVal = $('#aemail').val();
+      var queryString = 'afullname='+nameVal+'&aemail='+emailVal+'&aemail-result=&submit1=Send+it+now';
+        console.log(queryString);
+      if ( nameVal === '' || emailVal === '' || !exp.emailValid(emailVal)) {
+           $('.form-error').show(0);
+      } else {
+        $.ajax( {
+            'url': '/helpful-cro-tips.php',
+            'type': 'POST',
+            'data': queryString,
+            'success': function(response) {
+                $('.ajax-loading').hide(0);
+                var resp = $(response);
+                console.log(response);
+                var success = resp.find('.submit-success-message');
+                if (success.length) {
+                    $('.ajax-success').show(0);
+                } else {
+                    $('.ajax-error').show(0);
+                }
+            },
+            'error': function(response) {
+                $('.ajax-loading').hide(0);
+                $('.ajax-error').show(0);
+            },
+            'beforeSend': function() {
+                $('.ajax-success, .ajax-error, .form-error').hide(0);
+                $('.ajax-loading').show(0);
+            } 
+        });
+      }
+};
+
+/* _optimizely_evaluate=safe */
+        
+    // append styles to head
+    $('head').append('<style type="text/css"> \
 body { position: relative; top: -12px; } \
 .header a img { position: relative; top: -6px; } \
 .search-box p { position: relative; top: -44px; } \
@@ -107,59 +134,12 @@ float: right; line-height: 19px !important; width: 264px; text-align: center !im
 .cta-button { width: 253px; border-radius: 28px; border: 0px none; clear: left; float: left; text-align: center; padding: 10px; margin: 10px 0 20px 0; background: none repeat scroll 0% 0% #F89C36; color: #333; font-size: 14px; font-weight: bold; letter-spacing: 1px; transition: all 0.5s ease 0s; } \
 .client-testimonial-header p { width: 580px; padding: 0 5px; margin-left: auto; margin-right: auto; position: relative; top: -47px; background: transparent; \
 color: #f8972b; font-size: 20px; text-align: center; } \
-.client-testimonials p { background: none; width: auto; } \ ';
+.client-testimonials p { background: none; width: auto; } </style>');
 
-exp.emailValid = function(email) { 
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-};
-    
-exp.formSubmit = function(e){
-      e.preventDefault();
-      var nameVal = $('#afullname').val();
-      var emailVal = $('#aemail').val();
-      var queryString = 'afullname='+nameVal+'&aemail='+emailVal+'&aemail-result=&submit1=Send+it+now';
-        console.log(queryString);
-      if ( nameVal === '' || emailVal === '' || !exp.emailValid(emailVal)) {
-           $('.form-error').show(0);
-      } else {
-        $.ajax( {
-            'url': '/helpful-cro-tips.php',
-            'type': 'POST',
-            'data': queryString,
-            'success': function(response) {
-                $('.ajax-loading').hide(0);
-                var resp = $(response);
-                console.log(response);
-                var success = resp.find('.submit-success-message');
-                if (success.length) {
-                    $('.ajax-success').show(0);
-                } else {
-                    $('.ajax-error').show(0);
-                }
-            },
-            'error': function(response) {
-                $('.ajax-loading').hide(0);
-                $('.ajax-error').show(0);
-            },
-            'beforeSend': function() {
-                $('.ajax-success, .ajax-error, .form-error').hide(0);
-                $('.ajax-loading').show(0);
-            } 
-        });
-      }
-    };
-    
-// Init function
-// Called to run the actual experiment, will be mostly DOM manipulation, event listeners, etc
-exp.init = function() {
 
     // un-hide the page
     $('.video-section,.main-wrap').css({'visibility':'visible'});
     $('.header').css({'visibility':'visible'});
-        
-    // append styles to head
-    $('head').append('<style type="text/css">'+this.css+'</style>');
 
     // Some example DOM manipulation...
     
@@ -285,14 +265,3 @@ exp.init = function() {
     $('#mini-ajax-form').bind('submit',exp.formSubmit);
     
     $('.client-comments').bind('click',function(e){ e.preventDefault(); window.location = 'http://www.awa-digital.com/results/'; });
-    
-};
-
-// Run the experiment
-exp.init();
-
-// Return the experiment object so we can access it later
-return exp;
-
-// Close the IIFE, passing in jQuery and any other global variables as needed
-})(jQuery);
