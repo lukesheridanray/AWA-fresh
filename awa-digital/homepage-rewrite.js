@@ -197,13 +197,13 @@ color: #f8972b; font-size: 20px; text-align: center; } \
 								</div> \
 							</div> \
 						</div> \
-				<a href="/how-we-do-it.php" class="panel-link">Find out more</a>');
+				<a href="/about/#team" class="panel-link">Find out more</a>');
     
     $('.client-testimonials').html(' \
         <div class="client-comments"> \
           <div class="client-comments--col-left"> \
               <div class="client-comments--client-images"> \
-                  <img src="/images/split-test/client-richer-sounds-photo.png" alt="" width="160" height="160" /> \
+                  <img src="/images/split-test/client-lyle-scott-photo.png" alt="" width="160" height="160" /> \
               </div> \
               <div class="client-comments--client-text"> \
                   <p style="font-size:17px">A 48% increase in just 6 months, a &ldquo;huge impact on our business&rdquo;</p> \
