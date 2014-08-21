@@ -14,7 +14,7 @@ var home_page_exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Lyle and Scott home page experiment - 1.4.0');
+console.log('Lyle and Scott home page experiment - 1.5.0');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -32,14 +32,13 @@ exp.vars = {
     'has_run': false,
 
     'masonry_section': $('#home_content'),
-    'video_block': $('#home_content > div:nth-of-type(1)'),
-    'history_block': $('#home_content > div:nth-of-type(2)'),
-    'email_capture_block': $('#home_content > div:nth-of-type(3)'),
-    'scottish_creatives_block': $('#home_content > div:nth-of-type(4)'),
+    'history_block': $('#home_content > div:nth-of-type(1)'),
+    'email_capture_block': $('#home_content > div:nth-of-type(2)'),
+    'scottish_creatives_block': $('#home_content > div:nth-of-type(3)'),
 
     'jackets_and_coats_block': $('<div class="content_block CGIT_HP_CATBLOCK"> \
     <a href="http://www.lyleandscott.com/jackets-coats/men/fcp-category/list?resetFilters=true"> \
-        <img style="padding-bottom:20px" src="//cdn.optimizely.com/img/174847139/3d0839791ab84e589ee362764f93b083.jpg" alt="Jackets &amp; Coats"> \
+        <img style="padding-bottom:20px" src="//cdn.optimizely.com/img/174847139/53df10f20bb445278a80ede3031ce1ac.jpg" alt="Jackets &amp; Coats"> \
         <h2 class="block_title">Jackets &amp; Coats</h2> \
     </a> \
 </div>'),
@@ -81,16 +80,22 @@ exp.css = ' \
     margin-right: 0; \
 } \
 .email_capture_block form#quickProspectRegistrationForm button { \
-    padding: 1em; \
+    padding: 1em 0.75em; \
     font-family: \'gill_sans_mt_condensedregular\'; \
     text-transform: uppercase; \
     font-size: 1.5em; \
     line-height: 15px; \
     float: right; \
+    letter-spacing: 0.1em; \
 } \
 #home_content h2 { \
     font-family: \'gill_sans_mt_condensedregular\'; \
     text-transform: uppercase; \
+    letter-spacing: 0.2em; \
+} \
+.CGIT_HP_CATBLOCK img { \
+    width: 480px; \
+    height: 520px; \
 }';
 
 // Functions
@@ -103,9 +108,6 @@ exp.init = function() {
 
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
-
-    // Remove video block
-    this.vars.video_block.remove();
 
     // Remove history block
     this.vars.history_block.remove();
@@ -143,6 +145,5 @@ return exp;
 
 // Run the experiment
 $(document).ready(function() {
-    console.log("MAKING DO");
     home_page_exp.init();
 });
