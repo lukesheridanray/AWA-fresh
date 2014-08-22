@@ -6,8 +6,6 @@
 // jshint multistr: true
 // jshint jquery: true
 
-console.log('experiment has begun evaluating');
-
 /*
 
 GA slot 2
@@ -21,8 +19,8 @@ Free resources downloaded (GA event action ""DownloadResources"")"
 */
 
 /* _optimizely_evaluate=force */
-    $('.video-section,.main-wrap').css({'visibility':'hidden'});
-    $('.header').css({'visibility':'hidden'});
+$('.video-section,.main-wrap').css({'visibility':'hidden'});
+$('.header').css({'visibility':'hidden'});
 /* _optimizely_evaluate=safe */
 
 // Wrap the experiment code in an IIFE (Immediately Invoked Function Expression)
@@ -33,7 +31,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Home page - dev 0.6');
+console.log('Home page - dev 0.10');
 
 // Variables
 // Object containing variables for use in the experiment, generally these would be strings or jQuery objects
@@ -97,17 +95,17 @@ float: right; line-height: 19px !important; width: 264px; text-align: center !im
 .client-comments--col-left:hover,.client-comments--col-right:hover { background: #E2E8F6; } \
 .client-comments--col-right { float: right; margin-left: 0; margin-right: 13px; } \
 .client-comments--client-images { width: 160px; float: left; margin: 10px 0 0 10px; } \
-.client-comments--client-text { width: 260px; padding-top: 35px; padding-right: 20px; float: right; } \
-.client-comments--client-text a { color: #666; } \
-.client-comments--client-text a:hover,.client-comments--col-left:hover a,.client-comments--col-right:hover a { color: #F8982A; } \
-.client-comments--client-credit { overflow: auto; padding-top: 5px; padding-bottom: 10px; margin: 5px 0 0 0; clear:both; } \
-.client-comments--client-credit p { float: left; padding: 0 0 0 10px; } \
+.client-comments--client-text { width: 260px; padding-top: 24px; padding-right: 20px; float: right; } \
+.client-comments--client-credit a { color: #666; } \
+.client-comments--client-credit a:hover,.client-comments--col-left:hover a,.client-comments--col-right:hover a { color: #F8982A; } \
+.client-comments--client-credit { overflow: auto; padding-top: 0; padding-bottom: 10px; margin: 0; clear:both; } \
+.client-comments--client-credit p { float: right; padding: 0 10px 0 0; } \
 .client-comments--client-credit img { position: absolute; bottom: 17px; right: 10px; } \
 .cta-button:hover { text-decoration: none; color: #333 !important; background-color: #E07C0E; } \
 .cta-button { width: 253px; border-radius: 28px; border: 0px none; clear: left; float: left; text-align: center; padding: 10px; margin: 10px 0 20px 0; background: none repeat scroll 0% 0% #F89C36; color: #333; font-size: 14px; font-weight: bold; letter-spacing: 1px; transition: all 0.5s ease 0s; } \
 .client-testimonial-header p { width: 580px; padding: 0 5px; margin-left: auto; margin-right: auto; position: relative; top: -47px; background: transparent; \
 color: #f8972b; font-size: 20px; text-align: center; } \
-.client-testimonials p { background: none; width: auto; } \ ';
+.client-testimonials p { background: none; width: auto; }  ';
 
 exp.emailValid = function(email) { 
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -175,12 +173,12 @@ exp.init = function() {
     $('.client-testimonial-heading').addClass('client-testimonial-header').removeClass('client-testimonial-heading');
     
     $('.services-wrap').html(' \
-				<div class="ms-header"> \
-					<img src="/images/home-icon-services.png" alt="services"> \
+        <div class="ms-header"> \
+          <img src="/images/home-icon-services.png" alt="services"> \
           <h2><a href="/what-we-do.php">A full range of services</a></h2> \
-				</div> \
-				<h4>Let us help you with:</h4> \
-				<ul> \
+        </div> \
+        <h4>Let us help you with:</h4> \
+        <ul> \
           <li>Website optimisation, including mobile</li> \
           <li>Multi-lingual CRO</li> \
           <li>Google & Universal Analytics and paid-for tools</li> \
@@ -188,63 +186,61 @@ exp.init = function() {
           <li>Customer research and insight</li> \
           <li>Training &amp; mentoring</li> \
         </ul> \
-				  <a href="/what-we-do.php" class="panel-link">Find out more</a></p>');
+          <a href="/what-we-do.php" class="panel-link">Find out more</a></p>');
     
     $('.client-testimonial-strapline').html('');
     
     $('.methodology-wrap').html(' \
-				<div class="ms-header"> \
-					<img src="/images/home-icon-methodology.png" alt="methodology"> \
-					<h2><a href="/about/#team">Meet the AWA Team</a></h2> \
-				</div> \
-						<div class="team-member-wrap"> \
-							<img src="/images/team-optimisation-update-3.jpg" alt="AWA digital team"> \
-							<div class="caption"> \
-								<p>AWA Optimisation Team</p> \
-							</div> \
-							<div class="team-bottom-wrap clearfix"> \
-								<div class="team-l"> \
-									<img src="/images/team-creative.png" alt="AWA digital team"> \
-									<div class="caption"> \
-										<p>AWA Creative Team</p> \
-									</div> \
-								</div> \
-								<div class="team-r"> \
-									<img src="/images/team-technical.png" alt="AWA digital team"> \
-									<div class="caption"> \
-										<p>AWA Technical Team</p> \
-									</div> \
-								</div> \
-							</div> \
-						</div> \
-				<a href="/how-we-do-it.php" class="panel-link">Find out more</a>');
+        <div class="ms-header"> \
+          <img src="/images/home-icon-methodology.png" alt="methodology"> \
+          <h2><a href="/about/#team">Meet the AWA Team</a></h2> \
+        </div> \
+            <div class="team-member-wrap"> \
+              <img src="/images/team-optimisation-update-3.jpg" alt="AWA digital team"> \
+              <div class="caption"> \
+                <p>AWA Optimisation Team</p> \
+              </div> \
+              <div class="team-bottom-wrap clearfix"> \
+                <div class="team-l"> \
+                  <img src="/images/team-creative.png" alt="AWA digital team"> \
+                  <div class="caption"> \
+                    <p>AWA Creative Team</p> \
+                  </div> \
+                </div> \
+                <div class="team-r"> \
+                  <img src="/images/team-technical.png" alt="AWA digital team"> \
+                  <div class="caption"> \
+                    <p>AWA Technical Team</p> \
+                  </div> \
+                </div> \
+              </div> \
+            </div> \
+        <a href="/about/#team" class="panel-link">Find out more</a>');
     
     $('.client-testimonials').html(' \
         <div class="client-comments"> \
           <div class="client-comments--col-left"> \
               <div class="client-comments--client-images"> \
-                  <img src="/images/split-test/client-richer-sounds-photo.png" alt="" width="160" height="160" /> \
+                  <img src="/images/split-test/client-lyle-scott-logo-large.png" alt="" width="160" height="160" /> \
               </div> \
               <div class="client-comments--client-text"> \
-                  <p style="font-size:17px">A 48% increase in just 6 months, a &ldquo;huge impact on our business&rdquo;</p> \
-                  <p><a href="/results/">Read more case studies &gt;</a></p> \
+                  <p>A 48% increase in just 6 months, a &ldquo;huge impact on our business&rdquo;</p> \
+                  <p style="font-size:15px;">Will Dymott,<br />Head of Ecommerce, Lyle &amp; Scott</p> \
               </div> \
               <div class="client-comments--client-credit"> \
-                  <p>Will Dymott,<br />Head of Ecommerce, Lyle &amp; Scott</p> \
-                   <img src="/images/split-test/client-lyle-scott-logo.png" alt="" width="84" height="72" /> \
+                  <p><a href="/results/">Read more case studies &gt;</a></p> \
               </div> \
           </div> \
           <div class="client-comments--col-right"> \
               <div class="client-comments--client-images"> \
-                  <img src="/images/split-test/client-richer-sounds-photo.png" alt="" width="160" height="160" /> \
+                  <img src="/images/split-test/client-richer-sounds-logo-large.png" alt="" width="160" height="160" /> \
               </div> \
               <div class="client-comments--client-text"> \
-                  <p style="font-size:17px">&ldquo;It was so successful it has paid<br />for itself many times over.&rdquo;</p> \
-                  <p><a href="/results/">Read more testimonials &gt;</a></p> \
+                  <p>&ldquo;It was so successful it has paid<br />for itself many times over.&rdquo;</p> \
+                  <p style="font-size:15px;">Claudia Vernon,<br />Marketing Director, Richer Sounds</p> \
               </div> \
               <div class="client-comments--client-credit"> \
-                  <p>Claudia Vernon,<br />Marketing Director, Richer Sounds</p> \
-                  <img src="/images/split-test/client-richer-sounds-logo.png" alt="" width="117" height="19" /> \
+                  <p><a href="/results/">Read more testimonials &gt;</a></p> \
               </div> \
           </div> \
         </div> \
