@@ -1,3 +1,6 @@
+// jshint jquery: true
+// jshint multistr: true
+
 var FlyingFlowersBasketPage = {
 
     /**
@@ -40,8 +43,7 @@ var FlyingFlowersBasketPage = {
 .addAddonIcon { cursor: pointer; } \
 .dialogue .addonImg img { border: 0 !important; } \
 .addon .moreinfo { display: none; } \
-.addItem { background-color: transparent; height: 19px; width: 18px; } \
-',
+.addItem { background-color: transparent; height: 19px; width: 18px; } ',
 
     /**
      * The run function is called to run the experiment
@@ -68,7 +70,8 @@ var FlyingFlowersBasketPage = {
                p_code === 'C04871VS' ||
                p_code === 'C00281BS' ||
                p_code === 'C04871PS' ||
-               p_code === 'C04872PS'
+               p_code === 'C04872PS' ||
+               (p_code.slice(0,3) === 'FC9')
            ) {
                blocked_product = true;
                return false;
@@ -168,6 +171,7 @@ customUpgradeOption();
                     });
                     
                     current_addon.unbind('click');
+
                     current_addon.bind('click',function() {
                         
                       if( $(this).html() !== '<img src="//cdn.optimizely.com/img/174847139/cf65de90fbf648fea95b6ea9adecf95a.gif" alt="">' && !$(this).hasClass('disableAddOn') ) {
@@ -248,9 +252,10 @@ customUpgradeOption();
 
         function customCheckoutListener() {
 
-           $('img[src="/static/images/checkoutSecurely.jpg"]').each(function(){
+           $('.greenBtn.checkout_securely.checkOutSecurely').parent('a').each(function(){
                
-               $(this).parent().bind('click',function(e) {
+               $(this).bind('click',function(e) {
+
                     e.preventDefault();
                    
                  if(vars.variation === 1) {
@@ -331,7 +336,7 @@ window.setTimeout(function(){
 
 };
 
-console.log('v3.0.10');
+console.log('v4 - tablet');
 
 // Run the experiment
 FlyingFlowersBasketPage.run();
