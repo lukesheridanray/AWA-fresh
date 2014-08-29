@@ -14,7 +14,7 @@ var tile_calculator_2014_08 = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Tile Calculator 2014 08 - 1.0.5');
+console.log('Tile Calculator 2014 08 - 1.0.6');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -121,7 +121,6 @@ exp.css = ' \
     width: 90px; \
 } \
 .room-row td:nth-child(7), /* Equals symbol */ \
-.room-row .room, \
 .room-row .total { \
     display: none; \
 } \
@@ -133,8 +132,8 @@ exp.css = ' \
 } \
 #CGIT_you_need_add_to_cart_btn, \
 #CGIT_you_may_add_to_cart_btn { \
-    width: 300px; \
-    margin-left: 15px; \
+    width: 100%; \
+    margin-top: 1em; \
 } \
 #tile-calculator .row.tab-buttons { \
     margin-top: -15px; \
@@ -146,6 +145,14 @@ exp.css = ' \
     padding-bottom: 30px; \
 } \
 #tile-calculator-modal .modal-footer { \
+    display: none; \
+} \
+.room-row .room .room-remove-btn { \
+    display: none; \
+    padding: 0.35em 0.5em; \
+} \
+.times.wall-attr, \
+.height.wall-attr { \
     display: none; \
 }';
 
@@ -208,10 +215,8 @@ exp.func.initNewElements = function(){
                 'you_may_also_need_spacers_label'      : $('<label>'+ exp.vars.content.you_may_also_need_spacers_label +'</label>'),
                 'you_may_also_need_linear_border_label': $('<label>'+ exp.vars.content.you_may_also_need_linear_border_label +'</label>'),
         'add_to_cart_row'                              : $('<div id="CGIT_add_to_cart_row" class="row">'),
-            'you_need_add_to_cart_col'                 : $('<div id="CGIT_you_need_add_to_cart_col" class="col-sm-6">'),
-                'you_need_add_to_cart_btn'             : $('<a id="CGIT_you_need_add_to_cart_btn" class="btn btn-primary" data-loading-text="Added to cart.">Add to Basket</a>'),
-            'you_may_add_to_cart_col'                  : $('<div id="CGIT_you_may_add_to_cart_col" class="col-sm-6">'),
-                'you_may_add_to_cart_btn'              : $('<a id="CGIT_you_may_add_to_cart_btn" class="btn btn-primary" data-loading-text="Added to cart.">Add to Basket</a>'),
+            'add_to_cart_col'                              : $('<div id="CGIT_add_to_cart_col" class="col-sm-4 col-sm-offset-4">'),
+                'add_to_cart_btn'                          : $('<a id="CGIT_you_need_add_to_cart_btn" class="btn btn-primary" data-loading-text="Added to cart.">Add to Basket</a>'),
     };
 };
 
@@ -273,16 +278,11 @@ exp.func.executeDomChanges = function() {
         exp.vars.new_elements.you_need_col,
         exp.vars.new_elements.you_may_col
     );
-    exp.vars.new_elements.you_need_add_to_cart_col.append(
-        exp.vars.new_elements.you_need_add_to_cart_btn
-    );
-    exp.vars.new_elements.you_may_add_to_cart_col.append(
-        exp.vars.new_elements.you_may_add_to_cart_btn
-    );
-
     exp.vars.new_elements.add_to_cart_row.append(
-        exp.vars.new_elements.you_need_add_to_cart_col,
-        exp.vars.new_elements.you_may_add_to_cart_col
+        exp.vars.new_elements.add_to_cart_col
+    );
+    exp.vars.new_elements.add_to_cart_col.append(
+        exp.vars.new_elements.add_to_cart_btn
     );
     exp.vars.elements.floor_wall_buttons_row.after(
         exp.vars.new_elements.image_and_rooms_row,
@@ -311,8 +311,7 @@ exp.func.executeDomChanges = function() {
     exp.vars.new_elements.you_may_col.append(
         exp.vars.elements.le_grande_table_adhesive_field,
         exp.vars.elements.le_grande_table_grout_field,
-        exp.vars.elements.le_grande_table_spacers_field,
-        exp.vars.elements.le_grande_table_linear_border_field
+        exp.vars.elements.le_grande_table_spacers_field
     );
 
     // Hide rows whih previously held the fields we've moevd elsewhere - these
@@ -342,9 +341,6 @@ exp.func.executeDomChanges = function() {
     exp.vars.elements.le_grande_table_spacers_field.before(
         exp.vars.new_elements.you_may_also_need_spacers_label
     );
-    exp.vars.elements.le_grande_table_linear_border_field.before(
-        exp.vars.new_elements.you_may_also_need_linear_border_label
-    );
 
     // Add "wall-attr" class to linear border field and label - it should only show when we're messing with walls.
     exp.vars.elements.le_grande_table_linear_border_field.addClass('wall-attr');
@@ -361,23 +357,30 @@ exp.func.onTilesCalculated = function($tiles_input){
     exp.vars.new_elements.no_of_tiles_field.val(tiles_required);
 
     // Reset add-to-cart buttons
-    exp.vars.new_elements.you_need_add_to_cart_btn.button('reset');
-    exp.vars.new_elements.you_may_add_to_cart_btn.button('reset');
+    exp.vars.new_elements.add_to_cart_btn.button('reset');
 };
 
 exp.func.attachAddToCartLogic = function() {
     // Proxy for the modal's "Apply" button.
-    exp.vars.new_elements.you_need_add_to_cart_btn.on('click', function(e){
+    exp.vars.new_elements.add_to_cart_btn.on('click', function(e){
         // Set button o loading state (shows "Added to cart.")
         $(this).button('loading');
 
         // Code extracted from the existing site (de-minified)
 
         // Load values from modal
-        var _tiles_val    = parseFloat($("input.total-tiles",    this.form).val());
+        var _tiles_val    = parseFloat($("input.total-tiles",    this.form).val()),
+            _border_val   = parseFloat($("input.total-border",   this.form).val()),
+            _grout_val    = parseFloat($("input.total-grout",    this.form).val()),
+            _adhesive_val = parseFloat($("input.total-adhesive", this.form).val()),
+            _spacers_val  = parseFloat($("input.total-spacers",  this.form).val());
 
         // Defaults values to 0 if they're NaN
         if (isNaN(_tiles_val))    _tiles_val    = 0;
+        if (isNaN(_border_val))   _border_val   = 0;
+        if (isNaN(_grout_val))    _grout_val    = 0;
+        if (isNaN(_adhesive_val)) _adhesive_val = 0;
+        if (isNaN(_spacers_val))  _spacers_val  = 0;
 
         var add_to_cart_form = exp.vars.tile_calculator_button.closest("form");
 
@@ -387,26 +390,6 @@ exp.func.attachAddToCartLogic = function() {
 
         // Add to cart!
         exp.vars.product_add_to_cart_button.click();
-    });
-
-
-    exp.vars.new_elements.you_may_add_to_cart_btn.on('click', function(e){
-        // Set button o loading state (shows "Added to cart.")
-        $(this).button('loading');
-
-        // Code extracted from the existing site (de-minified)
-
-        // Load values from modal
-        var _border_val   = parseFloat($("input.total-border",   this.form).val()),
-            _grout_val    = parseFloat($("input.total-grout",    this.form).val()),
-            _adhesive_val = parseFloat($("input.total-adhesive", this.form).val()),
-            _spacers_val  = parseFloat($("input.total-spacers",  this.form).val());
-
-        // Defaults values to 0 if they're NaN
-        if (isNaN(_border_val))   _border_val   = 0;
-        if (isNaN(_grout_val))    _grout_val    = 0;
-        if (isNaN(_adhesive_val)) _adhesive_val = 0;
-        if (isNaN(_spacers_val))  _spacers_val  = 0;
 
         $(".cross-sell-list .adhesive").each(function (i, elem) {
             var $elem = $(elem);
@@ -456,25 +439,6 @@ exp.func.attachAddToCartLogic = function() {
             $(".update-item-btn", $elem).click();
 
         });
-
-        $(".cross-sell-list .linear-border").each(
-            exp.vars.tile_calculator_form.hasClass("floor") ?
-                function (i, elem) {
-                    $(elem).removeClass("recommended");
-                }
-            :
-                function (i, elem) {
-                    var $elem = $(elem);
-                    $(".recommended-uom", $elem).text("m");
-                    $(".recommended-quantity", $elem).text(_border_val);
-                    $(".sale-input", $elem).val(_border_val);
-                    $(".sale-input", $elem).trigger("blur");
-                    $elem.addClass("recommended");
-
-                    // Add to cart (Delay slightly to wait for any event listeners on 'blur' to parse.)
-                    $(".update-item-btn", $elem).click();
-
-                });
     });
 };
 
@@ -493,6 +457,12 @@ exp.func.onModalLoaded = function(e){
 
     // Add placeholders to room fields
     exp.func.addRoomRowPlaceholders();
+
+    // Remove unecessary "Room N" text from remove button.
+    exp.func.cleanupRemoveRoomButton();
+    exp.vars.elements.add_room_button.on('click', function(){
+        setTimeout(exp.func.cleanupRemoveRoomButton, 100);
+    });
 
     // Add event listener to "Add room" button, when it is clicked we need to
     // re-add the room placeholders, after a minor delay (to make sure thi is ran last)
@@ -595,6 +565,10 @@ exp.func.loadTechnicalInfo = function(){
                 }
         }
     });
+};
+
+exp.func.cleanupRemoveRoomButton = function(){
+    $(".room-remove-btn").html("<i class=\"fa fa-times\"></i>").css('display', 'block');
 };
 
 // Init function
