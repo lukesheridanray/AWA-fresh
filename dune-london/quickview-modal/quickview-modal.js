@@ -13,25 +13,6 @@ Notes
 "Quick View Modal for listed categories - don't know URL of QV
 All Boots, Shoes and Sandals categories for both Mens and Ladies departments."
 
-"See wireframe.
-
-1. The main change is to scrape additional details from Product Information tabs on the product pages, then to expose this on the QV modal.
-
-This should be presented as on the wireframe in two columns, using the existing QV font style.
-
-The wireframe shows the following configuration:
-Heel (Type)
-Heel Height
-Heel Shape
-Material
-Lining Material
-Sole Material
-
-See for example www.dunelondon.com/alina-pointed-toe-reptile-print-mid-heel-court-shoe-0085503940156311/
-
-In some cases, Heel Height is not available but Boot Height is e.g. www.dunelondon.com/tina-strap-and-buckle-trim-knee-high-leather-boot-0089501020018484/
-
-
 
 target - UK-EN
 
@@ -45,6 +26,7 @@ Number of Views on Product Pages (Regex to identify product pages in GA : .*[0-9
 
 */
 
+
 // Wrap the experiment code in an IIFE, this creates a local scope and allows us to
 // pass in jQuery to use as $. Other globals could be passed in if required.
 var exp = (function($) {
@@ -53,7 +35,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Quick view modal experiment - dev 0.1');
+console.log('Quick view modal experiment - dev 0.5');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -69,8 +51,23 @@ if(exp.condition && !exp.condition.length) {
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
     'viewProdLink': $('.viewproductdetaillink'),
-    'prodURL': $('.viewproductdetaillink a').attr('href')
+    'prodURL': $('.viewproductdetaillink a').attr('href'),
+    'prodText': $('span.prodName1').text().toLowerCase() + $('span.prodName2').text().toLowerCase() + $('.prodSHORTdesc').text().toLowerCase()
 };
+
+exp.vars.is_footwear = false;
+
+if( typeof dataLayer[0]['product'] != 'undefined' ) {
+    var prodCat = dataLayer[0]['product']['category'];
+    exp.vars.is_footwear = (prodCat === 'Bags' || prodCat === 'Accessories') ? false : true;
+} else if(
+    exp.vars.prodText.indexOf('sandal') !== -1 || exp.vars.prodText.indexOf('shoe') !== -1 || exp.vars.prodText.indexOf('boot') !== -1 ||
+    exp.vars.prodText.indexOf('brogue') !== -1 || exp.vars.prodText.indexOf('ballerina') !== -1 || exp.vars.prodText.indexOf('trainer') !== -1 || exp.vars.prodText.indexOf('loafer') !== -1
+) {
+    console.log('FOOTWEAR DAMMIT')
+    exp.vars.is_footwear = true
+}
+
 
 // Styles
 // String containing the CSS for the experiment
@@ -148,6 +145,12 @@ exp.func.scrapeProduct = function( url ) {
 // Init function
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
 exp.init = function() {
+
+    // Stop experiment if it is not footwear
+    if( this.vars.is_footwear === false ) {
+        console.log('Quick view modal experiment stopped as it is not footwear');
+        return false;
+    };
         
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
