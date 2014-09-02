@@ -14,11 +14,11 @@ var tile_calculator_2014_08 = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Tile Calculator 2014 08 - dev 0.2');
+console.log('Tile Calculator 2014 08 - 1.1.0');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
-exp.condition = $('.tile-calculator-btn');
+exp.condition = $('.product-top-container .tile-calculator-btn');
 
 // Check for a condition and return false if it has not been met
 if(exp.condition && !exp.condition.length) {
@@ -30,30 +30,40 @@ if(exp.condition && !exp.condition.length) {
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
     ran_once: false,
-    tile_width_mm: 0,
-    tile_length_mm: 0,
+    tile_width_mm: undefined,
+    tile_length_mm: undefined,
+    tile_type: undefined,
 
-    // Existing elements will be set when the modal loads
-    tile_calculator_modal : $('#tile-calculator-modal'),
-    technical_info_rows  : $('.tech-info-table .row'),
+    // Some existing elements will be set when the modal loads, page-wide elements can
+    // be set here.
+    tile_calculator_block      : $('#tile-calculator'),
+    tile_calculator_modal      : $('#tile-calculator-modal'),
+    tile_calculator_button     : $('.product-top-container .tile-calculator-btn'),
+    tile_calculator_form       : $('#tile-calculator-modal .modal-body > #tile-calculator'),
+    technical_info_rows        : $('.tech-info-table .row'),
     product_add_to_cart_button : $('.product-top-container .add-item-btn'),
 
     // Content
     content: {
-        'modal_title': 'How many tiles do you need?',
-        'modal_description': 'The tile calculator will tell you exactly what you\'ll need for tiling your room: exactly how many tiles and the grout, spaces and adhesive required.',
-        'you_need_title': 'You need:-',
-        'you_need_subtitle_floor': 'For your floor',
-        'you_need_subtitle_wall' : 'For your wall',
-        'you_need_desc': '(This includes 10% extra to account for wastage and cutting of tiles)',
-        'you_need_tiles_label': 'No of tiles',
-        'you_may_also_need_title': 'You may also need:-',
-        'you_may_also_need_adhesive_label': 'Adhesive',
-        'you_may_also_need_grout_label': 'Grout',
-        'you_may_also_need_spacers_label': 'Spacers',
-        'you_may_also_need_linear_border_label': 'Linear Border',
-        'add_to_basket_label': 'Add to Basket',
-        'calculate_label': 'Calculate'
+        modal_title: 'How many tiles do you need?',
+        modal_description: 'The tile calculator will tell you exactly what you\'ll need for tiling your room: exactly how many tiles and the grout, spaces and adhesive required.',
+        you_need_title: 'You need:-',
+        you_need_subtitle_floor: 'For your floor',
+        you_need_subtitle_wall : 'For your wall',
+        you_need_desc: '(This includes 10% extra to account for wastage and cutting of tiles)',
+        you_need_tiles_label: 'No of tiles',
+        you_may_also_need_title: 'You may also need:-',
+        you_may_also_need_adhesive_label: 'Adhesive',
+        you_may_also_need_grout_label: 'Grout',
+        you_may_also_need_spacers_label: 'Spacers',
+        you_may_also_need_linear_border_label: 'Linear Border',
+        add_to_basket_label: 'Add to Basket',
+        calculate_label: 'Calculate',
+        add_room_button_wall: 'Add a wall',
+        add_room_button_floor: 'Add a floor',
+        width_field_placeholder: 'Width',
+        length_field_placeholder: 'Length',
+        height_field_placeholder: 'Height'
     },
 
     // Images
@@ -62,26 +72,7 @@ exp.vars = {
         floor_diagram : '//cdn.optimizely.com/img/174847139/d127a116d0e64f45960de354f5cd20e8.png',
     }
 };
-
-exp.vars.new_elements = {
-    'image_and_rooms_row'                          : $('<div id="CGIT_images_and_rooms_row" class="row">'),
-        'image_col'                                : $('<div id="CGIT_image_col" class="col-sm-6">'),
-            'image'                                : $('<img id="CGIT_image" src="'+ exp.vars.images.wall_diagram +'">'),
-        'rooms_col'                                : $('<div id="CGIT_rooms_col" class="col-sm-6">'),
-    'you_need_row'                                 : $('<div id="CGIT_you_need_row" class="row">'),
-        'you_need_col'                             : $('<div id="CGIT_you_need_col" class="col-sm-6"><h4>'+ exp.vars.content.you_need_title +'</h4><div class="row"><div class="col-sm-6"><h5>'+ exp.vars.content.you_need_subtitle_wall +'</h5><p>'+ exp.vars.content.you_need_desc +'</p></div><div class="col-sm-6 tile-recipiticle"><h5>No of tiles</h5></div></div></div>'),
-            'no_of_tiles_field'                    : $('<input type="text" id="CGIT_no_of_tiles_field" disabled="disabled" />'),
-        'you_may_col'                              : $('<div id="CGIT_you_may_col" class="col-sm-6"><h4>'+ exp.vars.content.you_may_also_need_title +'</h4></div>'),
-            'you_may_also_need_adhesive_label'     : $('<label>'+ exp.vars.content.you_may_also_need_adhesive_label +'</label>'),
-            'you_may_also_need_grout_label'        : $('<label>'+ exp.vars.content.you_may_also_need_grout_label +'</label>'),
-            'you_may_also_need_spacers_label'      : $('<label>'+ exp.vars.content.you_may_also_need_spacers_label +'</label>'),
-            'you_may_also_need_linear_border_label': $('<label>'+ exp.vars.content.you_may_also_need_linear_border_label +'</label>'),
-    'add_to_cart_row'                              : $('<div id="CGIT_add_to_cart_row" class="row">'),
-        'you_need_add_to_cart_col'                 : $('<div id="CGIT_you_need_add_to_cart_col" class="col-sm-6">'),
-            'you_need_add_to_cart_btn'             : $('<a id="CGIT_you_need_add_to_cart_btn" class="btn btn-primary">Add to Cart</a>'),
-        'you_may_add_to_cart_col'                  : $('<div id="CGIT_you_may_add_to_cart_col" class="col-sm-6">'),
-            'you_may_add_to_cart_btn'              : $('<a id="CGIT_you_may_add_to_cart_btn" class="btn btn-primary">Add to Cart</a>'),
-};
+exp.vars.modal_description = $('<p>', { text: exp.vars.content.modal_description });
 
 // Styles
 // String containing the CSS for the experiment
@@ -110,6 +101,7 @@ exp.css = ' \
     background-color: #f2f2f2; \
     border: 0; \
     width: 50%; \
+    margin-right: 0.5em; \
 } \
 #CGIT_you_may_col label { \
     width: 100px; \
@@ -139,10 +131,30 @@ exp.css = ' \
     background-color: transparent; \
     border-top: 0; \
 } \
-#CGIT_you_need_add_to_cart_btn, \
-#CGIT_you_may_add_to_cart_btn { \
-    width: 300px; \
-    margin-left: 15px; \
+#CGIT_you_need_add_to_cart_btn{ \
+    width: 80%; \
+    margin: 1em auto 0; \
+    display: block; \
+} \
+#tile-calculator .row.tab-buttons { \
+    margin-top: -15px; \
+} \
+#tile-calculator-modal .modal-header { \
+    border-bottom: 0; \
+} \
+#tile-calculator-modal .modal-body { \
+    padding-bottom: 30px; \
+} \
+#tile-calculator-modal .modal-footer { \
+    display: none; \
+} \
+.room-row .room .room-remove-btn { \
+    display: none; \
+    padding: 0.35em 0.5em; \
+} \
+.times.wall-attr, \
+.height.wall-attr { \
+    display: none; \
 }';
 
 // Functions
@@ -189,6 +201,27 @@ exp.func.waitForFunction = function(func, callback, timeout, keepAlive) {
         }, intervalTime);
 };
 
+exp.func.initNewElements = function(){
+    exp.vars.new_elements = {
+        'image_and_rooms_row'                          : $('<div id="CGIT_images_and_rooms_row" class="row">'),
+            'image_col'                                : $('<div id="CGIT_image_col" class="col-sm-6">'),
+                'image'                                : $('<img id="CGIT_image" src="'+ exp.vars.images.wall_diagram +'">'),
+            'rooms_col'                                : $('<div id="CGIT_rooms_col" class="col-sm-6">'),
+        'you_need_row'                                 : $('<div id="CGIT_you_need_row" class="row">'),
+            'you_need_col'                             : $('<div id="CGIT_you_need_col" class="col-sm-6"><h4>'+ exp.vars.content.you_need_title +'</h4><div class="row"><div class="col-sm-6"><h5>'+ exp.vars.content.you_need_subtitle_wall +'</h5><p>'+ exp.vars.content.you_need_desc +'</p></div><div class="col-sm-6 tile-recipiticle"><h5>No of tiles</h5></div></div></div>'),
+                'no_of_tiles_field'                    : $('<input type="text" id="CGIT_no_of_tiles_field" disabled="disabled" />'),
+                'no_of_tiles_label'                    : $('<label>m<sup>2</sup></label>'),
+            'you_may_col'                              : $('<div id="CGIT_you_may_col" class="col-sm-6"><h4>'+ exp.vars.content.you_may_also_need_title +'</h4></div>'),
+                'you_may_also_need_adhesive_label'     : $('<label>'+ exp.vars.content.you_may_also_need_adhesive_label +'</label>'),
+                'you_may_also_need_grout_label'        : $('<label>'+ exp.vars.content.you_may_also_need_grout_label +'</label>'),
+                'you_may_also_need_spacers_label'      : $('<label>'+ exp.vars.content.you_may_also_need_spacers_label +'</label>'),
+                'you_may_also_need_linear_border_label': $('<label>'+ exp.vars.content.you_may_also_need_linear_border_label +'</label>'),
+        'add_to_cart_row'                              : $('<div id="CGIT_add_to_cart_row" class="row">'),
+            'add_to_cart_col'                              : $('<div id="CGIT_add_to_cart_col" class="col-sm-6 col-sm-offset-3">'),
+                'add_to_cart_btn'                          : $('<a id="CGIT_you_need_add_to_cart_btn" class="btn btn-primary" data-loading-text="Added to cart.">Add to Basket</a>'),
+    };
+};
+
 exp.func.loadExistingElements = function(){
     exp.vars.elements = {
         'tile_calculator_modal_title'            : $('#tile-calculator-modal .modal-content .modal-header .modal-title'),
@@ -215,6 +248,7 @@ exp.func.loadExistingElements = function(){
             'le_grande_table_tiles_row'          : $('#tile-calculator-modal .modal-content table tbody .total-row'),
             'le_grande_table_tiles_label'        : $('#tile-calculator-modal .modal-content table tbody .total-row .field'),
             'le_grande_table_tiles_field'        : $('#tile-calculator-modal .modal-content table tbody .total-row .value .input-group'),
+            'add_room_button'                    : $('#tile-calculator-modal .modal-content table tbody .room-add-btn'),
         'modal_footer'                           : $('#tile-calculator-modal .modal-footer'),
             'modal_apply_button'                 : $('#tile-calculator-modal .modal-footer .apply-btn')
     };
@@ -227,7 +261,9 @@ exp.func.executeDomChanges = function() {
     );
 
     // Add description of tile calculator
-    exp.vars.elements.tile_calculator_modal_title.after($('<p>', { text: exp.vars.content.modal_description }));
+    exp.vars.elements.tile_calculator_modal_title.after(
+        exp.vars.modal_description
+    );
 
     // Hide the mode-switch buttons
     exp.vars.elements.floor_wall_buttons_row.hide();
@@ -244,16 +280,11 @@ exp.func.executeDomChanges = function() {
         exp.vars.new_elements.you_need_col,
         exp.vars.new_elements.you_may_col
     );
-    exp.vars.new_elements.you_need_add_to_cart_col.append(
-        exp.vars.new_elements.you_need_add_to_cart_btn
-    );
-    exp.vars.new_elements.you_may_add_to_cart_col.append(
-        exp.vars.new_elements.you_may_add_to_cart_btn
-    );
-
     exp.vars.new_elements.add_to_cart_row.append(
-        exp.vars.new_elements.you_need_add_to_cart_col,
-        exp.vars.new_elements.you_may_add_to_cart_col
+        exp.vars.new_elements.add_to_cart_col
+    );
+    exp.vars.new_elements.add_to_cart_col.append(
+        exp.vars.new_elements.add_to_cart_btn
     );
     exp.vars.elements.floor_wall_buttons_row.after(
         exp.vars.new_elements.image_and_rooms_row,
@@ -282,8 +313,7 @@ exp.func.executeDomChanges = function() {
     exp.vars.new_elements.you_may_col.append(
         exp.vars.elements.le_grande_table_adhesive_field,
         exp.vars.elements.le_grande_table_grout_field,
-        exp.vars.elements.le_grande_table_spacers_field,
-        exp.vars.elements.le_grande_table_linear_border_field
+        exp.vars.elements.le_grande_table_spacers_field
     );
 
     // Hide rows whih previously held the fields we've moevd elsewhere - these
@@ -296,7 +326,8 @@ exp.func.executeDomChanges = function() {
     // Add tiles field to "You need" column
     exp.vars.new_elements.you_need_col.find('.tile-recipiticle').append(
         exp.vars.elements.le_grande_table_tiles_field,
-        exp.vars.new_elements.no_of_tiles_field
+        exp.vars.new_elements.no_of_tiles_field,
+        exp.vars.new_elements.no_of_tiles_label
     );
     // Hide tiles row (now empty) and tiles field (we'll use it's data in a
     // another field, but not display it directly.)
@@ -313,9 +344,6 @@ exp.func.executeDomChanges = function() {
     exp.vars.elements.le_grande_table_spacers_field.before(
         exp.vars.new_elements.you_may_also_need_spacers_label
     );
-    exp.vars.elements.le_grande_table_linear_border_field.before(
-        exp.vars.new_elements.you_may_also_need_linear_border_label
-    );
 
     // Add "wall-attr" class to linear border field and label - it should only show when we're messing with walls.
     exp.vars.elements.le_grande_table_linear_border_field.addClass('wall-attr');
@@ -324,30 +352,124 @@ exp.func.executeDomChanges = function() {
 
 exp.func.onTilesCalculated = function($tiles_input){
     console.log("Tiles changed!");
-    var tile_area_m = (exp.vars.tile_width_mm / 1000) * (exp.vars.tile_length_mm / 1000), // Convert Millimeter values to Meter
-        area_to_fill = parseInt($tiles_input.val(), 10),
-        tiles_required = area_to_fill / tile_area_m;
+    var area_to_fill = parseFloat($tiles_input.val(), 10);
 
-    // Populate "No of tiles" field with amount of tiles required
-    exp.vars.new_elements.no_of_tiles_field.val(tiles_required);
+    // Populate "No of tiles" field with amount of tiles required in m2
+    exp.vars.new_elements.no_of_tiles_field.val(area_to_fill);
+
+    // Reset add-to-cart buttons
+    exp.vars.new_elements.add_to_cart_btn.button('reset');
 };
 
 exp.func.attachAddToCartLogic = function() {
     // Proxy for the modal's "Apply" button.
-    exp.vars.new_elements.you_need_add_to_cart_btn.on('click', function(){
-        exp.vars.elements.modal_apply_button.click();
+    exp.vars.new_elements.add_to_cart_btn.on('click', function(e){
+        // Set button o loading state (shows "Added to cart.")
+        $(this).button('loading');
+
+        // Code extracted from the existing site (de-minified)
+
+        // Load values from modal
+        var _tiles_val    = parseFloat($("input.total-tiles",    this.form).val()),
+            _border_val   = parseFloat($("input.total-border",   this.form).val()),
+            _grout_val    = parseFloat($("input.total-grout",    this.form).val()),
+            _adhesive_val = parseFloat($("input.total-adhesive", this.form).val()),
+            _spacers_val  = parseFloat($("input.total-spacers",  this.form).val());
+
+        // Defaults values to 0 if they're NaN
+        if (isNaN(_tiles_val))    _tiles_val    = 0;
+        if (isNaN(_border_val))   _border_val   = 0;
+        if (isNaN(_grout_val))    _grout_val    = 0;
+        if (isNaN(_adhesive_val)) _adhesive_val = 0;
+        if (isNaN(_spacers_val))  _spacers_val  = 0;
+
+        var add_to_cart_form = exp.vars.tile_calculator_button.closest("form");
+
+        // Populate the product page quantity input and trigger any event listeners
+        $(".base-input", add_to_cart_form).val(_tiles_val);
+        $(".base-input", add_to_cart_form).trigger("blur");
+
+        // Add to cart!
         exp.vars.product_add_to_cart_button.click();
+
+        $(".cross-sell-list .adhesive").each(function (i, elem) {
+            var $elem = $(elem);
+
+            var _weight = parseFloat($elem.data("weight"));
+            if (isNaN(_weight)) _weight = 0;
+
+            var _qty = Math.ceil(20 / _weight * _adhesive_val);
+            $(".recommended-uom", $elem).text("x " + Math.ceil(_weight) + "kg bag(s)");
+            $(".recommended-quantity", $elem).text(_qty);
+            $(".sale-input", $elem).val(_qty);
+            // $(".sale-input", $elem).trigger("blur");
+            $elem.addClass("recommended");
+
+            // Add to cart
+            $(".update-item-btn", $elem).click();
+        });
+
+        $(".cross-sell-list .grout").each(function (i, elem) {
+            var $elem = $(elem);
+
+            var _weight = parseFloat($elem.data("weight"));
+            if (isNaN(_weight)) _weight = 0;
+
+            var _qty = Math.ceil(5 / _weight * _grout_val);
+            $(".recommended-uom", $elem).text("x " + Math.ceil(_weight) + "kg bag(s)");
+            $(".recommended-quantity", $elem).text(_qty);
+            $(".sale-input", $elem).val(_qty);
+            // $(".sale-input", $elem).trigger("blur");
+            $elem.addClass("recommended");
+
+            // Add to cart
+            $(".update-item-btn", $elem).click();
+
+        });
+
+        $(".cross-sell-list .spacers").each(function (i, elem) {
+            var $elem = $(elem);
+
+            $(".recommended-uom", $elem).text("pack(s)");
+            $(".recommended-quantity", $elem).text(_spacers_val);
+            $(".sale-input", $elem).val(_spacers_val);
+            $(".sale-input", $elem).trigger("blur");
+            $elem.addClass("recommended");
+
+            // Add to cart
+            $(".update-item-btn", $elem).click();
+
+        });
     });
-    // TODO : exp.vars.new_elements.you_may_add_to_cart_btn
 };
 
 exp.func.onModalLoaded = function(e){
+    // Create brand new elements. Doing it here instead of at script-load time
+    // because the modal is loaded fresh each tiem it's clicked, so we need
+    // fresh elements.
+    exp.func.initNewElements();
+
     // Now the modal has loaded we can now populate vars with the relevant
     // existing elements in the modla.
     exp.func.loadExistingElements();
 
     // We've got everything we need to change the DOM now
     exp.func.executeDomChanges();
+
+    // Add placeholders to room fields
+    exp.func.addRoomRowPlaceholders();
+
+    // Remove unecessary "Room N" text from remove button.
+    exp.func.cleanupRemoveRoomButton();
+    exp.vars.elements.add_room_button.on('click', function(){
+        setTimeout(exp.func.cleanupRemoveRoomButton, 100);
+    });
+
+    // Add event listener to "Add room" button, when it is clicked we need to
+    // re-add the room placeholders, after a minor delay (to make sure thi is ran last)
+    exp.vars.elements.add_room_button.on('click', function(){
+        setTimeout(exp.func.addRoomRowPlaceholders, 100);
+    });
 
     // Get the new "No of tiles" input hooked up with the tiles-required input.
     // We have to poll for this because the input is populated by Javascript,
@@ -363,43 +485,120 @@ exp.func.onModalLoaded = function(e){
         }
     }, 500);
 
-    // Hook up the "Add to cart" buttons
+    // Hook up the "Add to cart" tab-buttons
     exp.func.attachAddToCartLogic();
 
+    // Hook up the aesthetic changes between floor/wall tile to the floor/wall buttons
+    exp.vars.elements.floor_calculator_button.on('click', function(e){
+        exp.vars.new_elements.image.attr('src', exp.vars.images.floor_diagram);
+        exp.vars.new_elements.you_need_col.find('.col-sm-6:not(.tile-recipiticle) h5').text(
+            exp.vars.content.you_need_subtitle_floor
+        );
+        exp.vars.elements.add_room_button.text(
+            exp.vars.content.add_room_button_floor
+        );
+    });
+    exp.vars.elements.wall_calculator_button.on('click', function(e){
+        exp.vars.new_elements.image.attr('src', exp.vars.images.wall_diagram);
+        exp.vars.new_elements.you_need_col.find('.col-sm-6:not(.tile-recipiticle) h5').text(
+            exp.vars.content.you_need_subtitle_wall
+        );
+        exp.vars.elements.add_room_button.text(
+            exp.vars.content.add_room_button_wall
+        );
+    });
 
-    // Detect if we're on a wall tile or floor tile page.
-    // TODO
+    // Switch to the relevant variant of the form (floor or wall tiles)
+    switch(exp.vars.tile_type)
+    {
+        case "floor":
+            exp.vars.elements.floor_calculator_button.click();
+            break;
+
+        case "wall":
+            exp.vars.elements.wall_calculator_button.click();
+            break;
+
+        case "floor_wall":
+            // Show the selection buttons, default to floor.
+            exp.vars.elements.floor_wall_buttons_row.show();
+            exp.vars.elements.floor_calculator_button.click();
+            break;
+    }
+};
+
+exp.func.addRoomRowPlaceholders = function(){
+    $('#tile-calculator-modal .modal-content table tbody .room-row .length input').each(function(i, elem){
+        $(elem).attr('placeholder', exp.vars.content.length_field_placeholder);
+    });
+    $('#tile-calculator-modal .modal-content table tbody .room-row .width input').each(function(i, elem){
+        $(elem).attr('placeholder', exp.vars.content.width_field_placeholder);
+    });
+    $('#tile-calculator-modal .modal-content table tbody .room-row .height input').each(function(i, elem){
+        $(elem).attr('placeholder', exp.vars.content.height_field_placeholder);
+    });
+};
+
+exp.func.loadTechnicalInfo = function(){
+    exp.vars.technical_info_rows.each(function(i, elem){
+        var $elem = $(elem),
+            label = $elem.find('.tech-label').text().trim(),
+            value = $elem.find('.tech-value').text().trim();
+
+        switch (label) {
+            case "Width":
+                exp.vars.tile_width_mm = parseInt(value.replace( /^\D+/g, ''), 10);
+                break;
+            case "Length":
+                exp.vars.tile_length_mm = parseInt(value.replace( /^\D+/g, ''), 10);
+                break;
+            case "Tile Type":
+                switch (value) {
+                    case "Floor Tile":
+                        exp.vars.tile_type = "floor";
+                        break;
+                    case "Wall Tile":
+                        exp.vars.tile_type = "wall";
+                        break;
+                    case "Floor & Wall tile":
+                        exp.vars.tile_type = "floor_wall";
+                        break;
+                }
+        }
+    });
+};
+
+exp.func.cleanupRemoveRoomButton = function(){
+    $(".room-remove-btn").html("<i class=\"fa fa-times\"></i>").css('display', 'block');
 };
 
 // Init function
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
 exp.init = function() {
 
+    // Get tile width and height from page
+    exp.func.loadTechnicalInfo();
+
+    // Check if we've been able to extract the relevant information to run the experiment.
+    if (exp.vars.technical_info_rows.length === 0 ||
+        exp.vars.tile_width_mm === undefined ||
+        exp.vars.tile_length_mm === undefined ||
+        exp.vars.tile_type === undefined
+        )
+    {
+        console.log("Required information cannot be extracted from technical information table.  Aborting experiment.");
+        return false;
+    }
+
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
 
-    // Get tile width and height from page
-    exp.vars.technical_info_rows.each(function(i, elem){
-        var $elem = $(elem),
-            label = $elem.find('.tech-label').text(),
-            value = $elem.find('.tech-value').text();
-
-        if (label.trim() == "Width") {
-            exp.vars.tile_width_mm = parseInt(value.replace( /^\D+/g, ''), 10);
-        }
-        else if (label.trim() == "Length")
-        {
-            exp.vars.tile_length_mm = parseInt(value.replace( /^\D+/g, ''), 10);
-        }
-    });
-
     // Hook onto tile calc being shown
     this.vars.tile_calculator_modal.on('shown.bs.modal', function(){
-        if (!exp.vars.ran_once) exp.func.waitForElement('#tile-calculator-modal .modal-content .modal-body #tile-calculator', function(){
+        exp.func.waitForElement('#tile-calculator-modal .modal-content .modal-body #tile-calculator', function(){
             // Slight timeout to account for site JS.
             setTimeout(exp.func.onModalLoaded, 1000);
         });
-        exp.vars.ran_once = true;
     });
 
 };
