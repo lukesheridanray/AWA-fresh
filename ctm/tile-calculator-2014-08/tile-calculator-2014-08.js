@@ -14,7 +14,7 @@ var tile_calculator_2014_08 = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Tile Calculator 2014 08 - 1.0.6');
+console.log('Tile Calculator 2014 08 - 1.1.0');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -101,6 +101,7 @@ exp.css = ' \
     background-color: #f2f2f2; \
     border: 0; \
     width: 50%; \
+    margin-right: 0.5em; \
 } \
 #CGIT_you_may_col label { \
     width: 100px; \
@@ -130,10 +131,10 @@ exp.css = ' \
     background-color: transparent; \
     border-top: 0; \
 } \
-#CGIT_you_need_add_to_cart_btn, \
-#CGIT_you_may_add_to_cart_btn { \
-    width: 100%; \
-    margin-top: 1em; \
+#CGIT_you_need_add_to_cart_btn{ \
+    width: 80%; \
+    margin: 1em auto 0; \
+    display: block; \
 } \
 #tile-calculator .row.tab-buttons { \
     margin-top: -15px; \
@@ -209,13 +210,14 @@ exp.func.initNewElements = function(){
         'you_need_row'                                 : $('<div id="CGIT_you_need_row" class="row">'),
             'you_need_col'                             : $('<div id="CGIT_you_need_col" class="col-sm-6"><h4>'+ exp.vars.content.you_need_title +'</h4><div class="row"><div class="col-sm-6"><h5>'+ exp.vars.content.you_need_subtitle_wall +'</h5><p>'+ exp.vars.content.you_need_desc +'</p></div><div class="col-sm-6 tile-recipiticle"><h5>No of tiles</h5></div></div></div>'),
                 'no_of_tiles_field'                    : $('<input type="text" id="CGIT_no_of_tiles_field" disabled="disabled" />'),
+                'no_of_tiles_label'                    : $('<label>m<sup>2</sup></label>'),
             'you_may_col'                              : $('<div id="CGIT_you_may_col" class="col-sm-6"><h4>'+ exp.vars.content.you_may_also_need_title +'</h4></div>'),
                 'you_may_also_need_adhesive_label'     : $('<label>'+ exp.vars.content.you_may_also_need_adhesive_label +'</label>'),
                 'you_may_also_need_grout_label'        : $('<label>'+ exp.vars.content.you_may_also_need_grout_label +'</label>'),
                 'you_may_also_need_spacers_label'      : $('<label>'+ exp.vars.content.you_may_also_need_spacers_label +'</label>'),
                 'you_may_also_need_linear_border_label': $('<label>'+ exp.vars.content.you_may_also_need_linear_border_label +'</label>'),
         'add_to_cart_row'                              : $('<div id="CGIT_add_to_cart_row" class="row">'),
-            'add_to_cart_col'                              : $('<div id="CGIT_add_to_cart_col" class="col-sm-4 col-sm-offset-4">'),
+            'add_to_cart_col'                              : $('<div id="CGIT_add_to_cart_col" class="col-sm-6 col-sm-offset-3">'),
                 'add_to_cart_btn'                          : $('<a id="CGIT_you_need_add_to_cart_btn" class="btn btn-primary" data-loading-text="Added to cart.">Add to Basket</a>'),
     };
 };
@@ -324,7 +326,8 @@ exp.func.executeDomChanges = function() {
     // Add tiles field to "You need" column
     exp.vars.new_elements.you_need_col.find('.tile-recipiticle').append(
         exp.vars.elements.le_grande_table_tiles_field,
-        exp.vars.new_elements.no_of_tiles_field
+        exp.vars.new_elements.no_of_tiles_field,
+        exp.vars.new_elements.no_of_tiles_label
     );
     // Hide tiles row (now empty) and tiles field (we'll use it's data in a
     // another field, but not display it directly.)
@@ -349,12 +352,10 @@ exp.func.executeDomChanges = function() {
 
 exp.func.onTilesCalculated = function($tiles_input){
     console.log("Tiles changed!");
-    var tile_area_m = (exp.vars.tile_width_mm / 1000) * (exp.vars.tile_length_mm / 1000), // Convert Millimeter values to Meter
-        area_to_fill = parseInt($tiles_input.val(), 10),
-        tiles_required = area_to_fill / tile_area_m;
+    var area_to_fill = parseFloat($tiles_input.val(), 10);
 
-    // Populate "No of tiles" field with amount of tiles required
-    exp.vars.new_elements.no_of_tiles_field.val(tiles_required);
+    // Populate "No of tiles" field with amount of tiles required in m2
+    exp.vars.new_elements.no_of_tiles_field.val(area_to_fill);
 
     // Reset add-to-cart buttons
     exp.vars.new_elements.add_to_cart_btn.button('reset');
