@@ -14,7 +14,7 @@ var tile_calculator_2014_08 = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Tile Calculator 2014 08 - 1.1.0');
+console.log('Tile Calculator 2014 08 - 1.3.0');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -33,6 +33,7 @@ exp.vars = {
     tile_width_mm: undefined,
     tile_length_mm: undefined,
     tile_type: undefined,
+    tiles_per_box: undefined,
 
     // Some existing elements will be set when the modal loads, page-wide elements can
     // be set here.
@@ -155,6 +156,21 @@ exp.css = ' \
 .times.wall-attr, \
 .height.wall-attr { \
     display: none; \
+} \
+#CGIT_no_of_boxes { \
+    display: block; \
+    color: #777; \
+    background-color: #f5f5f5; \
+    border: 1px solid #F2E9E2; \
+    border-radius: 4px; \
+    font-size: 10px; \
+    padding: 4px; \
+    margin: 4px 0 0 0; \
+    font-weight: initial; \
+    font-weight: initial; \
+    text-transform: uppercase; \
+    width: 50%; \
+    text-align: center; \
 }';
 
 // Functions
@@ -211,6 +227,7 @@ exp.func.initNewElements = function(){
             'you_need_col'                             : $('<div id="CGIT_you_need_col" class="col-sm-6"><h4>'+ exp.vars.content.you_need_title +'</h4><div class="row"><div class="col-sm-6"><h5>'+ exp.vars.content.you_need_subtitle_wall +'</h5><p>'+ exp.vars.content.you_need_desc +'</p></div><div class="col-sm-6 tile-recipiticle"><h5>No of tiles</h5></div></div></div>'),
                 'no_of_tiles_field'                    : $('<input type="text" id="CGIT_no_of_tiles_field" disabled="disabled" />'),
                 'no_of_tiles_label'                    : $('<label>m<sup>2</sup></label>'),
+                'no_of_boxes_label'                    : $('<label id="CGIT_no_of_boxes">1 box</label>'),
             'you_may_col'                              : $('<div id="CGIT_you_may_col" class="col-sm-6"><h4>'+ exp.vars.content.you_may_also_need_title +'</h4></div>'),
                 'you_may_also_need_adhesive_label'     : $('<label>'+ exp.vars.content.you_may_also_need_adhesive_label +'</label>'),
                 'you_may_also_need_grout_label'        : $('<label>'+ exp.vars.content.you_may_also_need_grout_label +'</label>'),
@@ -327,7 +344,8 @@ exp.func.executeDomChanges = function() {
     exp.vars.new_elements.you_need_col.find('.tile-recipiticle').append(
         exp.vars.elements.le_grande_table_tiles_field,
         exp.vars.new_elements.no_of_tiles_field,
-        exp.vars.new_elements.no_of_tiles_label
+        exp.vars.new_elements.no_of_tiles_label,
+        exp.vars.new_elements.no_of_boxes_label
     );
     // Hide tiles row (now empty) and tiles field (we'll use it's data in a
     // another field, but not display it directly.)
@@ -352,10 +370,17 @@ exp.func.executeDomChanges = function() {
 
 exp.func.onTilesCalculated = function($tiles_input){
     console.log("Tiles changed!");
-    var area_to_fill = parseFloat($tiles_input.val(), 10);
+    var tile_area_m = (exp.vars.tile_width_mm / 1000) * (exp.vars.tile_length_mm / 1000), // Convert Millimeter values to Meter
+        area_to_fill = parseFloat($tiles_input.val(), 10),
+        tiles_required = area_to_fill / tile_area_m,
+        boxes_required = Math.ceil(tiles_required / exp.vars.tiles_per_box),
+        boxes_required_str = boxes_required + (boxes_required === 1 ? ' Box' : ' Boxes');
 
     // Populate "No of tiles" field with amount of tiles required in m2
     exp.vars.new_elements.no_of_tiles_field.val(area_to_fill);
+
+    // Update "boxes" field
+    exp.vars.new_elements.no_of_boxes_label.text(boxes_required_str);
 
     // Reset add-to-cart buttons
     exp.vars.new_elements.add_to_cart_btn.button('reset');
@@ -564,6 +589,9 @@ exp.func.loadTechnicalInfo = function(){
                         exp.vars.tile_type = "floor_wall";
                         break;
                 }
+            case "Tiles per Box":
+                exp.vars.tiles_per_box = parseInt(value, 10)
+                break;
         }
     });
 };
