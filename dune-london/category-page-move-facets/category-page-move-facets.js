@@ -10,7 +10,7 @@ var cat_page_move_facets_exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Category page move facets experiment - 1.0.1');
+console.log('Category page move facets experiment - 1.0.3');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -240,7 +240,7 @@ exp.func.ajaxGET = function(f, b, a){
             }
             if (scrolltotop === true) {
                 scrolltotop = false;
-                $("html, body").animate({scrollTop: 0}, "fast");
+                $("html, body").animate({scrollTop: 200}, "fast");
             }
 
             // MOVE THE CHOSEN ONES!
