@@ -10,7 +10,17 @@ var cat_page_move_facets_exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Category page move facets experiment - 1.0.0');
+console.log('Category page move facets experiment - 1.0.1');
+
+// Condition
+// If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
+exp.condition = $('.catBGHolder');
+
+// check for a condition and check it has been met
+if(exp.condition && !exp.condition.length) {
+    console.log('Experiment failed a condition');
+    return false;
+}
 
 // Variables
 // Object containing variables for use in the experiment, generally these would be strings or jQuery objects
@@ -74,6 +84,8 @@ a.CGIT_newFacetsClearAllLink { \
 } \
 .CGIT_newFacetsContainer { \
     display: none; \
+    padding-top: 1em; \
+    padding-bottom: 1em; \
 } \
 .CGIT_newFacetsContainer > ul { \
     width: 33%; \
@@ -100,7 +112,7 @@ a.CGIT_newFacetsClearAllLink { \
     border-right: 1px; \
     border-style: solid; \
     border-color: #666; \
-    width: 40%; \
+    width: 30%; \
 } \
 .CGIT_newFacetsContainer ul#facet_colour { \
     border-right: 1px; \
@@ -111,7 +123,7 @@ a.CGIT_newFacetsClearAllLink { \
 } \
 .CGIT_newFacetsContainer ul#facet_price { \
     padding-left: 1em; \
-    width: 20%; \
+    width: 30%; \
 } \
 .CGIT_newFacetsContainer ul{border:0;margin:0;padding:0} \
 .CGIT_newFacetsContainer ul li{margin:0;padding:0;line-height: 22px;} \
@@ -119,7 +131,13 @@ a.CGIT_newFacetsClearAllLink { \
     font-size:14px; \
     font-weight:normal; \
     text-transform:none; \
-    padding: 1em 10px 0.5em; \
+    padding: 0 0 0.5em 1.25em; \
+} \
+.CGIT_newFacetsContainer ul#facet_size > li, \
+.CGIT_newFacetsContainer ul#facet_colour > li, \
+.CGIT_newFacetsContainer ul#facet_price > li{ \
+    width: 80%; \
+    margin: 0 auto; \
 } \
 .CGIT_newFacetsContainer ul li.header_sub a{background:0;margin:0;padding:0;} \
 .CGIT_newFacetsContainer ul li{text-transform:inherit} \
