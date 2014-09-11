@@ -139,13 +139,16 @@ a.CGIT_newFacetsClearAllLink { \
     width: 80%; \
     margin: 0 auto; \
 } \
+.CGIT_newFacetsContainer ul#facet_colour > li > ul > li { \
+    text-transform: capitalize; \
+} \
 .CGIT_newFacetsContainer ul li.header_sub a{background:0;margin:0;padding:0;} \
 .CGIT_newFacetsContainer ul li{text-transform:inherit} \
 .CGIT_newFacetsContainer ul li a{background: url(http://www.dunelondon.com/images/core/facetselected_bg_b.gif?Lo0P=05f54031b69961b260fd244708c14d7d124)  no-repeat 10px 4px;text-transform:none;display:inline-block;cursor:pointer;padding-right:0;padding-left:34px;text-transform:capitalize} \
 .CGIT_newFacetsContainer ul.contracted{border-top:1px solid #949494;height:20px;overflow:hidden} \
 .CGIT_newFacetsContainer ul li.notselected.innertitle{padding-left:10px} \
 .CGIT_newFacetsContainer ul li.notselected a{background: url(http://www.dunelondon.com/images/core/facet_bg.gif?Lo0P=e143557e6f55b3c5696e28596227c0b274)  no-repeat 10px 4px;padding-right:10px} \
-.CGIT_newFacetsContainer ul li.notavailable{color:#aaa;cursor:default;padding-left:34px} \
+.CGIT_newFacetsContainer ul li.notavailable{color:#aaa;cursor:default;padding-left:34px; box-sizing: border-box;} \
 .CGIT_newFacetsContainer ul li .count{font-size:11px}';
 
 exp.func = {};
