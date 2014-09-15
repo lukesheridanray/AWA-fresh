@@ -2,26 +2,6 @@
 // CGIT Optimizely Boilerplate - version 0.1.3
 //
 
-/*
-
-Order complete / revenue per visitor
-
-"The intention is to show a VAT qualifier to all visitors within the experiment that enter on the site regardless of which page they enter on.
-
-The qualifier will be in the form of an overlay screen with two buttons asking the users to select if they would like to see VAT included or excluded from the prices on the site.
-
-After selecting one of the options all pricing on all page of the site should thereafter be displayed to the visitors according to the selection that was made."
-
-"""Welcome to TTS-Group.co.uk""
-
-""Please show me prices including VAT""
-
-""Please show me prices excluding VAT"""
-
-1% (50/50)
-
-*/
-
 // JSHint flags
 // jshint multistr: true
 // jshint jquery: true
@@ -34,7 +14,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('VAT experiment trigger - dev 0.1');
+console.log('VAT experiment trigger - dev 0.3');
 
 
 // Variables
@@ -59,7 +39,7 @@ exp.css = ' \
 #vat-qualifier img { float: left; } \
 #vat-qualifier .vat-qualifier--title { float: left; line-height: 70px; font-weight: bold; font-size: 20px; color: #3854B8; margin: 0 0 0 22px; padding: 0; } \
 #vat-qualifier .vat-qualifier--buttons { clear: both; overflow: auto; padding: 15px 0 0 0; } \
-#vat-qualifier .vat-qualifier--buttons .button { width: 187px; height: 47px; padding-top: 5px; float: left; line-height: 20px; font-size: 17px; } \
+#vat-qualifier .vat-qualifier--buttons .button { background-image: url("//cdn.optimizely.com/img/174847139/989d5a7f9b7e4509bc028a1504ff26bc.png"); width: 187px; height: 47px; padding-top: 5px; float: left; line-height: 20px; font-size: 17px; } \
 #vat-qualifier .vat-qualifier--buttons .button + .button { margin: 0 0 0 15px; } \
 #vat-qualifier.vat-qualifier--hidden { display: none; } ';
 
@@ -104,24 +84,35 @@ exp.func.openModal = function() {
 };
 
 exp.func.chooseVatOption = function( vat ) {
-    // add visitor to segment so that they will see the actual experiment
-    // once segmented they will no longer see this experiment
-    alert('segment');
     if(vat === 'ex') {
-        // the visitor chooses to display ex vat, so bucket them to variation 1
-        alert('bucket into ex');
+        // bucket the user to the ex VAT variation
+        window.optimizely.push(['bucketVisitor', 1931610162, 1901990023]);
     } else {
-        // the visitor chooses to display inc vat, so bucket them to variation 2
-        alert('bucket into inc');
+        // bucket the user to the inc VAT variation
+        window.optimizely.push(['bucketVisitor', 1931610162, 1891010497]);
     }
-    // refresh the page so that user can start seeing the relevant experiment
-    window.location = window.location;
+    // activate experiment
+    window.optimizely.push(['activate', 1931610162]);
+    // close fancybox
+    $.fancybox.close();
 };
 
 
 // Init function
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
 exp.init = function() {
+
+    window.optimizely = window.optimizely || [];
+
+    // if user has already been bucketed then we simply activate the experiment and return false
+    if ( window.optimizely.data.visitor.dimensions[1915070542] === 'seen' ) {
+        window.optimizely.push(['activate', 1931610162]);
+        console.log('user already bucketed');
+        return false;
+    }
+
+    // add visitor to dimension
+    window.optimizely.push(['setDimensionValue', 1915070542, 'seen']);
         
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
@@ -131,7 +122,7 @@ exp.init = function() {
 
     // add event listener to buttons
     $('.vat-option').bind('click',function(){
-        var vatOption = $(this).attr('[data-vat]');
+        var vatOption = $(this).attr('data-vat');
         exp.func.chooseVatOption( vatOption );
     });
     

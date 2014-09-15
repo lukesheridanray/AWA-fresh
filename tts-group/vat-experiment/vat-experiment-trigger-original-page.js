@@ -1,6 +1,23 @@
-// add visitor to segment so that they will see the actual experiment
-// once segmented they will no longer see this experiment
+window.optimizely = window.optimizely || [];
 
-// as they have not seen the qualifier we simply bucket them into the original version
+if ( window.optimizely.data.visitor.dimensions[1915070542] !== 'seen' ) {
 
-// done
+    console.log('about to bucket user');
+
+    // add visitor to dimension
+    window.optimizely.push(['setDimensionValue', 1915070542, 'seen']);
+
+    // bucket the user to the original
+    window.optimizely.push(['bucketVisitor', 1931610162, 1897410324]);
+
+    // activate experiment
+    window.optimizely.push(['activate', 1931610162]);
+
+} else {
+
+    console.log('user has been bucketed already');
+
+    // activate experiment
+    window.optimizely.push(['activate', 1931610162]);
+
+}
