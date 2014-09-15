@@ -14,7 +14,7 @@ var home_page_exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Lyle and Scott home page experiment - 1.5.0');
+console.log('Lyle and Scott home page experiment - 1.5.1');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -29,8 +29,6 @@ if(exp.condition && !exp.condition.length) {
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
-    'has_run': false,
-
     'masonry_section': $('#home_content'),
     'history_block': $('#home_content > div:nth-of-type(1)'),
     'email_capture_block': $('#home_content > div:nth-of-type(2)'),
@@ -128,6 +126,7 @@ exp.init = function() {
         .addClass('large')
         .addClass('email_capture_block');
 
+    // Remove inline styling on email box title and button.  Change email button's label to "SUBSCRIBE".
     this.vars.email_capture_block.find('h2').removeAttr('style');
     this.vars.email_capture_block.find('button').removeAttr('style').text("SUBSCRIBE");
 
