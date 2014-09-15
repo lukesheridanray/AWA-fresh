@@ -14,7 +14,7 @@ var tile_calculator_2014_08 = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Tile Calculator 2014 08 - 1.3.0');
+console.log('Tile Calculator 2014 08 - 1.3.1');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -235,7 +235,7 @@ exp.func.initNewElements = function(){
                 'you_may_also_need_linear_border_label': $('<label>'+ exp.vars.content.you_may_also_need_linear_border_label +'</label>'),
         'add_to_cart_row'                              : $('<div id="CGIT_add_to_cart_row" class="row">'),
             'add_to_cart_col'                              : $('<div id="CGIT_add_to_cart_col" class="col-sm-6 col-sm-offset-3">'),
-                'add_to_cart_btn'                          : $('<a id="CGIT_you_need_add_to_cart_btn" class="btn btn-primary" data-loading-text="Added to cart.">Add to Basket</a>'),
+                'add_to_cart_btn'                          : $('<a id="CGIT_you_need_add_to_cart_btn" class="btn btn-primary" data-loading-text="Added to Basket.">Add to Basket</a>'),
     };
 };
 
