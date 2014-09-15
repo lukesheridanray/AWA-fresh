@@ -14,7 +14,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('VAT experiment - dev 0.1');
+console.log('VAT experiment - inc VAT 0.1');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
