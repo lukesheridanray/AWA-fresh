@@ -10,7 +10,7 @@ var cat_page_move_facets_exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Category page move facets experiment - 1.0.3');
+console.log('Category page move facets experiment - 1.0.4');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -149,7 +149,13 @@ a.CGIT_newFacetsClearAllLink { \
 .CGIT_newFacetsContainer ul li.notselected.innertitle{padding-left:10px} \
 .CGIT_newFacetsContainer ul li.notselected a{background: url(http://www.dunelondon.com/images/core/facet_bg.gif?Lo0P=e143557e6f55b3c5696e28596227c0b274)  no-repeat 10px 4px;padding-right:10px} \
 .CGIT_newFacetsContainer ul li.notavailable{color:#aaa;cursor:default;padding-left:34px; box-sizing: border-box;} \
-.CGIT_newFacetsContainer ul li .count{font-size:11px}';
+.CGIT_newFacetsContainer ul li .count{font-size:11px} \
+.categoryBANNER > .banner-row { \
+    background-color: transparent; \
+} \
+.categoryBANNER > .banner-row > .column > p { \
+    display: none; \
+}';
 
 exp.func = {};
 
