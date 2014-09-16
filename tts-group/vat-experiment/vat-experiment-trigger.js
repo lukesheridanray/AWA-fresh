@@ -14,7 +14,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('VAT experiment trigger - dev 0.3');
+console.log('VAT experiment trigger - dev 0.4');
 
 
 // Variables
@@ -22,12 +22,12 @@ console.log('VAT experiment trigger - dev 0.3');
 exp.vars = {
     'modalContent': '<div id="vat-qualifier" class="vat-qualifier--hidden"> \
                          <img src="//cdn.optimizely.com/img/174847139/125b0dffb73c49b1be76e5b83a01927e.png" width="94" height="75" alt="TTS-Group" /> \
-                         <p class="vat-qualifier--title">Welcome to TTS-Group.co.uk</p> \
+                         <p class="vat-qualifier--title">Welcome to the TTS website</p> \
                          <div class="vat-qualifier--buttons"> \
                             <a tabindex="0" class="vat-option button green" data-vat="inc" href="#">Please show me prices<br /> \
-                            including VAT</a> \
+                            <strong>including</strong> VAT</a> \
                             <a tabindex="1" class="vat-option button green" data-vat="ex" href="#">Please show me prices<br /> \
-                            excluding VAT</a> \
+                            <strong>excluding</strong> VAT</a> \
                          </div> \
                      </div>'
 };
@@ -39,7 +39,7 @@ exp.css = ' \
 #vat-qualifier img { float: left; } \
 #vat-qualifier .vat-qualifier--title { float: left; line-height: 70px; font-weight: bold; font-size: 20px; color: #3854B8; margin: 0 0 0 22px; padding: 0; } \
 #vat-qualifier .vat-qualifier--buttons { clear: both; overflow: auto; padding: 15px 0 0 0; } \
-#vat-qualifier .vat-qualifier--buttons .button { background-image: url("//cdn.optimizely.com/img/174847139/989d5a7f9b7e4509bc028a1504ff26bc.png"); width: 187px; height: 47px; padding-top: 5px; float: left; line-height: 20px; font-size: 17px; } \
+#vat-qualifier .vat-qualifier--buttons .button { background-image: url("//cdn.optimizely.com/img/174847139/989d5a7f9b7e4509bc028a1504ff26bc.png"); text-align: center; width: 187px; height: 47px; padding-top: 5px; float: left; line-height: 20px; font-size: 17px; } \
 #vat-qualifier .vat-qualifier--buttons .button + .button { margin: 0 0 0 15px; } \
 #vat-qualifier.vat-qualifier--hidden { display: none; } ';
 
