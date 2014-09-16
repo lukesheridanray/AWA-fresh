@@ -15,7 +15,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Basket page experiment - dev 0.4');
+console.log('Basket page v2 -  0.1');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -29,9 +29,9 @@ exp.vars = {
     'oldDeliveryOpts': $('.basket_delivery_options_desc tr'),
     'spendMoreAmount': $('#ctl00_cphInnerMaster_lblSpendAnother'),
     'couponModal': ' \
-        <div id="coupon-modal-content" class="coupon-modal-content--hidden"> \
-             this is the content \
-        </div>',
+        <div id="coupon-modal-content" class="coupon-modal-content--hidden">'+
+             $('.basket_promotional_code').html() +
+        '</div>',
     'benefitsMarkup': ' \
        <div class="benefits-boxes"> \
           <div class="benefits-box benefits-box--secure"> \
@@ -52,7 +52,9 @@ exp.vars = {
 // Styles
 // String containing the CSS for the experiment
 exp.css = ' \
-.coupon-modal-content--hidden { display: none; } \
+#coupon-modal-content .use_code { margin-left:0 !important;position: relative;top:6px; } \
+#coupon-modal-content .basket_code_entry { width: 275px; } \
+#coupon-modal-content--hidden { display: none; } \
 \
 .basket_table { margin-bottom: 30px !important; } \
 .basket_table td { padding-top: 30px !important; } \
@@ -92,7 +94,12 @@ a.default_btn_basket_large:hover { background-image: url('+exp.vars.continueButt
 // Functions
 // Object containing functions, some helpful functions are included
 exp.func = {};
-
+    
+exp.func.submitCoupon = function() {
+    $('#ctl00_cphInnerMaster_txtPromoCode').val( $('#coupon-modal-content .basket_code_entry_field').val() );
+    $('#ctl00_cphInnerMaster_imgbtnPromotion').trigger('click');
+};
+    
 // Init function
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
 exp.init = function() {
@@ -111,9 +118,6 @@ exp.init = function() {
         });
     }
     
-    // Copy checkout button and add to top of table
-   // $('#ctl00_cphInnerMaster_divBasketItems').before( this.vars.continueButton );
-    
     // Alter text of continue buttons
     $('.basket_continue a').text('Continue to checkout');
     
@@ -127,7 +131,21 @@ exp.init = function() {
     
     // add coupon modal content to DOM
     
-    $('body').append( this.vars.couponModal );
+    $('#aspnetForm').append( this.vars.couponModal );
+    
+    $('#coupon-modal-content .use_code').attr('onclick', '').attr('id', '');
+    $('#coupon-modal-content .basket_code_entry_field').attr('id', '');
+    $('#coupon-modal-content .use_code').bind('click',function(e){
+        e.preventDefault();
+        exp.func.submitCoupon();
+        e.keyCode == 13;
+    });
+    $('#coupon-modal-content input').bind('keydown',function(e){
+        if(e.keyCode == 13) {
+           e.preventDefault();
+           exp.func.submitCoupon();
+        }
+    });
     
     // Text and layout changes to summary and delivery boxes
     
@@ -154,7 +172,7 @@ exp.init = function() {
             'autoScale': true,
             'speedIn': 500,
             'speedOut': 300,
-            'width': 429,
+            'width': 440,
             'height': 186,
             'autoDimensions': true,
             'centerOnScroll': true,
