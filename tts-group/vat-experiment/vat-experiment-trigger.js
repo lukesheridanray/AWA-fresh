@@ -14,7 +14,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('VAT experiment trigger - dev 0.4');
+console.log('VAT experiment trigger - 0.5');
 
 
 // Variables
@@ -84,6 +84,8 @@ exp.func.openModal = function() {
 };
 
 exp.func.chooseVatOption = function( vat ) {
+    // add visitor to dimension
+    window.optimizely.push(['setDimensionValue', 1915070542, 'seen']);
     if(vat === 'ex') {
         // bucket the user to the ex VAT variation
         window.optimizely.push(['bucketVisitor', 1931610162, 1901990023]);
@@ -110,9 +112,6 @@ exp.init = function() {
         console.log('user already bucketed');
         return false;
     }
-
-    // add visitor to dimension
-    window.optimizely.push(['setDimensionValue', 1915070542, 'seen']);
         
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');

@@ -47,6 +47,9 @@ at the bottom instead of moving to a new view.
 The ideal is for 24 items to be loaded initially, 24 more to auto-load as the user scroll down (can you use the existing functionality for this?) and 
 only then the Load More button appears.
 
+
+7. Ideally the left nav can be "sticky" so that it moves down the page as the user scrolls down.
+
 7. Price filter from x to y at the bottom of the left nav is new, as is the On SALE facet which simply loads items on sale in this category.
 
 8. When an item is added to basket, an ""Added to Basket"" modal appears in the same way as now. It is important that this shows product recommendations, 
