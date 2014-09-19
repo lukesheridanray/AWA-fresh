@@ -14,7 +14,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('VAT experiment - inc VAT 0.3');
+console.log('VAT experiment - ex VAT 0.3');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -28,8 +28,9 @@ exp.vars = {
 // Styles
 // String containing the CSS for the experiment
 exp.css = ' \
-.main_basket .product_pricing .total { width: 90px; } \
-.main_basket .product_pricing .price { width: 110px; }';
+.plus-x-vat { color: #666; font-size: 0.9em; font-weight: normal; } \
+.main_basket .product_pricing .total { width: 150px; } \
+.main_basket .product_pricing .price { width: 150px; }';
 
 // Functions
 // Object containing functions, some helpful functions are included
@@ -38,58 +39,28 @@ exp.func = {};
 // Function to amend price from ex to inc VAT and vice versa
 // el = jQuery Object
 exp.func.modPrices = function( el, vat ) {
-    var percentage;
-    var replaceOld;
-    var replaceNew;
-    if (vat === 'ex') {
-       percentage = 1.2;
-       replaceOld = 'ex';
-       replaceNew = 'inc';
-    } else if (vat === 'inc') {
-       percentage = 0.8;
-       replaceOld = 'inc';
-       replaceNew = 'ex';
-    } else {
-        return false;
-    }
+    var percentage = 0.2;
     el.each(function(){
         var self = $(this);
         var parts = self.html().match(/(.*)(£)(.*)(<span)(.*)/i);
         var priceBase = Math.round( parseFloat(parts[3]) * 100) / 100;
         var priceResult = (priceBase * percentage).toFixed(2);
-        self.html( parts[1] + parts[2] + priceResult + parts[4] + parts[5].replace(replaceOld, replaceNew) );
+        self.html( parts[1] + parts[2] + parts[3] + parts[4] + parts[5].replace('ex VAT', 'plus &pound;' + priceResult + ' VAT' ) );
+        //self.next('h3').html( 'plus &pound;' + priceResult + ' VAT' );
     });
 };
 
 // Function to amend basket prices from ex to inc VAT and vice versa
 // el = jQuery Object
 exp.func.modBasketPrices = function( el ) {
-    var percentage = 1.2;
+    var percentage = 0.2;
     el.each(function(){
         var self = $(this);
         var parts = self.html().match(/(£)(.*)/);
         var priceBase = Math.round( parseFloat(parts[2]) * 100) / 100;
         var priceResult = (priceBase * percentage).toFixed(2);
-        self.html( parts[1] + priceResult );
+        self.html( parts[1] + parts[2] + ' <span class="plus-x-vat">plus &pound;' + priceResult +  ' VAT</span>' );
     });
-};
-
-// Function to amend basket widget from ex to inc VAT and vice versa
-// el = jQuery Object
-exp.func.modBasketWidget = function( el ) {
-    var percentage = 1.2;
-    var replaceOld = 'ex';
-    var replaceNew = 'inc';
-    var newHtml = el.html().replace(/(.*)(£)(.*)(ex)(.*)/i, function(match, p1, p2, p3, p4, p5, offset, string){
-        var priceBase = Math.round( parseFloat(p3) * 100) / 100;
-        var priceResult = (priceBase * percentage).toFixed(2);
-        return p1 + p2 + priceResult + ' ' + p4.replace(replaceOld, replaceNew) + p5;
-    });
-    //var parts = el.html().match(/(.*)(£)(.*)(ex)(.*)/i);
-    //var priceBase = Math.round( parseFloat(parts[3]) * 100) / 100;
-    //var priceResult = (priceBase * percentage).toFixed(2);
-    //el.html( parts[1] + parts[2] + priceResult + ' ' + parts[4].replace(replaceOld, replaceNew) + parts[5] );
-    el.html( newHtml );
 };
 
 // Init function
@@ -100,35 +71,28 @@ exp.init = function() {
     if( !this.vars.basketWidget.length && !this.vars.basketPrices.length ) {
         return false;
     }
-        
+
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
-   
+
     if( this.vars.allPrices.length ) {
         // modify the ex VAT prices to inc VAT
         exp.func.modPrices( this.vars.allPrices, 'ex' );
     }
-    
+
     if( this.vars.allVatPrices.length ) {
         // modify the inc VAT prices to ex VAT
     //    exp.func.modPrices( this.vars.allVatPrices, 'inc' );
         exp.vars.allVatPrices.remove();
     }
-    
-    if( this.vars.basketWidget.length ) {
-        // modify the basket widget to inc VAT
-        exp.func.modBasketWidget( this.vars.basketWidget );
-    }
-    
+
     if( this.vars.basketPrices.length ) {
         // modify the basket prices to inc VAT
         exp.func.modBasketPrices( this.vars.basketPrices );
         // if were on the basket page make a few copy changes so it is more clear
     //    $('.main_basket th.price,.main_basket th.total').append(' inc VAT');
     //    $('.basket_subtotal th').append(' (Exc.VAT)');
-        $('.basket_subtotal th').append(' (Exc.VAT)');
-        $('.basket_subtotal, .product_pricing.basket_summary tr:eq(2), .product_pricing.basket_summary tr:eq(3)').remove();
-        $('th.summarytotal').text( $('th.summarytotal').text().replace(' (Inc.VAT)', '') );
+        //$('.basket_subtotal th').append(' (Exc.VAT)');
     }
 
 };
