@@ -11,23 +11,13 @@ function tabSwitch(active, number, tab_prefix, content_prefix) {
     document.getElementById(tab_prefix+active).className = 'active';
 }
 
-jQuery.getScript('http://www.coxandcox.co.uk/skin/frontend/base/default/js/magiczoomplus.js', function () {
-    MagicZoomPlus.options={"expand-speed":500,"restore-speed":-1,"expand-effect":"back","restore-effect":"linear","expand-align":"screen","expand-position":"center","expand-size":"fit-screen","background-color":"#000000","background-opacity":30,"background-speed":200,"caption-speed":250,"caption-position":"bottom","caption-height":300,"caption-width":300,buttons:"hide","buttons-position":"auto","buttons-display":"previous, next, close","loading-msg":"Loading zoom...","loading-opacity":75,"slideshow-effect":"dissolve","slideshow-speed":800,"z-index":10001,"expand-trigger":"click","restore-trigger":"auto","expand-trigger-delay":200,opacity:50,"zoom-width":300,"zoom-height":300,"zoom-position":"right","selectors-change":"click","selectors-mouseover-delay":60,"smoothing-speed":40,"zoom-distance":15,"zoom-fade-in-speed":200,"zoom-fade-out-speed":200,fps:25,"loading-position-x":-1,"loading-position-y":-1,x:-1,y:-1,"show-title":false,"selectors-effect":"dissolve","selectors-effect-speed":400,"zoom-align":"top","zoom-window-effect":"shadow","selectors-class":"","hint-text":"Zoom","hint-opacity":75,"initialize-on":"load","hint-position":"tl","right-click":"false","disable-zoom":false,"disable-expand":false,"keep-thumbnail":true,"show-loading":true,"slideshow-loop":true,keyboard:true,"keyboard-ctrl":false,"drag-mode":false,"always-show-zoom":false,smoothing:true,"opacity-reverse":false,"click-to-activate":false,"click-to-deactivate":false,"preload-selectors-small":true,"preload-selectors-big":false,"zoom-fade":true,"move-on-click":true,"preserve-position":false,"fit-zoom-window":true,"entire-image":false,hint:false,"pan-zoom":true,"caption-source":"span"};
-});
-
-jQuery.getScript('http://www.coxandcox.co.uk/skin/frontend/base/default/js/magictoolbox_utils.js');
-
-var magicToolboxOptionTitles=["color"];
-var MagicToolbox_click="click";
-var optionsPrice; // Required for Magic Toolbox
-
 /* Experiment */
 
 var exp = (function($) {
 
 var exp = {};
 
-var onlyEssentialProductInfo = false;
+var onlyEssentialProductInfo = true;
 
 exp.condition = $('.category-products');
 
@@ -124,11 +114,14 @@ exp.func.buildModalContent = function(stuff, productURL) {
 
     var realstuff = $(stuff).find(exp.vars.view);
 
-    realstuff.find(".add-to-box").after('<div class="view-details"><a class="product-details-link" href="'
-        + productURL
-        + '">View product details</a></div>');
-
+    if (onlyEssentialProductInfo) {
+        realstuff.find(".add-to-box").after('<div class="view-details"><a class="product-details-link" href="'
+            + productURL
+            + '">View product details</a></div>');
+    }
     //realstuff.find(".availability").replaceWith("");
+    
+    realstuff.find("a.MagicZoomPlus").removeAttr('href');
 
     contentString = ' \
 <div class="quickview-modal-content"> \
@@ -136,7 +129,6 @@ exp.func.buildModalContent = function(stuff, productURL) {
 <div class="product-view-wrap"> \
     <div class="product-view">' + realstuff.html() + '</div> \
 </div> \
-<link type="text/css" href="http://www.coxandcox.co.uk/skin/frontend/base/default/css/magiczoomplus.css" rel="stylesheet" media="screen" /> \
 </div>';
 
     return contentString;
@@ -155,11 +147,13 @@ exp.func.openModal = function(content) {
                 $('.add-to-cart .btn-cart').prop('type','submit');
                 $('.add-to-cart .btn-cart').prop("onclick", null);
 
-                $.getScript('http://assets.pinterest.com/js/pinit.js');
-                $.getScript('http://www.coxandcox.co.uk/js/varien/product.js');
+                $(".more-views li > a").prop("onclick", null);
+                $(".more-views li > a").click(function() {
+                    $('a.MagicZoomPlus > img').prop('src', $(this).prop('rev'));
+                    return false;
+                });
 
-                optionsPrice = new Product.OptionsPrice([]);
-                MagicToolboxPrepareOptions();
+                $.getScript('http://assets.pinterest.com/js/pinit.js');
             }
         }
     });
