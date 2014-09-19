@@ -140,6 +140,7 @@ exp.func.openModal = function(content) {
         content: content,
         player: 'html',
         title: '',
+        viewportPadding: 0,
         height: 900,
         width: 1800,
         options: {
@@ -199,10 +200,15 @@ exp.run = function() {
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
 
-    // add custom listener to addtocart button
+    // add custom listener to productg image
     $('.product-image').click(function(e) {
-        e.preventDefault();
-        exp.func.productModal( $(this).prop('href') );
+        var x = e.pageX - $(this).offset().left
+        var y = e.pageY - $(this).offset().top
+        if (y > 179 && y < 230 && x > 18 && x < 164)
+        {
+            e.preventDefault();
+            exp.func.productModal( $(this).prop('href') );
+        }
     });
 };
 
