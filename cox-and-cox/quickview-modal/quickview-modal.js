@@ -2,13 +2,13 @@
 // jshint jquery: true
 
 /* Script from product page */
-function tabSwitch(active, number, tab_prefix, content_prefix) {  
-    for (var i=1; i < number+1; i++) {  
-      document.getElementById(content_prefix+i).style.display = 'none';  
-      document.getElementById(tab_prefix+i).className = '';  
-    }  
-    document.getElementById(content_prefix+active).style.display = 'block';  
-    document.getElementById(tab_prefix+active).className = 'active';  
+function tabSwitch(active, number, tab_prefix, content_prefix) {
+    for (var i=1; i < number+1; i++) {
+      document.getElementById(content_prefix+i).style.display = 'none';
+      document.getElementById(tab_prefix+i).className = '';
+    }
+    document.getElementById(content_prefix+active).style.display = 'block';
+    document.getElementById(tab_prefix+active).className = 'active';
 }
 
 jQuery.getScript('http://www.coxandcox.co.uk/skin/frontend/base/default/js/magiczoomplus.js', function () {
@@ -19,6 +19,7 @@ jQuery.getScript('http://www.coxandcox.co.uk/skin/frontend/base/default/js/magic
 
 var magicToolboxOptionTitles=["color"];
 var MagicToolbox_click="click";
+var optionsPrice; // Required for Magic Toolbox
 
 /* Experiment */
 
@@ -118,7 +119,7 @@ exp.func.waitForFunction = function(func, callback, timeout, keepAlive) {
             attempts ++;
         }, intervalTime);
 };
-    
+
 exp.func.buildModalContent = function(stuff, productURL) {
 
     var realstuff = $(stuff).find(exp.vars.view);
@@ -140,7 +141,7 @@ exp.func.buildModalContent = function(stuff, productURL) {
 
     return contentString;
 };
-    
+
 exp.func.openModal = function(content) {
 
     Shadowbox.open({
@@ -153,16 +154,20 @@ exp.func.openModal = function(content) {
             onFinish: function() {
                 $('.add-to-cart .btn-cart').prop('type','submit');
                 $('.add-to-cart .btn-cart').prop("onclick", null);
+
                 $.getScript('http://assets.pinterest.com/js/pinit.js');
+                $.getScript('http://www.coxandcox.co.uk/js/varien/product.js');
+
+                optionsPrice = new Product.OptionsPrice([]);
                 MagicToolboxPrepareOptions();
             }
         }
     });
-    
+
 };
 
 exp.func.productModal = function(productURL) {
-    
+
     // do the request
     var request = jQuery.ajax({
         url:  productURL,
@@ -183,23 +188,23 @@ exp.func.productModal = function(productURL) {
         },
         complete: function() {
             //$('.addtobasket-spinner').hide(0);
-        }                     
+        }
     });
-    
+
 };
 
 exp.run = function() {
-     
+
     // check for a condition and check it has been met
     if(this.condition && !this.condition.length) {
         return false;
     }
-    
+
     console.log('Quick View modal experiment - 1.0.0');
 
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
-    
+
     // add custom listener to addtocart button
     $('.product-image').click(function(e) {
         e.preventDefault();
