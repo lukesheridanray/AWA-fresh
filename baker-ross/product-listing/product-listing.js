@@ -7,7 +7,7 @@
    + Copyright 2011/12 Paul Irish & Luke Shumard
    + Licensed under the MIT license
 
-   + !! Modified by CGIT
+   + !! Modified by CGIT - minified with uglify-js
 
    + Documentation: http://infinite-scroll.com/
 */
@@ -107,7 +107,9 @@ console.log('Product listing - 0.1');
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
     'primePromiseHeading': '<p class="price-promise-heading">YOU CAN\'T BUY CHEAPER - our <a href="#" data-behaviour="pricePromiseModal">100% PRICE PROMISE GAURANTEE</a></p>',
-    'amountText': $('.toolbar:eq(0).amount').text()
+    'amountText': $('.toolbar:eq(0).amount').text(),
+    'loadingGif': '//cdn.optimizely.com/img/174847139/8c520be03d2c4ba5a3353ae0a9b90a89.gif',
+    'currentPage': 1
 };
 
 // Styles
@@ -126,6 +128,17 @@ exp.css =
 .sort-by a { color: #333; padding: 0 15px; } \
 .sort-by a.active { text-decoration: underline; } \
 .sort-by a:hover { text-decoration: underline; } \
+.load-more-wrapper { text-align: center; } \
+.load-more-button { text-decoration: none; display: block; width: 100px; margin: 10px auto; font-size: 12px; \
+background-color: #FFF; color: #0071B9; border: 1px solid #0071B9; padding: 3px 7px; text-transform: uppercase; font-weight: 700; } \
+.load-more-button:hover { text-decoration: none; } \
+#infscr-loading { text-align: center; padding: 5px 0 10px 0; } \
+#infscr-loading img { display: block; margin: 0 auto 5px auto; } \
+.products-grid .item .feefo-holder { display: none; } \
+.products-grid { height: 220px !important; overflow: visible; position: relative; } \
+.products-grid--inner { position: absolute; top: 0; left: 0; height: 260px; } \
+.products-grid .item.mutated { height: 220px; overflow: hidden; } \
+.products-grid .item.mutated:hover { height: 260px; } \
 ';
 
 // Functions
@@ -197,7 +210,26 @@ exp.func.sortProducts = function(e) {
 // Function to open price promise modal
 exp.func.pricePromiseModal = function(e) {
     e.preventDefault();
-    alert('I am an old skool modal');
+    alert('This will become the price promise modal');
+};
+
+// Function to modify product items
+exp.func.modifyProducts = function() {
+    $('.products-grid').filter( function() {
+        return !$(this).has('.products-grid--inner');
+        }).each(function() {
+        console.log('found');
+           $(this).find('.item').wrapAll('<div class="products-grid--inner" />');
+    });
+    $('.products-grid .item').filter( function() {
+        return !$(this).hasClass('mutated');
+        }).each(function() {
+           var self = $(this);
+           var url = self.find('.actions .white').attr('href');
+           var id = self.find('.fancybox').attr('id').replace('fancybox','');
+           self.find('.actions').remove();
+           self.addClass('mutated');
+    });
 };
 
 // Init function
@@ -246,16 +278,74 @@ exp.init = function() {
         nextSelector : ".pages .i-next",
         itemSelector : ".products-grid",
         debug        : false,
-        loadingImg   : "/img/loading.gif",
-        loadingText  : "Loading new posts...",
+        loading: {
+          finishedMsg: "<em>There are no more products to load</em>",
+          img: exp.vars.loadingGif,
+          msgText: "<em>Loading...</em>",
+        },
         animate      : false,
         extraScrollPx: 50,
-        donetext     : "I think we've hit the end, Jim",
-        bufferPx     : 40,
+        bufferPx     : 10,
         errorCallback: function(){},
         localMode    : true
         },
         function(arrayOfNewElems){
+            
+            jQuery('.fancybox').fancybox({
+	   hideOnContentClick : true,
+	   width: 808,
+	   height: 380,
+	   autoDimensions: true,
+	   type : 'iframe',
+	   autoScale:true,
+	   centerOnScroll:true,
+	   showTitle: false,
+	   scrolling: 'no',
+	   speedIn:100,
+	   onComplete : function() {
+         /*
+	   	if(jQuery("#fancybox-frame").contents().find(".quickorder-product-view").length == 0 )
+	   	{
+	   		jQuery("#fancybox-frame").addClass('loading');
+	   		
+		    jQuery('#fancybox-frame').load(function() { // wait for frame to load and then get its height
+		      
+		      
+	      		var frame = jQuery('#fancybox-frame');
+	      		var frame_body = frame.contents().find("body.quickorder-index-options");
+	      		
+	      		var frame_height = frame.height();
+	      		var frame_body_height = frame_body.height();
+	      		
+	      		var frame_diff = parseInt(frame_height - frame_body_height);
+	      		
+	      		frame.animate({height:frame_body_height+'px'}, animation_speed, function(){
+      				frame_body.animate({opacity:1},animation_speed,function(){
+	      				//frame_body.css({'visibility':'visible'});
+      				});	
+  				});
+		       
+	      		if(jQuery("#fancybox-frame").contents().find('.link-wishlist').length>0)
+	      		{
+			       jQuery("#fancybox-frame").contents().find('.link-wishlist').on('click',function(e) {
+				       				       
+				       	e.preventDefault();
+						e.stopPropagation();
+						
+						var url = jQuery("#fancybox-frame").contents().find('.link-wishlist').attr('href');
+						window.location.href = url;
+						
+						return false;
+				       
+			       });
+			    }
+
+		    });
+		
+		  } */
+		 }
+	}); // fancybox
+            
         }
     );
     $('.category-products').infinitescroll('unbind');
@@ -269,6 +359,8 @@ exp.init = function() {
         e.preventDefault();
         $('.category-products').infinitescroll('retrieve');
     });
+    
+    exp.func.modifyProducts();
     
 
 };
