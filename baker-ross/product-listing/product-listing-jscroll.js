@@ -825,3 +825,335 @@
     };
 
 }));
+
+//
+// CGIT Optimizely Boilerplate - version 0.1.3
+//
+
+/*
+Notes
+-----
+
+Exclude mobile, but include tablet (and of course desktop)
+
+100% (50/50)
+4
+Crazy Egg
+
+"Revenue Per Visitor
+Number of Transactions
+Clicks in the left nav
+Clicks on Add To Basket"
+
+ajax add to cart error
+
+"http://www.bakerross.co.uk/pocket-money-toys/toys-party-bag-fillers
+
+and all other product listings pages
+
+/arts-and-crafts/arts-crafts-.*|/themed-crafts/themed-.*|/christmas|/easter|/fathers-day|/halloween|/mothers-day|/valentines-day|/pocket-money-toys/toys-.*|/fundraising-products/fundraising-.*|/educational-supplies/educational-.*|/educational-supplies/edcuational-.*|/super-value-packs/super-value-packs-.*|/football|/christmas/.*|/easter/.*|/fathers-day/.*|/halloween/.*|/mothers-day/.*|/valentines-day/.*|/football/.*|/.*-sale"
+
+"See 3 wireframes
+
+1. Checkboxes in left navigation, enabling user to switch items in and out of view. In our correspondence about this we referred to the 
+Macy's example. Also the links are styled as hyperlinks (blue underlined).
+
+2. Smaller item containers in the product grid, removing calls to action on default view (i.e. Quick View & Shop buttons).
+
+3. Item container now shows up to three different product variations, whereas currently only one is shown. You mentioned it would be possible to 
+scrape this from the product page. When more than three options are available (for example http://www.bakerross.co.uk/large-18ml-face-paint-pots), 
+it simply says ""x options available"" as shown in the wireframe on the far right of each row.
+
+4. On mouse-over, item container becomes taller and a call to action ""Add to Basket"" appears along with checkboxes next to the product 
+variations - See Wireframe 2. The user can then select one or more option and click ""Add To Basket"" to add the items to his basket straight 
+from this page. An ""Added to Cart"" modal will appear - see point 8.
+
+5. Clicking anywhere else in the container will open the Quick View modal, exactly the same as currently on the site. Clicking on ""view product 
+details"" at the bottom is the only way to get to the product page.
+
+6. At the bottom of the page is a Load More button which acts in the same way as the ""Next"" button in current scenario, except that it adds items 
+at the bottom instead of moving to a new view.
+
+The ideal is for 24 items to be loaded initially, 24 more to auto-load as the user scroll down (can you use the existing functionality for this?) and 
+only then the Load More button appears.
+
+
+7. Ideally the left nav can be "sticky" so that it moves down the page as the user scrolls down.
+
+7. Price filter from x to y at the bottom of the left nav is new, as is the On SALE facet which simply loads items on sale in this category.
+
+8. When an item is added to basket, an ""Added to Basket"" modal appears in the same way as now. It is important that this shows product recommendations, 
+which you will see if you add an item to basket from the product page on the live site. However, currently it doesn't happen when you add an item to basket 
+from Quick View because of a technical reason, which they are fixing. This is very important so please investigate if necessary. 
+Could the feed be scraped from relevant product page?
+
+9. Retain ""Clear All"" filter functionality. To see how this works, apply a facet on the site. Next to the facet appears a ""close"" symbol and below 
+""Clear All"".
+
+10. A minor change is that the SEO blurb and hero image at the top of the page disappear.
+
+11. Another minor change is that the Sort By filter at the top of the page is presented differently. When the page first loads, you can use the 
+existing default. The user can then apply anyone of those filters at a time (Best Sellers - Lowest Price - Highest Price) which will become underlined 
+when selected. It's probably best to include another one - ""Default"" at the start of that series.
+
+12. Price Promise Guarantee is clickable and opens a modal. I'll send copy for that separately.
+
+Wireframe 3 shows view when an item has been added to cart.
+"
+
+*/
+
+// JSHint flags
+// jshint multistr: true
+// jshint jquery: true
+
+// Wrap the experiment code in an IIFE, this creates a local scope and allows us to
+// pass in jQuery to use as $. Other globals could be passed in if required.
+var exp = (function($) {
+
+// Initialise the experiment object
+var exp = {};
+
+// Log the experiment, useful when multiple experiments are running
+console.log('Product listing - 0.1');
+
+// Variables
+// Object containing variables, generally these would be strings or jQuery objects
+exp.vars = {
+    'primePromiseHeading': '<p class="price-promise-heading">YOU CAN\'T BUY CHEAPER - our <a href="#" data-behaviour="pricePromiseModal">100% PRICE PROMISE GAURANTEE</a></p>',
+    'amountText': $('.toolbar:eq(0).amount').text(),
+    'loadingGif': '//cdn.optimizely.com/img/174847139/8c520be03d2c4ba5a3353ae0a9b90a89.gif',
+    'currentPage': 1,
+    'pricePromise': '<div class="price-promise-modal"> \
+                      <h2>Price Promise</h2> \
+                      <p>Content goes here.</p> \
+                     </div>'
+};
+
+// Styles
+// String containing the CSS for the experiment
+exp.css = 
+/* General / Product Grid */ ' \
+.category-image { display: none; } \
+.toolbar .limiter, .toolbar .pages  { display: none; } \
+.toolbar { margin: -10px 0 0 0; } \
+.price-promise-heading { text-align: center; font-size: 1.3em; padding: 0 0 15px 0; } \
+.price-promise-heading a { color: #333; font-weight: bold; } \
+.price-promise-heading a:hover { text-decoration: underline; } \
+.pager.sorter { padding: 0 0 15px 0; } \
+.sorter .sort-by { float: right !important; margin-right: 0 !important; } \
+.sort-by label { font-weight: bold; padding: 0 15px 0 0; } \
+.sort-by a { color: #333; padding: 0 15px; } \
+.sort-by a.active { text-decoration: underline; } \
+.sort-by a:hover { text-decoration: underline; } \
+.load-more-wrapper { text-align: center; } \
+.load-more-button { text-decoration: none; display: block; width: 100px; margin: 10px auto; font-size: 12px; \
+background-color: #FFF; color: #0071B9; border: 1px solid #0071B9; padding: 3px 7px; text-transform: uppercase; font-weight: 700; } \
+.load-more-button:hover { text-decoration: none; } \
+#infscr-loading { text-align: center; padding: 5px 0 10px 0; } \
+#infscr-loading img { display: block; margin: 0 auto 5px auto; } \
+.products-grid { width: 100%; height: 236px; position: relative; overflow: visible; margin-bottom: 20px !important; } \
+.products-grid .item .feefo-holder { display: none; } \
+.item.mutated { height: 220px; overflow: hidden; position: absolute; top: 0; background: #fff; } \
+.item.mutated { z-index: 1; } \
+.item.mutated:hover { height: 300px; border-color: #bbb; z-index: 2; } \
+.item.mutated { left: 186px; } \
+.item.mutated + .mutated + .mutated { left: 372px; } \
+.item.mutated.first { left: 0; } \
+.item.mutated.last { left: 558px !important; } \
+.mutated .cta-add { font: bold 12px Arial,Helvetica,sans-serif; display: block; margin: 0 auto; width: 100px; text-decoration: none; border: medium none; background-color: #DC002E; color: #FFF; padding: 5px 7px; text-align: center; text-transform: uppercase; } \
+.mutated .cta-plain { display: block; text-align: center; padding: 7px 0 0 0; } \
+';
+
+// Functions
+// Object containing functions, some helpful functions are included
+exp.func = {};
+
+// This function waits till a DOM element is available, then runs a callback function
+exp.func.waitForElement = function(selector, callback, timeout, keepAlive) {
+    timeout = timeout || 20000;
+    keepAlive = keepAlive || false;
+    var intervalTime = 50,
+        maxAttempts = timeout / intervalTime,
+        attempts = 0,
+        interval = setInterval(function() {
+            if ($(selector).length) {
+                if (!keepAlive) {
+                    clearInterval(interval);
+                }
+                callback();
+            } else if (attempts > maxAttempts) {
+                clearInterval(interval);
+            }
+            attempts ++;
+        }, intervalTime);
+};
+
+// This function waits till a function is available, then runs a callback function
+exp.func.waitForFunction = function(func, callback, timeout, keepAlive) {
+    timeout = timeout || 20000;
+    keepAlive = keepAlive || false;
+    var intervalTime = 50,
+        maxAttempts = timeout / intervalTime,
+        attempts = 0,
+        interval = setInterval(function() {
+            if ($.isFunction(func)) {
+                if (!keepAlive) {
+                    clearInterval(interval);
+                }
+                callback();
+            } else if (attempts > maxAttempts) {
+                clearInterval(interval);
+            }
+            attempts ++;
+        }, intervalTime);
+};
+
+// Functon to sort products
+exp.func.sortProducts = function(e) {
+    e.preventDefault();
+    var search = window.location.search;
+    var loc;
+    var self = $(this);
+    var dir = self.attr('data-dir');
+    var order = self.attr('data-order');
+    if( search ) {
+        if( search.indexOf('order=') !== -1 ) {
+            loc = window.location.toString().replace(/(.*)(dir=)(.*)(sc)(.*)(&)(.*)(order=)(.*)/g,function(p1,p2,p3,p4,p5,p6,p7,p8,p9){
+                return p2 + p3 + dir + p6 + p7 + p9 + order;
+            });
+        } else {
+            loc = window.location + '&dir=' + dir + '&order=' + order;
+        }
+    } else {
+        loc = window.location + '?dir=' + dir + '&order=' + order;
+    }
+    window.location = loc;
+};
+
+// Function to open price promise modal
+exp.func.pricePromiseModal = function(e) {
+    e.preventDefault();
+    $.fancybox({
+        content: exp.vars.pricePromise
+    });
+};
+
+// Function to modify product items
+exp.func.modifyProducts = function() {
+    $('.products-grid').filter( function() {
+        return !$(this).has('.products-grid--inner');
+        }).each(function() {
+        console.log('found');
+           $(this).find('.item').wrapAll('<div class="products-grid--inner" />');
+    });
+    $('.products-grid .item').filter( function() {
+        return !$(this).hasClass('mutated');
+        }).each(function() {
+           var self = $(this);
+           var url = self.find('.actions .white').attr('href');
+           var quickview = self.find('.fancybox').attr('href');
+           var pricebox = self.find('.price-box');
+           var pricecontent = pricebox.html();
+           pricebox.html('');
+           self.find('.actions').remove();
+           self.addClass('mutated');
+           self.append( '<div class="cta-actions"><a href="javascript:exp.func.addToBasket(\''+url+'\');return false;" class="cta-add">ADD TO BASKET</a><a href="'+url+'" class="cta-plain">view product details</a></div>' );
+           $.ajax({
+               url: url,
+               type: 'GET',
+               success: function( response ) {
+                   //console.log( $(response).find('.add-to-box .grouped-item').html() );
+                   pricecontent = $(response).find('.add-to-box .grouped-item').length;
+                   pricebox.html( pricecontent );
+               },
+               error: function() {
+                   console.log('error');
+                   pricebox.html( pricecontent );
+               }
+           });
+    });
+};
+
+// Function to add items to the basket
+exp.func.addToBasket = function( item ) {
+    alert('testing');
+};
+
+// Init function
+// Called to run the actual experiment, DOM manipulation, event listeners, etc
+exp.init = function() {
+        
+    // append styles to head
+    $('head').append('<style type="text/css">'+this.css+'</style>');
+
+    // **
+    // Toolbars, general and Product Grid
+    //
+
+    $('.toolbar:eq(1), .toolbar .limiter').remove();
+
+    $('.toolbar').html(
+        $('.toolbar').html().replace(/(.*)(of)(.*)(<\/p>)/, function(p1,p2,p3,p4,p5) {
+            return p4 + ' results' + p5;
+        })
+    );
+
+    $('.toolbar').prepend( exp.vars.primePromiseHeading );
+    $('[data-behaviour="pricePromiseModal"]').bind('click', exp.func.pricePromiseModal);
+
+    $('.sort-by').html(
+        '<label>Sort By:</label> \
+        <a href="#" data-behaviour="sortProducts" data-dir="asc" data-order="bestseller_sequence">Best Sellers</a> \
+        <a href="#" data-behaviour="sortProducts" data-dir="asc" data-order="price">Lowest Price</a> \
+        <a href="#" data-behaviour="sortProducts" data-dir="desc" data-order="price">Highest Price</a>'              
+    );
+    $('[data-behaviour="sortProducts"]').bind('click',exp.func.sortProducts);
+
+    if( window.location.search.toString().indexOf('bestseller_sequence') !== -1 ) {
+        $('[data-order="bestseller_sequence"]').addClass('active');
+    } else if( window.location.search.toString().indexOf('order=price') !== -1 ) {
+        if( window.location.search.toString().indexOf('dir=desc') !== -1 ) {
+            $('[data-dir="desc"]').addClass('active');
+        } else {
+            $('[data-order="price"][data-dir="asc"]').addClass('active');
+        }
+    }
+
+    // Init infinite scroll
+
+    $('.category-products').jscroll({
+        debug: true,
+        loadingHtml: '<img src="exp.vars.loadingGif" alt="Loading" /> <em>Loading...</em>',
+        padding: 20,
+        nextSelector: '.pages .i-next',
+    });
+    //$('.category-products').infinitescroll('unbind');
+    $('.category-products').after(
+        '<div class="load-more-wrapper">'+ $('.toolbar .amount').html().replace(/(.*)(of)(.*)(<\/p>)/, function(p1,p2,p3,p4,p5) {
+            return p4 + ' results' + p5;
+        })+' <a href="#" data-behaviour="loadMore" class="load-more-button">LOAD MORE</a></div>'
+    );
+
+    $('[data-behaviour="loadMore"]').bind('click',function(e){
+        e.preventDefault();
+        //$('.category-products').infinitescroll('retrieve');
+    });
+    
+    exp.func.modifyProducts();
+
+    // **
+    // Toolbars, general and Product Grid
+    //
+    
+
+};
+
+// Run the experiment
+exp.init();
+
+// Return the experiment object so we can access it later if required
+return exp;
+
+// Close the IIFE, passing in jQuery and any other global variables as required
+})(jQuery);
