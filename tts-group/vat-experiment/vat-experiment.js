@@ -14,12 +14,12 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('VAT experiment - inc VAT 0.3');
+console.log('VAT experiment - inc VAT 0.5');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
-    'allPrices': $('.rr-price a, #product_price, .product_table h2, .product_range_holder h3, h4.was_price, h3.alt_head'),
+    'allPrices': $('#product_price, .product_table h2, .product_range_holder h3, h4.was_price, h3.alt_head'), //'rrPrices': $('.rr-price a'),
     'allVatPrices': $('#product_price_inc_vat, .was_price_height'),
     'basketPrices': $('.main_basket td.price,.main_basket td.total'),
     'basketWidget': $('.header_basket')
@@ -34,6 +34,26 @@ exp.css = ' \
 // Functions
 // Object containing functions, some helpful functions are included
 exp.func = {};
+
+// This function waits till a DOM element is available, then runs a callback function
+exp.func.waitForElement = function(selector, callback, timeout, keepAlive) {
+    timeout = timeout || 20000;
+    keepAlive = keepAlive || false;
+    var intervalTime = 50,
+        maxAttempts = timeout / intervalTime,
+        attempts = 0,
+        interval = setInterval(function() {
+            if ($(selector).length) {
+                if (!keepAlive) {
+                    clearInterval(interval);
+                }
+                callback();
+            } else if (attempts > maxAttempts) {
+                clearInterval(interval);
+            }
+            attempts ++;
+        }, intervalTime);
+};
 
 // Function to amend price from ex to inc VAT and vice versa
 // el = jQuery Object
@@ -59,7 +79,6 @@ exp.func.modPrices = function( el, vat ) {
         var priceResult
         if ( self.parents('.product_range_holder').length || self.hasClass('alt_head') ) {
             if( self.html().indexOf('£') !== -1 ) {
-                console.log( self.html().indexOf('£') );
                 parts = self.html().match(/(.*)(£)(.*)/i);
                 priceBase = Math.round( parseFloat(parts[3]) * 100) / 100;
                 priceResult = (priceBase * percentage).toFixed(2);
@@ -124,6 +143,10 @@ exp.init = function() {
         // modify the ex VAT prices to inc VAT
         exp.func.modPrices( this.vars.allPrices, 'ex' );
     }
+   
+    this.func.waitForElement( '.rr-price a', function() {
+        exp.func.modPrices( $('.rr-price a'), 'ex' );
+    });
     
     if( this.vars.allVatPrices.length ) {
         // modify the inc VAT prices to ex VAT
