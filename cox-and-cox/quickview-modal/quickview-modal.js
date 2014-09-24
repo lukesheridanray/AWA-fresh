@@ -17,7 +17,7 @@ var exp = (function($) {
 
 var exp = {};
 
-var onlyEssentialProductInfo = true;
+var onlyEssentialProductInfo = false;
 
 exp.condition = $('.category-products');
 
@@ -68,7 +68,10 @@ height: 28px; position: absolute; top: 11px; right: -42px; width: 28px; display:
     text-decoration: none !important; \
     font-size: 1.2em \
   } \
+  .product-view-wrap .block .block-content #block-related li.item { width: 110px; } \
   ';
+
+exp.css += "  .product-view-wrap { overflow: auto; height: 650px; }";
 
 exp.func = exp.func || {};
 
@@ -142,7 +145,7 @@ exp.func.openModal = function(content) {
         title: '',
         viewportPadding: 0,
         height: 900,
-        width: 1800,
+        width: 1400,
         options: {
             onFinish: function() {
                 $('.add-to-cart .btn-cart').prop('type','submit');
