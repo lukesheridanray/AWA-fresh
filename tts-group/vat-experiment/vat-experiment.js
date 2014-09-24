@@ -19,7 +19,7 @@ console.log('VAT experiment - inc VAT 0.3');
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
-    'allPrices': $('.rr-price a, #product_price, .product_table h2'),
+    'allPrices': $('.rr-price a, #product_price, .product_table h2, .product_range_holder h3, h4.was_price, h3.alt_head'),
     'allVatPrices': $('#product_price_inc_vat, .was_price_height'),
     'basketPrices': $('.main_basket td.price,.main_basket td.total'),
     'basketWidget': $('.header_basket')
@@ -54,10 +54,26 @@ exp.func.modPrices = function( el, vat ) {
     }
     el.each(function(){
         var self = $(this);
-        var parts = self.html().match(/(.*)(£)(.*)(<span)(.*)/i);
-        var priceBase = Math.round( parseFloat(parts[3]) * 100) / 100;
-        var priceResult = (priceBase * percentage).toFixed(2);
-        self.html( parts[1] + parts[2] + priceResult + parts[4] + parts[5].replace(replaceOld, replaceNew) );
+        var parts;
+        var priceBase;
+        var priceResult
+        if ( self.parents('.product_range_holder').length || self.hasClass('alt_head') ) {
+            if( self.html().indexOf('£') !== -1 ) {
+                console.log( self.html().indexOf('£') );
+                parts = self.html().match(/(.*)(£)(.*)/i);
+                priceBase = Math.round( parseFloat(parts[3]) * 100) / 100;
+                priceResult = (priceBase * percentage).toFixed(2);
+                self.html( parts[1] + parts[2] + priceResult );
+                if( self.html().indexOf('WAS') === -1 ) {
+                    self.next('h4').html( self.next('h4').html().replace(replaceOld, replaceNew) );
+                }
+            }
+        } else {
+            parts = self.html().match(/(.*)(£)(.*)(<span)(.*)/i);
+            priceBase = Math.round( parseFloat(parts[3]) * 100) / 100;
+            priceResult = (priceBase * percentage).toFixed(2);
+            self.html( parts[1] + parts[2] + priceResult + parts[4] + parts[5].replace(replaceOld, replaceNew) );
+        }
     });
 };
 
