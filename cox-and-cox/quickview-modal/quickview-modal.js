@@ -17,7 +17,7 @@ var exp = (function($) {
 
 var exp = {};
 
-var onlyEssentialProductInfo = false;
+var onlyEssentialProductInfo = true;
 
 exp.condition = $('.category-products');
 
@@ -27,7 +27,7 @@ exp.vars = {
 };
 
 exp.css = ' \
-.quickview-modal-close { position: absolute; top: 5px; right: 5px; width: 20px; height: 20px; \
+.quickview-modal-close { position: absolute; top: 0; right: 0; width: 20px; height: 20px; \
     background: url("//cdn.optimizely.com/img/174847139/169921110dad41ffac775bc65ee97c6d.gif") 0 0 no-repeat transparent; \
     cursor: pointer; z-index: 1103; display: block; } \
 .quickview-modal-close:hover, .quickview-modal-close:focus { text-decoration: none; } \
@@ -70,8 +70,6 @@ height: 28px; position: absolute; top: 11px; right: -42px; width: 28px; display:
   } \
   .product-view-wrap .block .block-content #block-related li.item { width: 110px; } \
   ';
-
-exp.css += "  .product-view-wrap { overflow: auto; height: 650px; }";
 
 exp.func = exp.func || {};
 
@@ -128,7 +126,7 @@ exp.func.buildModalContent = function(stuff, productURL) {
 
     contentString = ' \
 <div class="quickview-modal-content"> \
-<a href="#" onclick="Shadowbox.close();return false;" class="quickview-modal-close">&nbsp;</a> \
+<a href="#" onclick="jQuery.fancybox.close();return false;" class="quickview-modal-close">&nbsp;</a> \
 <div class="product-view-wrap"> \
     <div class="product-view">' + realstuff.html() + '</div> \
 </div> \
@@ -139,15 +137,17 @@ exp.func.buildModalContent = function(stuff, productURL) {
 
 exp.func.openModal = function(content) {
 
-    Shadowbox.open({
-        content: content,
-        player: 'html',
-        title: '',
-        viewportPadding: 0,
-        height: 900,
-        width: 1400,
-        options: {
-            onFinish: function() {
+    $.fancybox(
+        content,
+        {
+            'autoDimensions'    : true,
+            'showCloseButton'   : false,
+            'autoScale'         : false,
+            'width'             : 1000,
+            'height'            : 'auto',
+            'transitionIn'      : 'none',
+            'transitionOut'     : 'none',
+            'onComplete'        : function() {
                 $('.add-to-cart .btn-cart').prop('type','submit');
                 $('.add-to-cart .btn-cart').prop("onclick", null);
 
@@ -160,7 +160,7 @@ exp.func.openModal = function(content) {
                 $.getScript('http://assets.pinterest.com/js/pinit.js');
             }
         }
-    });
+    );
 
 };
 
