@@ -236,16 +236,28 @@ exp.func.modifyProducts = function() {
            var url = self.find('.actions .white').attr('href');
            var quickview = self.find('.fancybox').attr('href');
            var id = self.find('.fancybox').attr('id').replace('fancybox','');
-           //var pricebox = self.find('.price-box');
-           //var pricecontent = pricebox.html();
-           //pricebox.html('');
+           var pricebox = self.find('.price-box');
+           var pricecontent = pricebox.html();
+           pricebox.html('');
            self.find('.actions').remove();
            self.addClass('mutated');
            self.attr('data-prod-id', id);
            self.append( '<div class="cta-actions"><a href="#" class="cta-add" data-behaviour="addToBasket">ADD TO BASKET</a><a href="'+url+'" class="cta-plain">view product details</a></div>' );
            self.find('.product-image, .product-name a').attr('data-behaviour', 'quickViewModal');
            self.find('.product-image, .product-name a').attr('data-quickview', quickview);
-           self.bind('mouseover', exp.func.loadBasketOptions );
+           //self.bind('mouseover', exp.func.loadBasketOptions );
+                      $.ajax({
+               url: url,
+               type: 'GET',
+               success: function( response ) {
+                   //console.log( $(response).find('.add-to-box .grouped-item').html() );
+                   pricecontent = $(response).find('.add-to-box .grouped-item').length;
+                   pricebox.html( '**LOADED**' );
+               },
+               error: function() {
+                   pricebox.html( '**ERROR**' );
+               }
+           });
     });
     // Rebind add to basket handlers
     $('[data-behaviour="addToBasket"]').unbind();
@@ -260,19 +272,18 @@ exp.func.loadBasketOptions = function() {
     var self = $(this);
     var id = self.attr('data-prod-id');
     self.find('.price-box').html( id );
-          /* $.ajax({
+           $.ajax({
                url: url,
                type: 'GET',
                success: function( response ) {
                    //console.log( $(response).find('.add-to-box .grouped-item').html() );
                    pricecontent = $(response).find('.add-to-box .grouped-item').length;
-                   pricebox.html( pricecontent );
+                   pricebox.html( '**LOADED**' );
                },
                error: function() {
-                   console.log('error');
-                   pricebox.html( pricecontent );
+                   pricebox.html( '**ERROR**' );
                }
-           }); */
+           });
 };
 
 // Function to add items to the basket
