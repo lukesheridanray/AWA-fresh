@@ -22,6 +22,8 @@
 Notes
 -----
 
+price range validation and regex improvements
+
 Exclude mobile, but include tablet (and of course desktop)
 
 100% (50/50)
@@ -108,7 +110,30 @@ exp.vars = {
     'pricePromise': '<div class="price-promise-modal"> \
                       <h2>Price Promise</h2> \
                       <p>Content goes here.</p> \
-                     </div>'
+                     </div>',
+    //'filterOptions': $('#narrow-by-list li a'),
+    'currentFilters': $('.sidebar .currently li'),
+    'filterLabels': $('#narrow-by-list dt'),
+    'filterGroups': {
+        'Product Type': '<dt class="odd">Product Type</dt> <dd class="odd"><ol></ol></dd>',
+        'Material': '<dt class="odd">Material</dt> <dd class="odd"><ol></ol></dd>',
+        'Occasion': '<dt class="odd">Occasion</dt> <dd class="odd"><ol></ol></dd>',
+        'Theme': '<dt class="odd">Theme</dt> <dd class="odd"><ol></ol></dd>',
+        'Brand': '<dt class="odd">Brand</dt> <dd class="odd"><ol></ol></dd>',
+        'Price': '<dt class="odd">Price</dt> <dd class="odd"><ol></ol></dd>'
+    },
+    'filterGroupsDOM':
+        ( $('#narrow-by-list dt:contains("Product Type")').length ? '<dt class="odd">Product Type</dt><dd>' + $('#narrow-by-list dt:contains("Product Type")').next('dd').html() + '</dd>' : '<dt class="odd empty-filters">Product Type</dt> <dd class="odd empty-filters"><ol></ol></dd>' ) +
+        ( $('#narrow-by-list dt:contains("Material")').length ? '<dt class="odd">Material</dt><dd>' +  $('#narrow-by-list dt:contains("Material")').next('dd').html() + '</dd>' : '<dt class="odd empty-filters">Material</dt> <dd class="odd empty-filters"><ol></ol></dd>' ) +
+        ( $('#narrow-by-list dt:contains("Occasion")').length ? '<dt class="odd">Occasion</dt><dd>' + $('#narrow-by-list dt:contains("Occasion")').next('dd').html() + '</dd>' : '<dt class="odd empty-filters">Occasion</dt> <dd class="odd empty-filters"><ol></ol></dd>' ) +
+        ( $('#narrow-by-list dt:contains("Theme")').length ? '<dt class="odd">Theme</dt><dd>' +  $('#narrow-by-list dt:contains("Theme")').next('dd').html() + '</dd>' : '<dt class="odd empty-filters">Theme</dt> <dd class="odd empty-filters"><ol></ol></dd>' ) +
+        ( $('#narrow-by-list dt:contains("Brand")').length ? '<dt class="odd">Brand</dt><dd>' + $('#narrow-by-list dt:contains("Brand")').next('dd').html() + '</dd>' : '<dt class="odd empty-filters">Brand</dt> <dd class="odd empty-filters"><ol></ol></dd>' ) +
+        ( $('#narrow-by-list dt:contains("Price")').length ? '<dt class="odd">Price</dt><dd>' + $('#narrow-by-list dt:contains("Price")').next('dd').html() + '</dd>' : '<dt class="odd empty-filters">Price</dt> <dd class="odd empty-filters"><ol></ol></dd>' ),
+    'priceRange': '<form class="price-range-filter" action="' + window.location + '" method="get"> \
+                   <label for="price-range-min">&pound;</label><input type="text" id="price-range-min" placeholder="min" value="" /> \
+                   <label for="price-range-max">to</label><input type="text" id="price-range-max" placeholder="max" value="" /> \
+                   <input type="submit" id="price-range-max" class="price-range-submit" placeholder="max" value="Go" /> \
+                   </form>'
 };
 
 // Styles
@@ -144,7 +169,20 @@ background-color: #FFF; color: #0071B9; border: 1px solid #0071B9; padding: 3px 
 .item.mutated.first { left: 0; } \
 .item.mutated.last { left: 558px !important; } \
 .mutated .cta-add { font: bold 12px Arial,Helvetica,sans-serif; display: block; margin: 0 auto; width: 100px; text-decoration: none; border: medium none; background-color: #DC002E; color: #FFF; padding: 5px 7px; text-align: center; text-transform: uppercase; } \
-.mutated .cta-plain { display: block; text-align: center; padding: 7px 0 0 0; } \
+.mutated .cta-plain { display: block; text-align: center; padding: 7px 0 0 0; } ' +
+/* Side Navigation */ ' \
+dd.empty-filters,dt.empty-filters { display: none; } \
+.sidebar .currently { display: none; } \
+#narrow-by-list { padding-left: 7px; padding-right: 7px; } \
+#narrow-by-list li label { color: #0071B9; position: relative; left: 4px; text-decoration: underline; cursor: pointer; } \
+#narrow-by-list li input { cursor: pointer; } \
+#narrow-by-list li label:hover { text-decoration: none; } \
+#narrow-by-list dd li { padding: 6px 0 0 0; } \
+#narrow-by-list dd { padding: 0 0 8px 0; } \
+#narrow-by-list { padding-left: 7px; padding-right: 7px; } \
+.price-range-filter label { float: left; line-height: 21px; font-size: 1.2em; margin: 0 6px 10px 0; } \
+.price-range-filter input { width: 28px; padding: 3px; float: left; margin: 0 6px 0 0; } \
+.price-range-filter .price-range-submit { height: 23px; margin-left: 2px; width: 36px; border: 0; background: #0071B9; color: #fff; font-weight: bold; } \
 ';
 
 // Functions
@@ -226,7 +264,6 @@ exp.func.modifyProducts = function() {
     $('.products-grid').filter( function() {
         return !$(this).has('.products-grid--inner');
         }).each(function() {
-        console.log('found');
            $(this).find('.item').wrapAll('<div class="products-grid--inner" />');
     });
     $('.products-grid .item').filter( function() {
@@ -235,18 +272,19 @@ exp.func.modifyProducts = function() {
            var self = $(this);
            var url = self.find('.actions .white').attr('href');
            var quickview = self.find('.fancybox').attr('href');
-           var id = self.find('.fancybox').attr('id').replace('fancybox','');
-           var pricebox = self.find('.price-box');
-           var pricecontent = pricebox.html();
-           pricebox.html('');
+           // search for .out-of-stock here
+           //var id = self.find('.fancybox').attr('id').replace('fancybox','');
+//           var pricebox = self.find('.price-box');
+//           var pricecontent = pricebox.html();
+//           pricebox.html('');
            self.find('.actions').remove();
            self.addClass('mutated');
-           self.attr('data-prod-id', id);
+           //self.attr('data-prod-id', id);
            self.append( '<div class="cta-actions"><a href="#" class="cta-add" data-behaviour="addToBasket">ADD TO BASKET</a><a href="'+url+'" class="cta-plain">view product details</a></div>' );
            self.find('.product-image, .product-name a').attr('data-behaviour', 'quickViewModal');
            self.find('.product-image, .product-name a').attr('data-quickview', quickview);
            //self.bind('mouseover', exp.func.loadBasketOptions );
-                      $.ajax({
+/*                      $.ajax({
                url: url,
                type: 'GET',
                success: function( response ) {
@@ -258,6 +296,7 @@ exp.func.modifyProducts = function() {
                    pricebox.html( '**ERROR**' );
                }
            });
+*/
     });
     // Rebind add to basket handlers
     $('[data-behaviour="addToBasket"]').unbind();
@@ -266,7 +305,7 @@ exp.func.modifyProducts = function() {
     $('[data-behaviour="quickViewModal"]').unbind();
     $('[data-behaviour="quickViewModal"]').bind('click', exp.func.quickViewModal);
 };
-
+/*
 // Function to load the basket options
 exp.func.loadBasketOptions = function() {
     var self = $(this);
@@ -277,15 +316,15 @@ exp.func.loadBasketOptions = function() {
                type: 'GET',
                success: function( response ) {
                    //console.log( $(response).find('.add-to-box .grouped-item').html() );
-                   pricecontent = $(response).find('.add-to-box .grouped-item').length;
-                   pricebox.html( '**LOADED**' );
+                   //pricecontent = $(response).find('.add-to-box .grouped-item').length;
+                   //pricebox.html( '**LOADED**' );
                },
                error: function() {
                    pricebox.html( '**ERROR**' );
                }
            });
 };
-
+*/
 // Function to add items to the basket
 exp.func.addToBasket = function(e) {
     e.preventDefault();
@@ -330,6 +369,29 @@ exp.func.countResults = function() {
     $('.results--current-count').html( $('.products-grid .item').length );
     if ( $('.results--current-count').text().trim() === $('.results--results-count').text().trim() ) {
         $('.load-more-button').remove();
+    }
+};
+
+// Function to filter products by a custom price range
+exp.func.priceRangeFilter = function() {
+    var min = parseFloat( $('#price-range-min').val() );
+    var max = parseFloat( $('#price-range-max').val() );
+    var locString = window.location.toString();
+    var search = window.location.search;
+    if( isNaN(min) || isNaN(max) ) {
+        alert( 'You have not entered a price range to search by' );
+    } else {
+        if( locString.indexOf('price=') !== -1 ) {
+            window.location = locString.replace(/(.*)(price=)(.*)(&)(.*)/g,function(parts,p1,p2,p3,p4){
+                return p1 + p2 + min +'-'+ max + p4;
+            });
+        } else if( search) {
+            window.location = locString + '&price='+ min +'-'+ max;
+        } else {
+            window.location = locString + '?price='+ min +'-'+ max;
+        }
+
+            
     }
 };
 
@@ -421,7 +483,43 @@ exp.init = function() {
     // **
     // Side navigation
     //
-    
+
+    $('.sidebar .block-title').html( '<strong><span>REFINE BY</span></strong>' );
+
+    $('#narrow-by-list dt, #narrow-by-list dd').remove();
+
+    $('#narrow-by-list').prepend( exp.vars.filterGroupsDOM );
+
+    $('#narrow-by-list li a').each(function(){
+        var self = $(this);
+        var href = self.attr('href');
+        var name = self.text();
+        var id = name.trim();
+        self.replaceWith( '<input type="checkbox" id="'+id+'" value="1" /><label for="'+id+'" data-behaviour="filterSelect" data-value="'+href+'">'+name+'</label>&nbsp;' );
+    });
+
+    if( exp.vars.currentFilters.length ) {
+        exp.vars.currentFilters.each(function(){
+            var self = $(this);
+            var label = self.find('.label').text().replace(':','');
+            var value = self.find('.value').text();
+            var href = self.find('.btn-remove').attr('href');
+            var id = value.trim();
+            var current = '<li><input type="checkbox" id="'+id+'" checked="checked" value="1" /><label for="'+id+'" data-behaviour="filterSelect" data-value="'+href+'">'+value+'</label> </li>';
+            $('#narrow-by-list dt:contains("'+label+'")').removeClass('empty-filters').next('dd').removeClass('empty-filters').find('ol').prepend( current );
+        });
+    }
+
+    $('[data-behaviour="filterSelect"]').bind('click',function(){
+        window.location = $(this).attr('data-value');
+    });
+
+    $('#narrow-by-list').append( exp.vars.priceRange );
+
+    $('.price-range-filter').bind('submit',function(e){
+        e.preventDefault();
+        exp.func.priceRangeFilter();
+    });
 
 };
 
