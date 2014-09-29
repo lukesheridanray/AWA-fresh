@@ -103,6 +103,7 @@ console.log('Product listing - 0.1');
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
+    'productJSON': {},
     'primePromiseHeading': '<p class="price-promise-heading">YOU CAN\'T BUY CHEAPER - our <a href="#" data-behaviour="pricePromiseModal">100% PRICE PROMISE GAURANTEE</a></p>',
     'amountText': $('.toolbar:eq(0).amount').text(),
     'loadingGif': '//cdn.optimizely.com/img/174847139/8c520be03d2c4ba5a3353ae0a9b90a89.gif',
@@ -111,7 +112,6 @@ exp.vars = {
                       <h2>Price Promise</h2> \
                       <p>Content goes here.</p> \
                      </div>',
-    //'filterOptions': $('#narrow-by-list li a'),
     'currentFilters': $('.sidebar .currently li'),
     'filterLabels': $('#narrow-by-list dt'),
     'filterGroups': {
@@ -180,6 +180,7 @@ dd.empty-filters,dt.empty-filters { display: none; } \
 #narrow-by-list dd li { padding: 6px 0 0 0; } \
 #narrow-by-list dd { padding: 0 0 8px 0; } \
 #narrow-by-list { padding-left: 7px; padding-right: 7px; } \
+.price-range-filter { display: block; height: 20px; } \
 .price-range-filter label { float: left; line-height: 21px; font-size: 1.2em; margin: 0 6px 10px 0; } \
 .price-range-filter input { width: 28px; padding: 3px; float: left; margin: 0 6px 0 0; } \
 .price-range-filter .price-range-submit { height: 23px; margin-left: 2px; width: 36px; border: 0; background: #0071B9; color: #fff; font-weight: bold; } \
@@ -379,19 +380,19 @@ exp.func.priceRangeFilter = function() {
     var locString = window.location.toString();
     var search = window.location.search;
     if( isNaN(min) || isNaN(max) ) {
-        alert( 'You have not entered a price range to search by' );
+        alert( 'You have not entered a price range to search by. Please try again.' );
+    } else if( max <= min ) {
+        alert( 'The max price must be larger than the min price. Please try again.' );
     } else {
         if( locString.indexOf('price=') !== -1 ) {
-            window.location = locString.replace(/(.*)(price=)(.*)(&)(.*)/g,function(parts,p1,p2,p3,p4){
-                return p1 + p2 + min +'-'+ max + p4;
+            window.location = locString.replace(/(.*)(price=)(.*)/g,function(parts,p1,p2,p3){
+                return p1 + p2 + min +'-'+ max;
             });
         } else if( search) {
             window.location = locString + '&price='+ min +'-'+ max;
         } else {
             window.location = locString + '?price='+ min +'-'+ max;
-        }
-
-            
+        }      
     }
 };
 
