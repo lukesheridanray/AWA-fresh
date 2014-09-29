@@ -14,7 +14,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('VAT experiment trigger - 0.5');
+console.log('VAT experiment trigger - 0.6');
 
 
 // Variables
@@ -96,6 +96,7 @@ exp.func.chooseVatOption = function( vat ) {
     // activate experiment
     window.optimizely.push(['activate', 1931610162]);
     // close fancybox
+    $('#vat-qualifier').addClass('vat-qualifier--hidden');
     $.fancybox.close();
 };
 
