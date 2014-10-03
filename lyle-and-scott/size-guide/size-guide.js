@@ -277,36 +277,38 @@ exp.vars.sizeGuideContent = ' \
     We recommend you <b>buy your normal size</b>.</p>' +
     exp.vars.sizeCharts['mens']['tops'] +
     '<div class="modal-accordion"> \
+        <p class="sub-heading">FAQ</p> \
         <div class="modal-accordion--item"> \
-            <p class="modal-accordion--title">How do I make sure I buy the right size?</p>
+            <p class="modal-accordion--title"><a href="#">How do I make sure I buy the right size?</a></p> \
             <p class="modal-accordion--content">To be absolutely certain, measure your chest and waist and use the chart above.<br /> \
             Chest: Place the tape under your armpits and measure across the broadest part of your chest.<br /> \
             Waist: Place the tape measure around your waist, just below your navel.<br /> \
-            Tip: Measure against your body, not over clothes. Hold the tape measure gently but firmly and do not pull it tight. If you\'re in between two sizes go for the larger size.</p>
+            Tip: Measure against your body, not over clothes. Hold the tape measure gently but firmly and do not pull it tight. If you\'re in between two sizes go for the larger size.</p> \
         <div class="modal-accordion--item"> \
-            <p class="modal-accordion--title">The last time I bought a Lyle &amp; Scott garment it was too large/small. How do I avoid this? \
+            <p class="modal-accordion--title"><a href="#">The last time I bought a Lyle &amp; Scott garment it was too large/small. How do I avoid this?</a></p> \
             <p class="modal-accordion--content">We are sorry you have had problems in the past. In August 2013, we standardised Lyle &amp; Scott sizes across all ranges. We now recommend buying your normal size.</p> \
         </div> \
         <div class="modal-accordion--item"> \
-            <p class="modal-accordion--title">Is there a difference in size between the various ranges? \
+            <p class="modal-accordion--title"><a href="#">Is there a difference in size between the various ranges?</a></p> \
             <p class="modal-accordion--content">No, not any more. Since August 2013, all Lyle &amp; Scott ranges come in standardised sizes.</p> \
         </div> \
         <div class="modal-accordion--item"> \
-            <p class="modal-accordion--title">I\'m still not sure. What should I do?</p> \
+            <p class="modal-accordion--title"><a href="#">I\'m still not sure. What should I do?</a></p> \
             <p class="modal-accordion--content">The best thing to do is place your order and try it on at home. Returns in the \
-            UK are free via Collect+ (outside of end of season sale period), so it\'s quick and \ 
+            UK are free via Collect+ (outside of end of season sale period), so it\'s quick and \
             easy to get a full refund if you are not satisfied with the fit.</p> \
         </div> \
     </div> \
     <script type="text/javascript"> \
-        jQuery(".modal-accordion--title").unbind().bind("click",function(e){ \
+    console.log("parse"); \
+        jQuery(".modal-accordion--title a").unbind().bind("click",function(e){ \
             e.preventDefault(); \
             var _this = jQuery(this); \
             _this.toggleClass("open"); \
-            _this.next("p").toggleSlide(); \
+            _this.parent("p").next("p").slideToggle(); \
         }); \
     </script> \
-    </div> \';
+    </div>';
 
 // Styles
 // String containing the CSS for the experiment
