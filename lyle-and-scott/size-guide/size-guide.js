@@ -16,33 +16,6 @@ GA 3
 Number of Transactions
 Basket Page Views"
 
-
-
-"As per wireframe.
-
-1. Currently, the modal contains information for both tops and trousers. We are splitting this. The wireframe shows the modal for Tops. For trousers, the only difference will be the chart. 
-
-2. We introduce a FAQ section. By default, questions are shown. If you click on a question, it will open the relevant response inline below that question. See Copy below."
-
-">I usually wear S/M/L/XL in other brands. What size should I buy?
-Simply buy the size you usually wear. Our garments are standard sizes, but if you have any problems with fit, returns in the UK are free and easy via Collect+ (outside of end of season sale period). 
-
-> How do I make sure I buy the right size? 
-To be absolutely certain, measure your chest and waist and use the chart above. 
-Chest: Place the tape under your armpits and measure across the broadest part of your chest
-Waist: Place the tape measure around your waist, just below your navel. 
-Tip: Measure against your body, not over clothes. Hold the tape measure gently but firmly and do not pull it tight. If you're in between two sizes go for the larger size. 
-
->The last time I bought a Lyle & Scott garment it was too large/small. How do I avoid this?
-We are sorry you have had problems in the past. In August 2013, we standardised Lyle & Scott sizes across all ranges. We now recommend buying your normal size.
-
->Is there a difference in size between the various ranges? 
-No, not any more. Since August 2013, all Lyle & Scott ranges come in standardised sizes.  
-
->I’m still not sure. What should I do? 
-The best thing to do is place your order and try it on at home. Returns in the UK are free via Collect+ (outside of end of season sale period), so it’s quick and easy to get a full refund if you are not satisfied with the fit.
-"
-
 */
 
 // Wrap the experiment code in an IIFE, this creates a local scope and allows us to
@@ -53,7 +26,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Size guide - 0.1');
+console.log('Size guide - 0.2');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -68,8 +41,39 @@ if(exp.condition && !exp.condition.length) {
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
-    'sizeGuideLink': $('#product_size_guide')
+    'sizeGuideLink': $('#product_size_guide'),
+    'sizeGuideLinkAlt': $('#size_fit .popup'),
+    'productURL': window.universal_variable.product.url,
+    'gender': '',
+    'type': ''
 };
+
+// select gender by size guide, or return false if none
+// select bottoms or tops by url, or return false if neither found
+
+
+if(
+    exp.vars.sizeGuideLink.attr('href').indexOf('size-guide-men') !== -1 ||
+    exp.vars.sizeGuideLink.attr('href').indexOf('size-guide-footwear') !== -1
+) {
+    exp.vars.gender = 'mens';
+} else {
+    return false;
+}
+
+if (
+    exp.vars.productURL.indexOf('trousers') !== -1 ||
+    exp.vars.productURL.indexOf('chinos') !== -1 ||
+    exp.vars.productURL.indexOf('swimshorts') !== -1 ||
+    exp.vars.productURL.indexOf('pants') !== -1 ||
+    exp.vars.productURL.indexOf('shorts') !== -1
+) {
+    exp.vars.type = 'bottoms';
+} else if( exp.vars.sizeGuideLink.attr('href').indexOf('size-guide-footwear') !== -1 ) {
+    exp.vars.type = 'footwear';
+} else {
+    exp.vars.type = 'tops';
+}
 
 exp.vars.sizeCharts = {
     'mens': {
@@ -184,8 +188,44 @@ exp.vars.sizeCharts = {
                 <td>34"</td> \
             </tr> \
         </table> \
+</div>',
+'footwear': ' \
+<div id="size-guide-footwear"> \
+        <p class="sub-heading">Footwear</p> \
+        <table> \
+            <tr class="alt"> \
+                <th>UK</th> \
+                <td>6</td> \
+                <td>7</td> \
+                <td>8</td> \
+                <td>9</td> \
+                <td>10</td> \
+                <td>11</td> \
+                <td>12</td> \
+            </tr> \
+            <tr> \
+                <th>EU</th> \
+                <td>40</td> \
+                <td>41</td> \
+                <td>42</td> \
+                <td>43</td> \
+                <td>44</td> \
+                <td>45</td> \
+                <td>46</td> \
+            </tr> \
+            <tr class="alt"> \
+                <th>US</th> \
+                <td>7</td> \
+                <td>8</td> \
+                <td>9</td> \
+                <td>10</td> \
+                <td>11</td> \
+                <td>12</td> \
+                <td>13</td> \
+            </tr> \
+        </table> \
 </div>'
-    },
+},
     'womens': ' \
 <div id="size-guide-women"> \
         <p class="sub-title">Tops</p> \
@@ -231,42 +271,6 @@ exp.vars.sizeCharts = {
                 <td>38-40"</td> \
             </tr> \
         </table> \
-</div>',
-    'footwear': ' \
-<div id="size-guide-footwear"> \
-        <p class="sub-heading">Footwear</p> \
-        <table> \
-            <tr class="alt"> \
-                <th>UK</th> \
-                <td>6</td> \
-                <td>7</td> \
-                <td>8</td> \
-                <td>9</td> \
-                <td>10</td> \
-                <td>11</td> \
-                <td>12</td> \
-            </tr> \
-            <tr> \
-                <th>EU</th> \
-                <td>40</td> \
-                <td>41</td> \
-                <td>42</td> \
-                <td>43</td> \
-                <td>44</td> \
-                <td>45</td> \
-                <td>46</td> \
-            </tr> \
-            <tr class="alt"> \
-                <th>US</th> \
-                <td>7</td> \
-                <td>8</td> \
-                <td>9</td> \
-                <td>10</td> \
-                <td>11</td> \
-                <td>12</td> \
-                <td>13</td> \
-            </tr> \
-        </table> \
 </div>'
 };
 
@@ -275,32 +279,31 @@ exp.vars.sizeGuideContent = ' \
     <p class="title">Size Guide</p> \
     <p>Lyle and Scott sizes fits true to size across all ranges.<br /> \
     We recommend you <b>buy your normal size</b>.</p>' +
-    exp.vars.sizeCharts['mens']['tops'] +
+    exp.vars.sizeCharts[ exp.vars.gender ][ exp.vars.type ] +
     '<div class="modal-accordion"> \
         <p class="sub-heading">FAQ</p> \
         <div class="modal-accordion--item"> \
-            <p class="modal-accordion--title"><a href="#">How do I make sure I buy the right size?</a></p> \
+            <p class="modal-accordion--title sub-title"><a href="#">How do I make sure I buy the right size?</a></p> \
             <p class="modal-accordion--content">To be absolutely certain, measure your chest and waist and use the chart above.<br /> \
             Chest: Place the tape under your armpits and measure across the broadest part of your chest.<br /> \
             Waist: Place the tape measure around your waist, just below your navel.<br /> \
             Tip: Measure against your body, not over clothes. Hold the tape measure gently but firmly and do not pull it tight. If you\'re in between two sizes go for the larger size.</p> \
         <div class="modal-accordion--item"> \
-            <p class="modal-accordion--title"><a href="#">The last time I bought a Lyle &amp; Scott garment it was too large/small. How do I avoid this?</a></p> \
+            <p class="modal-accordion--title sub-title"><a href="#">The last time I bought a Lyle &amp; Scott garment it was too large/small. How do I avoid this?</a></p> \
             <p class="modal-accordion--content">We are sorry you have had problems in the past. In August 2013, we standardised Lyle &amp; Scott sizes across all ranges. We now recommend buying your normal size.</p> \
         </div> \
         <div class="modal-accordion--item"> \
-            <p class="modal-accordion--title"><a href="#">Is there a difference in size between the various ranges?</a></p> \
+            <p class="modal-accordion--title sub-title"><a href="#">Is there a difference in size between the various ranges?</a></p> \
             <p class="modal-accordion--content">No, not any more. Since August 2013, all Lyle &amp; Scott ranges come in standardised sizes.</p> \
         </div> \
         <div class="modal-accordion--item"> \
-            <p class="modal-accordion--title"><a href="#">I\'m still not sure. What should I do?</a></p> \
+            <p class="modal-accordion--title sub-title"><a href="#">I\'m still not sure. What should I do?</a></p> \
             <p class="modal-accordion--content">The best thing to do is place your order and try it on at home. Returns in the \
             UK are free via Collect+ (outside of end of season sale period), so it\'s quick and \
             easy to get a full refund if you are not satisfied with the fit.</p> \
         </div> \
     </div> \
     <script type="text/javascript"> \
-    console.log("parse"); \
         jQuery(".modal-accordion--title a").unbind().bind("click",function(e){ \
             e.preventDefault(); \
             var _this = jQuery(this); \
@@ -312,7 +315,13 @@ exp.vars.sizeGuideContent = ' \
 
 // Styles
 // String containing the CSS for the experiment
-exp.css = '';
+exp.css = ' \
+#size-guide-footwear, #size-guide-men, #size-guide-women { width: auto; } \
+.modal-accordion--content { display: none; } \
+.pop_up .modal-accordion--title.sub-title { font-size: 1.6em; } \
+.modal-accordion--title a:before { background-image: url("//cdn.optimizely.com/img/174847139/dbb6b47043884472b791924977416b5e.png"); \
+background-position: 0 0; background-repeat: no-repeat; background-color: transparent; content: " "; float: left; margin: 7px 7px 0 0; width: 12px; height: 12px; } \
+.modal-accordion--title a.open:before { background-image: url("//cdn.optimizely.com/img/174847139/f21d25d0da88459486fab2a59fc97333.png"); } ';
 
 // Functions
 // Object containing functions, some helpful functions are included
@@ -373,10 +382,12 @@ exp.init = function() {
     // unbind and rebind size guide link
     //this.vars.sizeGuideLink.unbind().bind( 'click', exp.vars.openSizeGuide );
     this.vars.sizeGuideLink.unbind();
+    this.vars.sizeGuideLinkAlt.unbind();
 
-    this.vars.sizeGuideLink.attr({'href':'/modal-content/'})
+    this.vars.sizeGuideLink.attr({'href':'/modal-content/'});
+    this.vars.sizeGuideLinkAlt.attr({'href':'/modal-content/'});
     var a = $('.pop_up');
-    $.fn.popUp({$triggers: $('#product_size_guide'), $popUpContainer: a, callback: function() {
+    $.fn.popUp({$triggers: $('#product_size_guide, #size_fit .popup'), $popUpContainer: a, callback: function() {
         var new_top_val = parseInt(a.css('top').replace('px',''))+20;
         a
         .html( exp.vars.sizeGuideContent )
