@@ -22,8 +22,6 @@
 Notes
 -----
 
-price range validation and regex improvements
-
 Exclude mobile, but include tablet (and of course desktop)
 
 100% (50/50)
@@ -92,7 +90,7 @@ Wireframe 3 shows view when an item has been added to cart.
 
 // Wrap the experiment code in an IIFE, this creates a local scope and allows us to
 // pass in jQuery to use as $. Other globals could be passed in if required.
-var exp = (function($) {
+var experiment = (function($) {
 
 // Initialise the experiment object
 var exp = {};
@@ -104,6 +102,8 @@ console.log('Product listing - 0.1');
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
     'productJSON': {},
+    'productFeedURL': '//www.bakerross.co.uk/feeds/skus_json_v1.xml',
+    'haveProductData': false,
     'primePromiseHeading': '<p class="price-promise-heading">YOU CAN\'T BUY CHEAPER - our <a href="#" data-behaviour="pricePromiseModal">100% PRICE PROMISE GAURANTEE</a></p>',
     'amountText': $('.toolbar:eq(0).amount').text(),
     'loadingGif': '//cdn.optimizely.com/img/174847139/8c520be03d2c4ba5a3353ae0a9b90a89.gif',
@@ -273,8 +273,15 @@ exp.func.modifyProducts = function() {
            var self = $(this);
            var url = self.find('.actions .white').attr('href');
            var quickview = self.find('.fancybox').attr('href');
-           // search for .out-of-stock here
-           //var id = self.find('.fancybox').attr('id').replace('fancybox','');
+           if( self.find('.out-of-stock').length ) {
+            console.log('lengthy');
+               //return false;
+           };
+           var id = self.find('.fancybox').attr('id').replace('fancybox','');
+           console.log( exp.vars.productJSON[ id ] );
+// create DOM based on options, update price box html
+
+
 //           var pricebox = self.find('.price-box');
 //           var pricecontent = pricebox.html();
 //           pricebox.html('');
@@ -284,20 +291,6 @@ exp.func.modifyProducts = function() {
            self.append( '<div class="cta-actions"><a href="#" class="cta-add" data-behaviour="addToBasket">ADD TO BASKET</a><a href="'+url+'" class="cta-plain">view product details</a></div>' );
            self.find('.product-image, .product-name a').attr('data-behaviour', 'quickViewModal');
            self.find('.product-image, .product-name a').attr('data-quickview', quickview);
-           //self.bind('mouseover', exp.func.loadBasketOptions );
-/*                      $.ajax({
-               url: url,
-               type: 'GET',
-               success: function( response ) {
-                   //console.log( $(response).find('.add-to-box .grouped-item').html() );
-                   pricecontent = $(response).find('.add-to-box .grouped-item').length;
-                   pricebox.html( '**LOADED**' );
-               },
-               error: function() {
-                   pricebox.html( '**ERROR**' );
-               }
-           });
-*/
     });
     // Rebind add to basket handlers
     $('[data-behaviour="addToBasket"]').unbind();
@@ -306,26 +299,7 @@ exp.func.modifyProducts = function() {
     $('[data-behaviour="quickViewModal"]').unbind();
     $('[data-behaviour="quickViewModal"]').bind('click', exp.func.quickViewModal);
 };
-/*
-// Function to load the basket options
-exp.func.loadBasketOptions = function() {
-    var self = $(this);
-    var id = self.attr('data-prod-id');
-    self.find('.price-box').html( id );
-           $.ajax({
-               url: url,
-               type: 'GET',
-               success: function( response ) {
-                   //console.log( $(response).find('.add-to-box .grouped-item').html() );
-                   //pricecontent = $(response).find('.add-to-box .grouped-item').length;
-                   //pricebox.html( '**LOADED**' );
-               },
-               error: function() {
-                   pricebox.html( '**ERROR**' );
-               }
-           });
-};
-*/
+
 // Function to add items to the basket
 exp.func.addToBasket = function(e) {
     e.preventDefault();
@@ -404,7 +378,7 @@ exp.init = function() {
     $('head').append('<style type="text/css">'+this.css+'</style>');
 
     // **
-    // Toolbars, general and Product Grid
+    // Toolbars and general
     //
 
     $('.toolbar:eq(1), .toolbar .limiter').remove();
@@ -460,7 +434,9 @@ exp.init = function() {
             var oldDOM = $('.products-grid:last .item:last').html();
             $('.products-grid:last').append('<div class="oldDOM">'+oldDOM+'</div>');
             
-            exp.func.modifyProducts();
+            if( exp.vars.haveProductData ) {
+                exp.func.modifyProducts();
+            }
             
         }
     );
@@ -479,7 +455,7 @@ exp.init = function() {
         $('.category-products').infinitescroll('retrieve');
     });
     
-    exp.func.modifyProducts();
+    //exp.func.modifyProducts();
 
     // **
     // Side navigation
@@ -521,6 +497,42 @@ exp.init = function() {
         e.preventDefault();
         exp.func.priceRangeFilter();
     });
+
+    // **
+    // Product Grid
+    //
+
+    exp.func.grabProductData = function() {
+        var attempts;
+        function doAjaxRequest() {
+            attempts = 0;
+            doAjaxRequestLoop();
+        }
+        function doAjaxRequestLoop() {
+            attempts += 1;
+            if (attempts > 3) {
+                return false;
+            }
+            console.log('attempt' + attempts);
+            $.ajax({
+                url: exp.vars.productFeedURL,
+                dataType: 'text',
+                type: 'GET',
+                success: function( response ) {
+                    exp.vars.productJSON = $.parseJSON(
+                        response.replace('" ','inch')
+                    );
+                    exp.func.modifyProducts();
+                    exp.vars.haveProductData = true;
+                },
+                error: function() {
+                    doAjaxRequestLoop();
+                }
+            });
+        }
+        doAjaxRequest();
+    };
+    exp.func.grabProductData();
 
 };
 
