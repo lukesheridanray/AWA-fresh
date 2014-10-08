@@ -90,7 +90,7 @@ Wireframe 3 shows view when an item has been added to cart.
 
 // Wrap the experiment code in an IIFE, this creates a local scope and allows us to
 // pass in jQuery to use as $. Other globals could be passed in if required.
-var experiment = (function($) {
+var exp = (function($) {
 
 // Initialise the experiment object
 var exp = {};
@@ -169,7 +169,11 @@ background-color: #FFF; color: #0071B9; border: 1px solid #0071B9; padding: 3px 
 .item.mutated.first { left: 0; } \
 .item.mutated.last { left: 558px !important; } \
 .mutated .cta-add { font: bold 12px Arial,Helvetica,sans-serif; display: block; margin: 0 auto; width: 100px; text-decoration: none; border: medium none; background-color: #DC002E; color: #FFF; padding: 5px 7px; text-align: center; text-transform: uppercase; } \
-.mutated .cta-plain { display: block; text-align: center; padding: 7px 0 0 0; } ' +
+.mutated .cta-plain { display: block; text-align: center; padding: 7px 0 0 0; } \
+.mini-prod-form-option { background: #fff; position: relative; top: -14px; line-height: 22px; overflow: auto; padding: 0 0 5px 0; } \
+.mini-prod-form-option .price { float: right; } \
+.mini-prod-form-option .name { position: absolute; top: 0; left: 25px; } \
+.mini-prod-form-option input.qty { float: left; border: 1px solid #999 !important; padding: 1px !important; width: 16px !important; height: 16px !important; border-radius: 2px; } ' +
 /* Side Navigation */ ' \
 dd.empty-filters,dt.empty-filters { display: none; } \
 .sidebar .currently { display: none; } \
@@ -270,27 +274,34 @@ exp.func.modifyProducts = function() {
     $('.products-grid .item').filter( function() {
         return !$(this).hasClass('mutated');
         }).each(function() {
-           var self = $(this);
-           var url = self.find('.actions .white').attr('href');
-           var quickview = self.find('.fancybox').attr('href');
-           if( self.find('.out-of-stock').length ) {
-            console.log('lengthy');
-               //return false;
-           };
-           var id = self.find('.fancybox').attr('id').replace('fancybox','');
-           console.log( exp.vars.productJSON[ id ] );
-// create DOM based on options, update price box html
-
-
-//           var pricebox = self.find('.price-box');
-//           var pricecontent = pricebox.html();
-//           pricebox.html('');
-           self.find('.actions').remove();
-           self.addClass('mutated');
-           //self.attr('data-prod-id', id);
-           self.append( '<div class="cta-actions"><a href="#" class="cta-add" data-behaviour="addToBasket">ADD TO BASKET</a><a href="'+url+'" class="cta-plain">view product details</a></div>' );
-           self.find('.product-image, .product-name a').attr('data-behaviour', 'quickViewModal');
-           self.find('.product-image, .product-name a').attr('data-quickview', quickview);
+            var self = $(this);
+                if( self.find('.out-of-stock').length ) {
+                    // this is out of stock so don't continue with mods
+                    return;
+                };
+            var url = self.find('.actions .white').attr('href');
+            var quickview = self.find('.fancybox').attr('href');
+            var id = self.find('.fancybox').attr('id').replace('fancybox','');
+            var pricebox = self.find('.price-box');
+            var optionsArray = exp.vars.productJSON[ id ];
+            // create DOM based on options, update price box html
+            var pricecontent = '';
+            for (var i = 0; i < optionsArray.length; i++) {
+                pricecontent += '<div class="mini-prod-form-option"> \
+                <input name="product" value="'+id+'" type="hidden"> \
+                <input name="related_product" id="related-products-field" value="" type="hidden"> \
+                <span class="input"><input name="super_group[ '+optionsArray[i]['code']+' ]" maxlength="12" value="" id="miniForm'+id+'" title="Qty" class="input-text qty" type="text"></span> \
+                <span class="name">'+optionsArray[i]['name']+'</span> \
+                <span class="price">&pound;'+parseFloat(optionsArray[i]['price']).toFixed(2)+'</span> \
+                </div>';
+            };
+            pricebox.html( pricecontent );
+            self.find('.actions').remove();
+            self.addClass('mutated');
+            self.attr('data-prod-id', id);
+            self.append( '<div class="cta-actions"><a href="#" class="cta-add" data-behaviour="addToBasket">ADD TO BASKET</a><a href="'+url+'" class="cta-plain">view product details</a></div>' );
+            self.find('.product-image, .product-name a').attr('data-behaviour', 'quickViewModal');
+            self.find('.product-image, .product-name a').attr('data-quickview', quickview);
     });
     // Rebind add to basket handlers
     $('[data-behaviour="addToBasket"]').unbind();
@@ -303,17 +314,31 @@ exp.func.modifyProducts = function() {
 // Function to add items to the basket
 exp.func.addToBasket = function(e) {
     e.preventDefault();
-    alert('testing');
-/*
+    var container = $(this).closest('.mutated');
+    var id = container.attr('data-prod-id');
+    var inputs = container.find('input');
+    var dataString = '';
+    inputs.each(function(){
+        var _this = $(this);
+        if( _this.attr('value') > 0 ) {
+            dataString += _this.attr('name')+'='+_this.attr('value')+'&';
+        }
+    });
+    if( dataString === '') {
+        alert('You must select a quantity to add to the cart');
+        return false;
+    }
     jQuery.ajax({
-        url: 'http://www.bakerross.co.uk/checkout/cart/add/uenc/aHR0cDovL3d3dy5iYWtlcnJvc3MuY28udWsvaG9iYnlsaW5lLWZpbmUtdGlwLWdsYXNzLXBlbnMtMQ,,/product/90466/form_key/okwfIb4BTh5UdesL/',
-        data: 'super_group[96121]=1&super_group[93520]=2',
+        url: 'http://www.bakerross.co.uk/checkout/cart/add/uenc/aHR0cDovL3d3dy5iYWtlcnJvc3MuY28udWsvaG9iYnlsaW5lLWZpbmUtdGlwLWdsYXNzLXBlbnMtMQ,,/product/'+id+'/form_key/okwfIb4BTh5UdesL/',
+        data: dataString.slice(0,-1),
         type: 'POST',
         success: function() {
             alert('success');
+        },
+        error: function() {
+            alert('There seemed to be a problem adding your item to the cart, please try again and if the problem persists please contact us.');
         }
     });
-*/
 };
 
 // Function to open the quick view modal
@@ -513,7 +538,6 @@ exp.init = function() {
             if (attempts > 3) {
                 return false;
             }
-            console.log('attempt' + attempts);
             $.ajax({
                 url: exp.vars.productFeedURL,
                 dataType: 'text',
