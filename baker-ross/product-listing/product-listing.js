@@ -43,11 +43,6 @@ and all other product listings pages
 
 "See 3 wireframes
 
-1. Checkboxes in left navigation, enabling user to switch items in and out of view. In our correspondence about this we referred to the 
-Macy's example. Also the links are styled as hyperlinks (blue underlined).
-
-2. Smaller item containers in the product grid, removing calls to action on default view (i.e. Quick View & Shop buttons).
-
 3. Item container now shows up to three different product variations, whereas currently only one is shown. You mentioned it would be possible to 
 scrape this from the product page. When more than three options are available (for example http://www.bakerross.co.uk/large-18ml-face-paint-pots), 
 it simply says ""x options available"" as shown in the wireframe on the far right of each row.
@@ -56,26 +51,10 @@ it simply says ""x options available"" as shown in the wireframe on the far righ
 variations - See Wireframe 2. The user can then select one or more option and click ""Add To Basket"" to add the items to his basket straight 
 from this page. An ""Added to Cart"" modal will appear - see point 8.
 
-5. Clicking anywhere else in the container will open the Quick View modal, exactly the same as currently on the site. Clicking on ""view product 
-details"" at the bottom is the only way to get to the product page.
-
-7. Ideally the left nav can be "sticky" so that it moves down the page as the user scrolls down.
-
-7. Price filter from x to y at the bottom of the left nav is new, as is the On SALE facet which simply loads items on sale in this category.
-
 8. When an item is added to basket, an ""Added to Basket"" modal appears in the same way as now. It is important that this shows product recommendations, 
 which you will see if you add an item to basket from the product page on the live site. However, currently it doesn't happen when you add an item to basket 
 from Quick View because of a technical reason, which they are fixing. This is very important so please investigate if necessary. 
 Could the feed be scraped from relevant product page?
-
-9. Retain ""Clear All"" filter functionality. To see how this works, apply a facet on the site. Next to the facet appears a ""close"" symbol and below 
-""Clear All"".
-
-10. A minor change is that the SEO blurb and hero image at the top of the page disappear.
-
-11. Another minor change is that the Sort By filter at the top of the page is presented differently. When the page first loads, you can use the 
-existing default. The user can then apply anyone of those filters at a time (Best Sellers - Lowest Price - Highest Price) which will become underlined 
-when selected. It's probably best to include another one - ""Default"" at the start of that series.
 
 12. Price Promise Guarantee is clickable and opens a modal. I'll send copy for that separately.
 
@@ -159,21 +138,25 @@ background-color: #FFF; color: #0071B9; border: 1px solid #0071B9; padding: 3px 
 .load-more-button:hover { text-decoration: none; } \
 #infscr-loading { text-align: center; padding: 5px 0 10px 0; } \
 #infscr-loading img { display: block; margin: 0 auto 5px auto; } \
-.products-grid { width: 100%; height: 236px; position: relative; overflow: visible; margin-bottom: 20px !important; } \
+.products-grid { width: 100%; height: 246px; position: relative; overflow: visible; margin-bottom: 20px !important; } \
 .products-grid .item .feefo-holder { display: none; } \
-.item.mutated { height: 220px; overflow: hidden; position: absolute; top: 0; background: #fff; } \
+.item.mutated { height: 240px; overflow: hidden; position: absolute; top: 0; background: #fff; } \
 .item.mutated { z-index: 1; } \
-.item.mutated:hover { height: 300px; border-color: #bbb; z-index: 2; } \
+.item.mutated:hover { height: auto; border-color: #bbb; z-index: 2; } \
 .item.mutated { left: 186px; } \
 .item.mutated + .mutated + .mutated { left: 372px; } \
 .item.mutated.first { left: 0; } \
 .item.mutated.last { left: 558px !important; } \
+.mutated .price-box { min-height: 52px; } \
 .mutated .cta-add { font: bold 12px Arial,Helvetica,sans-serif; display: block; margin: 0 auto; width: 100px; text-decoration: none; border: medium none; background-color: #DC002E; color: #FFF; padding: 5px 7px; text-align: center; text-transform: uppercase; } \
 .mutated .cta-plain { display: block; text-align: center; padding: 7px 0 0 0; } \
-.mini-prod-form-option { background: #fff; position: relative; top: -14px; line-height: 22px; overflow: auto; padding: 0 0 5px 0; } \
-.mini-prod-form-option .price { float: right; } \
-.mini-prod-form-option .name { position: absolute; top: 0; left: 25px; } \
-.mini-prod-form-option input.qty { float: left; border: 1px solid #999 !important; padding: 1px !important; width: 16px !important; height: 16px !important; border-radius: 2px; } ' +
+.mini-prod-form-option { display: none; } \
+.mutated:hover .mini-prod-form-option { display: block; } \
+.mutated:hover .intro-content-item { display: none; } \
+.mini-prod-form-option, .intro-content-item { background: #fff; position: relative; top: -14px; line-height: 16px; overflow: auto; padding: 0 0 5px 0; } \
+.mini-prod-form-option .price, .intro-content-item .price { float: right; } \
+.mini-prod-form-option .name, .intro-content-item .name { float: left; } \
+.mini-prod-form-option input, .intro-content-item input { float: left; margin: 0 5px 0 0; position: relative; top: 1px !important; } ' +
 /* Side Navigation */ ' \
 dd.empty-filters,dt.empty-filters { display: none; } \
 .sidebar .currently { display: none; } \
@@ -185,7 +168,7 @@ dd.empty-filters,dt.empty-filters { display: none; } \
 #narrow-by-list dd { padding: 0 0 8px 0; } \
 #narrow-by-list { padding-left: 7px; padding-right: 7px; } \
 .price-range-filter { display: block; height: 20px; } \
-.price-range-filter label { float: left; line-height: 21px; font-size: 1.2em; margin: 0 6px 10px 0; } \
+.price-range-filter label { float: left; line-height: 16px; font-size: 1.2em; margin: 0 6px 10px 0; } \
 .price-range-filter input { width: 28px; padding: 3px; float: left; margin: 0 6px 0 0; } \
 .price-range-filter .price-range-submit { height: 23px; margin-left: 2px; width: 36px; border: 0; background: #0071B9; color: #fff; font-weight: bold; } \
 ';
@@ -285,17 +268,31 @@ exp.func.modifyProducts = function() {
             var pricebox = self.find('.price-box');
             var optionsArray = exp.vars.productJSON[ id ];
             // create DOM based on options, update price box html
-            var pricecontent = '';
-            for (var i = 0; i < optionsArray.length; i++) {
-                pricecontent += '<div class="mini-prod-form-option"> \
+            var introcontent = '';
+            var formcontent = '';
+            if( optionsArray.length > 3 ) {
+                introcontent = '<div class="intro-content-item"> \
+                    <span class="name">'+optionsArray.length+' options available</span> \
+                    <span class="price">&pound;'+parseFloat(optionsArray[0]['price']).toFixed(2)+'</span> \
+                    </div>';
+            } else {
+                $.each(optionsArray, function(index, value) {
+                    introcontent += '<div class="intro-content-item"> \
+                    <span class="name">'+optionsArray[index]['name']+'</span> \
+                    <span class="price">&pound;'+parseFloat(optionsArray[index]['price']).toFixed(2)+'</span> \
+                    </div>';
+                });
+            }
+            $.each(optionsArray, function(index, value) {
+                formcontent += '<div class="mini-prod-form-option"> \
                 <input name="product" value="'+id+'" type="hidden"> \
                 <input name="related_product" id="related-products-field" value="" type="hidden"> \
-                <span class="input"><input name="super_group[ '+optionsArray[i]['code']+' ]" maxlength="12" value="" id="miniForm'+id+'" title="Qty" class="input-text qty" type="text"></span> \
-                <span class="name">'+optionsArray[i]['name']+'</span> \
-                <span class="price">&pound;'+parseFloat(optionsArray[i]['price']).toFixed(2)+'</span> \
+                <span class="input"><input id="i'+id+optionsArray[index]['code']+'" name="super_group[ '+optionsArray[index]['code']+' ]" value="1" title="Qty" type="checkbox"></span> \
+                <label for="i'+id+optionsArray[index]['code']+'" class="name">'+optionsArray[index]['name']+'</label> \
+                <span class="price">&pound;'+parseFloat(optionsArray[index]['price']).toFixed(2)+'</span> \
                 </div>';
-            };
-            pricebox.html( pricecontent );
+            });
+            pricebox.html( introcontent + formcontent );
             self.find('.actions').remove();
             self.addClass('mutated');
             self.attr('data-prod-id', id);
@@ -320,20 +317,21 @@ exp.func.addToBasket = function(e) {
     var dataString = '';
     inputs.each(function(){
         var _this = $(this);
-        if( _this.attr('value') > 0 ) {
+        if( _this.prop('checked') == true ){ 
             dataString += _this.attr('name')+'='+_this.attr('value')+'&';
         }
     });
     if( dataString === '') {
-        alert('You must select a quantity to add to the cart');
+        alert('You must select an option to add to the cart');
         return false;
     }
+    alert(id + ' ' + dataString.slice(0,-1));
     jQuery.ajax({
         url: 'http://www.bakerross.co.uk/checkout/cart/add/uenc/aHR0cDovL3d3dy5iYWtlcnJvc3MuY28udWsvaG9iYnlsaW5lLWZpbmUtdGlwLWdsYXNzLXBlbnMtMQ,,/product/'+id+'/form_key/okwfIb4BTh5UdesL/',
         data: dataString.slice(0,-1),
         type: 'POST',
-        success: function() {
-            alert('success');
+        success: function( response ) {
+            alert( response );
         },
         error: function() {
             alert('There seemed to be a problem adding your item to the cart, please try again and if the problem persists please contact us.');
