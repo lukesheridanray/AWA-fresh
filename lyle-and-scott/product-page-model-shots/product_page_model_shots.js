@@ -14,7 +14,7 @@ var product_page_model_shots = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Product page model shots - 0.4');
+console.log('Product page model shots - 0.5');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -40,6 +40,16 @@ exp.vars = {
 exp.css = '#CGIT_LS_PRODUCT_MODEL_SHOTS_model_image { \
     width: 50%; \
     float: right; \
+} \
+#CGIT_LS_PRODUCT_MODEL_SHOTS_model_label { \
+    float: right; \
+    width: 50%; \
+    clear: right; \
+    margin-top: 1em; \
+    text-align: center; \
+} \
+#CGIT_LS_PRODUCT_MODEL_SHOTS_model_label img { \
+    vertical-align: middle; \
 } \
 #CGIT_LS_PRODUCT_MODEL_SHOTS_model_link { \
 } \
@@ -119,12 +129,14 @@ exp.init = function() {
                 src: exp.func.get_large_image(model_shot_url),
                 id: 'CGIT_LS_PRODUCT_MODEL_SHOTS_model_image'
             }),
+            $model_label = $('<p id="CGIT_LS_PRODUCT_MODEL_SHOTS_model_label">Click here for full size image <img src="http://media.lyleandscott.com/pws/client/images/zoomButton.png"/></p>')
             $model_link = $('<a>', {
                 href: exp.func.get_zoom_image(model_shot_url),
                 id: 'CGIT_LS_PRODUCT_MODEL_SHOTS_model_link'
             });
 
         $model_link.append($model_image);
+        $model_link.append($model_label);
 
         exp.vars.size_tab.prepend($model_link);
 
