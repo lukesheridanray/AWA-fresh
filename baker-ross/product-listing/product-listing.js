@@ -33,8 +33,6 @@ Number of Transactions
 Clicks in the left nav
 Clicks on Add To Basket"
 
-ajax add to cart error
-
 "http://www.bakerross.co.uk/pocket-money-toys/toys-party-bag-fillers
 
 and all other product listings pages
@@ -75,7 +73,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Product listing - 0.1');
+console.log('Product listing - 0.2');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -217,6 +215,7 @@ exp.func.waitForFunction = function(func, callback, timeout, keepAlive) {
         }, intervalTime);
 };
 
+
 // Functon to sort products
 exp.func.sortProducts = function(e) {
     e.preventDefault();
@@ -287,7 +286,7 @@ exp.func.modifyProducts = function() {
                 formcontent += '<div class="mini-prod-form-option"> \
                 <input name="product" value="'+id+'" type="hidden"> \
                 <input name="related_product" id="related-products-field" value="" type="hidden"> \
-                <span class="input"><input id="i'+id+optionsArray[index]['code']+'" name="super_group[ '+optionsArray[index]['code']+' ]" value="1" title="Qty" type="checkbox"></span> \
+                <span class="input"><input id="i'+id+optionsArray[index]['code']+'" name="super_group%5B'+optionsArray[index]['code']+'%5D" value="1" title="Qty" type="checkbox"></span> \
                 <label for="i'+id+optionsArray[index]['code']+'" class="name">'+optionsArray[index]['name']+'</label> \
                 <span class="price">&pound;'+parseFloat(optionsArray[index]['price']).toFixed(2)+'</span> \
                 </div>';
@@ -314,28 +313,28 @@ exp.func.addToBasket = function(e) {
     var container = $(this).closest('.mutated');
     var id = container.attr('data-prod-id');
     var inputs = container.find('input');
-    var dataString = '';
+    var superGroups = '';
     inputs.each(function(){
         var _this = $(this);
         if( _this.prop('checked') == true ){ 
-            dataString += _this.attr('name')+'='+_this.attr('value')+'&';
+            superGroups += _this.attr('name')+'='+_this.attr('value')+'&';
         }
     });
-    if( dataString === '') {
+    if( superGroups === '') {
         alert('You must select an option to add to the cart');
         return false;
     }
-    alert(id + ' ' + dataString.slice(0,-1));
-    jQuery.ajax({
-        url: 'http://www.bakerross.co.uk/checkout/cart/add/uenc/aHR0cDovL3d3dy5iYWtlcnJvc3MuY28udWsvaG9iYnlsaW5lLWZpbmUtdGlwLWdsYXNzLXBlbnMtMQ,,/product/'+id+'/form_key/okwfIb4BTh5UdesL/',
-        data: dataString.slice(0,-1),
-        type: 'POST',
-        success: function( response ) {
-            alert( response );
-        },
-        error: function() {
-            alert('There seemed to be a problem adding your item to the cart, please try again and if the problem persists please contact us.');
-        }
+    var url = 'http://www.bakerross.co.uk/quickorder/index/success/uenc/aHR0cDovL3d3dy5iYWtlcnJvc3MuY28udWsvcmVkLXdoaXRlLWFuZC1ibHVlLWFjcnlsaWMtcGFpbnQ,/product/'+id+'/form_key/ag4a8S1SFOnX4HMf/?product='+id+'&related_product=&'+superGroups+'isAjax=1'
+    jQuery.fancybox({
+        href: url,
+        hideOnContentClick : true,
+        width: 800,
+        height: 450,
+        autoDimensions: true,
+        type: 'iframe',
+        showTitle: false,
+        scrolling: 'no',
+        centerOnScroll:true
     });
 };
 
