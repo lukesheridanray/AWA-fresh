@@ -73,7 +73,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Product listing - 0.2');
+console.log('Product listing - 0.4');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -81,7 +81,8 @@ exp.vars = {
     'productJSON': {},
     'productFeedURL': '//www.bakerross.co.uk/feeds/skus_json_v1.xml',
     'haveProductData': false,
-    'primePromiseHeading': '<p class="price-promise-heading">YOU CAN\'T BUY CHEAPER - our <a href="#" data-behaviour="pricePromiseModal">100% PRICE PROMISE GAURANTEE</a></p>',
+    'catDesc': $('.category-description.std'),
+    'primePromiseHeading': '<p class="price-promise-heading">Best Price Guaranteed - our <a href="#" data-behaviour="pricePromiseModal">100% Price Match Promise</a></p>',
     'amountText': $('.toolbar:eq(0).amount').text(),
     'loadingGif': '//cdn.optimizely.com/img/174847139/8c520be03d2c4ba5a3353ae0a9b90a89.gif',
     'currentPage': 1,
@@ -120,7 +121,7 @@ exp.css =
 .category-image { display: none; } \
 .toolbar .limiter, .toolbar .pages  { display: none; } \
 .toolbar { margin: -10px 0 0 0; } \
-.price-promise-heading { text-align: center; font-size: 1.3em; padding: 0 0 15px 0; } \
+.price-promise-heading { text-align: center; font-size: 1.3em; padding: 10px 0 25px 0; } \
 .price-promise-heading a { color: #333; font-weight: bold; } \
 .price-promise-heading a:hover { text-decoration: underline; } \
 .pager.sorter { padding: 0 0 15px 0; } \
@@ -166,7 +167,7 @@ dd.empty-filters,dt.empty-filters { display: none; } \
 #narrow-by-list dd { padding: 0 0 8px 0; } \
 #narrow-by-list { padding-left: 7px; padding-right: 7px; } \
 .price-range-filter { display: block; height: 20px; } \
-.price-range-filter label { float: left; line-height: 16px; font-size: 1.2em; margin: 0 6px 10px 0; } \
+.price-range-filter label { float: left; line-height: 22px; font-size: 1.2em; margin: 0 4px 10px 0; } \
 .price-range-filter input { width: 28px; padding: 3px; float: left; margin: 0 6px 0 0; } \
 .price-range-filter .price-range-submit { height: 23px; margin-left: 2px; width: 36px; border: 0; background: #0071B9; color: #fff; font-weight: bold; } \
 ';
@@ -403,6 +404,11 @@ exp.init = function() {
     // Toolbars and general
     //
 
+    if( this.vars.catDesc.length ) {
+        var theDesc = this.vars.catDesc.find('div').clone();
+        this.vars.catDesc.html( theDesc );
+    }
+
     $('.toolbar:eq(1), .toolbar .limiter').remove();
 
     $('.toolbar').html(
@@ -464,6 +470,8 @@ exp.init = function() {
     );
     $('.category-products').infinitescroll('unbind');
 
+if( $('.pages').length ) {
+
     $('.category-products').after(
         '<div class="load-more-wrapper"><span class="load-more-wrapper--results">' +
         'Showing 1 to <span class="results--current-count"></span> of <span class="results--results-count">' +
@@ -476,6 +484,8 @@ exp.init = function() {
         e.preventDefault();
         $('.category-products').infinitescroll('retrieve');
     });
+
+}
     
     //exp.func.modifyProducts();
 
@@ -483,7 +493,7 @@ exp.init = function() {
     // Side navigation
     //
 
-    $('.sidebar .block-title').html( '<strong><span>REFINE BY</span></strong>' );
+    $('.sidebar .block-title:eq(0)').html( '<strong><span>REFINE BY</span></strong>' );
 
     $('#narrow-by-list dt, #narrow-by-list dd').remove();
 
