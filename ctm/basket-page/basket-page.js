@@ -14,7 +14,7 @@ var ctm_basket_page_experiment = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('CTM Basket Page - 0.1');
+console.log('CTM Basket Page - 0.2');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -78,6 +78,7 @@ exp.vars = {
     'cartQuantityHeader': $('th.cart-quantity'),
     'cartQuantityHeaderText': 'Price',
 
+    'cartTable': $('table#cart'),
     'tableRows': $('table#cart > tbody > tr'),
     'changeQuantityModalTemplate': '<div class="modal AWA_ChangeQtyModal fade" id="AWA_ChangeQuantityModal___PRODUCT_ID__" tabindex="-1"> \
         <div class="modal-dialog"> \
@@ -91,7 +92,10 @@ exp.vars = {
             </div> \
         </div> \
     </div>',
-    'changeQuantityModalLinkTemplate': '<a class="modalLink print-hide" data-toggle="modal" data-target="#AWA_ChangeQuantityModal___PRODUCT_ID__" href="#" >Change quantity</a>'
+    'changeQuantityModalLinkTemplate': '<a class="modalLink print-hide" data-toggle="modal" data-target="#AWA_ChangeQuantityModal___PRODUCT_ID__" href="#" >Change quantity</a>',
+
+	'orderSummaryBox': $('div#order-summary'),
+    'needHelpBox': $('div#need-help')
 };
 
 // Styles
@@ -208,9 +212,18 @@ exp.init = function() {
         $elem.find('td.cart-quantity').append($(self.vars.changeQuantityModalLinkTemplate.replace('__PRODUCT_ID__', product_id)));
         $('#AWA_ChangeQuantityModal___PRODUCT_ID__ form .cancel-changes-btn'.replace('__PRODUCT_ID__', product_id)).on('click', function() { changeQtyModal.modal('hide'); });
         $('#AWA_ChangeQuantityModal___PRODUCT_ID__ form .update-item-btn'.replace('__PRODUCT_ID__', product_id)).on('click', function() { changeQtyModal.modal('hide'); });
-
-
     });
+
+	// Remove 'well' classes from order summary box, add it to the nearest parent row
+	this.vars.orderSummaryBox.removeClass("well well-white");
+	this.vars.orderSummaryBox.parents('.row').addClass('well well-white');
+	this.vars.cartTable.attr('style', '-webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none;');
+
+	// Behead order summary box
+	this.vars.orderSummaryBox.find('#order-summary-heading').hide();
+
+	// Hide "Need Help" box
+	this.vars.needHelpBox.hide();
 
 };
 
