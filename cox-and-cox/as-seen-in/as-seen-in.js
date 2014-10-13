@@ -26,7 +26,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('As seen in - 0.2');
+console.log('As seen in - 0.3');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -46,7 +46,7 @@ exp.vars = {
 // Styles
 // String containing the CSS for the experiment
 exp.css = ' \
-.product-shop .downloads-links-block { position: relative; height: 273px; } \
+.product-shop .downloads-links-block { position: relative; height: 243px; margin-top: 20px; } \
 .product-shop .downloads-links-block h4 { border-bottom: 1px solid #DFDFDF; } \
 .product-shop .downloads-links-block .download-text { width: auto; } \
 .product-shop .downloads-links-block .download-holder { border: 1px solid #fff; padding: 5px 0 0 5px !important; position: absolute; top: 40px; left: 0; background: #fff; width: 60px; height: 82px; overflow: hidden; } \
