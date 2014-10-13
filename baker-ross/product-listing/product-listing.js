@@ -73,7 +73,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Product listing - 0.4');
+console.log('Product listing - 0.5');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -504,7 +504,7 @@ if( $('.pages').length ) {
         var href = self.attr('href');
         var name = self.text();
         var id = name.trim();
-        self.replaceWith( '<input type="checkbox" id="'+id+'" value="1" /><label for="'+id+'" data-behaviour="filterSelect" data-value="'+href+'">'+name+'</label>&nbsp;' );
+        self.replaceWith( '<input type="checkbox" id="'+id+'" value="1" data-behaviour="filterSelect" data-value="'+href+'" /><label for="'+id+'" data-behaviour="filterSelect" data-value="'+href+'">'+name+'</label>&nbsp;' );
     });
 
     if( exp.vars.currentFilters.length ) {
@@ -514,7 +514,7 @@ if( $('.pages').length ) {
             var value = self.find('.value').text();
             var href = self.find('.btn-remove').attr('href');
             var id = value.trim();
-            var current = '<li><input type="checkbox" id="'+id+'" checked="checked" value="1" /><label for="'+id+'" data-behaviour="filterSelect" data-value="'+href+'">'+value+'</label> </li>';
+            var current = '<li><input type="checkbox" id="'+id+'" checked="checked" value="1" data-behaviour="filterSelect" data-value="'+href+'" /><label for="'+id+'" data-behaviour="filterSelect" data-value="'+href+'">'+value+'</label> </li>';
             $('#narrow-by-list dt:contains("'+label+'")').removeClass('empty-filters').next('dd').removeClass('empty-filters').find('ol').prepend( current );
         });
     }
