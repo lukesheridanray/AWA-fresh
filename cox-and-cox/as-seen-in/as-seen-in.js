@@ -26,7 +26,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('As seen in - 0.1');
+console.log('As seen in - 0.2');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -46,10 +46,12 @@ exp.vars = {
 // Styles
 // String containing the CSS for the experiment
 exp.css = ' \
-.product-shop .downloads-links-block { position: relative; } \
+.product-shop .downloads-links-block { position: relative; height: 273px; } \
 .product-shop .downloads-links-block h4 { border-bottom: 1px solid #DFDFDF; } \
-.product-shop .downloads-links-block .download-holder { border-top: 0; position: absolute; top: 40px; left: 0; background: #fff; width: 60px; overflow: hidden; } \
-.product-shop .downloads-links-block .download-holder:hover { width: 260px; } \
+.product-shop .downloads-links-block .download-text { width: auto; } \
+.product-shop .downloads-links-block .download-holder { border: 1px solid #fff; padding: 5px 0 0 5px !important; position: absolute; top: 40px; left: 0; background: #fff; width: 60px; height: 82px; overflow: hidden; } \
+.product-shop .downloads-links-block .download-holder:hover { width: 210px; border: 1px solid #DFDFDF !important; } \
+.whishlist_wrap { display: none; } \
 .whishlist_wrap ul.add-to-links li a.link-wishlist { font-weight: normal; position: relative; top: -5px; } ';
 
 // Functions
@@ -65,11 +67,14 @@ exp.init = function() {
 
     $('.catalog-product-view .downloads-links-block .head h4:contains("As Seen In:")').closest('.downloads-links-block').appendTo( $('.product-shop') );
 
-    $('.whishlist_wrap, #social').appendTo( $('.product-img-box') );
+    $('#social').appendTo( $('.product-img-box') );
 
     $('.product-shop .downloads-links-block .download-holder:eq(0)').css({ 'left': '0', 'z-index': '3' });
     $('.product-shop .downloads-links-block .download-holder:eq(1)').css({ 'left': '150px', 'z-index': '2' });
     $('.product-shop .downloads-links-block .download-holder:eq(2)').css({ 'left': '300px', 'z-index': '1' });
+    $('.product-shop .downloads-links-block .download-holder:eq(3)').css({ 'left': '0', 'top': '137px', 'z-index': '3' });
+    $('.product-shop .downloads-links-block .download-holder:eq(4)').css({ 'left': '150px', 'top': '137px', 'z-index': '2' });
+    $('.product-shop .downloads-links-block .download-holder:eq(5)').css({ 'left': '300px', 'top': '137px', 'z-index': '1' });
 
 };
 
