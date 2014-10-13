@@ -73,7 +73,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Product listing - 0.5');
+console.log('Product listing - 0.8');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -169,8 +169,7 @@ dd.empty-filters,dt.empty-filters { display: none; } \
 .price-range-filter { display: block; height: 20px; } \
 .price-range-filter label { float: left; line-height: 22px; font-size: 1.2em; margin: 0 4px 10px 0; } \
 .price-range-filter input { width: 28px; padding: 3px; float: left; margin: 0 6px 0 0; } \
-.price-range-filter .price-range-submit { height: 23px; margin-left: 2px; width: 36px; border: 0; background: #0071B9; color: #fff; font-weight: bold; } \
-';
+.price-range-filter .price-range-submit { height: 23px; margin-left: 2px; width: 36px; border: 0; background: #0071B9; color: #fff; font-weight: bold; } ';
 
 // Functions
 // Object containing functions, some helpful functions are included
@@ -258,6 +257,7 @@ exp.func.modifyProducts = function() {
         return !$(this).hasClass('mutated');
         }).each(function() {
             var self = $(this);
+            self.addClass('mutated');
                 if( self.find('.out-of-stock').length ) {
                     // this is out of stock so don't continue with mods
                     return;
@@ -294,7 +294,6 @@ exp.func.modifyProducts = function() {
             });
             pricebox.html( introcontent + formcontent );
             self.find('.actions').remove();
-            self.addClass('mutated');
             self.attr('data-prod-id', id);
             self.append( '<div class="cta-actions"><a href="#" class="cta-add" data-behaviour="addToBasket">ADD TO BASKET</a><a href="'+url+'" class="cta-plain">view product details</a></div>' );
             self.find('.product-image, .product-name a').attr('data-behaviour', 'quickViewModal');
@@ -314,19 +313,26 @@ exp.func.addToBasket = function(e) {
     var container = $(this).closest('.mutated');
     var id = container.attr('data-prod-id');
     var inputs = container.find('input');
-    var superGroups = '';
+    var superGroup = '';
+    var related = '';
+    var inputsIndex = 0;
     inputs.each(function(){
         var _this = $(this);
-        if( _this.prop('checked') == true ){ 
-            superGroups += _this.attr('name')+'='+_this.attr('value')+'&';
+        if( _this.prop('checked') === true ){
+            if( inputsIndex === 0 ) {
+                superGroup += _this.attr('name')+'='+_this.attr('value')+'&';
+            } else {
+                related += _this.attr('name').replace('super_group%5B','').replace('%5D','%2C');
+            }
+            inputsIndex++;
         }
     });
-    if( superGroups === '') {
-        alert('You must select an option to add to the cart');
+    if( superGroup === '') {
+        alert('You must select an option to add to your basket');
         return false;
     }
-    var url = 'http://www.bakerross.co.uk/quickorder/index/success/uenc/aHR0cDovL3d3dy5iYWtlcnJvc3MuY28udWsvcmVkLXdoaXRlLWFuZC1ibHVlLWFjcnlsaWMtcGFpbnQ,/product/'+id+'/form_key/ag4a8S1SFOnX4HMf/?product='+id+'&related_product=&'+superGroups+'isAjax=1'
-    jQuery.fancybox({
+    var url = 'http://www.bakerross.co.uk/quickorder/index/success/uenc/aHR0cDovL3d3dy5iYWtlcnJvc3MuY28udWsvcmVkLXdoaXRlLWFuZC1ibHVlLWFjcnlsaWMtcGFpbnQ,/product/'+id+'/form_key/ag4a8S1SFOnX4HMf/?product='+id+'&related_product='+related.slice(0,-3)+'&'+superGroup+'isAjax=1';
+    $.fancybox({
         href: url,
         hideOnContentClick : true,
         width: 800,
