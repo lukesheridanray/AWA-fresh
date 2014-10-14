@@ -14,7 +14,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('VAT experiment - inc VAT 0.5');
+console.log('VAT experiment - inc VAT 0.7');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -22,7 +22,10 @@ exp.vars = {
     'allPrices': $('#product_price, .product_table h2, .product_range_holder h3, h4.was_price, h3.alt_head'), //'rrPrices': $('.rr-price a'),
     'allVatPrices': $('#product_price_inc_vat, .was_price_height'),
     'basketPrices': $('.main_basket td.price,.main_basket td.total'),
-    'basketWidget': $('.header_basket')
+    'basketWidget': $('.header_basket'),
+    'rangeUnitPrices': $('.range_product_price_per_unit,.product_header_price_per_unit,.product_description_tab_price_per_unit'),
+    'strapline': $('#product_strapline'),
+    'straplineReadMore': $('#product_strapline #readMore')
 };
 
 // Styles
@@ -109,6 +112,33 @@ exp.func.modBasketPrices = function( el ) {
     });
 };
 
+// Function to amend range unit prices
+// el = jQuery Object
+exp.func.modRangeUnitPrices = function( el ) {
+    var percentage = 1.2;
+    el.each(function(){
+        var self = $(this);
+        var parts = self.text().trim().match(/(.*)(£)(.*)(EACH)(.*)/i);
+        var priceBase = Math.round( parseFloat(parts[3]) * 100) / 100;
+        var priceResult = (priceBase * percentage).toFixed(2);
+        self.html( parts[1] + parts[2] + priceResult + ' ' + parts[4] + parts[5] );
+    });
+};
+
+// Function to amend strapline prices
+// el = jQuery Object
+exp.func.modStraplinePrices = function( el ) {
+    var percentage = 1.2;
+    el.each(function(){
+        var self = $(this);
+        var parts = self.html().match(/(.*)(£)([0-9]*[.][0-9]*)(.*)/i);
+        console.log(self.html());
+        var priceBase = Math.round( parseFloat(parts[3]) * 100) / 100;
+        var priceResult = (priceBase * percentage).toFixed(2);
+        self.html( parts[1] + parts[2] + priceResult + ' ' + parts[4] + exp.vars.straplineReadMore );
+    });
+};
+
 // Function to amend basket widget from ex to inc VAT and vice versa
 // el = jQuery Object
 exp.func.modBasketWidget = function( el ) {
@@ -147,6 +177,18 @@ exp.init = function() {
     this.func.waitForElement( '.rr-price a', function() {
         exp.func.modPrices( $('.rr-price a'), 'ex' );
     });
+
+    if(this.vars.rangeUnitPrices.length) {
+        exp.func.modRangeUnitPrices( this.vars.rangeUnitPrices );
+    }
+    
+    if(this.vars.straplineReadMore.length) {
+        this.vars.straplineReadMore = this.vars.straplineReadMore.wrap('<p />').parent().html();
+    }
+    
+    if(this.vars.strapline.length) {
+        exp.func.modStraplinePrices( this.vars.strapline );
+    }
     
     if( this.vars.allVatPrices.length ) {
         // modify the inc VAT prices to ex VAT
@@ -163,11 +205,11 @@ exp.init = function() {
         // modify the basket prices to inc VAT
         exp.func.modBasketPrices( this.vars.basketPrices );
         // if were on the basket page make a few copy changes so it is more clear
-    //    $('.main_basket th.price,.main_basket th.total').append(' inc VAT');
-    //    $('.basket_subtotal th').append(' (Exc.VAT)');
+        $('.main_basket th.price,.main_basket th.total').append(' inc VAT');
         $('.basket_subtotal th').append(' (Exc.VAT)');
-        $('.basket_subtotal, .product_pricing.basket_summary tr:eq(2), .product_pricing.basket_summary tr:eq(3)').remove();
-        $('th.summarytotal').text( $('th.summarytotal').text().replace(' (Inc.VAT)', '') );
+    //    $('.basket_subtotal th').append(' (Exc.VAT)');
+    //    $('.basket_subtotal, .product_pricing.basket_summary tr:eq(2), .product_pricing.basket_summary tr:eq(3)').remove();
+    //    $('th.summarytotal').text( $('th.summarytotal').text().replace(' (Inc.VAT)', '') );
     }
 
 };

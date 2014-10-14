@@ -6,18 +6,6 @@
 // jshint multistr: true
 // jshint jquery: true
 
-/*
-
-GA slot 2
-Crazy Egg
-
-"Engagement
-Email sign up (GA event action ""SignUp"")
-Contact us form submitted (GA event action ""ContactUsFormSubmit"")
-Free resources downloaded (GA event action ""DownloadResources"")"
-
-*/
-
 /* _optimizely_evaluate=force */
 $('.video-section,.main-wrap').css({'visibility':'hidden'});
 $('.header').css({'visibility':'hidden'});
@@ -31,7 +19,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Home page - dev 0.11');
+console.log('Home page - 1.3');
 
 // Variables
 // Object containing variables for use in the experiment, generally these would be strings or jQuery objects
@@ -44,7 +32,9 @@ exp.css = ' \
 body { position: relative; top: -12px; } \
 .header a img { position: relative; top: -6px; } \
 .search-box p { position: relative; top: -44px; } \
-.search-box div,.search-box form { position: relative; top: 35px; } \
+.search-box form { position: relative; top: 0; } \
+.search-box .header-phone-dropdown { position: relative; top: 46px; } \
+.search-box .header-phone-dropdown p { font-size: 12px; } \
 .main-wrap-blue-background-wrapper { width: 100%; background: #4378D3; margin-bottom: -19px; } \
 .main-wrap { padding-top: 50px !important; background: #fff; } \
 .ServiceTickHidden { position: absolute; top: 0; left: 0; } \

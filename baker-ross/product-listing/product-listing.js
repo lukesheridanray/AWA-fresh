@@ -33,8 +33,6 @@ Number of Transactions
 Clicks in the left nav
 Clicks on Add To Basket"
 
-ajax add to cart error
-
 "http://www.bakerross.co.uk/pocket-money-toys/toys-party-bag-fillers
 
 and all other product listings pages
@@ -42,11 +40,6 @@ and all other product listings pages
 /arts-and-crafts/arts-crafts-.*|/themed-crafts/themed-.*|/christmas|/easter|/fathers-day|/halloween|/mothers-day|/valentines-day|/pocket-money-toys/toys-.*|/fundraising-products/fundraising-.*|/educational-supplies/educational-.*|/educational-supplies/edcuational-.*|/super-value-packs/super-value-packs-.*|/football|/christmas/.*|/easter/.*|/fathers-day/.*|/halloween/.*|/mothers-day/.*|/valentines-day/.*|/football/.*|/.*-sale"
 
 "See 3 wireframes
-
-1. Checkboxes in left navigation, enabling user to switch items in and out of view. In our correspondence about this we referred to the 
-Macy's example. Also the links are styled as hyperlinks (blue underlined).
-
-2. Smaller item containers in the product grid, removing calls to action on default view (i.e. Quick View & Shop buttons).
 
 3. Item container now shows up to three different product variations, whereas currently only one is shown. You mentioned it would be possible to 
 scrape this from the product page. When more than three options are available (for example http://www.bakerross.co.uk/large-18ml-face-paint-pots), 
@@ -56,26 +49,10 @@ it simply says ""x options available"" as shown in the wireframe on the far righ
 variations - See Wireframe 2. The user can then select one or more option and click ""Add To Basket"" to add the items to his basket straight 
 from this page. An ""Added to Cart"" modal will appear - see point 8.
 
-5. Clicking anywhere else in the container will open the Quick View modal, exactly the same as currently on the site. Clicking on ""view product 
-details"" at the bottom is the only way to get to the product page.
-
-7. Ideally the left nav can be "sticky" so that it moves down the page as the user scrolls down.
-
-7. Price filter from x to y at the bottom of the left nav is new, as is the On SALE facet which simply loads items on sale in this category.
-
 8. When an item is added to basket, an ""Added to Basket"" modal appears in the same way as now. It is important that this shows product recommendations, 
 which you will see if you add an item to basket from the product page on the live site. However, currently it doesn't happen when you add an item to basket 
 from Quick View because of a technical reason, which they are fixing. This is very important so please investigate if necessary. 
 Could the feed be scraped from relevant product page?
-
-9. Retain ""Clear All"" filter functionality. To see how this works, apply a facet on the site. Next to the facet appears a ""close"" symbol and below 
-""Clear All"".
-
-10. A minor change is that the SEO blurb and hero image at the top of the page disappear.
-
-11. Another minor change is that the Sort By filter at the top of the page is presented differently. When the page first loads, you can use the 
-existing default. The user can then apply anyone of those filters at a time (Best Sellers - Lowest Price - Highest Price) which will become underlined 
-when selected. It's probably best to include another one - ""Default"" at the start of that series.
 
 12. Price Promise Guarantee is clickable and opens a modal. I'll send copy for that separately.
 
@@ -96,19 +73,45 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Product listing - 0.1');
+console.log('Product listing - 0.8');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
-    'primePromiseHeading': '<p class="price-promise-heading">YOU CAN\'T BUY CHEAPER - our <a href="#" data-behaviour="pricePromiseModal">100% PRICE PROMISE GAURANTEE</a></p>',
+    'productJSON': {},
+    'productFeedURL': '//www.bakerross.co.uk/feeds/skus_json_v1.xml',
+    'haveProductData': false,
+    'catDesc': $('.category-description.std'),
+    'primePromiseHeading': '<p class="price-promise-heading">Best Price Guaranteed - our <a href="#" data-behaviour="pricePromiseModal">100% Price Match Promise</a></p>',
     'amountText': $('.toolbar:eq(0).amount').text(),
     'loadingGif': '//cdn.optimizely.com/img/174847139/8c520be03d2c4ba5a3353ae0a9b90a89.gif',
     'currentPage': 1,
     'pricePromise': '<div class="price-promise-modal"> \
                       <h2>Price Promise</h2> \
                       <p>Content goes here.</p> \
-                     </div>'
+                     </div>',
+    'currentFilters': $('.sidebar .currently li'),
+    'filterLabels': $('#narrow-by-list dt'),
+    'filterGroups': {
+        'Product Type': '<dt class="odd">Product Type</dt> <dd class="odd"><ol></ol></dd>',
+        'Material': '<dt class="odd">Material</dt> <dd class="odd"><ol></ol></dd>',
+        'Occasion': '<dt class="odd">Occasion</dt> <dd class="odd"><ol></ol></dd>',
+        'Theme': '<dt class="odd">Theme</dt> <dd class="odd"><ol></ol></dd>',
+        'Brand': '<dt class="odd">Brand</dt> <dd class="odd"><ol></ol></dd>',
+        'Price': '<dt class="odd">Price</dt> <dd class="odd"><ol></ol></dd>'
+    },
+    'filterGroupsDOM':
+        ( $('#narrow-by-list dt:contains("Product Type")').length ? '<dt class="odd">Product Type</dt><dd>' + $('#narrow-by-list dt:contains("Product Type")').next('dd').html() + '</dd>' : '<dt class="odd empty-filters">Product Type</dt> <dd class="odd empty-filters"><ol></ol></dd>' ) +
+        ( $('#narrow-by-list dt:contains("Material")').length ? '<dt class="odd">Material</dt><dd>' +  $('#narrow-by-list dt:contains("Material")').next('dd').html() + '</dd>' : '<dt class="odd empty-filters">Material</dt> <dd class="odd empty-filters"><ol></ol></dd>' ) +
+        ( $('#narrow-by-list dt:contains("Occasion")').length ? '<dt class="odd">Occasion</dt><dd>' + $('#narrow-by-list dt:contains("Occasion")').next('dd').html() + '</dd>' : '<dt class="odd empty-filters">Occasion</dt> <dd class="odd empty-filters"><ol></ol></dd>' ) +
+        ( $('#narrow-by-list dt:contains("Theme")').length ? '<dt class="odd">Theme</dt><dd>' +  $('#narrow-by-list dt:contains("Theme")').next('dd').html() + '</dd>' : '<dt class="odd empty-filters">Theme</dt> <dd class="odd empty-filters"><ol></ol></dd>' ) +
+        ( $('#narrow-by-list dt:contains("Brand")').length ? '<dt class="odd">Brand</dt><dd>' + $('#narrow-by-list dt:contains("Brand")').next('dd').html() + '</dd>' : '<dt class="odd empty-filters">Brand</dt> <dd class="odd empty-filters"><ol></ol></dd>' ) +
+        ( $('#narrow-by-list dt:contains("Price")').length ? '<dt class="odd">Price</dt><dd>' + $('#narrow-by-list dt:contains("Price")').next('dd').html() + '</dd>' : '<dt class="odd empty-filters">Price</dt> <dd class="odd empty-filters"><ol></ol></dd>' ),
+    'priceRange': '<form class="price-range-filter" action="' + window.location + '" method="get"> \
+                   <label for="price-range-min">&pound;</label><input type="text" id="price-range-min" placeholder="min" value="" /> \
+                   <label for="price-range-max">to</label><input type="text" id="price-range-max" placeholder="max" value="" /> \
+                   <input type="submit" id="price-range-max" class="price-range-submit" placeholder="max" value="Go" /> \
+                   </form>'
 };
 
 // Styles
@@ -118,7 +121,7 @@ exp.css =
 .category-image { display: none; } \
 .toolbar .limiter, .toolbar .pages  { display: none; } \
 .toolbar { margin: -10px 0 0 0; } \
-.price-promise-heading { text-align: center; font-size: 1.3em; padding: 0 0 15px 0; } \
+.price-promise-heading { text-align: center; font-size: 1.3em; padding: 10px 0 25px 0; } \
 .price-promise-heading a { color: #333; font-weight: bold; } \
 .price-promise-heading a:hover { text-decoration: underline; } \
 .pager.sorter { padding: 0 0 15px 0; } \
@@ -134,18 +137,39 @@ background-color: #FFF; color: #0071B9; border: 1px solid #0071B9; padding: 3px 
 .load-more-button:hover { text-decoration: none; } \
 #infscr-loading { text-align: center; padding: 5px 0 10px 0; } \
 #infscr-loading img { display: block; margin: 0 auto 5px auto; } \
-.products-grid { width: 100%; height: 236px; position: relative; overflow: visible; margin-bottom: 20px !important; } \
+.products-grid { width: 100%; height: 246px; position: relative; overflow: visible; margin-bottom: 20px !important; } \
 .products-grid .item .feefo-holder { display: none; } \
-.item.mutated { height: 220px; overflow: hidden; position: absolute; top: 0; background: #fff; } \
+.item.mutated { height: 240px; overflow: hidden; position: absolute; top: 0; background: #fff; } \
 .item.mutated { z-index: 1; } \
-.item.mutated:hover { height: 300px; border-color: #bbb; z-index: 2; } \
+.item.mutated:hover { height: auto; border-color: #bbb; z-index: 2; } \
 .item.mutated { left: 186px; } \
 .item.mutated + .mutated + .mutated { left: 372px; } \
 .item.mutated.first { left: 0; } \
 .item.mutated.last { left: 558px !important; } \
+.mutated .price-box { min-height: 52px; } \
 .mutated .cta-add { font: bold 12px Arial,Helvetica,sans-serif; display: block; margin: 0 auto; width: 100px; text-decoration: none; border: medium none; background-color: #DC002E; color: #FFF; padding: 5px 7px; text-align: center; text-transform: uppercase; } \
 .mutated .cta-plain { display: block; text-align: center; padding: 7px 0 0 0; } \
-';
+.mini-prod-form-option { display: none; } \
+.mutated:hover .mini-prod-form-option { display: block; } \
+.mutated:hover .intro-content-item { display: none; } \
+.mini-prod-form-option, .intro-content-item { background: #fff; position: relative; top: -14px; line-height: 16px; overflow: auto; padding: 0 0 5px 0; } \
+.mini-prod-form-option .price, .intro-content-item .price { float: right; } \
+.mini-prod-form-option .name, .intro-content-item .name { float: left; } \
+.mini-prod-form-option input, .intro-content-item input { float: left; margin: 0 5px 0 0; position: relative; top: 1px !important; } ' +
+/* Side Navigation */ ' \
+dd.empty-filters,dt.empty-filters { display: none; } \
+.sidebar .currently { display: none; } \
+#narrow-by-list { padding-left: 7px; padding-right: 7px; } \
+#narrow-by-list li label { color: #0071B9; position: relative; left: 4px; text-decoration: underline; cursor: pointer; } \
+#narrow-by-list li input { cursor: pointer; } \
+#narrow-by-list li label:hover { text-decoration: none; } \
+#narrow-by-list dd li { padding: 6px 0 0 0; } \
+#narrow-by-list dd { padding: 0 0 8px 0; } \
+#narrow-by-list { padding-left: 7px; padding-right: 7px; } \
+.price-range-filter { display: block; height: 20px; } \
+.price-range-filter label { float: left; line-height: 22px; font-size: 1.2em; margin: 0 4px 10px 0; } \
+.price-range-filter input { width: 28px; padding: 3px; float: left; margin: 0 6px 0 0; } \
+.price-range-filter .price-range-submit { height: 23px; margin-left: 2px; width: 36px; border: 0; background: #0071B9; color: #fff; font-weight: bold; } ';
 
 // Functions
 // Object containing functions, some helpful functions are included
@@ -191,6 +215,7 @@ exp.func.waitForFunction = function(func, callback, timeout, keepAlive) {
         }, intervalTime);
 };
 
+
 // Functon to sort products
 exp.func.sortProducts = function(e) {
     e.preventDefault();
@@ -226,26 +251,53 @@ exp.func.modifyProducts = function() {
     $('.products-grid').filter( function() {
         return !$(this).has('.products-grid--inner');
         }).each(function() {
-        console.log('found');
            $(this).find('.item').wrapAll('<div class="products-grid--inner" />');
     });
     $('.products-grid .item').filter( function() {
         return !$(this).hasClass('mutated');
         }).each(function() {
-           var self = $(this);
-           var url = self.find('.actions .white').attr('href');
-           var quickview = self.find('.fancybox').attr('href');
-           var id = self.find('.fancybox').attr('id').replace('fancybox','');
-           //var pricebox = self.find('.price-box');
-           //var pricecontent = pricebox.html();
-           //pricebox.html('');
-           self.find('.actions').remove();
-           self.addClass('mutated');
-           self.attr('data-prod-id', id);
-           self.append( '<div class="cta-actions"><a href="#" class="cta-add" data-behaviour="addToBasket">ADD TO BASKET</a><a href="'+url+'" class="cta-plain">view product details</a></div>' );
-           self.find('.product-image, .product-name a').attr('data-behaviour', 'quickViewModal');
-           self.find('.product-image, .product-name a').attr('data-quickview', quickview);
-           self.bind('mouseover', exp.func.loadBasketOptions );
+            var self = $(this);
+            self.addClass('mutated');
+                if( self.find('.out-of-stock').length ) {
+                    // this is out of stock so don't continue with mods
+                    return;
+                };
+            var url = self.find('.actions .white').attr('href');
+            var quickview = self.find('.fancybox').attr('href');
+            var id = self.find('.fancybox').attr('id').replace('fancybox','');
+            var pricebox = self.find('.price-box');
+            var optionsArray = exp.vars.productJSON[ id ];
+            // create DOM based on options, update price box html
+            var introcontent = '';
+            var formcontent = '';
+            if( optionsArray.length > 3 ) {
+                introcontent = '<div class="intro-content-item"> \
+                    <span class="name">'+optionsArray.length+' options available</span> \
+                    <span class="price">&pound;'+parseFloat(optionsArray[0]['price']).toFixed(2)+'</span> \
+                    </div>';
+            } else {
+                $.each(optionsArray, function(index, value) {
+                    introcontent += '<div class="intro-content-item"> \
+                    <span class="name">'+optionsArray[index]['name']+'</span> \
+                    <span class="price">&pound;'+parseFloat(optionsArray[index]['price']).toFixed(2)+'</span> \
+                    </div>';
+                });
+            }
+            $.each(optionsArray, function(index, value) {
+                formcontent += '<div class="mini-prod-form-option"> \
+                <input name="product" value="'+id+'" type="hidden"> \
+                <input name="related_product" id="related-products-field" value="" type="hidden"> \
+                <span class="input"><input id="i'+id+optionsArray[index]['code']+'" name="super_group%5B'+optionsArray[index]['code']+'%5D" value="1" title="Qty" type="checkbox"></span> \
+                <label for="i'+id+optionsArray[index]['code']+'" class="name">'+optionsArray[index]['name']+'</label> \
+                <span class="price">&pound;'+parseFloat(optionsArray[index]['price']).toFixed(2)+'</span> \
+                </div>';
+            });
+            pricebox.html( introcontent + formcontent );
+            self.find('.actions').remove();
+            self.attr('data-prod-id', id);
+            self.append( '<div class="cta-actions"><a href="#" class="cta-add" data-behaviour="addToBasket">ADD TO BASKET</a><a href="'+url+'" class="cta-plain">view product details</a></div>' );
+            self.find('.product-image, .product-name a').attr('data-behaviour', 'quickViewModal');
+            self.find('.product-image, .product-name a').attr('data-quickview', quickview);
     });
     // Rebind add to basket handlers
     $('[data-behaviour="addToBasket"]').unbind();
@@ -255,40 +307,42 @@ exp.func.modifyProducts = function() {
     $('[data-behaviour="quickViewModal"]').bind('click', exp.func.quickViewModal);
 };
 
-// Function to load the basket options
-exp.func.loadBasketOptions = function() {
-    var self = $(this);
-    var id = self.attr('data-prod-id');
-    self.find('.price-box').html( id );
-          /* $.ajax({
-               url: url,
-               type: 'GET',
-               success: function( response ) {
-                   //console.log( $(response).find('.add-to-box .grouped-item').html() );
-                   pricecontent = $(response).find('.add-to-box .grouped-item').length;
-                   pricebox.html( pricecontent );
-               },
-               error: function() {
-                   console.log('error');
-                   pricebox.html( pricecontent );
-               }
-           }); */
-};
-
 // Function to add items to the basket
 exp.func.addToBasket = function(e) {
     e.preventDefault();
-    alert('testing');
-/*
-    jQuery.ajax({
-        url: 'http://www.bakerross.co.uk/checkout/cart/add/uenc/aHR0cDovL3d3dy5iYWtlcnJvc3MuY28udWsvaG9iYnlsaW5lLWZpbmUtdGlwLWdsYXNzLXBlbnMtMQ,,/product/90466/form_key/okwfIb4BTh5UdesL/',
-        data: 'super_group[96121]=1&super_group[93520]=2',
-        type: 'POST',
-        success: function() {
-            alert('success');
+    var container = $(this).closest('.mutated');
+    var id = container.attr('data-prod-id');
+    var inputs = container.find('input');
+    var superGroup = '';
+    var related = '';
+    var inputsIndex = 0;
+    inputs.each(function(){
+        var _this = $(this);
+        if( _this.prop('checked') === true ){
+            if( inputsIndex === 0 ) {
+                superGroup += _this.attr('name')+'='+_this.attr('value')+'&';
+            } else {
+                related += _this.attr('name').replace('super_group%5B','').replace('%5D','%2C');
+            }
+            inputsIndex++;
         }
     });
-*/
+    if( superGroup === '') {
+        alert('You must select an option to add to your basket');
+        return false;
+    }
+    var url = 'http://www.bakerross.co.uk/quickorder/index/success/uenc/aHR0cDovL3d3dy5iYWtlcnJvc3MuY28udWsvcmVkLXdoaXRlLWFuZC1ibHVlLWFjcnlsaWMtcGFpbnQ,/product/'+id+'/form_key/ag4a8S1SFOnX4HMf/?product='+id+'&related_product='+related.slice(0,-3)+'&'+superGroup+'isAjax=1';
+    $.fancybox({
+        href: url,
+        hideOnContentClick : true,
+        width: 800,
+        height: 450,
+        autoDimensions: true,
+        type: 'iframe',
+        showTitle: false,
+        scrolling: 'no',
+        centerOnScroll:true
+    });
 };
 
 // Function to open the quick view modal
@@ -322,6 +376,29 @@ exp.func.countResults = function() {
     }
 };
 
+// Function to filter products by a custom price range
+exp.func.priceRangeFilter = function() {
+    var min = parseFloat( $('#price-range-min').val() );
+    var max = parseFloat( $('#price-range-max').val() );
+    var locString = window.location.toString();
+    var search = window.location.search;
+    if( isNaN(min) || isNaN(max) ) {
+        alert( 'You have not entered a price range to search by. Please try again.' );
+    } else if( max <= min ) {
+        alert( 'The max price must be larger than the min price. Please try again.' );
+    } else {
+        if( locString.indexOf('price=') !== -1 ) {
+            window.location = locString.replace(/(.*)(price=)(.*)/g,function(parts,p1,p2,p3){
+                return p1 + p2 + min +'-'+ max;
+            });
+        } else if( search) {
+            window.location = locString + '&price='+ min +'-'+ max;
+        } else {
+            window.location = locString + '?price='+ min +'-'+ max;
+        }      
+    }
+};
+
 // Init function
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
 exp.init = function() {
@@ -330,8 +407,13 @@ exp.init = function() {
     $('head').append('<style type="text/css">'+this.css+'</style>');
 
     // **
-    // Toolbars, general and Product Grid
+    // Toolbars and general
     //
+
+    if( this.vars.catDesc.length ) {
+        var theDesc = this.vars.catDesc.find('div').clone();
+        this.vars.catDesc.html( theDesc );
+    }
 
     $('.toolbar:eq(1), .toolbar .limiter').remove();
 
@@ -386,11 +468,15 @@ exp.init = function() {
             var oldDOM = $('.products-grid:last .item:last').html();
             $('.products-grid:last').append('<div class="oldDOM">'+oldDOM+'</div>');
             
-            exp.func.modifyProducts();
+            if( exp.vars.haveProductData ) {
+                exp.func.modifyProducts();
+            }
             
         }
     );
     $('.category-products').infinitescroll('unbind');
+
+if( $('.pages').length ) {
 
     $('.category-products').after(
         '<div class="load-more-wrapper"><span class="load-more-wrapper--results">' +
@@ -404,13 +490,86 @@ exp.init = function() {
         e.preventDefault();
         $('.category-products').infinitescroll('retrieve');
     });
+
+}
     
-    exp.func.modifyProducts();
+    //exp.func.modifyProducts();
 
     // **
     // Side navigation
     //
-    
+
+    $('.sidebar .block-title:eq(0)').html( '<strong><span>REFINE BY</span></strong>' );
+
+    $('#narrow-by-list dt, #narrow-by-list dd').remove();
+
+    $('#narrow-by-list').prepend( exp.vars.filterGroupsDOM );
+
+    $('#narrow-by-list li a').each(function(){
+        var self = $(this);
+        var href = self.attr('href');
+        var name = self.text();
+        var id = name.trim();
+        self.replaceWith( '<input type="checkbox" id="'+id+'" value="1" data-behaviour="filterSelect" data-value="'+href+'" /><label for="'+id+'" data-behaviour="filterSelect" data-value="'+href+'">'+name+'</label>&nbsp;' );
+    });
+
+    if( exp.vars.currentFilters.length ) {
+        exp.vars.currentFilters.each(function(){
+            var self = $(this);
+            var label = self.find('.label').text().replace(':','');
+            var value = self.find('.value').text();
+            var href = self.find('.btn-remove').attr('href');
+            var id = value.trim();
+            var current = '<li><input type="checkbox" id="'+id+'" checked="checked" value="1" data-behaviour="filterSelect" data-value="'+href+'" /><label for="'+id+'" data-behaviour="filterSelect" data-value="'+href+'">'+value+'</label> </li>';
+            $('#narrow-by-list dt:contains("'+label+'")').removeClass('empty-filters').next('dd').removeClass('empty-filters').find('ol').prepend( current );
+        });
+    }
+
+    $('[data-behaviour="filterSelect"]').bind('click',function(){
+        window.location = $(this).attr('data-value');
+    });
+
+    $('#narrow-by-list').append( exp.vars.priceRange );
+
+    $('.price-range-filter').bind('submit',function(e){
+        e.preventDefault();
+        exp.func.priceRangeFilter();
+    });
+
+    // **
+    // Product Grid
+    //
+
+    exp.func.grabProductData = function() {
+        var attempts;
+        function doAjaxRequest() {
+            attempts = 0;
+            doAjaxRequestLoop();
+        }
+        function doAjaxRequestLoop() {
+            attempts += 1;
+            if (attempts > 3) {
+                return false;
+            }
+            $.ajax({
+                url: exp.vars.productFeedURL,
+                dataType: 'text',
+                type: 'GET',
+                success: function( response ) {
+                    exp.vars.productJSON = $.parseJSON(
+                        response.replace('" ','inch')
+                    );
+                    exp.func.modifyProducts();
+                    exp.vars.haveProductData = true;
+                },
+                error: function() {
+                    doAjaxRequestLoop();
+                }
+            });
+        }
+        doAjaxRequest();
+    };
+    exp.func.grabProductData();
 
 };
 

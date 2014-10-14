@@ -10,11 +10,11 @@ var cat_page_move_facets_exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Category page move facets experiment - 1.0.4');
+console.log('Category page move facets experiment - 1.2.0');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
-exp.condition = $('.catBGHolder');
+exp.condition = $('.catBGHolder #facetResultsOnListingsPage');
 
 // check for a condition and check it has been met
 if(exp.condition && !exp.condition.length) {
@@ -45,9 +45,17 @@ exp.vars = {
     'newFacetsLabel': $('<a href="#" class="CGIT_newFacetsLabel">Beep boop I\'m a label.</a>'),
     'newFacetsImg': $('<img src="//cdn.optimizely.com/img/174847139/0a5eba47624149fa8fe3d5ebceabce2c.png">'),
     'newFacetsSupplementaryLabel': $('<label href="#" class="CGIT_newFacetsSupplementaryLabel">Beep boop I\'m a supplementary label.</label>'),
+
+    // Detect what kind of page we are on.
+    'isNewInPage': $('.leftNAVIGATION h2 a').text() == 'New In',
+    'isBrandPage': $('#crumb span:nth-of-type(2) a').text() == 'Brands',
+    'isCategoryPage': $('.leftNAVIGATION:first-of-type > ul:not(.navarrow) > li:not(.subcat).selected').length > 0,
 };
 
 exp.styles = '\
+#holder_CENTRE { \
+    padding-top: 40px; \
+} \
 .CGIT_newFacetsWrapper { \
     border: 1px solid #666; \
     border-top: 0; \
@@ -58,7 +66,6 @@ exp.styles = '\
     padding-bottom: 10px; \
     box-sizing: border-box; \
     padding: 1em; \
-    margin-top: 40px; \
 } \
 a.CGIT_newFacetsLabel { \
     display: block; \
@@ -149,13 +156,7 @@ a.CGIT_newFacetsClearAllLink { \
 .CGIT_newFacetsContainer ul li.notselected.innertitle{padding-left:10px} \
 .CGIT_newFacetsContainer ul li.notselected a{background: url(http://www.dunelondon.com/images/core/facet_bg.gif?Lo0P=e143557e6f55b3c5696e28596227c0b274)  no-repeat 10px 4px;padding-right:10px} \
 .CGIT_newFacetsContainer ul li.notavailable{color:#aaa;cursor:default;padding-left:34px; box-sizing: border-box;} \
-.CGIT_newFacetsContainer ul li .count{font-size:11px} \
-.categoryBANNER > .banner-row { \
-    background-color: transparent; \
-} \
-.categoryBANNER > .banner-row > .column > p { \
-    display: none; \
-}';
+.CGIT_newFacetsContainer ul li .count{font-size:11px}';
 
 exp.func = {};
 
@@ -353,10 +354,20 @@ exp.func.clearAllFacets = function(e){
     executeFacetAjax();
 };
 
+exp.func.reduceBanner = function(){
+    $('.categoryBANNER > .banner-row').css({ 'background-color': 'transparent' });
+    $('.categoryBANNER > .banner-row > .column > p').hide();
+};
+
 // Init function
 // Called to run the actual experiment, will be mostly DOM manipulation, event listeners, etc
 exp.init = function() {
     // DOM manipulation...
+
+    if (this.vars.isBrandPage) {
+        console.log("Aborting Category Move Facets experiment - brand pages are currently excluded from the experiment.")
+        return;
+    }
 
     // append styles to head
     $('head').append('<style type="text/css">'+this.styles+'</style>');
@@ -366,7 +377,7 @@ exp.init = function() {
     ajaxGET = exp.func.ajaxGET;
 
     // Add newFacetsContainer before categoryHolder
-    this.vars.categoryHolder.before(
+    this.vars.categoryHolder.find('#topSectionForCategories').after(
         this.vars.newFacetsWrapper
     );
 
@@ -379,8 +390,8 @@ exp.init = function() {
         this.vars.newFacetsContainer
     );
 
-this.vars.newFacetsLabel.prepend(
-    this.vars.newFacetsImg
+    this.vars.newFacetsLabel.prepend(
+        this.vars.newFacetsImg
     );
 
     this.vars.selectedOptionsClearAllLink.hide();
@@ -393,6 +404,11 @@ this.vars.newFacetsLabel.prepend(
     this.vars.newFacetsImg.attr('src', this.vars.img_downArrow);
     this.vars.newFacetsLabel.contents().last()[0].textContent = this.vars.closedLabel;
     this.vars.newFacetsLabel.on('click', this.func.toggleChosenOnes);
+
+    // Tweak the page's banner if we're allowed to. :-)
+    if (!(this.vars.isNewInPage || this.vars.isBrandPage || this.vars.isCategoryPage)) {
+        exp.func.reduceBanner();
+    }
 };
 
 // Return the experiment object so we can access it later

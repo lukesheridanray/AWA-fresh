@@ -14,7 +14,7 @@ var tile_calculator_2014_08 = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Tile Calculator 2014 08 - 1.3.1');
+console.log('Tile Calculator 2014 08 - 1.4.0');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -241,6 +241,7 @@ exp.func.initNewElements = function(){
 
 exp.func.loadExistingElements = function(){
     exp.vars.elements = {
+        'tile_calculator_modal'                  : $('#tile-calculator-modal'),
         'tile_calculator_modal_title'            : $('#tile-calculator-modal .modal-content .modal-header .modal-title'),
         'floor_wall_buttons_row'                 : $('#tile-calculator-modal div.row.tab-buttons'),
         'floor_calculator_button'                : $('.floor-calc-btn'),
@@ -465,6 +466,10 @@ exp.func.attachAddToCartLogic = function() {
             $(".update-item-btn", $elem).click();
 
         });
+
+        // Close modal
+        exp.vars.elements.tile_calculator_modal.modal('hide');
+
     });
 };
 

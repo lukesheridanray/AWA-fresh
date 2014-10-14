@@ -14,7 +14,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('VAT experiment - ex VAT 0.5');
+console.log('VAT experiment - ex VAT 0.7');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -32,6 +32,7 @@ exp.css = ' \
 .product_range_holder { height: 496px; } \
 .product_range_holder .buy_button { top: 55px; } \
 .product_range_holder h4 { padding-left: 10px; clear: left; } \
+.product_range_holder .float_left h4 { clear: none !important; } \
 .product_range_holder h4.was_price { top: 320px; left: 0; } \
 .product_table h2 .small_label { display: block; padding-left: 0; } \
 .product_table h3.alt_head { padding-top: 20px; } \
@@ -111,8 +112,8 @@ exp.init = function() {
     }
 
     // append styles to head
-    $('head').append('<style type="text/css">'+this.css+'</style>');
-
+    //$('head').append('<style type="text/css">'+this.css+'</style>');
+/*
     if( this.vars.allPrices.length ) {
         // modify the ex VAT prices to inc VAT
         exp.func.modPrices( this.vars.allPrices, 'ex' );
@@ -131,16 +132,16 @@ exp.init = function() {
             }
         });
     }
-
+*/
     if( this.vars.allVatPrices.length ) {
         // modify the inc VAT prices to ex VAT
     //    exp.func.modPrices( this.vars.allVatPrices, 'inc' );
-        exp.vars.allVatPrices.remove();
+    ////    exp.vars.allVatPrices.remove();
     }
 
     if( this.vars.basketPrices.length ) {
         // modify the basket prices to inc VAT
-        exp.func.modBasketPrices( this.vars.basketPrices );
+    //    exp.func.modBasketPrices( this.vars.basketPrices );
         // if were on the basket page make a few copy changes so it is more clear
     //    $('.main_basket th.price,.main_basket th.total').append(' inc VAT');
     //    $('.basket_subtotal th').append(' (Exc.VAT)');
