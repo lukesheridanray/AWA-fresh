@@ -26,7 +26,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('As seen in - 0.3');
+console.log('As seen in - 0.4');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -46,7 +46,7 @@ exp.vars = {
 // Styles
 // String containing the CSS for the experiment
 exp.css = ' \
-.product-shop .downloads-links-block { position: relative; height: 243px; margin-top: 20px; } \
+.product-shop .downloads-links-block { position: relative; height: 130px; margin-top: 20px; } \
 .product-shop .downloads-links-block h4 { border-bottom: 1px solid #DFDFDF; } \
 .product-shop .downloads-links-block .download-text { width: auto; } \
 .product-shop .downloads-links-block .download-holder { border: 1px solid #fff; padding: 5px 0 0 5px !important; position: absolute; top: 40px; left: 0; background: #fff; width: 60px; height: 82px; overflow: hidden; } \
@@ -75,6 +75,10 @@ exp.init = function() {
     $('.product-shop .downloads-links-block .download-holder:eq(3)').css({ 'left': '0', 'top': '137px', 'z-index': '3' });
     $('.product-shop .downloads-links-block .download-holder:eq(4)').css({ 'left': '150px', 'top': '137px', 'z-index': '2' });
     $('.product-shop .downloads-links-block .download-holder:eq(5)').css({ 'left': '300px', 'top': '137px', 'z-index': '1' });
+
+    if( $('.product-shop .downloads-links-block .download-holder').length > 3 ) {
+        $('.product-shop .downloads-links-block').css({'height': '243px'});
+    }
 
 };
 
