@@ -1,0 +1,33 @@
+<fieldset style="padding: 1em; width: 445px; margin: 0px auto; border: 1px solid rgb(204, 204, 204);" class="co-box"><legend style="display: block; padding: 0px 1em; font-weight: bold; font-size: 1.5em;">Your Email Address</legend>
+
+<form id="login-form" action="https://www.coxandcox.co.uk/customer/account/loginPost/" method="post">
+
+<ul class="form-list">
+  <li>
+    <label style="display: block; text-align: right; width: 150px;" for="login-email">Enter your Email Address:</label>
+    <div style="width: auto; margin-right: 20px;" class="input-box">
+      <input value="" name="login[username]" id="login-email" class="input-text required-entry validate-email" type="text">
+      <br>
+      <span style="float: right;">(for order confirmation)</span>
+	</div>
+  </li>
+  <li class="control">
+    <label style="display: inline-block; text-align: right; width: 150px;">Do you have a password?</label>
+   <div style="display: inline-block; float: right; width: 280px; top: 2px; position: relative;">
+    <input class="radio" value="guest" id="login:login" name="checkout_method" type="radio"><label style="margin-right: 1.5em;" for="login:login">Yes</label> <input class="radio" value="guest" id="login:guest" name="checkout_method" checked="checked" type="radio"><label for="login:guest">No</label>
+  </div>
+  </li>
+  <li class="password-container" style="display:none">
+	  <label style="display: block; text-align: right; width: 150px;" for="login-password">Password</label>
+  	  <div style="margin-right: 20px; width: auto;" class="input-box">
+        <input class="input-text required-entry" id="login-password" name="login[password]" type="password">
+        <br>
+        <span><a href="/customer/account/forgotpassword/">Forgot Password?</a></span>
+      </div>
+  </li>
+  <li style="margin-top:2em;"><button class="button" type="button" id="onepage-first-goon" style="display: block; font-size: 1.5em; font-weight: bold; padding: 0.75em 2em; margin: 0px auto; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);">Continue</button></li>
+</ul>
+
+</form>
+
+</fieldset>
