@@ -15,7 +15,6 @@ Crazy Egg
 Number of Transactions
 Add to Basket"
 
-
 */
 
 // Wrap the experiment code in an IIFE, this creates a local scope and allows us to

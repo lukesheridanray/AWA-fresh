@@ -33,31 +33,7 @@ Number of Transactions
 Clicks in the left nav
 Clicks on Add To Basket"
 
-"http://www.bakerross.co.uk/pocket-money-toys/toys-party-bag-fillers
-
-and all other product listings pages
-
 /arts-and-crafts/arts-crafts-.*|/themed-crafts/themed-.*|/christmas|/easter|/fathers-day|/halloween|/mothers-day|/valentines-day|/pocket-money-toys/toys-.*|/fundraising-products/fundraising-.*|/educational-supplies/educational-.*|/educational-supplies/edcuational-.*|/super-value-packs/super-value-packs-.*|/football|/christmas/.*|/easter/.*|/fathers-day/.*|/halloween/.*|/mothers-day/.*|/valentines-day/.*|/football/.*|/.*-sale"
-
-"See 3 wireframes
-
-3. Item container now shows up to three different product variations, whereas currently only one is shown. You mentioned it would be possible to 
-scrape this from the product page. When more than three options are available (for example http://www.bakerross.co.uk/large-18ml-face-paint-pots), 
-it simply says ""x options available"" as shown in the wireframe on the far right of each row.
-
-4. On mouse-over, item container becomes taller and a call to action ""Add to Basket"" appears along with checkboxes next to the product 
-variations - See Wireframe 2. The user can then select one or more option and click ""Add To Basket"" to add the items to his basket straight 
-from this page. An ""Added to Cart"" modal will appear - see point 8.
-
-8. When an item is added to basket, an ""Added to Basket"" modal appears in the same way as now. It is important that this shows product recommendations, 
-which you will see if you add an item to basket from the product page on the live site. However, currently it doesn't happen when you add an item to basket 
-from Quick View because of a technical reason, which they are fixing. This is very important so please investigate if necessary. 
-Could the feed be scraped from relevant product page?
-
-12. Price Promise Guarantee is clickable and opens a modal. I'll send copy for that separately.
-
-Wireframe 3 shows view when an item has been added to cart.
-"
 
 */
 
@@ -73,7 +49,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Product listing - 0.8');
+console.log('Product listing - 0.9');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -87,8 +63,10 @@ exp.vars = {
     'loadingGif': '//cdn.optimizely.com/img/174847139/8c520be03d2c4ba5a3353ae0a9b90a89.gif',
     'currentPage': 1,
     'pricePromise': '<div class="price-promise-modal"> \
-                      <h2>Price Promise</h2> \
-                      <p>Content goes here.</p> \
+                      <h2>100% Price Match Promise</h2> \
+                      <p>When you shop with us, we want to ensure that you are getting the best deal.</p> \
+                      <p>If you find any item on our website sold cheaper by any other business to business mail order catalogue on the UK mainland, we will match the price.</p> \
+                      <p><a href="http://www.bakerross.co.uk/pages/price-promise" target="_blank">How it works</a></p> \
                      </div>',
     'currentFilters': $('.sidebar .currently li'),
     'filterLabels': $('#narrow-by-list dt'),
@@ -124,6 +102,8 @@ exp.css =
 .price-promise-heading { text-align: center; font-size: 1.3em; padding: 10px 0 25px 0; } \
 .price-promise-heading a { color: #333; font-weight: bold; } \
 .price-promise-heading a:hover { text-decoration: underline; } \
+.price-promise-modal { text-align: left; width: 440px; } \
+.price-promise-modal p { margin: 10px 0 5px 0; } \
 .pager.sorter { padding: 0 0 15px 0; } \
 .sorter .sort-by { float: right !important; margin-right: 0 !important; } \
 .sort-by label { font-weight: bold; padding: 0 15px 0 0; } \
