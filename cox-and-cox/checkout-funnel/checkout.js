@@ -268,11 +268,26 @@
                     }
                 });
 
-                var address = $("#billing\\:street1").val() + '<br />'
-                    + $("#billing\\:street2").val() + '<br />'
-                    + $("#billing\\:city").val() + '<br />'
-                    + $("#billing\\:postcode").val() + '<br />'
-                    + $("#billing\\:country option:selected").text() + '<br /><br />'
+                var sepShipping = false;
+                if ($("#shipping\\:street1").val()) {
+                    sepShipping = true;
+                }
+
+                var address = ( sepShipping
+                        ? $("#shipping\\:street1").val()
+                        : $("#billing\\:street1").val()) + '<br />'
+                    + ( sepShipping
+                        ? $("#shipping\\:street2").val()
+                        : $("#billing\\:street2").val() ) + '<br />'
+                    + ( sepShipping
+                        ? $("#shipping\\:city").val()
+                        : $("#billing\\:city").val() ) + '<br />'
+                    + ( sepShipping
+                        ? $("#shipping\\:postcode").val()
+                        : $("#billing\\:postcode").val() ) + '<br />'
+                    + ( sepShipping
+                        ? $("#shipping\\:country_id option:selected").text()
+                        : $("#billing\\:country_id option:selected").text())  + '<br /><br />'
                     + '<a href="#" id="diff-delivery-addr" style="text-decoration:underline;">Deliver to different address</a>';
 
                 $("#co-shipping-method-form")
@@ -280,6 +295,21 @@
 
                 $("#checkout-shipping-method-load").css('margin-top', '3em');
                 $("#co-shipping-method-form > div.delivery-note").css('margin-top', '3em');
+
+                // Override
+                ShippingMethod.prototype.validate = function () {
+                    var methods = document.getElementsByName('shipping_method');
+                    if (methods.length==0) {
+                        alert(Translator.translate('Your order cannot be completed at this time as there is no shipping methods available for it. Please make necessary changes in your shipping address.').stripTags());
+                        return false;
+                    }
+
+                    if(!this.validator.validate()) {
+                        return false;
+                    }
+
+                    return true;
+                };
             }
         };
 
@@ -298,6 +328,91 @@
         $("#shipping-method-buttons-container > button").attr('style','display: block; font-size: 1.5em; font-weight: bold; padding: 0.75em 2em; margin: 0px auto; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);float: none;');
 
         $("#shipping-method-buttons-container").css('margin-top', '3em');
+
+        // Step 4 - Payment
+        
+        $('#co-payment-form > fieldset').attr('style','width: 445px;margin: 0 auto;');
+        $('#payment-buttons-container > p.required').remove();
+
+        $("#payment-buttons-container > button span").remove();
+        $("#payment-buttons-container > button").text('Secure Payment');
+        $("#payment-buttons-container > button").attr('style','display: block; font-size: 1.5em; font-weight: bold; padding: 0.75em 2em; margin: 0px auto; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);float: none;');
+
+        $("#payment-buttons-container").wrap('<fieldset style="padding: 1em; width: 445px; margin: 1em auto; border: 1px solid rgb(204, 204, 204);" class="co-box"></fieldset>');
+        $('<legend style="display: block; padding: 0px 1em; font-weight: bold; font-size: 1.2em;">Pay by Credit or Debit Card</legend>').prependTo('#checkout-step-payment > fieldset:eq(0)');
+
+        $('<p style="width: 20em;font-size:.9em;margin: .5em auto;">Credit and debit cards are not charged until the item is shipped from our warehouse</p>').insertAfter('#checkout-step-payment > fieldset:eq(0)');
+
+        $("#shipping-method-buttons-container > button").click(function() {
+            exp.func.waitForElement('#checkout-payment-method-load label', function() {
+
+                setTimeout(function() {
+
+                    payment.switchMethod('sagepaydirectpro');
+
+                    $("#p_method_sagepaydirectpro").prop('checked', true);
+
+                    $('<h2 style="font-size:1.5em;font-weight:bold;width: 445px;margin: 0 auto;">Secure Payment Information</h2>').prependTo("#co-payment-form");
+
+                    var paymentform = $("#payment_form_sagepaydirectpro").detach();
+
+                    $("#checkout-step-payment > fieldset").prepend(paymentform);
+
+                    $("#payment_form_sagepaydirectpro").css('width', 'auto');
+                    $("#payment_form_sagepaydirectpro .input-box").css('width', '150px');
+                    $("label > em").remove();
+                    $("#payment_form_sagepaydirectpro label").each(function() {
+                        $(this).text($(this).text() + ':');
+                    });
+                    $("#payment_form_sagepaydirectpro label").attr('style','text-align: right;');
+                    $("#payment-buttons-container").css('margin-top', '2em');
+                    $("#checkout-payment-method-load > dt:nth-child(1) > label").css('background-image','none');
+                    $("#checkout-payment-method-load > dt:nth-child(1) > label").css('padding-left',0);
+                    $("#checkout-payment-method-load > dt:nth-child(1) > label").css('font-weight','normal');
+                    $("#checkout-payment-method-load > dt:nth-child(3) > label").html("Pay with Paypal");
+                    $("#checkout-payment-method-load > dt:nth-child(3) > label").css('font-weight','normal');
+
+                    $("#co-payment-form > fieldset").attr('style', 'width: 250px; margin: 0 auto 2em auto;');
+
+                    var paypalText = '';
+
+                    $('#p_method_paypal_express').click(function() {
+                        $("#checkout-step-payment > fieldset > legend").text("Pay by PayPal");
+                        setTimeout(function() {
+
+                            if ( ! paypalText.length) {
+                                paypalText = $('#payment_form_paypal_express > li').text();
+                                $('#payment_form_paypal_express > li').remove();
+                            }
+
+                            $('<p style="width: 20em;font-size: .9em;margin: .5em auto;" id="paypal_text">' + paypalText + '</p>')
+                                .insertBefore('#payment-buttons-container');
+
+                        }, 100)
+                    });
+
+                    $('#p_method_sagepaydirectpro').click(function() {
+                        $("#paypal_text").remove();
+                        $("#checkout-step-payment > fieldset > legend").text("Pay by Credit or Debit Card");
+                    });
+
+                    $('#payment_form_sagepaydirectpro select').css('width','auto');
+                    var year = $('#sagepaydirectpro_expiration_yr').detach();
+                    $('#sagepaydirectpro_expiration').after(year);
+
+                    $('#sagepaydirectpro_cc_type_exp_div > div > div:nth-child(1)')
+                        .css('width','260px');
+
+                    $('#sagepaydirectpro_expiration')
+                        .css('margin-right','1em');
+
+                    $('#sagepaydirectpro_cc_cid').css('width', '50px');
+
+                    $('.cvv-what-is-this').attr('style', 'position: relative;top: 3px;');
+
+                }, 500);
+            });
+        });
     };
 
     // Run the experiment
