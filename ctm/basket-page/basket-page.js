@@ -14,7 +14,7 @@ var ctm_basket_page_experiment = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('CTM Basket Page - 0.2');
+console.log('CTM Basket Page - 0.3');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -62,7 +62,7 @@ exp.vars = {
                     <div class="modal-body"> \
                         <p>Your delivery cost will be added when you check out.</p> \
                         <p>There is a flat rate of R399 per ton for delivery to addresses within Gauteng, Cape Town, and Durban. </p> \
-                        <p>Delivery to rural areas is calculated individually, and varies depending on where you live and the weight of the order. You will have a chance to view your delivery costs before you pay. </p> \
+                        <p>Delivery to outlying areas is calculated individually, and varies depending on where you live and the weight of the order. You will have a chance to view your delivery costs before you pay. </p> \
                         <p>If you have any queries, just call us on  <a href="tel:0861433337">0861 433  337</a></p> \
                         <h4>Fast, secure delivery</h4> \
                         <p>All delivery costs include tracking, insurance and unloading your goods at ground floor level on arrival, and we normally deliver your online orders within two working days. You may also collect from your local store if you prefer.</p> \
@@ -114,11 +114,27 @@ exp.css = ' \
         margin-right: 1em; \
     } \
 } \
+.AWA_ChangeQtyModal  { \
+    z-index: 1100; \
+} \
 .AWA_ChangeQtyModal .picker-view-cart a.btn { \
     display: none !important; \
 } \
 .modalLink { \
     font-size: 14px; \
+} \
+/* Override the positions for these attributes so that the "Change quantity" modal displays correctly. */ \
+body div#sb-site, \
+.col-md-12 { \
+    position: initial; \
+} \
+@media print \
+{ \
+  table { page-break-after:auto } \
+  tr    { page-break-inside:avoid; page-break-after:always } \
+  td    { page-break-inside:avoid; page-break-after:auto } \
+  thead { display:table-header-group } \
+  tfoot { display:table-footer-group } \
 }';
 
 // Functions
@@ -208,7 +224,7 @@ exp.init = function() {
         // Create modal
         var changeQtyModal = $(self.vars.changeQuantityModalTemplate.replace('__PRODUCT_ID__', product_id).replace('__PRODUCT_NAME__', product_name));
         changeQtyModal.find('.modal-body').append($elem.find('.cart-quantity-picker'));  // Move quantity stuff to modal here
-        $('#stock-check-modal').before(changeQtyModal);
+        $elem.find('td.cart-quantity').append(changeQtyModal);
         $elem.find('td.cart-quantity').append($(self.vars.changeQuantityModalLinkTemplate.replace('__PRODUCT_ID__', product_id)));
         $('#AWA_ChangeQuantityModal___PRODUCT_ID__ form .cancel-changes-btn'.replace('__PRODUCT_ID__', product_id)).on('click', function() { changeQtyModal.modal('hide'); });
         $('#AWA_ChangeQuantityModal___PRODUCT_ID__ form .update-item-btn'.replace('__PRODUCT_ID__', product_id)).on('click', function() { changeQtyModal.modal('hide'); });
