@@ -9,6 +9,9 @@
 /*
 
 www.247blinds.co.uk/checkout/onepage/success
+rev per visitor
+
+GA 1
 
 100%
 equal split
@@ -31,7 +34,7 @@ var exp = {};
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
-    'variation' : '1',
+    'variation' : '2',
     'pathname': window.location.pathname.toString(),
     'page': '0',
     'qualityWrap': $('.quality-wrap'),
@@ -44,31 +47,33 @@ exp.vars = {
     'copy': {
         '1': { // origin-basic-white-venetian-blind
             '1': { // Var 1
-                'description': 'A Venetian blind is a timeless look that suits most rooms and gives you excellent privacy as well as total control of light. This Origin Venetian Blind in Basic White, a classic pure white colour, is made to order to fit your window perfectly and is normally ready in less than a week. All our Origin Venetian blinds are made with top quality fittings to ensure your blind opens and closes smoothly, and come ready to fit with all fixings included. Not sure about colour or style? Ask for a free sample before you order.',
+                'description': 'A Venetian blind is a timeless look that suits most rooms and gives you excellent privacy as well as total control of light. This Origin Venetian Blind in Basic White, a classic pure white colour, is made to order to fit your window perfectly and is normally ready in around a week.<br /><br /> \
+                                All our Origin Venetian blinds are made with top quality fittings to ensure your blind opens and closes smoothly, and come ready to fit with all fixings included. Not sure about colour or style? Order for a free sample before you buy.',
                 'feature1': {
                     'title': 'Beautifully straight slats',
                     'desc': 'Flimsy, thin slats can sag in the middle, so we make ours thicker than most. It gives them extra strength so they always line up perfectly straight.'
                 },
                 'feature2': {
                     'title': 'Smooth operation',
-                    'desc': 'We use precision-engineered, metal fittings and high quality, tangle-resist cord to make sure your blind holds fast when raised and opens and closes smoothly every day.'
+                    'desc': 'We use precision-engineered, metal fittings and high quality, tangle-resistant cord to make sure your blinds open and close smoothly every day while holding fast when raised.'
                 },
                 'feature3': {
                     'title': 'Matching Rails',
-                    'desc': 'Many blind companies supply venetian blinds with a white headrail and toprail to save costs. Ours always have matching rails for a perfectly co-ordinated look.'
+                    'desc': 'Many blind companies supply venetian blinds with a white headrail and bottom rail to save costs. Ours always have matching rails for a perfectly co-ordinated look.'
                 }
             }
         },
         '2': { // ecowood-cream-venetian-blind
             '1': { // Var 1
-                'description': 'Description: Bring a touch of New England chic into your home, with a solid Ecowood Venetian blind in Cream. This sophisticated blind is made to order to fit your window perfectly and is normally ready in less than a week. All our Ecowood Venetian blinds come ready to fit with a robust, co-ordinating headrail, woven control cords and all the fixings included. Not sure about colour or style? Ask for a free sample before you order.',
+                'description': 'Bring a touch of New England chic into your home, with a solid Ecowood Venetian blind in Cream, a soft neutral colourway. This sophisticated blind is made to order to fit your window perfectly and is normally ready in around a week.<br /><br /> \
+                                All our Ecowood Venetian blinds come ready to fit with a robust, coordinating headrail, woven control cords and all the fixings included. Not sure about colour or style? Order for a free sample before you buy.',
                 'feature1': {
                     'title': 'Moisture-resistant Ecowood',
                     'desc': 'Ecowood looks and feels just like real wood, but is resistant to damp, so it doesn’t crack, warp or rot. It lasts for years and is perfect for moist conditions such as a bathroom or kitchen.'
                 },
                 'feature2': {
                     'title': 'High quality headrails',
-                    'desc': 'Our headrails are solidly built to take the extra weight of wooden slats, and your blind comes with a matching pelmet and bottom rail for a totally co-ordinated look.'
+                    'desc': 'Our headrails are solidly built to take the extra weight of ecowood slats, and your blind comes with a matching pelmet and bottom rail for a totally co-ordinated look.'
                 },
                 'feature3': {
                     'title': 'Smooth operation',
@@ -78,19 +83,19 @@ exp.vars = {
         },
         '3': { // havana-stripe-white-vertical-blind
             '1': { // Var 1
-                'description': 'Description: Add height and elegance to your room with this Vertical Blind in Rimini White, a classic pure white colour. Louvres can turn easily and can be used open for maximum daylight, or closed give you total privacy whilst still allowing light to gently suffuse the room. \
-                                This contemporary style blind is made to order to fit your window perfectly and is normally ready in less than a week. All our Vertical Blinds come ready to fit with a slimline, Easyglide headrail, woven control cords and all the fixings included. If you’re not sure about colour, texture or pattern, why not ask for a free sample before you order?',
+                'description': 'Add height and elegance to your room with this vertical blind in Havana Stripe, which features stylish textured louvers woven with diagonal stripes. White is a classic neutral colour that suits all decors, louvers turn easily with a control wand and can be left open for maximum daylight, or closed give you total privacy whilst still allowing light to gently suffuse the room.<br /><br /> \
+                                This contemporary style blind is made to order to fit your window perfectly and is normally ready in around a week. All our Vertical Blinds come ready to fit with a slimline, Easyglide headrail, child safe wand controls and all the fixings included. If you’re not sure about colour, texture or pattern, why not order for a free sample before you buy?',
                 'feature1': {
                     'title': 'Stitched and welded hems',
                     'desc': 'Cheaper blinds are often hemmed using glue which can melt and come apart in the sun. To ensure your blind looks good for longer, we always machine-stitch or weld the hems on our vertical blinds.'
                 },
                 'feature2': {
                     'title': 'Slim, elegant headrails',
-                    'desc': 'Large, bulky headrails spoil the look of a vertical blind. We only use high quality, sllimline headrails so you see more of the louvres, which creates extra height and gives your room an elegant, designer style.'
+                    'desc': 'Large, bulky headrails spoil the look of a vertical blind. We only use high quality, sllimline headrails so you see more of the louvers, which creates extra height and gives your room an elegant, designer style.'
                 },
                 'feature3': {
                     'title': 'Smooth-Glide Operation',
-                    'desc': 'Drawing and closing your vertical blind and turning the louvres is effortlessly easy, thanks to our high quality Easy Glide system, precision-engineered components and strong woven control cords.'
+                    'desc': 'Drawing and closing your vertical blind and turning the louvers is effortlessly easy, thanks to our high quality Easy Glide system, precision-engineered components and child safe wand controls.'
                 }
             }
         }
@@ -107,15 +112,29 @@ if( exp.vars.pathname.indexOf('origin-basic-white-venetian-blind') !== -1 ) {
 
 // Styles
 // String containing the CSS for the experiment
-exp.css = '#accordion { margin-bottom: 0; }';
+exp.css = '#accordion { margin-bottom: 0; } \
+           .product-view { padding-bottom: 20px; } \
+           .block-viewed { padding-top: 0; }';
 
 if( exp.vars.variation === '1' ) {
     exp.css +=  '.main-desc-wrap { padding-bottom: 15px; } \
-                 .colour-check-wrap { clear: both; padding-top: 20px; ';
+                 .colour-check-wrap { clear: both; padding-top: 20px; padding-bottom: 30px; ';
 } else {
     exp.css +=  '.quality-wrap { position: relative; overflow: visible; } \
                  .main-desc-wrap { position: absolute; top: 0; left: 0; width: 976px; } \
-                 .colour-check-wrap { clear: both; width: 976px }';
+                 .colour-check-wrap { clear: both; width: 976px; padding-top: 10px; padding-bottom: 30px; } \
+           #product_addtocart_form { height: 540px; } \
+@media screen and (max-width: 1024px) { \
+  .main-desc-wrap, .colour-check-wrap { width: 757px !important; } \
+  .main-desc-wrap { padding-bottom: 30px !important; } \
+  #accordion, .quality-wrap .block-title { border-top: 15px solid #fff; } \
+  #product_addtocart_form { height: 570px; }  \
+} \
+@media screen and (max-width: 870px) { \
+  .main-desc-wrap, .colour-check-wrap { width: auto !important; position: relative !important; padding-bottom: 10px !important; padding-left: 5px !important; padding-right: 5px !important; } \
+  .quality-wrap, #accordion { padding-top: 0 !important; padding-bottom: 10px !important; } \
+  #product_addtocart_form { height: auto; }  \
+}';
 }
 
 // Functions
