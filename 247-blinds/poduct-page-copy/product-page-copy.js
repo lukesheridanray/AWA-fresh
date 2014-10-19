@@ -34,7 +34,7 @@ var exp = {};
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
-    'variation' : '2',
+    'variation' : '1',
     'pathname': window.location.pathname.toString(),
     'page': '0',
     'qualityWrap': $('.quality-wrap'),
@@ -42,13 +42,13 @@ exp.vars = {
     'accordionPanelsWrap': $('#accordion'),
     'colourCheck': {
         'title': 'How to check blind colours on screen',
-        'desc': 'Computer, tablet and phone screens all have different settings which may change the way a colour looks on screen. To find out how yours may be affected, simply hold up a sheet of plain white paper next to your screen and compare it with the background of this web page. Both should be the same colour. If you see a difference – for example, if your screen is a little more blue, or yellow than the paper - this will also apply to the colour of the blind material you can see on screen. If you\'re still not sure, please get in touch for a free sample.'
+        'desc': 'Computer, tablet and phone screens all have different settings which may change the way a colour looks on screen. To find out how yours may be affected, simply hold up a sheet of plain white paper next to your screen (ensure you have a piece of card behind it to prevent light seeping through) and compare it with the background of this web page. Both should be the same colour. If you see a difference – for example, if your screen is a little more blue, or yellow than the paper - this will also apply to the colour of the blind material you can see on screen. If you\'re still not sure, please get in touch for a free sample.'
     },
     'copy': {
         '1': { // origin-basic-white-venetian-blind
             '1': { // Var 1
-                'description': 'A Venetian blind is a timeless look that suits most rooms and gives you excellent privacy as well as total control of light. This Origin Venetian Blind in Basic White, a classic pure white colour, is made to order to fit your window perfectly and is normally ready in around a week.<br /><br /> \
-                                All our Origin Venetian blinds are made with top quality fittings to ensure your blind opens and closes smoothly, and come ready to fit with all fixings included. Not sure about colour or style? Order for a free sample before you buy.',
+                'description': 'A Venetian blind is a timeless look that suits most rooms and gives you excellent privacy as well as total control over outside light. This Origin Venetian Blind in Basic White, a classic pure white colour, is made to order to fit your window perfectly and is normally ready in around a week.<br /><br /> \
+                                All our Origin Venetian blinds are made with top quality fittings to ensure your blind opens and closes smoothly, and comes ready to fit with all fixings included. Not sure about colour or style? Order a free sample before you buy.',
                 'feature1': {
                     'title': 'Beautifully straight slats',
                     'desc': 'Flimsy, thin slats can sag in the middle, so we make ours thicker than most. It gives them extra strength so they always line up perfectly straight.'
@@ -83,7 +83,7 @@ exp.vars = {
         },
         '3': { // havana-stripe-white-vertical-blind
             '1': { // Var 1
-                'description': 'Add height and elegance to your room with this vertical blind in Havana Stripe, which features stylish textured louvers woven with diagonal stripes. White is a classic neutral colour that suits all decors, louvers turn easily with a control wand and can be left open for maximum daylight, or closed give you total privacy whilst still allowing light to gently suffuse the room.<br /><br /> \
+                'description': 'Add height and elegance to your room with this vertical blind in Havana Stripe, which features stylish textured louvers woven with diagonal stripes. White is a classic neutral colour that suits all decors, louvers turn easily with a control wand and can be left open for maximum daylight, or closed to give you total privacy whilst still allowing light to gently suffuse the room.<br /><br /> \
                                 This contemporary style blind is made to order to fit your window perfectly and is normally ready in around a week. All our Vertical Blinds come ready to fit with a slimline, Easyglide headrail, child safe wand controls and all the fixings included. If you’re not sure about colour, texture or pattern, why not order for a free sample before you buy?',
                 'feature1': {
                     'title': 'Stitched and welded hems',
@@ -189,14 +189,14 @@ exp.init = function() {
         return false;
     }
 
-    console.log('Product Page Copy - variation '+ exp.vars.variation +' - 0.1');
+    console.log('Product Page Copy - variation '+ exp.vars.variation +' - 0.3');
         
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
 
     // Quality copy
 
-    exp.vars.qualityWrap.find('.block-title').html( 'YOU CAN\'T BUY BETTER QUALITY' );
+    exp.vars.qualityWrap.find('.block-title').html( '<span>YOU CAN\'T BUY BETTER QUALITY</span>' );
 
     exp.vars.qualityWrap.find('h3[align="justify"]:eq(0) span').html(
         exp.vars.copy[ exp.vars.page ][ 1 ].feature1.title
