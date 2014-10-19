@@ -77,35 +77,94 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Example experiment - dev 0.1');
-
-// Condition
-// If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
-exp.condition = $('.unique-selector');
-
-// Check for a condition and return false if it has not been met
-if(exp.condition && !exp.condition.length) {
-    console.log('Experiment failed a condition');
-    return false;
-}
+console.log('Look inside experiment - 0.1');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
-    'myCustomTagLine': 'This split test is the best!',
-    'productDesc': $('.description').length ? $('.description').text() : 'default description',
-    'productSku': $('.sku-code span')
+//    'productId': dataLayer[0]['product_id'],
+    'colorOrange': '#F8932B',
+    'imageThumbsTitle': '//cdn.optimizely.com/img/579743489/212f033604254484a602bcb2583bb02d.png',
+    'imageMiniArrow': '//cdn.optimizely.com/img/579743489/08007039f0744e0a8cf7f358badafeee.png',
+    'productId': $('input[name="productId"]:eq(0)').val(),
+    'imagesExtension': '.jpg',
+    'imagesBase': 'http://www.awa-digital.com/optimizely/the-book-people/',
+    'imagesTypeFolders': {
+        'thumbs': '/product-page-thumbnails/',
+        'viewerThumbs': '/viewer-thumbnails/',
+        'viewerMainSmall': '/main-image-568-wide/',
+        'viewerMainLarge': '/main-image-827-wide/',
+        'zoomed': '/fullsize-for-zoom/'
+    },
+    'productName': {
+        '439365': 'julia-donaldson'
+    },
+    'images': {
+        'julia-donaldson': {
+            '0': [ 'TheGruffalosChild', 'The Gruffalo\'s Child', ''  ],
+            '1': [ 'WakeUpDoLydiaLou', 'Wake Up Do, Lydia Lou!', '' ],
+            '2': [ 'CharlieCooksFavouriteBook', 'Charlie Cook\'s Favourite Book', '' ],
+            '3': [ 'FreddieAndtheFairy', 'Freddie and the Fairy', '' ],
+            '4': [ 'MonkeyPuzzle', 'Monkey Puzzle', '' ],
+            '5': [ 'WiggleAndRoar', 'Wriggle and Roar!', '', true ],
+            '6': [ 'TheSnailAndTheWhale', 'The Snail and the Whale', '' ],
+            '7': [ 'RoomOnTheBroom', 'Room on the Broom', '' ],
+            '8': [ 'GoatGoesToPlaygroup', 'Goat Goes To Playgroup', '', true ],
+            '9': [ 'ToddleWaddle', 'Toddle Waddle', '' ]
+        }
+    }
 };
 
 // Styles
 // String containing the CSS for the experiment
 exp.css = ' \
-    #someSelector { color: #f00; } \
-    #header .tag-line { color: #f00; } ';
+/* Thumbs sidebar */ \
+.look-inside-thumbs { margin-bottom: 20px; } \
+.look-inside-thumbs--title a { color: '+exp.vars.colorOrange+'; background: url('+exp.vars.imageThumbsTitle+') left no-repeat transparent; \
+  line-height: 19px; padding: 0 0 0 25px; font-family: "Open Sans","sans-serif"; font-size: 1.6em; } \
+.look-inside-thumbs img { width: 60px; height: 60px; margin-left: 10px; margin-bottom: 10px; } \
+.look-inside-thumbs .look-inside-thumbs--first { margin-left: 0; } \
+/* Central panel list */ \
+.see-inside-hover { display: none; color: '+exp.vars.colorOrange+'; background: url('+exp.vars.imageMiniArrow+') left no-repeat transparent; \
+  padding: 0 0 0 15px; font-family: "Open Sans","sans-serif"; font-size: 1.1em; } \
+#setTitles .setTitle a:hover .see-inside-hover { display: inline; text-decoration: none !important; } \
+/* */ ';
 
 // Functions
 // Object containing functions, some helpful functions are included
 exp.func = {};
+
+// Function to output the 8 product thumbnails
+exp.func.productThumbs = function(_vars) {
+    _vars = _vars || exp.vars;
+    var thumbs = '<div class="look-inside-thumbs"> <p class="look-inside-thumbs--title"><a href="#" data-behaviour="lookInsideModal">See inside</a></p>';
+    var thisProduct = _vars.productName[ _vars.productId ];
+    var i = 1;
+    $.each( _vars.images[ thisProduct ], function( key, value ) {
+        if( !value[3] ) {
+            thumbs += '<a href="#" data-behaviour="lookInsideModal" data-thumb-id="' + key + '">'
+                    + '<img '+((i===1 || i===5 || i===9 ) ? 'class="look-inside-thumbs--first" ' : '')+'src="' + _vars.imagesBase + thisProduct + _vars.imagesTypeFolders['thumbs'] + value[0] + _vars.imagesExtension + '" alt="'+value[1]+'" /></a>';
+        }
+        i++;
+    });
+    thumbs += '</div>';
+    return thumbs;
+};
+
+// Function to add links to the central item list
+exp.func.centralList = function(_vars) {
+    _vars = _vars || exp.vars;
+    var list = '';
+    var thisProduct = _vars.productName[ _vars.productId ];
+    $.each( _vars.images[ thisProduct ], function( key, value ) {
+        if( !value[4] ) {
+            list += '<li class="setTitle"><a href="#" data-behaviour="lookInsideModal" data-thumb-id="' + key + '">'
+                    + value[1] + ((value[2] !== '') ? value[2] : '' ) + ' <span class="see-inside-hover">See inside</span></a></li>';
+        }
+        i++;
+    });
+    return list;
+};
 
 // This function waits till a DOM element is available, then runs a callback function
 exp.func.waitForElement = function(selector, callback, timeout, keepAlive) {
@@ -154,21 +213,13 @@ exp.init = function() {
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
 
-    // Some example DOM manipulation...
+    // Add thumbs underneath product image
 
-    $('.header').append(this.vars.productDesc);
+    $('.productImage:eq(0)').after( this.func.productThumbs(exp.vars) );
 
-    if(this.vars.productSku) {
-        $('#tagLine').html(this.vars.productSku);
+    if( $('#setTitles ul li').length ) {
+        $('#setTitles ul').html( this.func.centralList(exp.vars) );
     }
-
-    this.func.waitForFunction( openModal, function myCallback() {
-        openModal('modal content');
-    });
-
-    this.func.waitForElement( '.reviews-widget', function anotherCallback() {
-        $('.reviews-widget').append('Appending some content to the widget');
-    });
 
 };
 
