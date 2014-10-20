@@ -150,17 +150,23 @@ exp.css = ' \
 #lookInsideModal .modal-header { padding: 0; border-bottom: 0; } \
 #lookInsideModal .modal-header button { z-index: 99; color: '+exp.vars.colorBlue+'; opacity: 1 !important; position: absolute; top: 0; right: 5px; font-size: 2em; } \
 #lookInsideModal .modal-header button:hover { opacity: 0.4 !important; } \
-.see-inside-header { color: '+exp.vars.colorOrange+'; position: absolute; top: 5px; left: 5px; background: url('+exp.vars.imageModalTitle+') left no-repeat transparent; \
-  padding: 0 0 0 25px; line-height: 24px; font-size: 1.8em; font-family: "Open Sans","sans-serif"; } \
-.see-inside--header, .see-inside--zoom { width: 831px; float: right; clear: right; } \
+.see-inside-header { color: '+exp.vars.colorOrange+'; position: absolute; top: 10px; left: 10px; background: url('+exp.vars.imageModalTitle+') left no-repeat transparent; \
+  padding: 0 0 0 27px; line-height: 24px; font-size: 2.2em; font-family: "Open Sans","sans-serif"; } \
+.see-inside--header, .see-inside--zoom { width: 831px; float: right; clear: right; position: relative; } \
+.see-inside--header { height: 94px; overflow: hidden; position: relative; } \
 .see-inside--header h3 { margin-top: 0; width: 620px; font-size: 1.8em; float: left; clear: left; } \
-.see-inside--wishlist { float: left; clear: left; } \
+.see-inside--wishlist { position: absolute; bottom: 0; left: 0; } \
 .see-inside--header .priceWrapper { float: right; } \
 .see-inside--header .priceWrapper #add-to-wishlist-link { display: none; } \
 .see-inside--scroller { width: 300px; float: left; } \
 .see-inside--header .priceWrapper .price-string { margin: 0px -2px 0px 0px; padding: 0px; font-size: 21px; font-weight: bold; color: #000; } \
 .see-inside--header .priceWrapper .saving, .see-inside--header .priceWrapper .rrp { padding: 0px 5px 0px 0px; margin: 0px;} \
 .see-inside--header .add-to-basket-button { position: relative; top: -5px; } \
+.see-inside--header .addToBasketForm { margin: 0; } \
+.see-inside--zoom-container { background: #fff; } \
+.see-inside--zoom-container { width: 827px; height: auto; border: 2px solid '+exp.vars.colorOrange+'} \
+.see-inside--zoom-container + .see-inside--zoom-container { position: absolute; top: 0; left: 0; z-index: -1; } \
+.see-inside--zoom-nav-up { position: absolute; top: 0; left: 0; z-index: -1; } \
 /* */ ';
 
 // Functions
@@ -175,8 +181,8 @@ exp.func.productThumbs = function(_vars) {
     var i = 1;
     $.each( _vars.images[ thisProduct ], function( key, value ) {
         if( !value[3] ) {
-            thumbs += '<a href="#" data-behaviour="lookInsideModal" data-thumb-id="' + key + '">'
-                    + '<img '+((i===1 || i===5 || i===9 ) ? 'class="look-inside-thumbs--first" ' : '')+'src="' + _vars.imagesBase + thisProduct + _vars.imagesTypeFolders['thumbs'] + value[0] + _vars.imagesExtension + '" alt="'+value[1]+'" /></a>';
+            thumbs += '<a href="#" data-behaviour="lookInsideModal" data-thumb-id="' + key + '">' +
+                      '<img '+((i===1 || i===5 || i===9 ) ? 'class="look-inside-thumbs--first" ' : '')+'src="' + _vars.imagesBase + thisProduct + _vars.imagesTypeFolders['thumbs'] + value[0] + _vars.imagesExtension + '" alt="'+value[1]+'" /></a>';
         }
         i++;
     });
@@ -191,8 +197,8 @@ exp.func.centralList = function(_vars) {
     var thisProduct = _vars.productName[ _vars.productId ];
     $.each( _vars.images[ thisProduct ], function( key, value ) {
         if( !value[4] ) {
-            list += '<li class="setTitle"><a href="#" data-behaviour="lookInsideModal" data-thumb-id="' + key + '"><span class="see-inside-titlelink">'
-                    + value[1] + ((value[2] !== '') ? value[2] : '' ) + '</span> <span class="see-inside-hover">See inside</span></a></li>';
+            list += '<li class="setTitle"><a href="#" data-behaviour="lookInsideModal" data-thumb-id="' + key + '"><span class="see-inside-titlelink">' +
+                    value[1] + ((value[2] !== '') ? value[2] : '' ) + '</span> <span class="see-inside-hover">See inside</span></a></li>';
         }
         i++;
     });
@@ -201,11 +207,32 @@ exp.func.centralList = function(_vars) {
 
 // Function to open the modal
 exp.vars.lookInsideModal = function( pageId ) {
-    $('#lookInsideModal').modal();
+    var theModal = $('#lookInsideModal');
+    theModal.modal();
+    $('.see-inside--zoom-container + .see-inside--zoom-container').css({'z-index':'-1'});
+    $('.see-inside--zoom-container[data-zoom-id="'+pageId+'"]').css({'z-index':'99'});
+};
+
+// Function to generate the zoom thumbs
+exp.vars.generateThumbs = function() {
+    return '<div>mother effing thumbs</div>';
+};
+
+// Function to generate the zoom areas
+exp.vars.generateZooms = function(_vars) {
+    _vars = _vars || exp.vars;
+    var thisProduct = _vars.productName[ _vars.productId ];
+    var markup = '';
+    $.each( _vars.images[ thisProduct ], function( key, value ) {
+        markup += '<div class="see-inside--zoom-container" data-zoom-id="' + key + '">'+value[1]+'</div>';
+    });
+    return markup;
 };
 
 exp.vars.generateModalBody = function(_vars) {
     _vars = _vars || exp.vars;
+    var thumbs = exp.vars.generateThumbs(_vars);
+    var zooms = exp.vars.generateZooms(_vars);
     var markup = ' \
 <div class="see-inside--scroller"> \
     Scroller \
@@ -216,7 +243,9 @@ exp.vars.generateModalBody = function(_vars) {
     '<div class="see-inside--wishlist">'+_vars.wishlistLink.wrap('<div />').parent('div').html()+'</div> \
 </div><!-- .see-inside--header --> \
 <div class="see-inside--zoom"> \
-    Zoom area \
+    <a href="#" class="see-inside--zoom-nav-up">&nbsp;</a>' +
+    zooms +
+    '<a href="#" class="see-inside--zoom-nav-bottom">&nbsp;</a> \
 </div><!-- .see-inside--zoom --> \
 <!-- end see inside -->';
     return markup;
