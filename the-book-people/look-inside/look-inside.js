@@ -83,9 +83,22 @@ console.log('Look inside experiment - 0.1');
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
 //    'productId': dataLayer[0]['product_id'],
+    'productTitle': $('#product-description-title').html(),
+    'buyBlock': $('.priceWrapper').clone(),
+    'wishlistLink': $('#add-to-wishlist-link').clone(),
     'colorOrange': '#F8932B',
+    'colorBlue': '#45BE9D',
     'imageThumbsTitle': '//cdn.optimizely.com/img/579743489/212f033604254484a602bcb2583bb02d.png',
     'imageMiniArrow': '//cdn.optimizely.com/img/579743489/08007039f0744e0a8cf7f358badafeee.png',
+    'imageModalTitle': '//cdn.optimizely.com/img/579743489/6f69bc067a1b40989029c0b9dfbf2799.png',
+    'imageZoomNavUp': '//cdn.optimizely.com/img/579743489/96edba11ec5c4bce80f1601243764e06.png',
+    'imageZoomNavDown': '//cdn.optimizely.com/img/579743489/f4421c49c82b464fb89185bcbfb9d7dd.png',
+    'imageZoomIcon': '//cdn.optimizely.com/img/579743489/56069e92745b4d44854a5454137108b7.png',
+    'modalTemplate': ' \
+        <div class="modal fade" id="lookInsideModal" tabindex="-1" role="dialog" aria-labelledby="lookInsideModal" aria-hidden="true"> \
+        <div class="modal-dialog"> <div class="modal-content"> \
+        <div class="modal-header"> <button type="button" class="close" data-dismiss="modal">&times;</button> <p class="see-inside-header">See inside</p> </div> \
+        <div class="modal-body"> </div> </div> </div> </div>',
     'productId': $('input[name="productId"]:eq(0)').val(),
     'imagesExtension': '.jpg',
     'imagesBase': 'http://www.awa-digital.com/optimizely/the-book-people/',
@@ -123,11 +136,31 @@ exp.css = ' \
 .look-inside-thumbs--title a { color: '+exp.vars.colorOrange+'; background: url('+exp.vars.imageThumbsTitle+') left no-repeat transparent; \
   line-height: 19px; padding: 0 0 0 25px; font-family: "Open Sans","sans-serif"; font-size: 1.6em; } \
 .look-inside-thumbs img { width: 60px; height: 60px; margin-left: 10px; margin-bottom: 10px; } \
+.look-inside-thumbs a:hover { opacity: 0.9; } \
 .look-inside-thumbs .look-inside-thumbs--first { margin-left: 0; } \
 /* Central panel list */ \
 .see-inside-hover { display: none; color: '+exp.vars.colorOrange+'; background: url('+exp.vars.imageMiniArrow+') left no-repeat transparent; \
-  padding: 0 0 0 15px; font-family: "Open Sans","sans-serif"; font-size: 1.1em; } \
+  padding: 0 0 0 15px; font-family: "Open Sans","sans-serif"; font-size: 1.1em; line-height: 13px; } \
+#setTitles .setTitle a:hover { color: #08C !important; text-decoration: none !important; } \
+#setTitles .setTitle a:hover .see-inside-titlelink { text-decoration: underline !important; } \
 #setTitles .setTitle a:hover .see-inside-hover { display: inline; text-decoration: none !important; } \
+/* Look inside modal */ \
+#lookInsideModal { width: 1207px; margin-left: -603px; } \
+#lookInsideModal .modal-content { position: relative; } \
+#lookInsideModal .modal-header { padding: 0; border-bottom: 0; } \
+#lookInsideModal .modal-header button { z-index: 99; color: '+exp.vars.colorBlue+'; opacity: 1 !important; position: absolute; top: 0; right: 5px; font-size: 2em; } \
+#lookInsideModal .modal-header button:hover { opacity: 0.4 !important; } \
+.see-inside-header { color: '+exp.vars.colorOrange+'; position: absolute; top: 5px; left: 5px; background: url('+exp.vars.imageModalTitle+') left no-repeat transparent; \
+  padding: 0 0 0 25px; line-height: 24px; font-size: 1.8em; font-family: "Open Sans","sans-serif"; } \
+.see-inside--header, .see-inside--zoom { width: 831px; float: right; clear: right; } \
+.see-inside--header h3 { margin-top: 0; width: 620px; font-size: 1.8em; float: left; clear: left; } \
+.see-inside--wishlist { float: left; clear: left; } \
+.see-inside--header .priceWrapper { float: right; } \
+.see-inside--header .priceWrapper #add-to-wishlist-link { display: none; } \
+.see-inside--scroller { width: 300px; float: left; } \
+.see-inside--header .priceWrapper .price-string { margin: 0px -2px 0px 0px; padding: 0px; font-size: 21px; font-weight: bold; color: #000; } \
+.see-inside--header .priceWrapper .saving, .see-inside--header .priceWrapper .rrp { padding: 0px 5px 0px 0px; margin: 0px;} \
+.see-inside--header .add-to-basket-button { position: relative; top: -5px; } \
 /* */ ';
 
 // Functions
@@ -158,12 +191,35 @@ exp.func.centralList = function(_vars) {
     var thisProduct = _vars.productName[ _vars.productId ];
     $.each( _vars.images[ thisProduct ], function( key, value ) {
         if( !value[4] ) {
-            list += '<li class="setTitle"><a href="#" data-behaviour="lookInsideModal" data-thumb-id="' + key + '">'
-                    + value[1] + ((value[2] !== '') ? value[2] : '' ) + ' <span class="see-inside-hover">See inside</span></a></li>';
+            list += '<li class="setTitle"><a href="#" data-behaviour="lookInsideModal" data-thumb-id="' + key + '"><span class="see-inside-titlelink">'
+                    + value[1] + ((value[2] !== '') ? value[2] : '' ) + '</span> <span class="see-inside-hover">See inside</span></a></li>';
         }
         i++;
     });
     return list;
+};
+
+// Function to open the modal
+exp.vars.lookInsideModal = function( pageId ) {
+    $('#lookInsideModal').modal();
+};
+
+exp.vars.generateModalBody = function(_vars) {
+    _vars = _vars || exp.vars;
+    var markup = ' \
+<div class="see-inside--scroller"> \
+    Scroller \
+</div><!-- .see-inside--scroller --> \
+<div class="see-inside--header"> \
+    <h3>'+_vars.productTitle+'</h3>' +
+    _vars.buyBlock.wrap('<div />').parent('div').html() +
+    '<div class="see-inside--wishlist">'+_vars.wishlistLink.wrap('<div />').parent('div').html()+'</div> \
+</div><!-- .see-inside--header --> \
+<div class="see-inside--zoom"> \
+    Zoom area \
+</div><!-- .see-inside--zoom --> \
+<!-- end see inside -->';
+    return markup;
 };
 
 // This function waits till a DOM element is available, then runs a callback function
@@ -213,13 +269,29 @@ exp.init = function() {
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
 
-    // Add thumbs underneath product image
-
+    // add thumbs underneath product image
     $('.productImage:eq(0)').after( this.func.productThumbs(exp.vars) );
 
-    if( $('#setTitles ul li').length ) {
+    // turn set list into linked set list
+    if( $('#setTitles li').length ) {
         $('#setTitles ul').html( this.func.centralList(exp.vars) );
     }
+
+    // append modal template to body
+    $('#page-browse-product').append( this.vars.modalTemplate );
+
+    // customise modal template
+    $('#lookInsideModal .modal-body').html( this.vars.generateModalBody(exp.vars) );
+
+    // attach event listener to modal triggers
+    $('[data-behaviour="lookInsideModal"]').bind('click',function(e) {
+        e.preventDefault();
+        var pageId = $(this).attr('data-thumb-id');
+        exp.vars.lookInsideModal( pageId );
+    });
+/*    $('#lookInsideModal').on('shown', function () {
+        alert('shown');
+    }); */
 
 };
 
