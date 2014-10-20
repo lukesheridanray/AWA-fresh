@@ -232,6 +232,18 @@ exp.init = function() {
         $(".password-container").show();
     });
 
+    // Register
+    $('#register-customer-password').before('<li class="control" style="margin-top:1em;"><div class="input-box" style="width: 260px;"><input name="register" id="create-account" value="1" title="Create account" class="radio validation-passed" type="checkbox"><label for="create-account">Create an account</label></div></li>');
+
+    $('#create-account').change(function() {
+        if ( ! jQuery(this).is(':checked')) { 
+            jQuery(this).parents('li').siblings("li.remainhidden").hide();
+        }
+        else {
+            jQuery(this).parents('li').next().show();
+        }
+    });
+
     var email;
 
     // Continue button event handler
