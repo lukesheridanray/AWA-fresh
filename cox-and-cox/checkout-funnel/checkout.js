@@ -5,6 +5,10 @@
 // JSHint flags
 // jshint multistr: true
 // jshint jquery: true
+// 
+
+// Global var
+var shippingChangeCallback;
 
 // Wrap the experiment code in an IIFE, this creates a local scope and allows us to
 // pass in jQuery to use as $. Other globals could be passed in if required.
@@ -140,6 +144,7 @@ exp.init = function() {
     // Remove red stars
     $("label > em").remove();
 
+    // Colon after labels
     $("label:not(.radio)").each(function() {
         var text = $(this).text();
         if (text.length > 5) {
@@ -154,9 +159,20 @@ exp.init = function() {
         if (this.loadWaiting) return;
         this.accordion.openPrevSection(true);
         var current = $("div.progress-bar > div.step-link.active");
-        current.removeClass(active);
+        current.removeClass('active');
         current.prev().addClass('active');
     };
+
+    checkout.gotoSection = function(section)
+    {
+        var sectionElement = jQuery('#opc-'+section);
+        sectionElement.addClass('allow');
+        this.accordion.openSection('opc-'+section);
+        this.reloadProgressBlock(section);
+        if (section == 'payment') {
+            shippingChangeCallback(jQuery);
+        }
+    }
 
     // Step 1 - Guest checkout or login
     var messages = $(".messages").detach();
@@ -388,7 +404,10 @@ exp.init = function() {
         while (option = options.pop()) {
             deliveryOptions += '<option value="' + option.value + '" >' + option.label + '</option>';
         }
-        deliveryOptions += '</select>';
+        deliveryOptions += '</select><ul id="smallprint" style="margin-right: 55px;margin-top: 5px;"> \
+        <li>Next Working Day Delivery for Mainland UK (excludes Highlands & Islands) orders placed on weekdays before 1PM £8.50</li> \
+        <li>Next Working Day Delivery before 12pm for Mainland UK (excludes Highlands & Islands) orders placed on weekdays before 1pm. £10.00</li> \
+        <li>Saturday Delivery for Mainland UK (excludes Highlands & Islands) for orders placed before Friday 1pm £15.00</li></ul>';
 
         $("#checkout-shipping-method-load dd").html(deliveryOptions);
         $('#checkout-shipping-method-load dd').attr('style', 'margin: 7px 0 12px 18px;');
@@ -495,86 +514,111 @@ exp.init = function() {
 
     // Step 4 - Payment
 
-    $("#shipping-method-buttons-container > button").click(function() {
-        exp.func.waitForElement('#sagepaydirectpro_cc_cid', function() {
+    // Move payment form, restyle
+    shippingChangeCallback = function($$) {
 
-            var paymentform = $("dd > #payment_form_sagepaydirectpro").detach();
-            $("#payment_form_sagepaydirectpro label").attr('style','text-align: right;');
-            $("#payment-buttons-container").css('margin-top', '2em');
-            $("#checkout-payment-method-load > dt:nth-child(1) > label").css('background-image','none');
-            $("#checkout-payment-method-load > dt:nth-child(1) > label").css('padding-left',0);
-            $("#checkout-payment-method-load > dt:nth-child(1) > label").css('font-weight','normal');
-            $("#checkout-payment-method-load > dt:nth-child(3) > label").html("Pay with Paypal");
-            $("#checkout-payment-method-load > dt:nth-child(3) > label").css('font-weight','normal');
+        // Move payment form, restyle
+        $$("#payment_form_sagepaydirectpro label").attr('style','text-align: right;');
+        $$("#payment-buttons-container").css('margin-top', '2em');
 
-            if ( ! $('#co-payment-form > h2').length) {
+        $$("#checkout-payment-method-load > dt:nth-child(1) > label").css('background-image','none');
+        $$("#checkout-payment-method-load > dt:nth-child(1) > label").css('padding-left',0);
+        $$("#checkout-payment-method-load > dt:nth-child(1) > label").css('font-weight','normal');
+        $$("#checkout-payment-method-load > dt:nth-child(3) > label").html("Pay with Paypal");
+        $$("#checkout-payment-method-load > dt:nth-child(3) > label").css('font-weight','normal');
 
-                $('#co-payment-form > fieldset').attr('style','width: 445px;margin: 0 auto;');
-                $('#payment-buttons-container > p.required').remove();
+        $$('#co-payment-form > fieldset').attr('style','width: 445px;margin: 0 auto;');
+        $$('#payment-buttons-container > p.required').remove();
 
-                $("#payment-buttons-container > button span").remove();
-                $("#payment-buttons-container > button").text('Secure Payment');
-                $("#payment-buttons-container > button").attr('style','display: block; font-size: 1.5em; font-weight: bold; padding: 0.75em 2em; margin: 0px auto; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);float: none;');
+        // Redraw button
+        $$("#payment-buttons-container > button span").remove();
+        $$("#payment-buttons-container > button").text('Secure Payment');
+        $$("#payment-buttons-container > button").attr('style','display: block; font-size: 1.5em; font-weight: bold; padding: 0.75em 2em; margin: 0px auto; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);float: none;');
 
-                $("#payment-buttons-container").wrap('<fieldset style="padding: 1em; width: 445px; margin: 1em auto; border: 1px solid rgb(204, 204, 204);" class="co-box"></fieldset>');
-                $('<legend style="display: block; padding: 0px 1em; font-weight: bold; font-size: 1.2em;">Pay by Credit or Debit Card</legend>').prependTo('#checkout-step-payment > fieldset:eq(0)');
+        // Wrap with fieldset
+        $$("#payment-buttons-container").wrap('<fieldset style="padding: 1em; width: 445px; margin: 1em auto; border: 1px solid rgb(204, 204, 204);" class="co-box"></fieldset>');
 
-                $('<p style="width: 20em;font-size:.9em;margin: .5em auto;">Credit and debit cards are not charged until the item is shipped from our warehouse</p>').insertAfter('#checkout-step-payment > fieldset:eq(0)');
+        $$('<legend style="display: block; padding: 0px 1em; font-weight: bold; font-size: 1.2em;">Pay by Credit or Debit Card</legend>').prependTo('#checkout-step-payment > fieldset:eq(0)');
 
-                payment.switchMethod('sagepaydirectpro');
+        $$('<p style="width: 20em;font-size:.9em;margin: .5em auto;">Credit and debit cards are not charged until the item is shipped from our warehouse</p>').insertAfter('#checkout-step-payment > fieldset:eq(0)');
 
-                $("#p_method_sagepaydirectpro").prop('checked', true);
+        payment.switchMethod('sagepaydirectpro');
 
-                $('<h2 style="font-size:1.5em;font-weight:bold;width: 445px;margin: 0 auto;">Secure Payment Information</h2>').prependTo("#co-payment-form");
+        $$("#p_method_sagepaydirectpro").prop('checked', true);
 
-                if (paymentform.length) {
-                    $("#checkout-step-payment > fieldset").prepend(paymentform);
+        $$('<h2 style="font-size:1.5em;font-weight:bold;width: 445px;margin: 0 auto;">Secure Payment Information</h2>').prependTo("#co-payment-form");
+
+
+        $$("#payment_form_sagepaydirectpro").css('width', 'auto');
+        $$("#payment_form_sagepaydirectpro .input-box").css('width', '150px');
+
+        $$("#co-payment-form > fieldset").attr('style', 'width: 250px; margin: 0 auto 2em auto;');
+
+        var buttons = $$('#checkout-step-payment > .co-box').detach();
+        $$("#co-payment-form").append(buttons);
+
+        var paypalText = '';
+
+        $$('#p_method_paypal_express').click(function() {
+            $$("#checkout-step-payment > fieldset > legend").text("Pay by PayPal");
+            
+
+                if ( ! paypalText.length) {
+                    paypalText = $$('#payment_form_paypal_express > li').text();
+                    $$('#payment_form_paypal_express > li').remove();
                 }
 
-                $("#payment_form_sagepaydirectpro").css('width', 'auto');
-                $("#payment_form_sagepaydirectpro .input-box").css('width', '150px');
+                $$('<p style="width: 20em;font-size: .9em;margin: .5em auto;" id="paypal_text">' + paypalText + '</p>')
+                    .insertBefore('#payment-buttons-container');
 
-                $("#co-payment-form > fieldset").attr('style', 'width: 250px; margin: 0 auto 2em auto;');
+            
+        });
 
-                var paypalText = '';
+        $$('#p_method_sagepaydirectpro').click(function() {
+            $$("#paypal_text").remove();
+            $$("#checkout-step-payment > fieldset > legend").text("Pay by Credit or Debit Card");
+        });
 
-                $('#p_method_paypal_express').click(function() {
-                    $("#checkout-step-payment > fieldset > legend").text("Pay by PayPal");
-                    setTimeout(function() {
+        $$('#payment_form_sagepaydirectpro select').css('width','auto');
+        var year = $$('#sagepaydirectpro_expiration_yr').detach();
+        $$('#sagepaydirectpro_expiration').after(year);
 
-                        if ( ! paypalText.length) {
-                            paypalText = $('#payment_form_paypal_express > li').text();
-                            $('#payment_form_paypal_express > li').remove();
-                        }
+        $$('#sagepaydirectpro_cc_type_exp_div > div > div:nth-child(1)')
+            .css('width','260px');
 
-                        $('<p style="width: 20em;font-size: .9em;margin: .5em auto;" id="paypal_text">' + paypalText + '</p>')
-                            .insertBefore('#payment-buttons-container');
+        $$('#sagepaydirectpro_expiration')
+            .css('margin-right','1em');
 
-                    }, 1000)
-                });
+        $$('#sagepaydirectpro_cc_cid').css('width', '50px');
 
-                $('#p_method_sagepaydirectpro').click(function() {
-                    $("#paypal_text").remove();
-                    $("#checkout-step-payment > fieldset > legend").text("Pay by Credit or Debit Card");
-                });
+        $$('.cvv-what-is-this').attr('style', 'position: relative;top: 3px;');
 
-                $('#payment_form_sagepaydirectpro select').css('width','auto');
-                var year = $('#sagepaydirectpro_expiration_yr').detach();
-                $('#sagepaydirectpro_expiration').after(year);
+        // Remove red stars
+        $$("label > em").remove();
 
-                $('#sagepaydirectpro_cc_type_exp_div > div > div:nth-child(1)')
-                    .css('width','260px');
+        $$('#checkout-payment-method-load label').addClass('radio');
 
-                $('#sagepaydirectpro_expiration')
-                    .css('margin-right','1em');
-
-                $('#sagepaydirectpro_cc_cid').css('width', '50px');
-
-                $('.cvv-what-is-this').attr('style', 'position: relative;top: 3px;');
+        // Colon after labels
+        $$("#checkout-step-payment label:not(.radio)").each(function() {
+            var text = $$(this).text();
+            if (text.length > 5) {
+                $$(this).text(text + ':');
             }
+        });
 
-        }, 10000, 50);
-    });
+        var cardForm = $$("#payment_form_sagepaydirectpro");
+        $$("#co-payment-form > fieldset.co-box").prepend(cardForm);
+
+        setTimeout(function() { $$("#payment-buttons-container > button").prop('disabled', false); },
+            1000);
+    };
+
+    // Step 5 - review
+    $('#opc-review .step').css('border-top', 'none');
+
+    // Add back link
+    $('#checkout-review-load').before('<p class="back-link"><a href="#" onclick="checkout.back(); return false;"><small>« </small>Back</a></p>');
+    $('#checkout-review-load').after('<p class="back-link"><a href="#" onclick="checkout.back(); return false;"><small>« </small>Back</a></p>');
 };
 
 // Run the experiment
