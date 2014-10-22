@@ -34,7 +34,7 @@ var exp = {};
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
-    'variation' : '1',
+    'variation' : '2',
     'pathname': window.location.pathname.toString(),
     'page': '0',
     'qualityWrap': $('.quality-wrap'),
@@ -120,19 +120,20 @@ if( exp.vars.variation === '1' ) {
     exp.css +=  '.main-desc-wrap { padding-bottom: 15px; } \
                  .colour-check-wrap { clear: both; padding-top: 20px; padding-bottom: 30px; ';
 } else {
-    exp.css +=  '.quality-wrap { position: relative; overflow: visible; } \
-                 .main-desc-wrap { position: absolute; top: 0; left: 0; width: 976px; } \
+    exp.css +=  '.quality-wrap { position: relative; overflow: visible; margin-top: 0; } \
+                 .main-desc-wrap { position: absolute; top: 0; left: 0; width: 976px; margin-top: 0; } \
                  .colour-check-wrap { clear: both; width: 976px; padding-top: 10px; padding-bottom: 30px; } \
-           #product_addtocart_form { height: 540px; } \
+                 .product-view:first-child { padding-bottom: 0; } \
+                 #accordionOpt { margin-bottom: 20px; } \
 @media screen and (max-width: 1024px) { \
   .main-desc-wrap, .colour-check-wrap { width: 757px !important; } \
   .main-desc-wrap { padding-bottom: 30px !important; } \
-  #accordion, .quality-wrap .block-title { border-top: 15px solid #fff; } \
-  #product_addtocart_form { height: 570px; }  \
+  #accordion, #accordionOpt, .quality-wrap .block-title { border-top: 15px solid #fff; } \
+/*  #product_addtocart_form { height: 570px; } */  \
 } \
 @media screen and (max-width: 870px) { \
   .main-desc-wrap, .colour-check-wrap { width: auto !important; position: relative !important; padding-bottom: 10px !important; padding-left: 5px !important; padding-right: 5px !important; } \
-  .quality-wrap, #accordion { padding-top: 0 !important; padding-bottom: 10px !important; } \
+  .quality-wrap, #accordion, #accordionOpt { padding-top: 0 !important; padding-bottom: 10px !important; } \
   #product_addtocart_form { height: auto; }  \
 }';
 }
@@ -189,7 +190,7 @@ exp.init = function() {
         return false;
     }
 
-    console.log('Product Page Copy - variation '+ exp.vars.variation +' - 0.3');
+    console.log('Product Page Copy - variation '+ exp.vars.variation +' - 0.4');
         
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
@@ -233,21 +234,37 @@ exp.init = function() {
                            </div>';
         var topPadding;
 
-        exp.vars.qualityWrap.prepend( mainDesc );
+        // Product Desc
+        if( exp.vars.variation === '1' ) {
 
-        if( exp.vars.variation === '2' ) {
+            exp.vars.qualityWrap.prepend( mainDesc );
+
+        } else {
+
+            $('.product-view').after('<div class="product-view clearfix product-view-bottom"> \
+                <div class="product-essential col-sm-10 col-sm-push-14 col-md-9 col-md-push-15"></div> \
+                <div class="product-aside col-sm-14 col-sm-pull-10 col-md-15 col-md-pull-9"></div> \
+            </div>');
+
+            $('.product-view-bottom .product-essential').append( exp.vars.accordionPanelsWrap );
+            $('.product-view-bottom .product-aside').append( exp.vars.qualityWrap );
+            exp.vars.accordionPanelsWrap.attr('id','accordionOpt');
+
+            exp.vars.qualityWrap.prepend( mainDesc );
 
             topPadding = ($('.main-desc-wrap').height() + 20) + 'px';
             exp.vars.qualityWrap.add(exp.vars.accordionPanelsWrap).css({ 'padding-top': topPadding });
+
         }
 
+        // Colour Check
         if( exp.vars.variation === '1' ) {
 
             exp.vars.qualityWrap.after( colourCheck );
 
         } else {
 
-            $('.product-view').append( colourCheck );
+            $('.product-view-bottom').append( colourCheck );
 
         }
 
