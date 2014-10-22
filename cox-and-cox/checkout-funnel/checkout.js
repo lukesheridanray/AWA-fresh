@@ -174,6 +174,9 @@ exp.init = function() {
         }
     }
 
+    // Set height
+    $('#checkoutSteps').css('height','800px');
+
     // Step 1 - Guest checkout or login
     var messages = $(".messages").detach();
 
@@ -231,7 +234,7 @@ exp.init = function() {
     $('#login\\:login').click(function() {
         $(".password-container").show();
     });
-
+    /*
     // Register
     $('#register-customer-password').before('<li class="control" style="margin-top:1em;"><div class="input-box" style="width: 260px;"><input name="register" id="create-account" value="1" title="Create account" class="radio validation-passed" type="checkbox"><label for="create-account">Create an account</label></div></li>');
 
@@ -243,6 +246,12 @@ exp.init = function() {
             jQuery(this).parents('li').next().show();
         }
     });
+    */
+    
+    // Remove registration (other experiment)
+    setTimeout(function() {
+        $('label[for="OPTIMZELY_LOGIN_FORM_EXP_register_account"]').parents('.fields').remove();
+        }, 1000);
 
     var email;
 
@@ -293,6 +302,30 @@ exp.init = function() {
     $("li.control:nth-child(13)").hide();
     $(".invisible").hide();
     //$("li.control:gt(0)").remove();
+    
+    // Modal for telephone
+    $("#billing\\:telephone").after('<br /><span style="float: right;text-decoration: underline;"><a href="#" id="why-ask-phone" style="font-size: .9em;">why ask this?</a></span>');
+
+    // Modal window
+    var modal = '<div class="tool-tip" id="telephone-tool-tip" style="display:none;width:400px;"> \
+        <div class="btn-close"><a href="#" id="telephone-tool-tip-close" title="Close">Close</a></div> \
+        <div class="tool-tip-content">We may need to phone you to clarify delivery details related to this order. Your phone number will never be used for any other purpose.</div> \
+    </div>';
+    $(modal).prependTo('body');
+
+    $("#why-ask-phone").click(function(e) {
+        $('#telephone-tool-tip').css('top', (e.pageY+10)+'px');
+        $('#telephone-tool-tip').css('left', (e.pageX-400)+'px');
+
+        $('#telephone-tool-tip').show();
+
+        $('#telephone-tool-tip-close').click(function() {
+            $('#telephone-tool-tip').hide();
+            return false;
+        });
+
+        return false;
+    });
 
     // Continue button
     //<button class="button" type="button" id="onepage-first-goon" style="display: block; font-size: 1.5em; font-weight: bold; padding: 0.75em 2em; margin: 0px auto; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);">Continue</button>
@@ -313,9 +346,13 @@ exp.init = function() {
 
     $("#meanbee\\:billing_address_find").attr('style', 'display: block; font-size: 1em; font-weight: bold; padding: 0.25em .75em; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);');
 
+    // Underline link
+    $('#meanbee\\:billing_input_address_manually').css('text-decoration', 'underline');
+
     // Unhide fields, except the ones we don't want shown on clicking find address or manual entry
     $("#meanbee\\:billing_input_address_manually").click(function() {
         $(".fields:not(.remainhidden)").css('display', 'block');
+        $('.invisible').removeClass('invisible');
     });
     $("#meanbee\\:billing_address_find").click(function() {
         $(".fields:not(.remainhidden)").css('display', 'block');
@@ -327,6 +364,8 @@ exp.init = function() {
             $("#meanbee\\:billing_address_selector > div:nth-child(2) > button:nth-child(1)").text(btnText);
             $("#meanbee\\:billing_address_selector > div:nth-child(2) > button:nth-child(1)").attr('style', 'display: block; font-size: 1em; font-weight: bold; padding: 0.25em .75em; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);');
 
+            $('.invisible').removeClass('invisible');
+
             // Don't submit the form yet - the customer still needs to enter their phone number
             $("#meanbee\\:billing_address_selector button")[0].onclick = function() { meanbee_postcode_billing.fillFields($F('meanbee:billing_address_selector_select'), 'billing'); };
 
@@ -334,7 +373,7 @@ exp.init = function() {
     });
 
     // Insert tick box - delivery address same as billing
-    $("ul.form-list:nth-child(2) > li:nth-child(2)").before('<li class="control" style="margin-top:1em;"><div class="input-box" style="width: 260px;"><input name="billing[use_for_shipping]" id="billing:use_for_shipping_yes" value="1" checked="checked" title="Deliver to this address" onclick="" class="radio validation-passed" type="checkbox"><label for="billing:use_for_shipping_yes">Deliver to this address</label></div></li>');
+    $("ul.form-list:nth-child(2) > li:nth-child(2)").before('<li class="control invisible" style="margin-top:1em;"><div class="input-box" style="width: 260px;"><input name="billing[use_for_shipping]" id="billing:use_for_shipping_yes" value="1" checked="checked" title="Deliver to this address" onclick="" class="radio validation-passed" type="checkbox"><label for="billing:use_for_shipping_yes">Deliver to this address</label></div></li>');
 
     // Handle next click
     $("#continue-btn").click(function() {
@@ -358,6 +397,9 @@ exp.init = function() {
     $(".co-box2").prepend('<legend style="display: block; padding: 0px 1em; font-weight: bold; font-size: 1.5em;">Your Delivery Address</legend>');
 
     ShippingMain.removeClass("shipping-form-left");
+
+    // Underline link
+    $('#meanbee\\:shipping_input_address_manually').css('text-decoration', 'underline');
 
     // Fix label, it's not class radio therefore it gets colons
     var label = $("label[for='shipping:same_as_billing']").text();
@@ -398,31 +440,60 @@ exp.init = function() {
 
     $(".opc #checkout-step-billing #co-billing-form #billing-new-address-form, .opc #checkout-step-shipping #co-shipping-form #shipping-new-address-form").css('height','auto');
 
+    $("#co-shipping-form > fieldset > div:nth-child(2) > ul > li.control").css('margin-left', '130px');
+
+    $('label[for="gift_message"]').attr('style','text-align: left;font-weight: normal;');
+
+    $('<a href="#" id="add-gift" style="text-decoration: underline;">Add gift message?</a>').insertBefore('#amorderattr');
+    $('#amorderattr').hide();
+
+    $('#add-gift').click(function() {
+        $(this).hide();
+        $('#amorderattr').show();
+        return false;
+    });
+
+    $("#continue-btn-shipping").off().click(function(e){             
+            e.preventDefault();
+            shipping.save(); 
+        });
+
     // Step 3 - Delivery Method
     // 
     // Create a dropdown from radio buttons and rejig delivery method form
+    var deliveryMap = {
+        'productmatrix_Next_Working_Day_Delivery__for_Mainland_UK_(excludes_Highlands___Islands)_orders_placed_on_weekdays_before_1PM': 'Order before 1PM on weekdays',
+        'productmatrix_Next_Working_Day_Delivery_before_12pm_for_Mainland_UK__(excludes_Highlands___Islands)_orders_placed_on_weekdays_before_1pm.': 'Order before 1PM on weekdays',
+        'productmatrix_Saturday_Delivery__for_Mainland_UK_(excludes_Highlands___Islands)_for_orders_placed_before_Friday_1pm': 'Order before 1PM on Friday'
+    };
+
     var createDropdownRejigForm = function () {
         var options = [];
         $("#checkout-shipping-method-load li").each(function() {
             if ($(this).find("label").length) {
+                var val = $(this).find("input").val();
                 options.push({
-                    'value': $(this).find("input").val(),
-                    'label': $(this).find("label").text().replace(/\s\(.*(?=\s£)/,'')
+                    'value': val,
+                    'label': $(this).find("label").text().replace(/\s\(.*(?=\s£)/,''),
+                    'smallprint': (deliveryMap.hasOwnProperty(val) ? deliveryMap[val] : '')
                 });
             }
         });
 
         var deliveryOptions = '<select name="shipping_method">';
-        while (option = options.pop()) {
-            deliveryOptions += '<option value="' + option.value + '" >' + option.label + '</option>';
+        for (var i = 0; i < options.length; i++) {
+            option = options[i];
+            deliveryOptions += '<option value="' + option.value + '" data-smallprint="' + option.smallprint + '">' + option.label + '</option>';
         }
-        deliveryOptions += '</select><ul id="smallprint" style="margin-right: 55px;margin-top: 5px;"> \
-        <li>Next Working Day Delivery for Mainland UK (excludes Highlands & Islands) orders placed on weekdays before 1PM £8.50</li> \
-        <li>Next Working Day Delivery before 12pm for Mainland UK (excludes Highlands & Islands) orders placed on weekdays before 1pm. £10.00</li> \
-        <li>Saturday Delivery for Mainland UK (excludes Highlands & Islands) for orders placed before Friday 1pm £15.00</li></ul>';
+        deliveryOptions += '</select><span id="del-small-print" style="text-align: right;margin-right: 50px;display: block;font-size: 0.9em;">'
+            + (options.length ? options[0].smallprint : '') + '</span>';
 
         $("#checkout-shipping-method-load dd").html(deliveryOptions);
         $('#checkout-shipping-method-load dd').attr('style', 'margin: 7px 0 12px 18px;');
+
+        $('select[name="shipping_method"]').change(function() {
+            $('#del-small-print').text($(this).find('option:selected').data('smallprint'));
+        });
 
         if ( ! $(".display-address").length) { // in case this function is called more than once
             // Rejig form
@@ -444,6 +515,30 @@ exp.init = function() {
                     $('#co-shipping-method-form > div.delivery-note input').val('');
                     $('#co-shipping-method-form > div.delivery-note input').css('color', 'black');
                 }
+            });
+
+            // Modal for delivery note
+            $("#co-shipping-method-form > div.delivery-note input").after('<br /><span style="text-align:right;text-decoration:underline;display:inline-block;width:300px;"><a href="#" id="what-is-note" style="font-size: .9em;font-weight:normal;">what is this?</a></span>');
+
+            // Modal window
+            var other_modal = '<div class="tool-tip" id="note-tool-tip" style="display:none;width:400px;"> \
+                <div class="btn-close"><a href="#" id="note-tool-tip-close" title="Close">Close</a></div> \
+                <div class="tool-tip-content">Provide any special delivery instructions. Unfortunately the courier waybill is limited to 35 characters.</div> \
+            </div>';
+            $(other_modal).prependTo('body');
+
+            $("#what-is-note").click(function(e) {
+                $('#note-tool-tip').css('top', (e.pageY+10)+'px');
+                $('#note-tool-tip').css('left', (e.pageX-400)+'px');
+
+                $('#note-tool-tip').show();
+
+                $('#note-tool-tip-close').click(function() {
+                    $('#note-tool-tip').hide();
+                    return false;
+                });
+
+                return false;
             });
 
             // Is there a separate delivery address? if not, we'll use the billing address
