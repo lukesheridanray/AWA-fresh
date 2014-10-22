@@ -174,8 +174,16 @@ exp.init = function() {
         }
     }
 
+    var heightSetCount = 0;
     // Set height
-    $('#checkoutSteps').css('height','800px');
+    var heightSetter = setInterval(function () {
+        if (heightSetCount++ < 20) {
+            $('#checkoutSteps').css('height','800px');
+        }
+        else {
+            clearInterval(heightSetter);
+        }
+    }, 500);
 
     // Step 1 - Guest checkout or login
     var messages = $(".messages").detach();
@@ -714,7 +722,7 @@ exp.init = function() {
         });
 
         var cardForm = $$("#payment_form_sagepaydirectpro");
-        $$("#co-payment-form > fieldset.co-box").prepend(cardForm);
+        $$("#co-payment-form > fieldset.co-box > legend").after(cardForm);
 
         setTimeout(function() { $$("#payment-buttons-container > button").prop('disabled', false); },
             1000);
