@@ -158,9 +158,6 @@ exp.init = function() {
     checkout.back = function (){
         if (this.loadWaiting) return;
         this.accordion.openPrevSection(true);
-        var current = $("div.progress-bar > div.step-link.active");
-        current.removeClass('active');
-        current.prev().addClass('active');
     };
 
     checkout.gotoSection = function(section)
@@ -322,7 +319,7 @@ exp.init = function() {
     $(modal).prependTo('body');
 
     $("#why-ask-phone").click(function(e) {
-        $('#telephone-tool-tip').css('top', (e.pageY+10)+'px');
+        $('#telephone-tool-tip').css('top', (e.pageY-20)+'px');
         $('#telephone-tool-tip').css('left', (e.pageX-400)+'px');
 
         $('#telephone-tool-tip').show();
@@ -345,7 +342,10 @@ exp.init = function() {
     $("#billing-buttons-container").append(continueButton);
     $("#continue-btn span").remove();
     $("#continue-btn").text('Continue');
-    $("#continue-btn").attr('style','display: block; font-size: 1.5em; font-weight: bold; padding: 0.75em 2em; margin: 0px auto; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);');
+    $("#continue-btn").attr('style','font-size: 1.5em; font-weight: bold; padding: 0.75em 2em; margin: 0px auto; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);');
+
+    $("#billing-buttons-container").css('text-align', 'center');
+    $('#billing-buttons-container').addClass('invisible');
 
     // Find address button
     var findaddressText = $("#meanbee\\:billing_address_find").text();
@@ -377,6 +377,10 @@ exp.init = function() {
             // Don't submit the form yet - the customer still needs to enter their phone number
             $("#meanbee\\:billing_address_selector button")[0].onclick = function() { meanbee_postcode_billing.fillFields($F('meanbee:billing_address_selector_select'), 'billing'); };
 
+            // Sort out layout
+            $('#meanbee\\:billing_address_selector').css('margin-left','110px');
+            $('#meanbee\\:billing_address_selector').css('width','260px');
+
         },10000,50);
     });
 
@@ -392,6 +396,17 @@ exp.init = function() {
             $(".step-link.delivery").addClass('active');
             });
     });
+
+    // Form size fix
+    $('#co-billing-form .field').css('width', '440px');
+    $('#co-billing-form .fields').css('width', '440px');
+    $('#co-billing-form .wide').css('width','440px');
+    $("#co-billing-form .input-box").css('width', '260px');
+    $("#co-billing-form .input-box").css('margin-right','70px');
+    $("#co-billing-form label.required").css('width', '90px');
+
+    // Spacing under manual entry link
+    $('#meanbee\\:billing_address_selector').css('margin-top','1em');
 
     // Step 2.5 - Delivery Address
     //
@@ -466,6 +481,22 @@ exp.init = function() {
             shipping.save(); 
         });
 
+    // Form size fix
+    $('#co-shipping-form .field').css('width', '440px');
+    $('#co-shipping-form .fields').css('width', '440px');
+    $('#co-shipping-form .wide').css('width','440px');
+    $("#co-shipping-form .input-box").css('width', '260px');
+    $("#co-shipping-form .input-box").css('margin-right','70px');
+    $("#co-shipping-form label.required").css('width', '90px');
+    $("#co-shipping-form label[for='shipping:company']").css('width', '90px');
+    $("#co-shipping-form > fieldset > div:nth-child(2) > ul > li.control").css('margin-left', '90px');
+    $("#co-shipping-form > fieldset > div:nth-child(2) > ul > li.control").css('width', '260px');
+    $("#meanbee\\:shipping_address_selector").css('width', '260px');
+    $("#meanbee\\:shipping_address_selector").css('margin-left', '110px');
+
+    // Spacing under manual entry link
+    $('#meanbee\\:shipping_address_selector').css('margin-top','1em');
+
     // Step 3 - Delivery Method
     // 
     // Create a dropdown from radio buttons and rejig delivery method form
@@ -536,7 +567,7 @@ exp.init = function() {
             $(other_modal).prependTo('body');
 
             $("#what-is-note").click(function(e) {
-                $('#note-tool-tip').css('top', (e.pageY+10)+'px');
+                $('#note-tool-tip').css('top', (e.pageY-20)+'px');
                 $('#note-tool-tip').css('left', (e.pageX-400)+'px');
 
                 $('#note-tool-tip').show();
@@ -648,7 +679,10 @@ exp.init = function() {
         // Redraw button
         $$("#payment-buttons-container > button span").remove();
         $$("#payment-buttons-container > button").text('Secure Payment');
-        $$("#payment-buttons-container > button").attr('style','display: block; font-size: 1.5em; font-weight: bold; padding: 0.75em 2em; margin: 0px auto; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);float: none;');
+        $$("#payment-buttons-container > button").attr('style','display: block; font-size: 1.5em; font-weight: bold; padding: 0.75em 20px 0.75em 36px; margin: 0px auto; \
+            border: 1px solid rgb(0, 0, 0); \
+            background: rgb(241, 194, 0) url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAGNJREFUeNpiYKAFYGFn9wfi+0D8H4pBbH9iNdsjaTwPxPuR+PbEGHAeqjgezUVgA4kxAKtCmEvQxZlwmPOB2PBiombI5yMFFiGcj80FAiTYJ0A1L4wagGrABxL0faBa+gEIMADz0iKXhglKDAAAAABJRU5ErkJggg==) \
+            no-repeat 15px 12px;float: none;');
 
         // Wrap with fieldset
         $$("#payment-buttons-container").wrap('<fieldset style="padding: 1em; width: 445px; margin: 1em auto; border: 1px solid rgb(204, 204, 204);" class="co-box"></fieldset>');
@@ -723,6 +757,8 @@ exp.init = function() {
 
         var cardForm = $$("#payment_form_sagepaydirectpro");
         $$("#co-payment-form > fieldset.co-box > legend").after(cardForm);
+
+        $$("#payment-buttons-container > p").remove();
 
         setTimeout(function() { $$("#payment-buttons-container > button").prop('disabled', false); },
             1000);
