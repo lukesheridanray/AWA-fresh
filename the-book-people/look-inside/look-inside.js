@@ -205,6 +205,16 @@ script + .see-inside--zoom-container { position: absolute; top: 0; left: 0; z-in
 */.zoom-item { padding: 0 0 20px 0; height: 200px; } \
 .zoom-item.current a, .zoom-item:hover a { color: '+exp.vars.colorOrange+'; } \
 .zoom-item.current img, .zoom-item:hover img { border-color: '+exp.vars.colorOrange+'; } \
+/* Responsive */ \
+@media screen and (max-width: 1240px), screen and (max-height: 820px) { \
+    #lookInsideModal { height: 565px; width: 940px; margin-left: -470px; top: 5%; } \
+    .see-inside--scroller { height: 430px; margin-top: 100px; } \
+    .see-inside--header, .see-inside--zoom { width: 581px; } \
+    .see-inside--header h3 { width: 350px; line-height: 30px; } \
+    .see-inside--zoom-container { width: 581px; height: 390px; } \
+    .see-inside--zoom-container--inner { width: 578px; } \
+    .see-inside--zoom-nav-up, .see-inside--zoom-nav-bottom { left: 290px; } \
+} \
 /* */ ';
 
 // Functions
