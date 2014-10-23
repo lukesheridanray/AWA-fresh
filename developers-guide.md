@@ -10,6 +10,8 @@ Each new site needs a full audit
 
 TO DO: list steps to take in a full audit
 
+Validate HTML, check for errors. Check for JavaScript errors.
+
 Experiments need auditing individually, some more so than others. Initially check the page on all browsers, that way we are already aware of browser inconsistencies, 
 broken behaviour in old IE's etc, also test the page(s) fully, that way we know how things 'should' work, 
 and can document any broken functionality, before it gets blamed on the experiment.
