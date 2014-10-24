@@ -130,7 +130,7 @@ exp.init = function() {
 
     // Global
     // Progress bar
-    var progress = '<div class="progress-bar"><div class="steps-line "></div><div class="step-link login active">Login</div><div class="step-link billing">Billing information</div><div class="step-link delivery">Delivery</div><div class="step-link payment">Payment</div></div>';
+    var progress = '<div class="progress-bar"><div class="steps-line"></div><div class="step-link login active">Login</div><div class="step-link billing">Billing information</div><div class="step-link delivery">Delivery</div><div class="step-link payment">Payment</div></div>';
 
     // Hide old progress indicator
     $(".step-title").hide();
@@ -182,110 +182,119 @@ exp.init = function() {
         }
     }, 500);
 
-    // Step 1 - Guest checkout or login
-    var messages = $(".messages").detach();
+    // Is logged in? If not, we don't need the first step
+    if ( ! $('.account-logout').length)
+    {
+        // Step 1 - Guest checkout or login
+        var messages = $(".messages").detach();
 
-    // Remove what we don't need on this screen
-    
-    $("#checkout-step-login > div.col2-set > div.col-2 > div.login").remove();
-    $("#login-form > fieldset > h4").remove();
-    $("#login-form > fieldset > div.sign-in-to").remove();
-    $("#login-form > fieldset > div.sign-in-content").remove();
-    $("#login-form > fieldset > p").remove();
-    $("#forgot-password").remove(); // We'll re-create it later
+        // Remove what we don't need on this screen
+        
+        $("#checkout-step-login > div.col2-set > div.col-2 > div.login").remove();
+        $("#login-form > fieldset > h4").remove();
+        $("#login-form > fieldset > div.sign-in-to").remove();
+        $("#login-form > fieldset > div.sign-in-content").remove();
+        $("#login-form > fieldset > p").remove();
+        $("#forgot-password").remove(); // We'll re-create it later
 
-    // Introduce choice
-    $('#login-form > fieldset > ul > li:nth-child(1)').after('<li class="control"><label>Do you have a password?</label>   <div style="display: inline-block; float: right; width: 280px;">    <input class="radio" value="guest" id="login:login" name="checkout_method" type="radio"><label style="margin-right: 1.5em;" for="login:login">Yes</label> <input class="radio" value="guest" id="login:guest" name="checkout_method" checked="checked" type="radio"><label for="login:guest">No</label>  </div>  </li>');
+        // Introduce choice
+        $('#login-form > fieldset > ul > li:nth-child(1)').after('<li class="control"><label>Do you have a password?</label>   <div style="display: inline-block; float: right; width: 280px;">    <input class="radio" value="guest" id="login:login" name="checkout_method" type="radio"><label style="margin-right: 1.5em;" for="login:login">Yes</label> <input class="radio" value="guest" id="login:guest" name="checkout_method" checked="checked" type="radio"><label for="login:guest">No</label>  </div>  </li>');
 
-    // Restyle fields and labels
-    $("#login-form > label").attr('style', 'display: block; text-align: right; width: 150px;');
-    $("#login-form .input-box").attr('style', 'width: auto; margin-right: 20px;')
+        // Restyle fields and labels
+        $("#login-form > label").attr('style', 'display: block; text-align: right; width: 150px;');
+        $("#login-form .input-box").attr('style', 'width: auto; margin-right: 20px;')
 
-    // Remove 2 col layout, introduce fieldset with legend
-    $(".col-1").remove();
-    var toplevel = $(".col-2");
-    toplevel.removeClass('col-2');
-    toplevel.wrap('<fieldset style="padding: 2.5em 1em; width: 445px; margin: 0px auto; border: 1px solid rgb(204, 204, 204);" class="co-box" />');
-    $(".checkout-seperator-top2, .checkout-seperator-bottom, .checkout-seperator-top1").remove();
-    $(".co-box").prepend('<legend style="display: block; padding: 0px 1em; font-weight: bold; font-size: 1.5em;">Your Email Address</legend>');
+        // Remove 2 col layout, introduce fieldset with legend
+        $(".col-1").remove();
+        var toplevel = $(".col-2");
+        toplevel.removeClass('col-2');
+        toplevel.wrap('<fieldset style="padding: 2.5em 1em; width: 445px; margin: 0px auto; border: 1px solid rgb(204, 204, 204);" class="co-box" />');
+        $(".checkout-seperator-top2, .checkout-seperator-bottom, .checkout-seperator-top1").remove();
+        $(".co-box").prepend('<legend style="display: block; padding: 0px 1em; font-weight: bold; font-size: 1.5em;">Your Email Address</legend>');
 
-    // Insert error messages
-    $("#checkout-step-login > div.col2-set > fieldset > legend").after(messages);
+        // Insert error messages
+        $("#checkout-step-login > div.col2-set > fieldset > legend").after(messages);
 
-    // Create forgot password & email note
-    $("#login-email").after('<br /><span style="float: right;">(for order confirmation)</span>');
-    $("#login-password").after('<br /><span><a href="/customer/account/forgotpassword/" target="_blank">Forgot Password?</a></span>');
+        // Create forgot password & email note
+        $("#login-email").after('<br /><span style="float: right;">(for order confirmation)</span>');
+        $("#login-password").after('<br /><span><a href="/customer/account/forgotpassword/" target="_blank">Forgot Password?</a></span>');
 
-    // Change wording
-    $("#login-form label[for='login-email']").text('Enter your Email Address:');
+        // Change wording
+        $("#login-form label[for='login-email']").text('Enter your Email Address:');
 
-    // Change button
-    $("#checkout-step-login button span").remove();
-    $("#checkout-step-login button").text('Continue');
-    $("#checkout-step-login button").attr('style','display: block; font-size: 1.5em; font-weight: bold; padding: 0.75em 2em; margin: 0px auto; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);');
+        // Change button
+        $("#checkout-step-login button span").remove();
+        $("#checkout-step-login button").text('Continue');
+        $("#checkout-step-login button").attr('style','display: block; font-size: 1.5em; font-weight: bold; padding: 0.75em 2em; margin: 0px auto; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);');
 
-    $(".buttons-set").attr('style', 'margin-top: 2em');
-    $(".buttons-set").removeClass('buttons-set');
+        $(".buttons-set").attr('style', 'margin-top: 2em');
+        $(".buttons-set").removeClass('buttons-set');
 
-    // Hiding of password
-    $("#login-form > fieldset > ul > li:nth-child(3)").addClass("password-container");
-    $(".password-container").hide();
-
-    // Switching between login and guest checkout
-    $('#login\\:guest').click(function() {
+        // Hiding of password
+        $("#login-form > fieldset > ul > li:nth-child(3)").addClass("password-container");
         $(".password-container").hide();
-    });
 
-    $('#login\\:login').click(function() {
-        $(".password-container").show();
-    });
-    /*
-    // Register
-    $('#register-customer-password').before('<li class="control" style="margin-top:1em;"><div class="input-box" style="width: 260px;"><input name="register" id="create-account" value="1" title="Create account" class="radio validation-passed" type="checkbox"><label for="create-account">Create an account</label></div></li>');
+        // Switching between login and guest checkout
+        $('#login\\:guest').click(function() {
+            $(".password-container").hide();
+        });
 
-    $('#create-account').change(function() {
-        if ( ! jQuery(this).is(':checked')) { 
-            jQuery(this).parents('li').siblings("li.remainhidden").hide();
-        }
-        else {
-            jQuery(this).parents('li').next().show();
-        }
-    });
-    */
-    
-    // Remove registration (other experiment)
-    setTimeout(function() {
-        $('label[for="OPTIMZELY_LOGIN_FORM_EXP_register_account"]').parents('.fields').remove();
-        }, 1000);
+        $('#login\\:login').click(function() {
+            $(".password-container").show();
+        });
+        /*
+        // Register
+        $('#register-customer-password').before('<li class="control" style="margin-top:1em;"><div class="input-box" style="width: 260px;"><input name="register" id="create-account" value="1" title="Create account" class="radio validation-passed" type="checkbox"><label for="create-account">Create an account</label></div></li>');
 
-    var email;
+        $('#create-account').change(function() {
+            if ( ! jQuery(this).is(':checked')) { 
+                jQuery(this).parents('li').siblings("li.remainhidden").hide();
+            }
+            else {
+                jQuery(this).parents('li').next().show();
+            }
+        });
+        */
+        
+        // Remove registration (other experiment)
+        setTimeout(function() {
+            $('label[for="OPTIMZELY_LOGIN_FORM_EXP_register_account"]').parents('.fields').remove();
+            }, 1000);
 
-    // Continue button event handler
-    $("#checkout-step-login > div.col2-set > fieldset > div > div > div > button")[0].onclick = function() {
+        var email;
 
-        if ($('#login\\:guest').is(':checked')) {
-            if(loginForm.validator && loginForm.validator.validate()){
+        // Continue button event handler
+        $("#checkout-step-login > div.col2-set > fieldset > div > div > div > button")[0].onclick = function() {
+
+            if ($('#login\\:guest').is(':checked')) {
+                if(loginForm.validator && loginForm.validator.validate()){
+                    // Fill in billing
+                    email = $('#login-email').val();
+                    $("#billing\\:email").val(email);
+                    checkout.setMethod();
+                }
+
+                exp.func.waitForElement("#checkout-step-shipping:visible",
+                function() {
+                    $(".step-link.login").removeClass('active');
+                    $(".step-link.billing").addClass('active');
+                });
+            }
+            else {
                 // Fill in billing
                 email = $('#login-email').val();
                 $("#billing\\:email").val(email);
-                checkout.setMethod();
-            }
-
-            exp.func.waitForElement("#checkout-step-shipping:visible",
-            function() {
+                onepageLogin($(this)[0]);
                 $(".step-link.login").removeClass('active');
                 $(".step-link.billing").addClass('active');
-            });
-        }
-        else {
-            // Fill in billing
-            email = $('#login-email').val();
-            $("#billing\\:email").val(email);
-            onepageLogin($(this)[0]);
-            $(".step-link.login").removeClass('active');
-            $(".step-link.billing").addClass('active');
-        }
-    };
+            }
+        };
+    }
+    else {
+        // Progress the progress bar
+        $('.step-link.login').removeClass('active');
+        $('.step-link.billing').addClass('active');
+    }
 
     // Step 2 - Billing
     // 
