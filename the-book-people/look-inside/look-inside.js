@@ -87,12 +87,13 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Look inside experiment - 0.1');
+console.log('Look inside experiment - 0.3');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
 //    'productId': dataLayer[0]['product_id'],
+    'viewportWidth': $(window).width(),
     'productTitle': $('#product-description-title').html(),
     'buyBlock': $('.priceWrapper').clone(),
     'wishlistLink': $('#add-to-wishlist-link').clone(),
@@ -166,6 +167,8 @@ exp.css = ' \
 #setTitles .setTitle a:hover { color: #08C !important; text-decoration: none !important; } \
 #setTitles .setTitle a:hover .see-inside-titlelink { text-decoration: underline !important; } \
 #setTitles .setTitle a:hover .see-inside-hover { display: inline; text-decoration: none !important; } \
+#setTitles ul { display: none; } \
+#setTitles ul.setTitlesLinks { display: block; } \
 /* Look inside modal */ \
 #lookInsideModal { height: 700px; width: 1207px; margin-left: -603px; display: none; } \
 #lookInsideModal .modal-content { position: relative; } \
@@ -211,9 +214,31 @@ script + .see-inside--zoom-container { position: absolute; top: 0; left: 0; z-in
     .see-inside--scroller { height: 430px; margin-top: 100px; } \
     .see-inside--header, .see-inside--zoom { width: 581px; } \
     .see-inside--header h3 { width: 350px; line-height: 30px; } \
+    .see-inside--zoom { height: 424px; } \
+    .see-inside--zoom-nav-up { top: -6px; } \
+    .see-inside--zoom-nav-bottom { bottom: -25px; } \
     .see-inside--zoom-container { width: 581px; height: 390px; } \
-    .see-inside--zoom-container--inner { width: 578px; } \
+    .see-inside--zoom-container img, .see-inside--zoom-container--inner { width: 577px; } \
+    .see-inside--zoom-container--inner:hover { height: 410px; } \
     .see-inside--zoom-nav-up, .see-inside--zoom-nav-bottom { left: 290px; } \
+} \
+@media screen and (max-width: 1199px) { \
+    .look-inside-thumbs img { width: 50px; height: 50px; margin-left: 6px; } \
+} \
+@media screen and (max-width: 980px), screen and (max-height: 580px) { \
+    .see-inside--scroller { display: none; } \
+    #lookInsideModal { top: 3%; height: 510px; width: 610px; margin-left: -305px; } \
+    .see-inside--zoom { height: 398px; } \
+    .see-inside--zoom-container { height: 382px; } \
+    .see-inside--zoom-container--inner { max-height: 358px; } \
+    .see-inside--zoom-container--inner:hover { height: 358px; } \
+    .see-inside--zoom-nav-bottom { bottom: 0px; } \
+    .see-inside-header { display: none; } \
+} \
+@media screen and (max-width: 650px), screen and (max-height: 545px) { \
+    .look-inside-thumbs { display: none; } \
+    #setTitles ul { display: block; } \
+    #setTitles ul.setTitlesLinks { display: none; } \
 } \
 /* */ ';
 
@@ -299,17 +324,6 @@ exp.vars.lookInsideModal = function( pageId ) {
     theModal.on('shown',function(){
         exp.vars.scrollThumbs(pageId);
     });
-/*
-    exp.func.tryUntil( function(){
-        exp.vars.scrollThumbs(pageId);
-    }, function() {
-        if( $('.see-inside--scroller').scrollTop() === exp.vars.positionArray[ pageId ] ) {
-            return true;
-        } else {
-            return false;
-        }
-    } );
-    */
 };
 
 // Function to generate the zoom thumbs
@@ -331,13 +345,15 @@ exp.vars.generateZooms = function(_vars) {
     _vars = _vars || exp.vars;
     var thisProduct = _vars.productName[ _vars.productId ];
     var markup = '';
+    var viewerSize = (_vars.viewportWidth > 1240) ? 'viewerMainLarge' : 'viewerMainSmall';
+    console.log(viewerSize);
     var i = 1;
     $.each( _vars.images[ thisProduct ], function( key, value ) {
         markup += '<div class="see-inside--zoom-container" data-zoom-id="' + key + '"> \
                   <div class="see-inside--zoom-container--inner zoom'+i+'"> \
-        <img src="'+ _vars.imagesBase + thisProduct + _vars.imagesTypeFolders['viewerMainLarge'] + value[0] + _vars.imagesExtension + '" alt="'+value[1]+'" /></div></div> \
+        <img src="'+ _vars.imagesBase + thisProduct + _vars.imagesTypeFolders[ viewerSize ] + value[0] + _vars.imagesExtension + '" alt="'+value[1]+'" /></div></div> \
         <script type="text/javascript"> \
-            $(".see-inside--zoom-container--inner.zoom'+i+'").zoom({url: "'+_vars.imagesBase + thisProduct + _vars.imagesTypeFolders['zoomed'] + value[0] + _vars.imagesExtension+'"}); \
+            $(".see-inside--zoom-container--inner.zoom'+i+'").zoom({touch: true, url: "'+_vars.imagesBase + thisProduct + _vars.imagesTypeFolders['zoomed'] + value[0] + _vars.imagesExtension+'"}); \
         </script>';
         i++;
     });
@@ -437,7 +453,7 @@ exp.init = function() {
 
     // turn set list into linked set list
     if( $('#setTitles li').length ) {
-        $('#setTitles ul').html( this.func.centralList(exp.vars) );
+        $('#setTitles ul').after( '<ul class="unformatted setTitlesLinks">'+this.func.centralList(exp.vars)+'</ul>' );
     }
 
     // add thumbs underneath product image
