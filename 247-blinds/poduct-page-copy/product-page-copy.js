@@ -28,6 +28,10 @@ Copy update for these three pages. See mockups
 // pass in jQuery to use as $. Other globals could be passed in if required.
 var exp = (function($) {
 
+    if(jQuery('.main-desc-wrap').length) {
+        return false;
+    }
+
 // Initialise the experiment object
 var exp = {};
 
@@ -190,7 +194,7 @@ exp.init = function() {
         return false;
     }
 
-    console.log('Product Page Copy - variation '+ exp.vars.variation +' - 0.4');
+    console.log('Product Page Copy - variation '+ exp.vars.variation +' - 0.5');
         
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
