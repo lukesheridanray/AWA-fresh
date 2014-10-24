@@ -130,7 +130,7 @@ exp.init = function() {
 
     // Global
     // Progress bar
-    var progress = '<div class="progress-bar"><div class="steps-line "></div><div class="step-link login active">Login</div><div class="step-link billing">Billing information</div><div class="step-link delivery">Delivery</div><div class="step-link payment">Payment</div></div>';
+    var progress = '<div class="progress-bar"><div class="steps-line"></div><div class="step-link login active">Login</div><div class="step-link billing">Billing information</div><div class="step-link delivery">Delivery</div><div class="step-link payment">Payment</div></div>';
 
     // Hide old progress indicator
     $(".step-title").hide();
@@ -288,6 +288,10 @@ exp.init = function() {
                 $(".step-link.billing").addClass('active');
             }
         };
+    }
+    else {
+        $('.step-link.login').removeClass('active');
+        $('.step-link.billing').addClass('active');
     }
 
     // Step 2 - Billing
