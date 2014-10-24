@@ -182,7 +182,8 @@ exp.init = function() {
         }
     }, 500);
 
-    if ( ! window.location.pathname.match(/^\/checkout\/onepage\/index/i))
+    // Is logged in? If not, we don't need the first step
+    if ( ! $('.account-logout').length)
     {
         // Step 1 - Guest checkout or login
         var messages = $(".messages").detach();
@@ -290,6 +291,7 @@ exp.init = function() {
         };
     }
     else {
+        // Progress the progress bar
         $('.step-link.login').removeClass('active');
         $('.step-link.billing').addClass('active');
     }
