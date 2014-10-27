@@ -4,9 +4,9 @@ function tileCalculatorExperiment() {
        console.log('Failed for CTM flow and buttons experiment - not a tile product');
        return false;
     }
-  
+
     console.log('Running CTM flow and buttons experiment - tile product');
-    
+
     jQuery('head').append('<style type="text/css"> \
 @media (min-width: 768px) { \
 .add-item-btn { \
@@ -83,8 +83,23 @@ left: 235px!important; \
 left: -150px!important; \
 } \
 } \
+.product-top-container .picker-add-product .btn, \
+.product-top-container .picker-view-cart .btn, \
+.product-top-container .picker-cancel .btn, \
+.product-top-container .picker-save .btn { \
+  position:absolute!important; \
+  z-index: 1; \
+  width: 100%; \
+} \
+.product-top-container .picker-add-product, \
+.product-top-container .picker-view-cart, \
+.product-top-container .picker-cancel, \
+.product-top-container .picker-save { \
+  position:relative!important; \
+  height: 57px; \
+} \
 </style> ');
-    
+
 }
 
 tileCalculatorExperiment();
