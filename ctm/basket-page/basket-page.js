@@ -14,7 +14,7 @@ var ctm_basket_page_experiment = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('CTM Basket Page - 0.3');
+console.log('CTM Basket Page - 0.4');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -74,13 +74,16 @@ exp.vars = {
         </div>'),
 
     'backToShoppingButton': $('#quote-nav .li-back a.btn'),
+    'backToShoppingNewHTML': '<i class="fa fa-shopping-cart"></i> Continue shopping',
 
     'cartQuantityHeader': $('th.cart-quantity'),
-    'cartQuantityHeaderText': 'Price',
+    'cartQuantityHeaderText': 'Quantity',
+
+    'priceCellHeader': $('<th class="cart-price">Price</th>'),
 
     'cartTable': $('table#cart'),
     'tableRows': $('table#cart > tbody > tr'),
-    'changeQuantityModalTemplate': '<div class="modal AWA_ChangeQtyModal fade" id="AWA_ChangeQuantityModal___PRODUCT_ID__" tabindex="-1"> \
+    'changeQuantityModalTemplate': '<div class="modal AWA_ChangeQtyModal fade" id="AWA_ChangeQuantityModal___PRODUCT_ID__" tabindex="-1" data-product-id="__PRODUCT_ID__"> \
         <div class="modal-dialog"> \
             <div class="modal-content"> \
                 <div class="modal-header"> \
@@ -95,7 +98,9 @@ exp.vars = {
     'changeQuantityModalLinkTemplate': '<a class="modalLink print-hide" data-toggle="modal" data-target="#AWA_ChangeQuantityModal___PRODUCT_ID__" href="#" >Change quantity</a>',
 
 	'orderSummaryBox': $('div#order-summary'),
-    'needHelpBox': $('div#need-help')
+    'needHelpBox': $('div#need-help'),
+
+    'productQuantityAmounts': {}
 };
 
 // Styles
@@ -135,6 +140,27 @@ body div#sb-site, \
   td    { page-break-inside:avoid; page-break-after:auto } \
   thead { display:table-header-group } \
   tfoot { display:table-footer-group } \
+}\
+#quote-ref-well { \
+    font-size: 1.25em; \
+} \
+body #quote-ref-well #quote-ref-label, \
+body #quote-ref-well #quote-ref { \
+    display: inline-block !important; \
+    margin-right: 0.25em; \
+    text-align: left; \
+}\
+#order-summary-totals .summary-incl-row { \
+    font-size: 1.5em; \
+} \
+body #cart tbody td.cart-price .price-box .ctm_buom, \
+body #cart tbody td.cart-price .price-box .price { \
+    color: #333; \
+} \
+.AWA_itemQuantityContainer { \
+    color: #333; \
+    font-size: 18px; \
+    font-weight: bold; \
 }';
 
 // Functions
@@ -156,6 +182,8 @@ exp.init = function() {
     // Move "Reference" to left of screen and remove 'well' styling
     this.vars.quoteRef.removeClass('well well-white');
     this.vars.quoteRef.parent().insertBefore(this.vars.quoteNav.parent());
+    this.vars.quoteRef.parent().removeClass('col-md-3').addClass('col-md-4');
+    this.vars.quoteNav.parent().removeClass('col-md-9').addClass('col-md-8');
 
     // Change label on "BUY NOW" button
     this.vars.buyButton.html(this.vars.newBuyButtonLabelHTML);
@@ -208,26 +236,72 @@ exp.init = function() {
         $backToShoppingListItem
     );
 
-    // Change "Change Quantity" cart header to "Price"
+    // Change "Change Quantity" cart header text
     this.vars.cartQuantityHeader.text(
         this.vars.cartQuantityHeaderText
     );
 
+    // Add "Price" cell header
+    this.vars.cartQuantityHeader.after(this.vars.priceCellHeader);
 
     // Add modals for each row's quantity column
     var self = this;
     $.each(this.vars.tableRows, function(i, elem) {
         var product_id = elem.id,
             $elem = $(elem),
-            product_name = $elem.find('.item-name').text();
+            product_name = $elem.find('.item-name').text(),
+            $cart_qty_picker = $elem.find('.cart-quantity-picker');
+
+        var quantityTrackerDOM = $('<span class="AWA_itemQuantity"></span>'),
+            quantityTrackerContainer = $('<div class="AWA_itemQuantityContainer">');
+
+        quantityTrackerContainer.append(quantityTrackerDOM);
+
+        // Suffix, "M2" or "Item(s)"
+        if ($cart_qty_picker.find('form').hasClass('single-uom'))
+        {
+            quantityTrackerDOM.text($cart_qty_picker.find('.picker-sale-quantity').text());
+            quantityTrackerContainer.append(' Item(s)');
+        }
+        else {
+            quantityTrackerDOM.text($cart_qty_picker.find('.picker-buom .base-input').val());
+            quantityTrackerContainer.append(' M2');
+        }
+
+        self.vars.productQuantityAmounts[product_id] = quantityTrackerDOM;
+        $elem.find('td.cart-quantity').append(quantityTrackerContainer);
 
         // Create modal
-        var changeQtyModal = $(self.vars.changeQuantityModalTemplate.replace('__PRODUCT_ID__', product_id).replace('__PRODUCT_NAME__', product_name));
-        changeQtyModal.find('.modal-body').append($elem.find('.cart-quantity-picker'));  // Move quantity stuff to modal here
+        var changeQtyModal = $(self.vars.changeQuantityModalTemplate.replace(/__PRODUCT_ID__/g, product_id).replace('__PRODUCT_NAME__', product_name));
+        changeQtyModal.find('.modal-body').append($cart_qty_picker);  // Move quantity stuff to modal here
         $elem.find('td.cart-quantity').append(changeQtyModal);
         $elem.find('td.cart-quantity').append($(self.vars.changeQuantityModalLinkTemplate.replace('__PRODUCT_ID__', product_id)));
         $('#AWA_ChangeQuantityModal___PRODUCT_ID__ form .cancel-changes-btn'.replace('__PRODUCT_ID__', product_id)).on('click', function() { changeQtyModal.modal('hide'); });
         $('#AWA_ChangeQuantityModal___PRODUCT_ID__ form .update-item-btn'.replace('__PRODUCT_ID__', product_id)).on('click', function() { changeQtyModal.modal('hide'); });
+
+        changeQtyModal.on('hidden.bs.modal', function(){
+            // Modla has been hidden, let's update the quantity thing
+
+            var product_id = $(this).data('product-id'),
+                newQty;
+
+
+            if ($(this).find('form').hasClass('single-uom'))
+            {
+                newQty = $(this).find('.picker-sale-quantity').text();
+            }
+            else {
+                newQty = $(this).find('.picker-buom .base-input').val();
+            }
+
+            // Update qty on main table
+            self.vars.productQuantityAmounts[product_id].text(newQty);
+        });
+
+        // Move 'price' data to new price column
+        var newPriceCell = $('<td class="cart-price">');
+        newPriceCell.append($elem.find('td.cart-quantity .cart-item-price'));
+        $elem.find('td.cart-quantity').after(newPriceCell);
     });
 
 	// Remove 'well' classes from order summary box, add it to the nearest parent row
@@ -240,6 +314,9 @@ exp.init = function() {
 
 	// Hide "Need Help" box
 	this.vars.needHelpBox.hide();
+
+    // Change wording on 'Back to shopping' button to 'Continue shopping'
+    this.vars.backToShoppingButton.html(this.vars.backToShoppingNewHTML);
 
 };
 
