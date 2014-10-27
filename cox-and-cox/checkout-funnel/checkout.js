@@ -132,6 +132,19 @@ exp.init = function() {
     // Progress bar
     var progress = '<div class="progress-bar"><div class="steps-line"></div><div class="step-link login active">Login</div><div class="step-link billing">Billing information</div><div class="step-link delivery">Delivery</div><div class="step-link payment">Payment</div></div>';
 
+    // Secure CO
+    $('#main > div > div.page-title > h1').text('Secure Checkout');
+    $('#main > div > div.page-title > h1').attr('style', 'background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAALRJREFUeNpiYKAxYCRGEQs7uzyQCgBiAajQByDe8Ofnz4cUuwBoeD8Q/8eB+yk1fD4ew2F4PrmG2yMZ8h6I45Hk/IH4PpK8PTkWrMdnACheoBaD5NeTYwHM8P1EBOF7XGqYiLDrAB65B1BagBILKAI0t4AFLUz5gVQBmhoHoDgu/Q5IeuuhzAnADPgRa06GppYDFDraAWjBweETB6MWjFowagFaWQQEF4C4gUIzLzDQEwAEGACVRDpCn2OzmAAAAABJRU5ErkJggg==); \
+        background-repeat: no-repeat; \
+        padding-left: 32px; \
+        background-position-y: 0px; \
+        }');
+
+    // Remove nav
+    $('.nav-container').remove();
+    $('.header-search-bar').remove();
+    $('#footer').remove();
+
     // Hide old progress indicator
     $(".step-title").hide();
 
