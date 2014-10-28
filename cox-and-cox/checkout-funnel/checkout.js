@@ -430,6 +430,9 @@ exp.init = function() {
     // Spacing under manual entry link
     $('#meanbee\\:billing_address_selector').css('margin-top','1em');
 
+    // County not required
+    $('#billing\\:region').removeClass('required-entry');
+
     // Step 2.5 - Delivery Address
     //
     // Rearrange two columns into one, wrap it with our usual fieldset, add legend
@@ -518,6 +521,9 @@ exp.init = function() {
 
     // Spacing under manual entry link
     $('#meanbee\\:shipping_address_selector').css('margin-top','1em');
+
+    // County not required
+    $('#shipping\\:region').removeClass('required-entry');
 
     // Step 3 - Delivery Method
     // 
