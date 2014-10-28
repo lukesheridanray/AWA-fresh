@@ -409,16 +409,6 @@ exp.init = function() {
     // Insert tick box - delivery address same as billing
     $("ul.form-list:nth-child(2) > li:nth-child(2)").before('<li class="control invisible" style="margin-top:1em;"><div class="input-box" style="width: 260px;"><input name="billing[use_for_shipping]" id="billing:use_for_shipping_yes" value="1" checked="checked" title="Deliver to this address" onclick="" class="radio validation-passed" type="checkbox"><label for="billing:use_for_shipping_yes">Deliver to this address</label></div></li>');
 
-    // Handle next click
-    $("#continue-btn").click(function() {
-        $("#billing\\:email").parents("li").show();
-        exp.func.waitForElement("#checkout-step-shipping_method:visible",
-            function() {
-            $(".step-link.billing").removeClass('active');
-            $(".step-link.delivery").addClass('active');
-            });
-    });
-
     // Form size fix
     $('#co-billing-form .field').css('width', '440px');
     $('#co-billing-form .fields').css('width', '440px');
@@ -432,6 +422,23 @@ exp.init = function() {
 
     // County not required
     $('#billing\\:region').removeClass('required-entry');
+
+    // Handle next click
+    // Problems with continue button
+    setTimeout(function() {
+        $("#continue-btn").off()
+        $("#continue-btn").click(function(e){        
+            e.preventDefault();         
+            billing.save();
+
+            $("#billing\\:email").parents("li").show();
+            exp.func.waitForElement("#checkout-step-shipping_method:visible",
+                function() {
+                $(".step-link.billing").removeClass('active');
+                $(".step-link.delivery").addClass('active');
+                });
+        });
+    }, 500);
 
     // Step 2.5 - Delivery Address
     //
@@ -659,9 +666,14 @@ exp.init = function() {
     $("#shipping-method-buttons-container > p").remove();
 
     // If the continue button is clicked in previous steps (billing/shipping addr)- do trigger the rejigging of the screen
-    $("#continue-btn, #continue-btn-shipping").click(function() {
-        exp.func.waitForElement('#checkout-shipping-method-load label', createDropdownRejigForm,10000,50);
-    });
+    // Delay action due to changes earlier in Step 2 at 500ms
+    setTimeout(function() {
+        $("#continue-btn, #continue-btn-shipping").click(function() {
+            setTimeout(function() {
+                exp.func.waitForElement('#checkout-shipping-method-load label', createDropdownRejigForm, 10000,50);
+            },500);
+        });
+    }, 1500);
 
     // Wrap the whole screen in a fieldset
     $("#co-shipping-method-form").wrap('<fieldset style="padding: 1em; width: 445px; margin: 0px auto; border: 1px solid rgb(204, 204, 204);" class="co-box"></fieldset>');
