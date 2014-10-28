@@ -420,7 +420,7 @@ exp.init = function() {
     // Spacing under manual entry link
     $('#meanbee\\:billing_address_selector').css('margin-top','1em');
 
-    // County not required
+    // County not required - need to remove again because it will be put back
     $('#billing\\:region').removeClass('required-entry');
 
     // Handle next click
@@ -428,7 +428,9 @@ exp.init = function() {
     setTimeout(function() {
         $("#continue-btn").off()
         $("#continue-btn").click(function(e){        
-            e.preventDefault();         
+            e.preventDefault();
+            $('#billing\\:region').removeClass('required-entry');
+
             billing.save();
 
             $("#billing\\:email").parents("li").show();
@@ -510,6 +512,8 @@ exp.init = function() {
 
     $("#continue-btn-shipping").off().click(function(e){             
             e.preventDefault();
+            // County not required
+            $('#shipping\\:region').removeClass('required-entry');
             shipping.save(); 
         });
 
@@ -529,7 +533,7 @@ exp.init = function() {
     // Spacing under manual entry link
     $('#meanbee\\:shipping_address_selector').css('margin-top','1em');
 
-    // County not required
+    // County not required - need to do it before submission too
     $('#shipping\\:region').removeClass('required-entry');
 
     // Step 3 - Delivery Method
