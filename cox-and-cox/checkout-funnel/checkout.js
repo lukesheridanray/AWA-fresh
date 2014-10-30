@@ -132,6 +132,19 @@ exp.init = function() {
     // Progress bar
     var progress = '<div class="progress-bar"><div class="steps-line"></div><div class="step-link login active">Login</div><div class="step-link billing">Billing information</div><div class="step-link delivery">Delivery</div><div class="step-link payment">Payment</div></div>';
 
+    // Secure CO
+    $('#main > div > div.page-title > h1').text('Secure Checkout');
+    $('#main > div > div.page-title > h1').attr('style', 'background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAALRJREFUeNpiYKAxYCRGEQs7uzyQCgBiAajQByDe8Ofnz4cUuwBoeD8Q/8eB+yk1fD4ew2F4PrmG2yMZ8h6I45Hk/IH4PpK8PTkWrMdnACheoBaD5NeTYwHM8P1EBOF7XGqYiLDrAB65B1BagBILKAI0t4AFLUz5gVQBmhoHoDgu/Q5IeuuhzAnADPgRa06GppYDFDraAWjBweETB6MWjFowagFaWQQEF4C4gUIzLzDQEwAEGACVRDpCn2OzmAAAAABJRU5ErkJggg==); \
+        background-repeat: no-repeat; \
+        padding-left: 32px; \
+        background-position-y: 0px; \
+        }');
+
+    // Remove nav
+    $('.nav-container').remove();
+    $('.header-search-bar').remove();
+    $('#footer').remove();
+
     // Hide old progress indicator
     $(".step-title").hide();
 
@@ -396,16 +409,6 @@ exp.init = function() {
     // Insert tick box - delivery address same as billing
     $("ul.form-list:nth-child(2) > li:nth-child(2)").before('<li class="control invisible" style="margin-top:1em;"><div class="input-box" style="width: 260px;"><input name="billing[use_for_shipping]" id="billing:use_for_shipping_yes" value="1" checked="checked" title="Deliver to this address" onclick="" class="radio validation-passed" type="checkbox"><label for="billing:use_for_shipping_yes">Deliver to this address</label></div></li>');
 
-    // Handle next click
-    $("#continue-btn").click(function() {
-        $("#billing\\:email").parents("li").show();
-        exp.func.waitForElement("#checkout-step-shipping_method:visible",
-            function() {
-            $(".step-link.billing").removeClass('active');
-            $(".step-link.delivery").addClass('active');
-            });
-    });
-
     // Form size fix
     $('#co-billing-form .field').css('width', '440px');
     $('#co-billing-form .fields').css('width', '440px');
@@ -416,6 +419,28 @@ exp.init = function() {
 
     // Spacing under manual entry link
     $('#meanbee\\:billing_address_selector').css('margin-top','1em');
+
+    // County not required - need to remove again because it will be put back
+    $('#billing\\:region').removeClass('required-entry');
+
+    // Handle next click
+    // Problems with continue button
+    setTimeout(function() {
+        $("#continue-btn").off()
+        $("#continue-btn").click(function(e){        
+            e.preventDefault();
+            $('#billing\\:region').removeClass('required-entry');
+
+            billing.save();
+
+            $("#billing\\:email").parents("li").show();
+            exp.func.waitForElement("#checkout-step-shipping_method:visible",
+                function() {
+                $(".step-link.billing").removeClass('active');
+                $(".step-link.delivery").addClass('active');
+                });
+        });
+    }, 500);
 
     // Step 2.5 - Delivery Address
     //
@@ -487,6 +512,8 @@ exp.init = function() {
 
     $("#continue-btn-shipping").off().click(function(e){             
             e.preventDefault();
+            // County not required
+            $('#shipping\\:region').removeClass('required-entry');
             shipping.save(); 
         });
 
@@ -505,6 +532,9 @@ exp.init = function() {
 
     // Spacing under manual entry link
     $('#meanbee\\:shipping_address_selector').css('margin-top','1em');
+
+    // County not required - need to do it before submission too
+    $('#shipping\\:region').removeClass('required-entry');
 
     // Step 3 - Delivery Method
     // 
@@ -640,9 +670,14 @@ exp.init = function() {
     $("#shipping-method-buttons-container > p").remove();
 
     // If the continue button is clicked in previous steps (billing/shipping addr)- do trigger the rejigging of the screen
-    $("#continue-btn, #continue-btn-shipping").click(function() {
-        exp.func.waitForElement('#checkout-shipping-method-load label', createDropdownRejigForm,10000,50);
-    });
+    // Delay action due to changes earlier in Step 2 at 500ms
+    setTimeout(function() {
+        $("#continue-btn, #continue-btn-shipping").click(function() {
+            setTimeout(function() {
+                exp.func.waitForElement('#checkout-shipping-method-load label', createDropdownRejigForm, 10000,50);
+            },500);
+        });
+    }, 1500);
 
     // Wrap the whole screen in a fieldset
     $("#co-shipping-method-form").wrap('<fieldset style="padding: 1em; width: 445px; margin: 0px auto; border: 1px solid rgb(204, 204, 204);" class="co-box"></fieldset>');
