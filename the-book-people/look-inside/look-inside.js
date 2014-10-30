@@ -88,7 +88,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Look inside experiment - 0.9');
+console.log('Look inside experiment - 0.10');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -106,7 +106,7 @@ exp.vars = {
     'imageZoomNavUp': '//cdn.optimizely.com/img/579743489/96edba11ec5c4bce80f1601243764e06.png',
     'imageZoomNavDown': '//cdn.optimizely.com/img/579743489/f4421c49c82b464fb89185bcbfb9d7dd.png',
     'imageZoomIcon': '//cdn.optimizely.com/img/579743489/56069e92745b4d44854a5454137108b7.png',
-    'imageSpinner': '//cdn.optimizely.com/img/579743489/9aedf4ab62bc4ddfb28ef709b878538e.gif',
+    'imageSpinner': '//cdn.optimizely.com/img/579743489/d1d5466f2fd04bfbb7a2f6ff53b7cfd2.gif',
     'zoomThumbs': {},
     'positionArray': [],
     'modalTemplate': ' \
@@ -156,8 +156,6 @@ exp.vars = {
 // Styles
 // String containing the CSS for the experiment
 exp.css = ' \
-.imagePreloaderWrap { width: 0px; height: 0px; line-height: 0px; position: relative; overflow: hidden; } \
-.imagePreloaderWrap p { position: absolute; left: -3000px; right: -3000px; } \
 /* Thumbs sidebar */ \
 .look-inside-thumbs { margin-bottom: 20px; } \
 .look-inside-thumbs--title a { color: '+exp.vars.colorOrange+'; background: url('+exp.vars.imageThumbsTitle+') left no-repeat transparent; \
@@ -186,11 +184,14 @@ exp.css = ' \
 .see-inside--header { height: 94px; overflow: hidden; position: relative; } \
 .see-inside--header h3 { margin-top: 0; width: 600px; font-size: 1.8em; float: left; clear: left; } \
 .see-inside--wishlist { position: absolute; bottom: 0; left: 0; } \
-.see-inside--header .priceWrapper { float: right; } \
+.see-inside--header .priceWrapper { float: right; width: 210px; } \
 .see-inside--header .priceWrapper #add-to-wishlist-link { display: none; } \
+.see-inside--header .priceWrapper fieldset { position: relative; } \
+.see-inside--header .priceWrapper fieldset div { display: none; } \
+.see-inside--header .priceWrapper fieldset select { float: left; } \
 .see-inside--header .priceWrapper .price-string { margin: 0px -2px 0px 0px; padding: 0px; font-size: 21px; font-weight: bold; color: #000; } \
-.see-inside--header .priceWrapper .saving, .see-inside--header .priceWrapper .rrp { padding: 0px 5px 0px 0px; margin: 0px;} \
-.see-inside--header .add-to-basket-button { position: relative; top: -5px; font-size: 13px !important; font-weight: normal; width: 130px; } \
+.see-inside--header .priceWrapper .saving, .see-inside--header .priceWrapper .rrp { padding: 0px 5px 0px 0px; margin: 0px; } \
+.see-inside--header .add-to-basket-button { height: auto !important; margin: 0 !important; position: absolute !important; top: 0 !important; right: 0 !important; font-size: 13px !important; font-weight: normal !important; width: 130px !important; float: right !important; } \
 .see-inside--header .addToBasketForm { margin: 0; } \
 .see-inside--zoom { height: 542px; } \
 .see-inside--scroller { width: 300px; float: left; margin: 35px 0px 0px; height: 644px; overflow: auto; } \
@@ -203,7 +204,7 @@ exp.css = ' \
 .see-inside--zoom-container--inner { position: relative; width: 827px; height: auto; border: 2px solid '+exp.vars.colorOrange+'; cursor: zoom-in; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; } \
 .see-inside--zoom-container--inner:after { content:""; display: block; width: 40px; height: 40px; position: absolute; top: 0px; right: 0; background: url('+exp.vars.imageZoomIcon+') center no-repeat #F0F8FB; } \
 .see-inside--zoom-container--inner:hover { height: 535px; } \
-.see-inside--zoom-container--inner:hover:before { content:""; display: block; width: 20px; height: 20px; position: absolute; top: 255px; right: 407px; background: url('+exp.vars.imageSpinner+') center no-repeat #F0F8FB; } \
+.see-inside--zoom-container--inner:hover:before { content:""; display: block; width: 64px; height: 64px; position: absolute; top: 233px; right: 385px; background: url('+exp.vars.imageSpinner+') center no-repeat #F0F8FB; } \
 .see-inside--zoom-container img { width: 827px; height: auto; cursor: zoom-in; } \
 .see-inside--zoom-container { position: absolute; top: 15px; left: 0; z-index: -1; } \
 .see-inside--zoom-nav-up, .see-inside--zoom-nav-bottom { position: absolute; left: 400px; width: 17px; height: 16px; z-index: 99; } \
@@ -226,7 +227,7 @@ exp.css = ' \
     .see-inside--zoom-container { width: 581px; height: 390px; } \
     .see-inside--zoom-container img, .see-inside--zoom-container--inner { width: 577px; } \
     .see-inside--zoom-container--inner:hover { height: 410px; } \
-    .see-inside--zoom-container--inner:hover:before { top: 195px; right: 282px; } \
+    .see-inside--zoom-container--inner:hover:before { top: 173px; right: 260px; } \
     .see-inside--zoom-nav-up, .see-inside--zoom-nav-bottom { left: 282px; } \
 } \
 @media screen and (max-width: 1199px) { \
@@ -240,7 +241,7 @@ exp.css = ' \
     .see-inside--zoom-container--inner { max-height: 358px; } \
     .see-inside--zoom-container--inner:hover { height: 358px; } \
     .see-inside--zoom-nav-bottom { bottom: 0px; } \
-    .see-inside--zoom-container--inner:hover:before { top: 169px; right: 282px; } \
+    .see-inside--zoom-container--inner:hover:before { top: 147px; right: 260px; } \
     .see-inside-header { display: none; } \
 } \
 @media screen and (max-width: 650px), screen and (max-height: 525px) { \
@@ -324,6 +325,7 @@ exp.vars.scrollThumbs = function(pageId) {
 exp.vars.lookInsideModal = function( pageId ) {
     var theModal = $('#lookInsideModal');
     theModal.modal();
+    $('.see-inside--zoom-container--inner').trigger('mouseleave');
     var thumb = $('.zoom-item[data-thumb-id="'+pageId+'"]');
     $('.zoom-item').removeClass('current');
     thumb.addClass('current');
@@ -354,7 +356,6 @@ exp.vars.generateZooms = function(_vars) {
     var thisProduct = _vars.productName[ _vars.productId ];
     var markup = '';
     var viewerSize = (_vars.viewportWidth > 1240) ? 'viewerMainLarge' : 'viewerMainSmall';
-    console.log(viewerSize);
     var i = 1;
     $.each( _vars.images[ thisProduct ], function( key, value ) {
         markup += '<div class="see-inside--zoom-container" data-zoom-id="' + key + '"> \
@@ -362,7 +363,7 @@ exp.vars.generateZooms = function(_vars) {
         <img src="'+ _vars.imagesBase + thisProduct + _vars.imagesTypeFolders[ viewerSize ] + value[0] + _vars.imagesExtension + '" alt="'+value[1]+'" /> \
         </div></div> \
         <script type="text/javascript"> \
-            $(".see-inside--zoom-container--inner.zoom'+i+'").zoom({touch: true, url: "'+_vars.imagesBase + thisProduct + _vars.imagesTypeFolders['zoomed'] + value[0] + _vars.imagesExtension+'", callback: function(){ $(this).trigger(\'mouseenter\').trigger(\'mousemove\'); } }); \
+            $(".see-inside--zoom-container--inner.zoom'+i+'").zoom({touch: true, url: "'+_vars.imagesBase + thisProduct + _vars.imagesTypeFolders['zoomed'] + value[0] + _vars.imagesExtension+'", callback: function(){ $(this).trigger(\'mouseenter\').trigger(\'mousemove\') } }); \
         </script>';
         i++;
     });
@@ -472,7 +473,7 @@ exp.init = function() {
 
     // customise modal template
     $('#lookInsideModal .modal-body').html( this.vars.generateModalBody(exp.vars) );
-    $('.see-inside--header .priceWrapper fieldset div').remove();
+//    $('.see-inside--header .priceWrapper fieldset div').remove();
 
     // attach event listeners
 
