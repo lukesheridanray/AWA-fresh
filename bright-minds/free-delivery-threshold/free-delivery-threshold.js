@@ -145,24 +145,73 @@ exp.vars = {
         leftToGo: 0.00
     },
     placeholders: {
-        mainBanner: $('.custom-three-ways')
+        mainBanner: {}
     }
 };
 
-exp.vars.banner: {
+exp.vars.banner = {
     initial: '<div class="del-banner--initial">FREE UK DELIVERY when you spend £60 or more - use promo code '+exp.vars.promoCode+'</div>',
     nudge: '<div class="del-banner--nudge">Spend just £<span></span> more to get FREE UK DELIVERY</div>',
     qualified: '<div class="del-banner--qualified">GREAT! You Qualify for FREE UK DELIVERY - remember to enter promo code '+exp.vars.promoCode+' when you check out</div>'
-}
+};
 
 // Styles
-exp.css = '';
+exp.css = ' \
+.del-banner-wrap--main { \
+  text-align: center; \
+  width: 920px; \
+  padding: 10px; \
+  margin: 5px 0 10px 20px; \
+  background: #FED10F; \
+  color: #064C96; \
+  font-size: 1.3em; \
+  position: relative; \
+} \
+.del-banner-wrap--nudged .del-banner-wrap--main { \
+  text-align: left; \
+} \
+.del-banner-wrap--main .del-banner--nudge { \
+  position: absolute; \
+  top: 0; \
+  right: 0; \
+  text-align: right; \
+  padding: 10px; \
+  background: #E5007E; \
+  color: #fff; \
+  width: 336px; \
+} \
+.del-banner-wrap--main .del-banner--qualified { \
+  color: #E5007E; \
+} ';
 
 // Functions
 exp.func = {};
 
+// This function waits till a DOM element is available, then runs a callback function
+exp.func.waitForElement = function(selector, callback, timeout, keepAlive) {
+    timeout = timeout || 20000;
+    keepAlive = keepAlive || false;
+    var intervalTime = 50,
+        maxAttempts = timeout / intervalTime,
+        attempts = 0,
+        interval = setInterval(function() {
+            if ($(selector).length) {
+                if (!keepAlive) {
+                    clearInterval(interval);
+                }
+                callback();
+            } else if (attempts > maxAttempts) {
+                clearInterval(interval);
+            }
+            attempts ++;
+        }, intervalTime);
+};
+
 exp.func.updateCookie = function( newValue ) {
-    docCookies.setItem( exp.vars.cookieName, newValue );
+    docCookies.setItem( exp.vars.cookieName, newValue, null, '/' );
+    exp.vars.cookieVal = newValue;
+    exp.func.setState();
+    exp.func.appendBanners();
     console.log('Cookie updated to value: '+ newValue);
 };
 
@@ -187,27 +236,55 @@ exp.func.setState = function() {
     if( exp.vars.cookieVal >= exp.vars.threshold.amount ) {
         // Threshold reached, will display nudge
         exp.vars.threshold.reached = true;
+    } else {
+        exp.vars.threshold.reached = false;
     }
     if( exp.vars.cookieVal >= exp.vars.qualify.amount ) {
         // Qualified for free delivery
         exp.vars.qualify.reached = true;
+        exp.vars.qualify.leftToGo = 0;
     } else {
-        // Calculate how much more to spend
-        exp.vars.qualify.leftToGo = exp.vars.qualify.amount - exp.vars.cookieVal;
+        exp.vars.qualify.reached = false;
+        // Calculate how much more to spend till we qualify
+        exp.vars.qualify.leftToGo = (exp.vars.qualify.amount - exp.vars.cookieVal).toFixed(2);
     }
 };
 
 exp.func.appendBanners = function() {
     var bannerType = 'initial';
+    var body = $('body');
     if( exp.vars.qualify.reached ) {
         bannerType = 'qualified';
     }
-    // Main banner
-    if( this.vars.placeholders.mainBanner.length ) {
-        this.vars.placeholders.mainBanner.replaceWith(
-            '<div class="del-banner-wrap--main'+(exp.vars.threshold.reached ? ' del-banner-wrap--main--nudged' : '')+'">' +this.vars.banners[ bannerType ]+ (exp.vars.threshold.reached ? this.vars.banners[nudge] : '')+'</div>'
+    // Add or remove nudged or qualified class on body
+    if( exp.vars.qualify.reached ) {
+        // qualified
+        body
+            .addClass('del-banner-wrap--qualified')
+            .removeClass('del-banner-wrap--nudged');
+    } else if( exp.vars.threshold.reached ) {
+        // reached nudge threshold, not yet qualified
+        body
+            .removeClass('del-banner-wrap--qualified')
+            .addClass('del-banner-wrap--nudged');
+    } else {
+        // neither reached nudge threshold or qualified
+        body
+            .removeClass('del-banner-wrap--qualified')
+            .removeClass('del-banner-wrap--nudged');
+    }
+    // If available append banners to their relevant placeholders
+    if( exp.vars.placeholders.mainBanner.length ) {
+        exp.vars.placeholders.mainBanner.html(
+            exp.vars.banner[ bannerType ] + (exp.vars.threshold.reached && !exp.vars.qualify.reached ? exp.vars.banner.nudge : '')
         );
     }
+    // If we have a nudge, append the left to go amount
+    if( $('.del-banner--nudge').length ) {
+        $('.del-banner--nudge span').html( exp.vars.qualify.leftToGo );
+    }
+    // Add our custom val to cart widget
+    $('#total').html( '<span>Total</span> £'+exp.vars.cookieVal );
 };
 
 // Init function
@@ -226,19 +303,19 @@ exp.init = function() {
         this.vars.cookieVal === null &&
         $('#total').text().replace('£','').replace('Total','').trim() !== '0.00'
     ) {
-        console.log( 'Optimizely delivery threshold experiment encountered a problem. User has untracked items in the basket.'); 
+        console.log( 'Optimizely delivery threshold experiment encountered a problem. User has untracked items in the basket.');
         return false;
     }
 
     // If cookie value is null, initialise the cookie
     if( this.vars.cookieVal === null ) {
-        docCookies.setItem( this.vars.cookieName, '0.00' );
+        docCookies.setItem( this.vars.cookieName, '0.00', null, '/' );
         this.vars.cookieVal = '0.00';
     }
 
     // If cookie value is not a number there has been a problem, so abort the experiment
     if( typeof parseFloat(this.vars.cookieVal) !== 'number' ) {
-        console.log( 'Optimizely delivery threshold experiment encountered a problem. Cookie value invalid.'); 
+        console.log( 'Optimizely delivery threshold experiment encountered a problem. Cookie value invalid.');
         return false;
     }
 
@@ -249,17 +326,41 @@ exp.init = function() {
     // DOM Stuff
     //
 
-    // append styles to head
+    // Append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
+
+    // Append banner placeholders and reference them as vars
+
+    if( $('.custom-three-ways').length ) {
+        $('.custom-three-ways').replaceWith( '<div class="del-banner-wrap--main" />' );
+    }
+    this.vars.placeholders.mainBanner = $('.del-banner-wrap--main');
 
     // Append Banners to DOM
     this.func.appendBanners();
 
+    //
     // Events
+    //
 
-    exp.func.updateCookie(
-        exp.func.calculateTotal( this.vars.cookieVal, '10.99', 'add' )
-    );
+    exp.func.waitForElement('#added_item_box .fright.cost', function addProductVal() {
+        var addedVal = $('#added_item_box .fright.cost').text().replace('£','').trim();
+        exp.func.updateCookie(
+            exp.func.calculateTotal( exp.vars.cookieVal, addedVal, 'add' )
+        );
+    });
+
+    $('#cart .button.remove').bind('click', function removeProductVal() {
+        var _this = $(this);
+        var removedVal = _this.parents('dd').find('.col.price b').text().replace('£','').trim();
+        //var unitPrice = _this.prev('.col.unit').text().replace('£','').trim();
+        //var quantity = _this.prev('input.qty').val();
+        //var removedVal = (parseFloat( unitPrice ) * parseInt( quantity )).toFixed(2);
+        exp.func.updateCookie(
+            exp.func.calculateTotal( exp.vars.cookieVal, removedVal, 'remove' )
+        );
+        return;
+    });
 
 };
 
