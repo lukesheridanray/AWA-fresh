@@ -824,3 +824,183 @@ return exp;
 
 // Close the IIFE, passing in jQuery and any other global variables as required
 })(jQuery);
+
+// Forgotten password sub-experiment
+
+var forgotpwExpt = (function($) {
+
+// Initialise the experiment object
+var forgotpwExpt = {};
+
+// Log the experiment, useful when multiple experiments are running
+console.log('Checkout funnel experiment - forgot password - dev 0.1');
+
+// Condition
+// If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
+forgotpwExpt.condition = $('.customer-account-forgotpassword');
+
+// Check for a condition and return false if it has not been met
+if(forgotpwExpt.condition && !forgotpwExpt.condition.length) {
+    console.log('Experiment failed a condition');
+    //return false;
+}
+
+// Variables
+// Object containing variables, generally these would be strings or jQuery objects
+forgotpwExpt.vars = {
+    'myCustomTagLine': 'This split test is the best!',
+    'productDesc': $('.description').length ? $('.description').text() : 'default description',
+    'productSku': $('.sku-code span')
+};
+
+// Styles
+// String containing the CSS for the experiment
+forgotpwExpt.css = ' \
+.step-link { \
+    display: inline-block; \
+    width: 150px; \
+    font-size: 0.9em; \
+    text-align: center; \
+} \
+ \
+.step-link.active:before { \
+    background: black; \
+} \
+ \
+.step-link:before { \
+    content: ""; \
+    display:block; \
+    width: 14px; \
+    height: 14px; \
+    background: #ccc; \
+    position: relative; \
+    left: 70px; \
+    top: -15px; \
+    border-radius: 7px; \
+} \
+ \
+.steps-line { \
+    border-bottom: 3px solid #ccc; \
+    position: relative; \
+    top: -7px; \
+    left: 78px; \
+    width: 456px; \
+} \
+.progress-bar { \
+    margin: 0 auto 3em auto; \
+    width: 600px; \
+} \
+.opc li.section { \
+    display: block; \
+    position: relative; \
+    top: -90px; \
+} \
+#opc-billing #checkout-step-billing, #opc-shipping #checkout-step-shipping, \
+#opc-shipping_method #checkout-step-shipping_method, \
+#opc-payment #checkout-step-payment, #opc-review #checkout-step-review { \
+    background: white; \
+} \
+.opc #checkout-step-billing #co-billing-form #billing-new-address-form { \
+    height: auto; \
+} \
+.opc .form-list li fieldset { \
+    margin-bottom: 0; \
+}';
+
+// Functions
+// Object containing functions, some helpful functions are included
+forgotpwExpt.func = {};
+
+// This function waits till a DOM element is available, then runs a callback function
+forgotpwExpt.func.waitForElement = function(selector, callback, timeout, keepAlive) {
+    timeout = timeout || 20000;
+    keepAlive = keepAlive || false;
+    var intervalTime = 50,
+        maxAttempts = timeout / intervalTime,
+        attempts = 0,
+        interval = setInterval(function() {
+            if ($(selector).length) {
+                if (!keepAlive) {
+                    clearInterval(interval);
+                }
+                callback();
+            } else if (attempts > maxAttempts) {
+                clearInterval(interval);
+            }
+            attempts ++;
+        }, intervalTime);
+};
+
+// Init function
+// Called to run the actual experiment, DOM manipulation, event listeners, etc
+forgotpwExpt.init = function() {
+
+        
+    // append styles to head
+
+    // Some example DOM manipulation...
+
+    $ = jQuery;
+    $('head').append('<style type="text/css">'+this.css+'</style>');
+
+    // Global
+
+    // Remove nav
+    $('.nav-container').remove();
+    $('.header-search-bar').remove();
+    $('#footer').remove();
+
+    // Hide old progress indicator
+    $(".step-title").hide();
+
+    // Remove "required fields" text from everywhere - that's going to be the default behaviour
+    $("p.required").remove();
+
+    // Remove red stars
+    $("label > em").remove();
+
+    $("label").css('text-align', 'right');
+
+    $('#form-validate > div.fieldset').wrap('<fieldset style="padding: 2.5em 1em; width: 445px; margin: 0px auto; border: 1px solid rgb(204, 204, 204);" class="co-box2" />');
+    $(".co-box2").prepend('<legend style="display: block; padding: 0px 1em; font-weight: bold; font-size: 1.5em;">Retrieve Your Password</legend>');
+
+    var buttonsSet = $(".buttons-set").detach();
+    $(".co-box2").append(buttonsSet);
+
+    $("#form-validate > fieldset > div.fieldset").removeClass('fieldset');
+
+    $("#form-validate > fieldset > div:nth-child(2) > h2").remove();
+
+    $("#form-validate > fieldset > div:nth-child(2) > ul").css('margin-top', '1.5em');
+
+    $("div.buttons-set > button span").remove();
+    $("div.buttons-set > button").text('Submit');
+    $("div.buttons-set > button").attr('style','display: block; font-size: 1.5em; font-weight: bold; padding: 0.75em 2em; margin: 0px auto; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);');
+
+    $(".back-link").css('margin-top', '2em');
+
+    $(".back-link a").attr('href','/checkout/onepage/index/');
+
+    $("#form-validate").submit(function() {
+        var postData = $("#email_address").serialize();
+
+        $.post($(this).attr('action'),
+            postData,
+            function(data) {
+                alert($(data).find(".messages").text());
+                location.href   = '/checkout/onepage/index/';
+        });
+
+        return false;
+    });
+
+ };
+
+// Run the experiment
+forgotpwExpt.init();
+
+// Return the experiment object so we can access it later if required
+return forgotpwExpt;
+
+// Close the IIFE, passing in jQuery and any other global variables as required
+})(jQuery);
