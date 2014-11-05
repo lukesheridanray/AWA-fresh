@@ -70,7 +70,7 @@ var exp = (function($) {
 
 var exp = {};
 
-console.log('Free Delivery Threshold - 0.1');
+console.log('Free Delivery Threshold - 0.2');
 
 /*\
 |*|  :: cookies.js ::
@@ -145,14 +145,17 @@ exp.vars = {
         leftToGo: 0.00
     },
     placeholders: {
-        mainBanner: {}
+        mainBanner: {},
+        cartMainBanner: {},
+        cartSubBanner: {}
     }
 };
 
 exp.vars.banner = {
     initial: '<div class="del-banner--initial">FREE UK DELIVERY when you spend £60 or more - use promo code '+exp.vars.promoCode+'</div>',
     nudge: '<div class="del-banner--nudge">Spend just £<span></span> more to get FREE UK DELIVERY</div>',
-    qualified: '<div class="del-banner--qualified">GREAT! You Qualify for FREE UK DELIVERY - remember to enter promo code '+exp.vars.promoCode+' when you check out</div>'
+    qualified: '<div class="del-banner--qualified">GREAT! You Qualify for FREE UK DELIVERY - remember to enter promo code '+exp.vars.promoCode+' when you check out</div>',
+    codeHint: 'FREE (enter code below)'
 };
 
 // Styles
@@ -182,6 +185,49 @@ exp.css = ' \
 } \
 .del-banner-wrap--main .del-banner--qualified { \
   color: #E5007E; \
+} \
+.del-banner-wrap--cart-main { \
+  text-align: center; \
+  width: 600px; \
+  padding: 10px; \
+  margin: 0; \
+  line-height: 20px; \
+  background: #FED10F; \
+  color: #064C96; \
+  font-size: 0.5em; \
+  float: right; \
+  font-weight: normal; \
+} \
+.del-banner-wrap--cart-main .del-banner--qualified { \
+  color: #E5007E; \
+} \
+.del-banner-wrap--qualified .del-banner-wrap--cart-main { \
+  margin-top: -10px; \
+} \
+.del-banner-wrap--qualified .del-banner-wrap--cart-main .del-banner--qualified { \
+  width: 360px; \
+  margin: 0 auto; \
+} \
+#promotions_basket { \
+  overflow: visible; \
+  min-height: 50px; \
+} \
+.del-banner-wrap--cart-sub { \
+  text-align: left; \
+  width: 480px; \
+  padding: 10px; \
+  margin: 0; \
+  line-height: 20px; \
+  color: #064C96; \
+  float: left; \
+  font-weight: normal; \
+  position: relative; \
+  top: -68px; \
+  left: 0; \
+} \
+.del-banner-wrap--cart-sub .del-banner--nudge, \
+.del-banner-wrap--cart-sub .del-banner--qualified { \
+  color: #E5007E; \
 } ';
 
 // Functions
@@ -207,11 +253,31 @@ exp.func.waitForElement = function(selector, callback, timeout, keepAlive) {
         }, intervalTime);
 };
 
+/*
+exp.func.calcCartUpdate = function(_this) {
+    var operation;
+    var unitPrice = _this.parents('dd').find('.col.unit').text().replace('£','').trim();
+    var totalPrice = _this.parents('dd').find('.col.price b').text().replace('£','').trim();
+    var qty = _this.parents('dd').find('input.qty').val();
+    var newTotal = parseInt(qty) * parseFloat(unitPrice);
+    var diff = (totalPrice - newTotal).toFixed(2).replace('-','');
+    if( newTotal < totalPrice ){
+        operation = 'remove';
+    } else if( newTotal > totalPrice ) {
+        operation = 'add';
+    }
+    return {
+        'diff': diff,
+        'operation': operation
+    };
+};
+*/
+
 exp.func.updateCookie = function( newValue ) {
     docCookies.setItem( exp.vars.cookieName, newValue, null, '/' );
     exp.vars.cookieVal = newValue;
     exp.func.setState();
-    exp.func.appendBanners();
+    exp.func.mutateDOM();
     console.log('Cookie updated to value: '+ newValue);
 };
 
@@ -225,8 +291,6 @@ exp.func.calculateTotal = function( currentTotal, priceString, operation ) {
         newTotal = currentFloat - priceFloat;
     }
     if( newTotal < 0 ) {
-        // We should never get less than 0 unless something went wrong
-        // do we kill the experiment, try to save it, or ignore it?
         newTotal = 0;
     }
     return newTotal.toFixed(2);
@@ -250,7 +314,7 @@ exp.func.setState = function() {
     }
 };
 
-exp.func.appendBanners = function() {
+exp.func.mutateDOM = function() {
     var bannerType = 'initial';
     var body = $('body');
     if( exp.vars.qualify.reached ) {
@@ -279,6 +343,22 @@ exp.func.appendBanners = function() {
             exp.vars.banner[ bannerType ] + (exp.vars.threshold.reached && !exp.vars.qualify.reached ? exp.vars.banner.nudge : '')
         );
     }
+    if( exp.vars.placeholders.cartMainBanner.length ) {
+        exp.vars.placeholders.cartMainBanner.html(
+            exp.vars.banner[ bannerType ]
+        );
+    }
+    if( exp.vars.placeholders.cartSubBanner.length ) {
+        exp.vars.placeholders.cartSubBanner.html(
+            exp.vars.banner[ bannerType ] + (exp.vars.threshold.reached && !exp.vars.qualify.reached ? exp.vars.banner.nudge : '')
+        );
+    }
+    // If we are on the cart page and have qualified, add a hint next to the code box
+    if ( exp.vars.qualify.reached && $('dd.totals.delivery .total').length ) {
+        $('.textlist.basket .totals .blabel').css({ 'width': '220px' } );
+        $('.textlist.basket .totals .total').css({ 'width': '132px' } );
+        $('dd.totals.delivery .total').html( exp.vars.banner.codeHint );
+    }
     // If we have a nudge, append the left to go amount
     if( $('.del-banner--nudge').length ) {
         $('.del-banner--nudge span').html( exp.vars.qualify.leftToGo );
@@ -289,10 +369,6 @@ exp.func.appendBanners = function() {
 
 // Init function
 exp.init = function() {
-
-    //
-    // Cookie Stuff
-    //
 
     // Get the current value of the cookie
     this.vars.cookieVal = docCookies.getItem( this.vars.cookieName );
@@ -319,13 +395,6 @@ exp.init = function() {
         return false;
     }
 
-    // Set the current basket / threshold state, based on cookie value
-    this.func.setState();
-
-    //
-    // DOM Stuff
-    //
-
     // Append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
 
@@ -336,31 +405,90 @@ exp.init = function() {
     }
     this.vars.placeholders.mainBanner = $('.del-banner-wrap--main');
 
-    // Append Banners to DOM
-    this.func.appendBanners();
+    if( $('#p_checkout #cart .pageheading').length ) {
+        $('#p_checkout #cart .pageheading').append( '<div class="del-banner-wrap--cart-main" />' );
+    }
+    this.vars.placeholders.cartMainBanner = $('.del-banner-wrap--cart-main');
 
-    //
-    // Events
-    //
+    if( $('#cart #promotions_basket').length ) {
+        $('#cart #promotions_basket').prepend( '<div class="del-banner-wrap--cart-sub" />' );
+    }
+    this.vars.placeholders.cartSubBanner = $('.del-banner-wrap--cart-sub');
 
-    exp.func.waitForElement('#added_item_box .fright.cost', function addProductVal() {
-        var addedVal = $('#added_item_box .fright.cost').text().replace('£','').trim();
-        exp.func.updateCookie(
-            exp.func.calculateTotal( exp.vars.cookieVal, addedVal, 'add' )
-        );
-    });
+    // If we are in the cart then we have an opportunity to grab the cart total without needing to do any fancy stuff...
+    if( $('#p_checkout #cart').length ) {
 
+        (function() {
+            var newValue = 0;
+            // add up each total price column
+            $('#cart .col.price b').each(function(){
+                newValue += parseFloat( $(this).text().replace('£','').trim() );
+            });
+            exp.func.updateCookie( newValue.toFixed(2) );
+        })();
+
+    // ...otherwise we need to check for an added item box and update the cookie if an item has been added
+    } else {
+
+        // Initially set the current basket / threshold state
+        this.func.setState();
+
+        // Make DOM changes
+        this.func.mutateDOM();
+
+        // Listen for an added to basket element
+        exp.func.waitForElement('#added_item_box .fright.cost', function addProductVal() {
+            var addedVal = $('#added_item_box .fright.cost').text().replace('£','').trim();
+            exp.func.updateCookie(
+                exp.func.calculateTotal( exp.vars.cookieVal, addedVal, 'add' )
+            );
+        });
+
+    }
+
+    // unhide basket total in header
+    $('#total').css({'color': '#4E4E4E'});
+
+/*
+    // Cart remove button
     $('#cart .button.remove').bind('click', function removeProductVal() {
         var _this = $(this);
         var removedVal = _this.parents('dd').find('.col.price b').text().replace('£','').trim();
-        //var unitPrice = _this.prev('.col.unit').text().replace('£','').trim();
-        //var quantity = _this.prev('input.qty').val();
-        //var removedVal = (parseFloat( unitPrice ) * parseInt( quantity )).toFixed(2);
         exp.func.updateCookie(
             exp.func.calculateTotal( exp.vars.cookieVal, removedVal, 'remove' )
         );
         return;
     });
+
+    // Cart plus 1 button
+    $('#cart .button.qtypos').bind('click', function plusOneProductVal() {
+        var _this = $(this);
+        var addedVal = _this.parents('dd').find('.col.unit').text().replace('£','').trim();
+        exp.func.updateCookie(
+            exp.func.calculateTotal( exp.vars.cookieVal, addedVal, 'add' )
+        );
+        return;
+    });
+
+    // Cart minus 1 button
+    $('#cart .button.qtyneg').bind('click', function minusOneProductVal() {
+        var _this = $(this);
+        var removedVal = _this.parents('dd').find('.col.unit').text().replace('£','').trim();
+        exp.func.updateCookie(
+            exp.func.calculateTotal( exp.vars.cookieVal, removedVal, 'remove' )
+        );
+        return;
+    });
+
+    // Cart product update button
+    $('#cart .button.update').bind('click', function updateProductVal() {
+        var values = exp.func.calcCartUpdate( $(this) );
+        exp.func.updateCookie(
+            exp.func.calculateTotal( exp.vars.cookieVal, values.diff, values.operation )
+        );
+        return;
+    });
+*/
 
 };
 
