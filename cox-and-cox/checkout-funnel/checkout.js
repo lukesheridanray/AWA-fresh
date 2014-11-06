@@ -842,7 +842,7 @@ forgotpwExpt.condition = $('.customer-account-forgotpassword');
 // Check for a condition and return false if it has not been met
 if(forgotpwExpt.condition && !forgotpwExpt.condition.length) {
     console.log('Experiment failed a condition');
-    //return false;
+    return false;
 }
 
 // Variables
