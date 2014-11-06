@@ -16,6 +16,7 @@
 */
 (function(o){var t={url:!1,callback:!1,target:!1,duration:120,on:"mouseover",touch:!0,onZoomIn:!1,onZoomOut:!1,magnify:1};o.zoom=function(t,n,e,i){var u,c,a,m,l,r,s,f=o(t).css("position"),h=o(n);return t.style.position=/(absolute|fixed)/.test(f)?f:"relative",t.style.overflow="hidden",e.style.width=e.style.height="",o(e).addClass("zoomImg").css({position:"absolute",top:0,left:0,opacity:0,width:e.width*i,height:e.height*i,border:"none",maxWidth:"none",maxHeight:"none"}).appendTo(t),{init:function(){c=o(t).outerWidth(),u=o(t).outerHeight(),n===t?(m=c,a=u):(m=h.outerWidth(),a=h.outerHeight()),l=(e.width-c)/m,r=(e.height-u)/a,s=h.offset()},move:function(o){var t=o.pageX-s.left,n=o.pageY-s.top;n=Math.max(Math.min(n,a),0),t=Math.max(Math.min(t,m),0),e.style.left=t*-l+"px",e.style.top=n*-r+"px"}}},o.fn.zoom=function(n){return this.each(function(){var e,i=o.extend({},t,n||{}),u=i.target||this,c=this,a=o(c),m=document.createElement("img"),l=o(m),r="mousemove.zoom",s=!1,f=!1;(i.url||(e=a.find("img"),e[0]&&(i.url=e.data("src")||e.attr("src")),i.url))&&(function(){var o=u.style.position,t=u.style.overflow;a.one("zoom.destroy",function(){a.off(".zoom"),u.style.position=o,u.style.overflow=t,l.remove()})}(),m.onload=function(){function t(t){e.init(),e.move(t),l.stop().fadeTo(o.support.opacity?i.duration:0,1,o.isFunction(i.onZoomIn)?i.onZoomIn.call(m):!1)}function n(){l.stop().fadeTo(i.duration,0,o.isFunction(i.onZoomOut)?i.onZoomOut.call(m):!1)}var e=o.zoom(u,c,m,i.magnify);"grab"===i.on?a.on("mousedown.zoom",function(i){1===i.which&&(o(document).one("mouseup.zoom",function(){n(),o(document).off(r,e.move)}),t(i),o(document).on(r,e.move),i.preventDefault())}):"click"===i.on?a.on("click.zoom",function(i){return s?void 0:(s=!0,t(i),o(document).on(r,e.move),o(document).one("click.zoom",function(){n(),s=!1,o(document).off(r,e.move)}),!1)}):"toggle"===i.on?a.on("click.zoom",function(o){s?n():t(o),s=!s}):"mouseover"===i.on&&(e.init(),a.on("mouseenter.zoom",t).on("mouseleave.zoom",n).on(r,e.move)),i.touch&&a.on("touchstart.zoom",function(o){o.preventDefault(),f?(f=!1,n()):(f=!0,t(o.originalEvent.touches[0]||o.originalEvent.changedTouches[0]))}).on("touchmove.zoom",function(o){o.preventDefault(),e.move(o.originalEvent.touches[0]||o.originalEvent.changedTouches[0])}),o.isFunction(i.callback)&&i.callback.call(m)},m.src=i.url)})},o.fn.zoom.defaults=t})(window.jQuery);
 
+
 /*
 I have given the use full access to the bucket gs://tbpawa
 
@@ -87,7 +88,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Look inside experiment - 0.3');
+console.log('Look inside experiment - 0.10');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -105,6 +106,7 @@ exp.vars = {
     'imageZoomNavUp': '//cdn.optimizely.com/img/579743489/96edba11ec5c4bce80f1601243764e06.png',
     'imageZoomNavDown': '//cdn.optimizely.com/img/579743489/f4421c49c82b464fb89185bcbfb9d7dd.png',
     'imageZoomIcon': '//cdn.optimizely.com/img/579743489/56069e92745b4d44854a5454137108b7.png',
+    'imageSpinner': '//cdn.optimizely.com/img/579743489/d1d5466f2fd04bfbb7a2f6ff53b7cfd2.gif',
     'zoomThumbs': {},
     'positionArray': [],
     'modalTemplate': ' \
@@ -114,7 +116,7 @@ exp.vars = {
         <div class="modal-body"> </div> </div> </div> </div>',
     'productId': $('input[name="productId"]:eq(0)').val(),
     'imagesExtension': '.jpg',
-    'imagesBase': 'http://www.awa-digital.com/optimizely/the-book-people/',
+    'imagesBase': '//storage.googleapis.com/tbpawa/',
     'imagesTypeFolders': {
         'thumbs': '/product-page-thumbnails/',
         'viewerThumbs': '/viewer-thumbnails/',
@@ -182,25 +184,30 @@ exp.css = ' \
 .see-inside--header { height: 94px; overflow: hidden; position: relative; } \
 .see-inside--header h3 { margin-top: 0; width: 600px; font-size: 1.8em; float: left; clear: left; } \
 .see-inside--wishlist { position: absolute; bottom: 0; left: 0; } \
-.see-inside--header .priceWrapper { float: right; } \
+.see-inside--header .priceWrapper { float: right; width: 210px; } \
 .see-inside--header .priceWrapper #add-to-wishlist-link { display: none; } \
+.see-inside--header .priceWrapper fieldset { position: relative; } \
+.see-inside--header .priceWrapper fieldset div { display: none; } \
+.see-inside--header .priceWrapper fieldset select { float: left; } \
 .see-inside--header .priceWrapper .price-string { margin: 0px -2px 0px 0px; padding: 0px; font-size: 21px; font-weight: bold; color: #000; } \
-.see-inside--header .priceWrapper .saving, .see-inside--header .priceWrapper .rrp { padding: 0px 5px 0px 0px; margin: 0px;} \
-.see-inside--header .add-to-basket-button { position: relative; top: -5px; font-size: 13px !important; font-weight: normal; width: 130px; } \
+.see-inside--header .priceWrapper .saving, .see-inside--header .priceWrapper .rrp { padding: 0px 5px 0px 0px; margin: 0px; } \
+.see-inside--header .add-to-basket-button { height: auto !important; margin: 0 !important; position: absolute !important; top: 0 !important; right: 0 !important; font-size: 13px !important; font-weight: normal !important; width: 130px !important; float: right !important; } \
 .see-inside--header .addToBasketForm { margin: 0; } \
 .see-inside--zoom { height: 542px; } \
-.see-inside--scroller { width: 300px; float: left; margin: 50px 0px 0px; height: 652px; overflow: auto; } \
+.see-inside--scroller { width: 300px; float: left; margin: 35px 0px 0px; height: 644px; overflow: auto; } \
 .see-inside--scroller p { margin: 0; height: 37px; } \
 .see-inside--scroller p a { font-size: 1.1em; color: #333; } \
 .see-inside--scroller a { text-decoration: none; } \
 .see-inside--scroller p a span { font-size: 0.8em; display: block; position: relative; top: -4px; font-style: italic; } \
 .see-inside--scroller img { border: 2px solid #fff; width: 260px; height: auto; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; } \
-.see-inside--zoom-container { margin-top: 15px; width: 831px; height: 550px; background: #fff; } \
-.see-inside--zoom-container--inner { width: 827px; height: auto; border: 2px solid '+exp.vars.colorOrange+'; cursor: zoom-in; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; } \
+.see-inside--zoom-container { width: 831px; height: 550px; background: #fff; } \
+.see-inside--zoom-container--inner { position: relative; width: 827px; height: auto; border: 2px solid '+exp.vars.colorOrange+'; cursor: zoom-in; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; } \
 .see-inside--zoom-container--inner:after { content:""; display: block; width: 40px; height: 40px; position: absolute; top: 0px; right: 0; background: url('+exp.vars.imageZoomIcon+') center no-repeat #F0F8FB; } \
+.see-inside--zoom-container--inner:hover { height: 535px; } \
+.see-inside--zoom-container--inner:hover:before { content:""; display: block; width: 64px; height: 64px; position: absolute; top: 233px; right: 385px; background: url('+exp.vars.imageSpinner+') center no-repeat #F0F8FB; } \
 .see-inside--zoom-container img { width: 827px; height: auto; cursor: zoom-in; } \
-script + .see-inside--zoom-container { position: absolute; top: 0; left: 0; z-index: -1; } \
-.see-inside--zoom-nav-up, .see-inside--zoom-nav-bottom { position: absolute; left: 407px; width: 17px; height: 16px; z-index: 99; } \
+.see-inside--zoom-container { position: absolute; top: 15px; left: 0; z-index: -1; } \
+.see-inside--zoom-nav-up, .see-inside--zoom-nav-bottom { position: absolute; left: 400px; width: 17px; height: 16px; z-index: 99; } \
 .see-inside--zoom-nav-up:hover, .see-inside--zoom-nav-bottom:hover { text-decoration: none; opacity: 0.8; } \
 .see-inside--zoom-nav-up { top: -20px; background: url('+exp.vars.imageZoomNavUp+') 0 0 no-repeat transparent; } \
 .see-inside--zoom-nav-bottom { bottom: -35px; background: url('+exp.vars.imageZoomNavDown+') 0 0 no-repeat transparent; } \
@@ -220,7 +227,8 @@ script + .see-inside--zoom-container { position: absolute; top: 0; left: 0; z-in
     .see-inside--zoom-container { width: 581px; height: 390px; } \
     .see-inside--zoom-container img, .see-inside--zoom-container--inner { width: 577px; } \
     .see-inside--zoom-container--inner:hover { height: 410px; } \
-    .see-inside--zoom-nav-up, .see-inside--zoom-nav-bottom { left: 290px; } \
+    .see-inside--zoom-container--inner:hover:before { top: 173px; right: 260px; } \
+    .see-inside--zoom-nav-up, .see-inside--zoom-nav-bottom { left: 282px; } \
 } \
 @media screen and (max-width: 1199px) { \
     .look-inside-thumbs img { width: 50px; height: 50px; margin-left: 6px; } \
@@ -233,9 +241,10 @@ script + .see-inside--zoom-container { position: absolute; top: 0; left: 0; z-in
     .see-inside--zoom-container--inner { max-height: 358px; } \
     .see-inside--zoom-container--inner:hover { height: 358px; } \
     .see-inside--zoom-nav-bottom { bottom: 0px; } \
+    .see-inside--zoom-container--inner:hover:before { top: 147px; right: 260px; } \
     .see-inside-header { display: none; } \
 } \
-@media screen and (max-width: 650px), screen and (max-height: 545px) { \
+@media screen and (max-width: 650px), screen and (max-height: 525px) { \
     .look-inside-thumbs { display: none; } \
     #setTitles ul { display: block; } \
     #setTitles ul.setTitlesLinks { display: none; } \
@@ -316,6 +325,7 @@ exp.vars.scrollThumbs = function(pageId) {
 exp.vars.lookInsideModal = function( pageId ) {
     var theModal = $('#lookInsideModal');
     theModal.modal();
+    $('.see-inside--zoom-container--inner').trigger('mouseleave');
     var thumb = $('.zoom-item[data-thumb-id="'+pageId+'"]');
     $('.zoom-item').removeClass('current');
     thumb.addClass('current');
@@ -346,14 +356,14 @@ exp.vars.generateZooms = function(_vars) {
     var thisProduct = _vars.productName[ _vars.productId ];
     var markup = '';
     var viewerSize = (_vars.viewportWidth > 1240) ? 'viewerMainLarge' : 'viewerMainSmall';
-    console.log(viewerSize);
     var i = 1;
     $.each( _vars.images[ thisProduct ], function( key, value ) {
         markup += '<div class="see-inside--zoom-container" data-zoom-id="' + key + '"> \
                   <div class="see-inside--zoom-container--inner zoom'+i+'"> \
-        <img src="'+ _vars.imagesBase + thisProduct + _vars.imagesTypeFolders[ viewerSize ] + value[0] + _vars.imagesExtension + '" alt="'+value[1]+'" /></div></div> \
+        <img src="'+ _vars.imagesBase + thisProduct + _vars.imagesTypeFolders[ viewerSize ] + value[0] + _vars.imagesExtension + '" alt="'+value[1]+'" /> \
+        </div></div> \
         <script type="text/javascript"> \
-            $(".see-inside--zoom-container--inner.zoom'+i+'").zoom({touch: true, url: "'+_vars.imagesBase + thisProduct + _vars.imagesTypeFolders['zoomed'] + value[0] + _vars.imagesExtension+'"}); \
+            $(".see-inside--zoom-container--inner.zoom'+i+'").zoom({touch: true, url: "'+_vars.imagesBase + thisProduct + _vars.imagesTypeFolders['zoomed'] + value[0] + _vars.imagesExtension+'", callback: function(){ $(this).trigger(\'mouseenter\').trigger(\'mousemove\') } }); \
         </script>';
         i++;
     });
@@ -374,7 +384,6 @@ exp.vars.generateModalBody = function(_vars) {
     '<div class="see-inside--wishlist">'+_vars.wishlistLink.wrap('<div />').parent('div').html()+'</div> \
 </div><!-- .see-inside--header --> \
 <div class="see-inside--zoom"> \
-    <div class="see-inside--zoom-icon"></div> \
     <a href="#" class="see-inside--zoom-nav-up" data-behaviour="zoomNav" data-zoom-dir="up">&nbsp;</a>' +
     zooms +
     '<a href="#" class="see-inside--zoom-nav-bottom" data-behaviour="zoomNav" data-zoom-dir="down">&nbsp;</a> \
@@ -464,7 +473,7 @@ exp.init = function() {
 
     // customise modal template
     $('#lookInsideModal .modal-body').html( this.vars.generateModalBody(exp.vars) );
-    $('.see-inside--header .priceWrapper fieldset div').remove();
+//    $('.see-inside--header .priceWrapper fieldset div').remove();
 
     // attach event listeners
 
@@ -493,20 +502,6 @@ exp.init = function() {
         e.preventDefault();
         $('#lookInsideModal').modal('hide');
     });
-
-
-    // Preload fullsize images
-
-    (function(_vars){
-        _vars = _vars || exp.vars;
-        var images = [];
-        var thisProduct = _vars.productName[ _vars.productId ];
-        $.each( _vars.images[ thisProduct ], function( key, value ) {
-            var imgsrc = _vars.imagesBase + thisProduct + _vars.imagesTypeFolders['zoomed'] + value[0] + _vars.imagesExtension;
-            images[key] = new Image();
-            images[key].src = imgsrc;
-        });
-    })(exp.vars);
 
 
 };
