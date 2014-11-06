@@ -9,26 +9,19 @@ Numerous (crazy egg, ethnio etc.)
 "Revenue per visitor / AOV
 Number of transactions"
 
-"Changes are sitewide but main priority pages are:
 
-- http://www.brightminds.co.uk/
-- All Category Pages (e.g. http://www.brightminds.co.uk/science-discovery/c5)
-- All Product Pages (e.g. http://www.http://www.brightminds.co.uk/microscope-set-in-handy-carry-case/p164)
-- http://www.brightminds.co.uk/cart.php"
-
-"As per wireframe:
-
-- Site-wide (Homepage / category pages / product pages etc.) to replace all instances of current 3 button blue banner under main navigation - banner change based on three state changes - default, approaching free delivery threshold and threshold reached.
-
-- Shopping Basket page banners (as above) + cart detail changes (delivery charges) TBC by Jamie.
-
-- Site-wide basket total amended to exclude delivery (top right of each page) TBC by Jamie
-
-- Delivery tier selection page (during checkout).  Only standard delivery is free so other options still need to be available.  For the test audience who do not hit the threshold, standard delivery should be displayed with, ""Spend £60 to get free delivery"".  Once threshold has been reached, price is replaced by ""FREE"" and radio button is pre-selected. TBC by Jamie.
+- Delivery tier selection page (during checkout).  Only standard delivery is free so other 
+options still need to be available.  For the test audience who do not hit the threshold, 
+standard delivery should be displayed with, ""Spend £60 to get free delivery"".  Once 
+threshold has been reached, price is replaced by ""FREE"" and radio button is pre-selected. 
+TBC by Jamie.
 
 - Free delivery terms and conditions:
 
-Free delivery is provided on shopping baskets of £60 and over.  It applies to web and phone orders and is available on standard delivery only.  To redeem, the free delivery promotion code must be entered in the promotion box in the shopping basket or on the phone.  Cannot be used in conjunction with any other offer.
+Free delivery is provided on shopping baskets of £60 and over.  It applies to web and 
+phone orders and is available on standard delivery only.  To redeem, the free delivery 
+promotion code must be entered in the promotion box in the shopping basket or on the 
+phone.  Cannot be used in conjunction with any other offer.
 
 to be added to:
 
@@ -36,24 +29,6 @@ to be added to:
 2) Deliveries & Returns Tab (On product page)
 3) 'Click for delivery options' popup (On product page)
 
-For just the test audience.
-
-"Free delivery voucher code is: BM9KG3
-Threshold for free delivery is: £60
-Threshold for 'approaching threshold' nudges is: £45
-Free delivery is for standard delivery only, other delivery tiers are to remain available for all customers.
-
-If user enters the voucher code before free delivery threshold is reached will voucher be activated in anticipation or will it throw an error?
-
-The wireframes are for illustrative purposes only, in terms of style / appearance.  Please match site font and styling to ensure changes are 'on brand'."
-
-"Site-wide (where existing 3 button blue banner is) but priority pages are:
-
-- http://www.brightminds.co.uk/
-- All Category Pages (e.g. http://www.brightminds.co.uk/science-discovery/c5)
-- All Product Pages (e.g. - http://www.http://www.brightminds.co.uk/microscope-set-in-handy-carry-case/p164)
-- http://www.brightminds.co.uk/cart.php"
-"
 
 */
 
@@ -70,7 +45,7 @@ var exp = (function($) {
 
 var exp = {};
 
-console.log('Free Delivery Threshold - 0.2');
+console.log('Free Delivery Threshold - 0.3');
 
 /*\
 |*|  :: cookies.js ::
@@ -135,6 +110,8 @@ exp.vars = {
     promoCode: 'BM9KG3',
     cookieName: 'optimizelyCartTotal',
     cookieVal: null,
+    voucherApplied: (window.location.search.indexOf('msgID=5') !== -1) ? true : false,
+    cookieVoucherName: 'optimizelyVoucherApplied',
     threshold: {
         amount: 45.00,
         reached: false
@@ -181,7 +158,7 @@ exp.css = ' \
   padding: 10px; \
   background: #E5007E; \
   color: #fff; \
-  width: 336px; \
+  width: 356px; \
 } \
 .del-banner-wrap--main .del-banner--qualified { \
   color: #E5007E; \
@@ -198,6 +175,10 @@ exp.css = ' \
   float: right; \
   font-weight: normal; \
 } \
+.del-banner-wrap--nudged .del-banner-wrap--cart-main { \
+  background: #E5007E; \
+  color: #fff; \
+} \
 .del-banner-wrap--cart-main .del-banner--qualified { \
   color: #E5007E; \
 } \
@@ -210,11 +191,12 @@ exp.css = ' \
 } \
 #promotions_basket { \
   overflow: visible; \
-  min-height: 50px; \
+  min-height: 90px; \
 } \
-.del-banner-wrap--cart-sub { \
+.del-banner-wrap--cart-sub .del-banner--initial, \
+.del-banner-wrap--cart-sub .del-banner--nudge { \
   text-align: left; \
-  width: 480px; \
+  width: 470px; \
   padding: 10px; \
   margin: 0; \
   line-height: 20px; \
@@ -224,10 +206,34 @@ exp.css = ' \
   position: relative; \
   top: -68px; \
   left: 0; \
+  background: #FED10F; \
+  position: relative; \
 } \
-.del-banner-wrap--cart-sub .del-banner--nudge, \
+.del-banner-wrap--cart-sub .del-banner--nudge { \
+  background: #E5007E; \
+  color: #fff; \
+  clear: left; \
+  top: -66px; \
+} \
 .del-banner-wrap--cart-sub .del-banner--qualified { \
+  text-align: left; \
+  width: 334px; \
+  padding: 10px; \
+  margin: 0; \
+  line-height: 20px; \
   color: #E5007E; \
+  position: relative; \
+  top: -5px; \
+  left: 585px; \
+  position: relative; \
+} \
+.del-opts-delivery-message { \
+  color: #064C96; \
+  font-style: normal; \
+  font-size: 0.8em; \
+  position: relative; \
+  left: -24px; \
+  top: -4px; \
 } ';
 
 // Functions
@@ -273,6 +279,23 @@ exp.func.calcCartUpdate = function(_this) {
 };
 */
 
+exp.func.addPlaceholders = function() {
+    if( $('.custom-three-ways').length ) {
+        $('.custom-three-ways').replaceWith( '<div class="del-banner-wrap--main" />' );
+    }
+    exp.vars.placeholders.mainBanner = $('.del-banner-wrap--main');
+
+    if( $('#p_checkout #cart .pageheading').length ) {
+        $('#p_checkout #cart .pageheading').append( '<div class="del-banner-wrap--cart-main" />' );
+    }
+    exp.vars.placeholders.cartMainBanner = $('.del-banner-wrap--cart-main');
+
+    if( $('#cart #promotions_basket').length ) {
+        $('#cart #promotions_basket').prepend( '<div class="del-banner-wrap--cart-sub" />' );
+    }
+    exp.vars.placeholders.cartSubBanner = $('.del-banner-wrap--cart-sub');
+};
+
 exp.func.updateCookie = function( newValue ) {
     docCookies.setItem( exp.vars.cookieName, newValue, null, '/' );
     exp.vars.cookieVal = newValue;
@@ -308,6 +331,11 @@ exp.func.setState = function() {
         exp.vars.qualify.reached = true;
         exp.vars.qualify.leftToGo = 0;
     } else {
+        if ( exp.vars.voucherApplied ) {
+            exp.vars.voucherApplied = false;
+            docCookies.removeItem( exp.vars.cookieVoucherName, '/' );
+            exp.func.addPlaceholders();
+        }
         exp.vars.qualify.reached = false;
         // Calculate how much more to spend till we qualify
         exp.vars.qualify.leftToGo = (exp.vars.qualify.amount - exp.vars.cookieVal).toFixed(2);
@@ -315,6 +343,9 @@ exp.func.setState = function() {
 };
 
 exp.func.mutateDOM = function() {
+    if( $('#p_checkout #cart').length && exp.vars.voucherApplied ) {
+        return false;
+    }
     var bannerType = 'initial';
     var body = $('body');
     if( exp.vars.qualify.reached ) {
@@ -345,7 +376,7 @@ exp.func.mutateDOM = function() {
     }
     if( exp.vars.placeholders.cartMainBanner.length ) {
         exp.vars.placeholders.cartMainBanner.html(
-            exp.vars.banner[ bannerType ]
+            (exp.vars.threshold.reached && !exp.vars.qualify.reached ? exp.vars.banner.nudge : exp.vars.banner[ bannerType ])
         );
     }
     if( exp.vars.placeholders.cartSubBanner.length ) {
@@ -395,25 +426,29 @@ exp.init = function() {
         return false;
     }
 
+    // If voucher cookie set the var to true
+    // or if var is true set the voucher cookie
+
+    if( docCookies.getItem( this.vars.cookieVoucherName ) === 'true' ) {
+        exp.vars.voucherApplied = true;
+    } else {
+        if( exp.vars.voucherApplied ) {
+            docCookies.setItem( this.vars.cookieVoucherName, 'true', null, '/' );
+        }
+    }
+
     // Append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
 
     // Append banner placeholders and reference them as vars
 
-    if( $('.custom-three-ways').length ) {
-        $('.custom-three-ways').replaceWith( '<div class="del-banner-wrap--main" />' );
-    }
-    this.vars.placeholders.mainBanner = $('.del-banner-wrap--main');
+    if( $('#p_checkout #cart').length && exp.vars.voucherApplied ) {
 
-    if( $('#p_checkout #cart .pageheading').length ) {
-        $('#p_checkout #cart .pageheading').append( '<div class="del-banner-wrap--cart-main" />' );
-    }
-    this.vars.placeholders.cartMainBanner = $('.del-banner-wrap--cart-main');
+    } else {
 
-    if( $('#cart #promotions_basket').length ) {
-        $('#cart #promotions_basket').prepend( '<div class="del-banner-wrap--cart-sub" />' );
+        this.func.addPlaceholders();
+
     }
-    this.vars.placeholders.cartSubBanner = $('.del-banner-wrap--cart-sub');
 
     // If we are in the cart then we have an opportunity to grab the cart total without needing to do any fancy stuff...
     if( $('#p_checkout #cart').length ) {
@@ -421,8 +456,11 @@ exp.init = function() {
         (function() {
             var newValue = 0;
             // add up each total price column
-            $('#cart .col.price b').each(function(){
-                newValue += parseFloat( $(this).text().replace('£','').trim() );
+            $('#cart dd .col.price b').each(function(){
+                var _this = $(this);
+                if( !_this.parents('dd.promotion').length ) {
+                    newValue += parseFloat( _this.text().replace('£','').trim() );
+                }
             });
             exp.func.updateCookie( newValue.toFixed(2) );
         })();
@@ -430,11 +468,17 @@ exp.init = function() {
     // ...otherwise we need to check for an added item box and update the cookie if an item has been added
     } else {
 
-        // Initially set the current basket / threshold state
-        this.func.setState();
+        // As a fail safe, if total in cart widget is zero, set our cookie and our variable to zero
+        if( $('#total').text().replace('£','').replace('Total','').trim() === '0.00' ) {
+            exp.func.updateCookie( '0.00' ); 
+        } else {
 
-        // Make DOM changes
-        this.func.mutateDOM();
+            // Initially set the current basket / threshold state
+            this.func.setState();
+
+            // Make DOM changes
+            this.func.mutateDOM();
+        }
 
         // Listen for an added to basket element
         exp.func.waitForElement('#added_item_box .fright.cost', function addProductVal() {
@@ -448,6 +492,25 @@ exp.init = function() {
 
     // unhide basket total in header
     $('#total').css({'color': '#4E4E4E'});
+
+
+    if(
+        $('#p_choose_shipping').length &&
+        exp.vars.cookieVal >= exp.vars.qualify.amount &&
+        $('form .textlist dd:eq(0) .price').text().trim() !== 'FREE'
+    ) {
+        // user has qualified but not entered code
+        $('label[for="opt_1"]').append('<em class="del-opts-delivery-message">You qualify for free standard delivery, return to your basket and enter the code '+exp.vars.promoCode+' to claim</em>');
+    } else if(
+        $('#p_choose_shipping').length &&
+        $('form .textlist dd:eq(0) .price').text().trim() !== 'FREE'
+    ) {
+        // user has not qualified
+        $('label[for="opt_1"]').append('<em class="del-opts-delivery-message">Spend £60 to get free delivery</em>');
+    
+    }
+
+
 
 /*
     // Cart remove button
