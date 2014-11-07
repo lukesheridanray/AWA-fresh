@@ -140,6 +140,9 @@ exp.init = function() {
         background-position-y: 0px; \
         }');
 
+    // Remove thin lines when logged in
+    $('div.checkout-seperator-top1, div.checkout-seperator-top2, div.checkout-seperator-bottom').remove();
+
     // Remove nav
     $('.nav-container').remove();
     $('.header-search-bar').remove();
@@ -311,230 +314,258 @@ exp.init = function() {
 
     // Step 2 - Billing
     // 
-    // Remove radio buttons
-    $("li.control:nth-child(3)").remove();
-    $("#co-billing-form > fieldset:nth-child(1) > ul:nth-child(1) > li:nth-child(2)").remove();
+    if ($('#billing-address-select').length) {
 
-    // Style container
-    $("#co-billing-form > fieldset:nth-child(1)").attr('style', 'padding: 1em; width: 445px; margin: 0px auto; border: 1px solid rgb(204, 204, 204);');
-    $("#co-billing-form > fieldset").prepend('<legend style="display: block; padding: 0px 1em; font-weight: bold; font-size: 1.5em;"">Your Billing Information</legend>');
+        $("#co-billing-form > fieldset:nth-child(1) > ul:nth-child(1) > li:nth-child(2)").remove();
 
-    // Prepopulate email and never show field
-    $("#billing-new-address-form > fieldset:nth-child(1) > ul:nth-child(2) > li:nth-child(2)").hide();
-    $("#billing-new-address-form > fieldset:nth-child(1) > ul:nth-child(2) > li:nth-child(10)").hide();
-    $("#billing-new-address-form > fieldset:nth-child(1) > ul:nth-child(2) > li:nth-child(2)").addClass('remainhidden');
+        // Style container
+        $("#co-billing-form > fieldset:nth-child(1)").attr('style', 'padding: 1em; width: 445px; margin: 0px auto; border: 1px solid rgb(204, 204, 204);');
+        $("#co-billing-form > fieldset").prepend('<legend style="display: block; padding: 0px 1em; font-weight: bold; font-size: 1.5em;"">Your Billing Information</legend>');
 
-    // Hide password field
-    $("#register-customer-password").addClass('remainhidden');
-    $("li.control:nth-child(13)").hide();
-    $(".invisible").hide();
-    //$("li.control:gt(0)").remove();
-    
-    // Modal for telephone
-    $("#billing\\:telephone").after('<br /><span style="float: right;text-decoration: underline;"><a href="#" id="why-ask-phone" style="font-size: .9em;">why ask this?</a></span>');
+        // Insert tick box - delivery address same as billing
+        $("ul.form-list:nth-child(2) > li:nth-child(2)").before('<li class="control invisible" style="margin-top:1em;"><div class="input-box" style="width: 260px;"><input name="billing[use_for_shipping]" id="billing:use_for_shipping_yes" value="1" checked="checked" title="Deliver to this address" onclick="" class="radio validation-passed" type="checkbox"><label for="billing:use_for_shipping_yes">Deliver to this address</label></div></li>');
 
-    // Modal window
-    var modal = '<div class="tool-tip" id="telephone-tool-tip" style="display:none;width:400px;"> \
-        <div class="btn-close"><a href="#" id="telephone-tool-tip-close" title="Close">Close</a></div> \
-        <div class="tool-tip-content">We may need to phone you to clarify delivery details related to this order. Your phone number will never be used for any other purpose.</div> \
-    </div>';
-    $(modal).prependTo('body');
+        // Form size fix
+        $('#co-billing-form .field').css('width', '440px');
+        $('#co-billing-form .fields').css('width', '440px');
+        $('#co-billing-form .wide').css('width','440px');
+        $("#co-billing-form .input-box").css('width', '260px');
+        $("#co-billing-form .input-box").css('margin-right','70px');
+        $("#co-billing-form label.required").css('width', '90px');
 
-    $("#why-ask-phone").click(function(e) {
-        $('#telephone-tool-tip').css('top', (e.pageY-20)+'px');
-        $('#telephone-tool-tip').css('left', (e.pageX-400)+'px');
+        // Spacing under manual entry link
+        $('#meanbee\\:billing_address_selector').css('margin-top','1em');
 
-        $('#telephone-tool-tip').show();
+        // County not required - need to remove again because it will be put back
+        $('#billing\\:region').removeClass('required-entry');
+    }
+    //
+    if ( ! $('#billing-address-select').length) {
+        // Remove radio buttons
+        $("li.control:nth-child(3)").remove();
+        $("#co-billing-form > fieldset:nth-child(1) > ul:nth-child(1) > li:nth-child(2)").remove();
 
-        $('#telephone-tool-tip-close').click(function() {
-            $('#telephone-tool-tip').hide();
+        // Style container
+        $("#co-billing-form > fieldset:nth-child(1)").attr('style', 'padding: 1em; width: 445px; margin: 0px auto; border: 1px solid rgb(204, 204, 204);');
+        $("#co-billing-form > fieldset").prepend('<legend style="display: block; padding: 0px 1em; font-weight: bold; font-size: 1.5em;"">Your Billing Information</legend>');
+
+        // Prepopulate email and never show field
+        $("#billing-new-address-form > fieldset:nth-child(1) > ul:nth-child(2) > li:nth-child(2)").hide();
+        $("#billing-new-address-form > fieldset:nth-child(1) > ul:nth-child(2) > li:nth-child(10)").hide();
+        $("#billing-new-address-form > fieldset:nth-child(1) > ul:nth-child(2) > li:nth-child(2)").addClass('remainhidden');
+
+        // Hide password field
+        $("#register-customer-password").addClass('remainhidden');
+        $("li.control:nth-child(13)").hide();
+        $(".invisible").hide();
+        //$("li.control:gt(0)").remove();
+        
+        // Modal for telephone
+        $("#billing\\:telephone").after('<br /><span style="float: right;text-decoration: underline;"><a href="#" id="why-ask-phone" style="font-size: .9em;">why ask this?</a></span>');
+
+        // Modal window
+        var modal = '<div class="tool-tip" id="telephone-tool-tip" style="display:none;width:400px;"> \
+            <div class="btn-close"><a href="#" id="telephone-tool-tip-close" title="Close">Close</a></div> \
+            <div class="tool-tip-content">We may need to phone you to clarify delivery details related to this order. Your phone number will never be used for any other purpose.</div> \
+        </div>';
+        $(modal).prependTo('body');
+
+        $("#why-ask-phone").click(function(e) {
+            $('#telephone-tool-tip').css('top', (e.pageY-20)+'px');
+            $('#telephone-tool-tip').css('left', (e.pageX-400)+'px');
+
+            $('#telephone-tool-tip').show();
+
+            $('#telephone-tool-tip-close').click(function() {
+                $('#telephone-tool-tip').hide();
+                return false;
+            });
+
             return false;
         });
 
-        return false;
-    });
+        // Continue button
+        //<button class="button" type="button" id="onepage-first-goon" style="display: block; font-size: 1.5em; font-weight: bold; padding: 0.75em 2em; margin: 0px auto; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);">Continue</button>
+        
+        // Sort out continue button
+        var continueButton = $("#continue-btn").detach();
+        $("#co-billing-form > fieldset:nth-child(1) ul").append('<li style="margin-top:2em;" id="billing-buttons-container"></li>');
+        $("#billing-buttons-container").remove();
+        $("#billing-buttons-container").append(continueButton);
+        $("#continue-btn span").remove();
+        $("#continue-btn").text('Continue');
+        $("#continue-btn").attr('style','font-size: 1.5em; font-weight: bold; padding: 0.75em 2em; margin: 0px auto; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);');
 
-    // Continue button
-    //<button class="button" type="button" id="onepage-first-goon" style="display: block; font-size: 1.5em; font-weight: bold; padding: 0.75em 2em; margin: 0px auto; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);">Continue</button>
-    
-    // Sort out continue button
-    var continueButton = $("#continue-btn").detach();
-    $("#co-billing-form > fieldset:nth-child(1) ul").append('<li style="margin-top:2em;" id="billing-buttons-container"></li>');
-    $("#billing-buttons-container").remove();
-    $("#billing-buttons-container").append(continueButton);
-    $("#continue-btn span").remove();
-    $("#continue-btn").text('Continue');
-    $("#continue-btn").attr('style','font-size: 1.5em; font-weight: bold; padding: 0.75em 2em; margin: 0px auto; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);');
+        $("#billing-buttons-container").css('text-align', 'center');
+        $('#billing-buttons-container').addClass('invisible');
 
-    $("#billing-buttons-container").css('text-align', 'center');
-    $('#billing-buttons-container').addClass('invisible');
+        // Find address button
+        var findaddressText = $("#meanbee\\:billing_address_find").text();
+        $("#meanbee\\:billing_address_find span").remove();
+        $("#meanbee\\:billing_address_find").text(findaddressText);
 
-    // Find address button
-    var findaddressText = $("#meanbee\\:billing_address_find").text();
-    $("#meanbee\\:billing_address_find span").remove();
-    $("#meanbee\\:billing_address_find").text(findaddressText);
+        $("#meanbee\\:billing_address_find").attr('style', 'display: block; font-size: 1em; font-weight: bold; padding: 0.25em .75em; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);');
 
-    $("#meanbee\\:billing_address_find").attr('style', 'display: block; font-size: 1em; font-weight: bold; padding: 0.25em .75em; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);');
+        // Underline link
+        $('#meanbee\\:billing_input_address_manually').css('text-decoration', 'underline');
 
-    // Underline link
-    $('#meanbee\\:billing_input_address_manually').css('text-decoration', 'underline');
-
-    // Unhide fields, except the ones we don't want shown on clicking find address or manual entry
-    $("#meanbee\\:billing_input_address_manually").click(function() {
-        $(".fields:not(.remainhidden)").css('display', 'block');
-        $('.invisible').removeClass('invisible');
-    });
-    $("#meanbee\\:billing_address_find").click(function() {
-        $(".fields:not(.remainhidden)").css('display', 'block');
-
-        // Change "Select Address" button when available
-        exp.func.waitForElement("#meanbee\\:billing_address_selector > div:nth-child(2) > button:nth-child(1) span", function () {
-            var btnText = $("#meanbee\\:billing_address_selector > div:nth-child(2) > button:nth-child(1)").text();
-            $("#meanbee\\:billing_address_selector > div:nth-child(2) > button:nth-child(1) span").remove();
-            $("#meanbee\\:billing_address_selector > div:nth-child(2) > button:nth-child(1)").text(btnText);
-            $("#meanbee\\:billing_address_selector > div:nth-child(2) > button:nth-child(1)").attr('style', 'display: block; font-size: 1em; font-weight: bold; padding: 0.25em .75em; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);');
-
+        // Unhide fields, except the ones we don't want shown on clicking find address or manual entry
+        $("#meanbee\\:billing_input_address_manually").click(function() {
+            $(".fields:not(.remainhidden)").css('display', 'block');
             $('.invisible').removeClass('invisible');
-
-            // Don't submit the form yet - the customer still needs to enter their phone number
-            $("#meanbee\\:billing_address_selector button")[0].onclick = function() { meanbee_postcode_billing.fillFields($F('meanbee:billing_address_selector_select'), 'billing'); };
-
-            // Sort out layout
-            $('#meanbee\\:billing_address_selector').css('margin-left','110px');
-            $('#meanbee\\:billing_address_selector').css('width','260px');
-
-        },10000,50);
-    });
-
-    // Insert tick box - delivery address same as billing
-    $("ul.form-list:nth-child(2) > li:nth-child(2)").before('<li class="control invisible" style="margin-top:1em;"><div class="input-box" style="width: 260px;"><input name="billing[use_for_shipping]" id="billing:use_for_shipping_yes" value="1" checked="checked" title="Deliver to this address" onclick="" class="radio validation-passed" type="checkbox"><label for="billing:use_for_shipping_yes">Deliver to this address</label></div></li>');
-
-    // Form size fix
-    $('#co-billing-form .field').css('width', '440px');
-    $('#co-billing-form .fields').css('width', '440px');
-    $('#co-billing-form .wide').css('width','440px');
-    $("#co-billing-form .input-box").css('width', '260px');
-    $("#co-billing-form .input-box").css('margin-right','70px');
-    $("#co-billing-form label.required").css('width', '90px');
-
-    // Spacing under manual entry link
-    $('#meanbee\\:billing_address_selector').css('margin-top','1em');
-
-    // County not required - need to remove again because it will be put back
-    $('#billing\\:region').removeClass('required-entry');
-
-    // Handle next click
-    // Problems with continue button
-    setTimeout(function() {
-        $("#continue-btn").off()
-        $("#continue-btn").click(function(e){        
-            e.preventDefault();
-            $('#billing\\:region').removeClass('required-entry');
-
-            billing.save();
-
-            $("#billing\\:email").parents("li").show();
-            exp.func.waitForElement("#checkout-step-shipping_method:visible",
-                function() {
-                $(".step-link.billing").removeClass('active');
-                $(".step-link.delivery").addClass('active');
-                });
         });
-    }, 500);
+        $("#meanbee\\:billing_address_find").click(function() {
+            $(".fields:not(.remainhidden)").css('display', 'block');
 
-    // Step 2.5 - Delivery Address
-    //
-    // Rearrange two columns into one, wrap it with our usual fieldset, add legend
-    var ShippingMain = $("#co-shipping-form > div.shipping-form-left");
-    var shippingRight = $("#co-shipping-form > div.shipping-form-right").detach();
-    ShippingMain.append(shippingRight);
-    shippingRight.removeClass("shipping-form-right");
+            // Change "Select Address" button when available
+            exp.func.waitForElement("#meanbee\\:billing_address_selector > div:nth-child(2) > button:nth-child(1) span", function () {
+                var btnText = $("#meanbee\\:billing_address_selector > div:nth-child(2) > button:nth-child(1)").text();
+                $("#meanbee\\:billing_address_selector > div:nth-child(2) > button:nth-child(1) span").remove();
+                $("#meanbee\\:billing_address_selector > div:nth-child(2) > button:nth-child(1)").text(btnText);
+                $("#meanbee\\:billing_address_selector > div:nth-child(2) > button:nth-child(1)").attr('style', 'display: block; font-size: 1em; font-weight: bold; padding: 0.25em .75em; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);');
 
-    ShippingMain.wrap('<fieldset style="padding: 2.5em 1em; width: 445px; margin: 0px auto; border: 1px solid rgb(204, 204, 204);" class="co-box2" />');
-    $(".co-box2").prepend('<legend style="display: block; padding: 0px 1em; font-weight: bold; font-size: 1.5em;">Your Delivery Address</legend>');
+                $('.invisible').removeClass('invisible');
 
-    ShippingMain.removeClass("shipping-form-left");
+                // Don't submit the form yet - the customer still needs to enter their phone number
+                $("#meanbee\\:billing_address_selector button")[0].onclick = function() { meanbee_postcode_billing.fillFields($F('meanbee:billing_address_selector_select'), 'billing'); };
 
-    // Underline link
-    $('#meanbee\\:shipping_input_address_manually').css('text-decoration', 'underline');
+                // Sort out layout
+                $('#meanbee\\:billing_address_selector').css('margin-left','110px');
+                $('#meanbee\\:billing_address_selector').css('width','260px');
 
-    // Fix label, it's not class radio therefore it gets colons
-    var label = $("label[for='shipping:same_as_billing']").text();
-    $("label[for='shipping:same_as_billing']").text(label.substring(0, label.length - 1));
-
-    // Sort out buttons
-    var shippingButtons = $("#shipping-buttons-container").detach();
-    $('#co-shipping-form > fieldset').append(shippingButtons);
-    $("#shipping-buttons-container .back-link").remove();
-
-    $("#continue-btn-shipping span").remove();
-    $("#continue-btn-shipping").text('Continue');
-    $("#continue-btn-shipping").attr('style','display: block; font-size: 1.5em; font-weight: bold; padding: 0.75em 2em; margin: 0px auto; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);');
-
-    // The same stuff as for billing
-    // Find address button
-    findaddressText = $("#meanbee\\:shipping_address_find").text();
-    $("#meanbee\\:shipping_address_find span").remove();
-    $("#meanbee\\:shipping_address_find").text(findaddressText);
-
-    $("#meanbee\\:shipping_address_find").attr('style', 'display: block; font-size: 1em; font-weight: bold; padding: 0.25em .75em; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);');
-
-    $("#meanbee\\:shipping_address_find").click(function() {
-        $(".fields:not(.remainhidden)").css('display', 'block');
-
-        // Change "Select Address" button when available
-        exp.func.waitForElement("#meanbee\\:shipping_address_selector > div:nth-child(2) > button:nth-child(1) span", function () {
-            var btnText = $("#meanbee\\:shipping_address_selector > div:nth-child(2) > button:nth-child(1)").text();
-            $("#meanbee\\:shipping_address_selector > div:nth-child(2) > button:nth-child(1) span").remove();
-            $("#meanbee\\:shipping_address_selector > div:nth-child(2) > button:nth-child(1)").text(btnText);
-            $("#meanbee\\:shipping_address_selector > div:nth-child(2) > button:nth-child(1)").attr('style', 'display: block; font-size: 1em; font-weight: bold; padding: 0.25em .75em; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);');
-
-            // Don't submit the form yet - the customer still needs to enter their phone number
-            $("#meanbee\\:shipping_address_selector button")[0].onclick = function() { meanbee_postcode_billing.fillFields($F('meanbee:billing_address_selector_select'), 'billing'); };
-
-        },10000,50);
-    });
-
-    $(".opc #checkout-step-billing #co-billing-form #billing-new-address-form, .opc #checkout-step-shipping #co-shipping-form #shipping-new-address-form").css('height','auto');
-
-    $("#co-shipping-form > fieldset > div:nth-child(2) > ul > li.control").css('margin-left', '130px');
-
-    $('label[for="gift_message"]').attr('style','text-align: left;font-weight: normal;');
-
-    $('<a href="#" id="add-gift" style="text-decoration: underline;">Add gift message?</a>').insertBefore('#amorderattr');
-    $('#amorderattr').hide();
-
-    $('#add-gift').click(function() {
-        $(this).hide();
-        $('#amorderattr').show();
-        return false;
-    });
-
-    $("#continue-btn-shipping").off().click(function(e){             
-            e.preventDefault();
-            // County not required
-            $('#shipping\\:region').removeClass('required-entry');
-            shipping.save(); 
+            },10000,50);
         });
 
-    // Form size fix
-    $('#co-shipping-form .field').css('width', '440px');
-    $('#co-shipping-form .fields').css('width', '440px');
-    $('#co-shipping-form .wide').css('width','440px');
-    $("#co-shipping-form .input-box").css('width', '260px');
-    $("#co-shipping-form .input-box").css('margin-right','70px');
-    $("#co-shipping-form label.required").css('width', '90px');
-    $("#co-shipping-form label[for='shipping:company']").css('width', '90px');
-    $("#co-shipping-form > fieldset > div:nth-child(2) > ul > li.control").css('margin-left', '90px');
-    $("#co-shipping-form > fieldset > div:nth-child(2) > ul > li.control").css('width', '260px');
-    $("#meanbee\\:shipping_address_selector").css('width', '260px');
-    $("#meanbee\\:shipping_address_selector").css('margin-left', '110px');
+        // Insert tick box - delivery address same as billing
+        $("ul.form-list:nth-child(2) > li:nth-child(2)").before('<li class="control invisible" style="margin-top:1em;"><div class="input-box" style="width: 260px;"><input name="billing[use_for_shipping]" id="billing:use_for_shipping_yes" value="1" checked="checked" title="Deliver to this address" onclick="" class="radio validation-passed" type="checkbox"><label for="billing:use_for_shipping_yes">Deliver to this address</label></div></li>');
 
-    // Spacing under manual entry link
-    $('#meanbee\\:shipping_address_selector').css('margin-top','1em');
+        // Form size fix
+        $('#co-billing-form .field').css('width', '440px');
+        $('#co-billing-form .fields').css('width', '440px');
+        $('#co-billing-form .wide').css('width','440px');
+        $("#co-billing-form .input-box").css('width', '260px');
+        $("#co-billing-form .input-box").css('margin-right','70px');
+        $("#co-billing-form label.required").css('width', '90px');
 
-    // County not required - need to do it before submission too
-    $('#shipping\\:region').removeClass('required-entry');
+        // Spacing under manual entry link
+        $('#meanbee\\:billing_address_selector').css('margin-top','1em');
+
+        // County not required - need to remove again because it will be put back
+        $('#billing\\:region').removeClass('required-entry');
+
+        // Handle next click
+        // Problems with continue button
+        setTimeout(function() {
+            $("#continue-btn").off()
+            $("#continue-btn").click(function(e){        
+                e.preventDefault();
+                $('#billing\\:region').removeClass('required-entry');
+
+                billing.save();
+
+                $("#billing\\:email").parents("li").show();
+                exp.func.waitForElement("#checkout-step-shipping_method:visible",
+                    function() {
+                    $(".step-link.billing").removeClass('active');
+                    $(".step-link.delivery").addClass('active');
+                    });
+            });
+        }, 500);
+
+        // Step 2.5 - Delivery Address
+        //
+        // Rearrange two columns into one, wrap it with our usual fieldset, add legend
+        var ShippingMain = $("#co-shipping-form > div.shipping-form-left");
+        var shippingRight = $("#co-shipping-form > div.shipping-form-right").detach();
+        ShippingMain.append(shippingRight);
+        shippingRight.removeClass("shipping-form-right");
+
+        ShippingMain.wrap('<fieldset style="padding: 2.5em 1em; width: 445px; margin: 0px auto; border: 1px solid rgb(204, 204, 204);" class="co-box2" />');
+        $(".co-box2").prepend('<legend style="display: block; padding: 0px 1em; font-weight: bold; font-size: 1.5em;">Your Delivery Address</legend>');
+
+        ShippingMain.removeClass("shipping-form-left");
+
+        // Underline link
+        $('#meanbee\\:shipping_input_address_manually').css('text-decoration', 'underline');
+
+        // Fix label, it's not class radio therefore it gets colons
+        var label = $("label[for='shipping:same_as_billing']").text();
+        $("label[for='shipping:same_as_billing']").text(label.substring(0, label.length - 1));
+
+        // Sort out buttons
+        var shippingButtons = $("#shipping-buttons-container").detach();
+        $('#co-shipping-form > fieldset').append(shippingButtons);
+        $("#shipping-buttons-container .back-link").remove();
+
+        $("#continue-btn-shipping span").remove();
+        $("#continue-btn-shipping").text('Continue');
+        $("#continue-btn-shipping").attr('style','display: block; font-size: 1.5em; font-weight: bold; padding: 0.75em 2em; margin: 0px auto; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);');
+
+        // The same stuff as for billing
+        // Find address button
+        findaddressText = $("#meanbee\\:shipping_address_find").text();
+        $("#meanbee\\:shipping_address_find span").remove();
+        $("#meanbee\\:shipping_address_find").text(findaddressText);
+
+        $("#meanbee\\:shipping_address_find").attr('style', 'display: block; font-size: 1em; font-weight: bold; padding: 0.25em .75em; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);');
+
+        $("#meanbee\\:shipping_address_find").click(function() {
+            $(".fields:not(.remainhidden)").css('display', 'block');
+
+            // Change "Select Address" button when available
+            exp.func.waitForElement("#meanbee\\:shipping_address_selector > div:nth-child(2) > button:nth-child(1) span", function () {
+                var btnText = $("#meanbee\\:shipping_address_selector > div:nth-child(2) > button:nth-child(1)").text();
+                $("#meanbee\\:shipping_address_selector > div:nth-child(2) > button:nth-child(1) span").remove();
+                $("#meanbee\\:shipping_address_selector > div:nth-child(2) > button:nth-child(1)").text(btnText);
+                $("#meanbee\\:shipping_address_selector > div:nth-child(2) > button:nth-child(1)").attr('style', 'display: block; font-size: 1em; font-weight: bold; padding: 0.25em .75em; border: 1px solid rgb(0, 0, 0); background: none repeat scroll 0% 0% rgb(241, 194, 0);');
+
+                // Don't submit the form yet - the customer still needs to enter their phone number
+                $("#meanbee\\:shipping_address_selector button")[0].onclick = function() { meanbee_postcode_billing.fillFields($F('meanbee:billing_address_selector_select'), 'billing'); };
+
+            },10000,50);
+        });
+
+        $(".opc #checkout-step-billing #co-billing-form #billing-new-address-form, .opc #checkout-step-shipping #co-shipping-form #shipping-new-address-form").css('height','auto');
+
+        $("#co-shipping-form > fieldset > div:nth-child(2) > ul > li.control").css('margin-left', '130px');
+
+        $('label[for="gift_message"]').attr('style','text-align: left;font-weight: normal;');
+
+        $('<a href="#" id="add-gift" style="text-decoration: underline;">Add gift message?</a>').insertBefore('#amorderattr');
+        $('#amorderattr').hide();
+
+        $('#add-gift').click(function() {
+            $(this).hide();
+            $('#amorderattr').show();
+            return false;
+        });
+
+        $("#continue-btn-shipping").off().click(function(e){             
+                e.preventDefault();
+                // County not required
+                $('#shipping\\:region').removeClass('required-entry');
+                shipping.save(); 
+            });
+
+        // Form size fix
+        $('#co-shipping-form .field').css('width', '440px');
+        $('#co-shipping-form .fields').css('width', '440px');
+        $('#co-shipping-form .wide').css('width','440px');
+        $("#co-shipping-form .input-box").css('width', '260px');
+        $("#co-shipping-form .input-box").css('margin-right','70px');
+        $("#co-shipping-form label.required").css('width', '90px');
+        $("#co-shipping-form label[for='shipping:company']").css('width', '90px');
+        $("#co-shipping-form > fieldset > div:nth-child(2) > ul > li.control").css('margin-left', '90px');
+        $("#co-shipping-form > fieldset > div:nth-child(2) > ul > li.control").css('width', '260px');
+        $("#meanbee\\:shipping_address_selector").css('width', '260px');
+        $("#meanbee\\:shipping_address_selector").css('margin-left', '110px');
+
+        // Spacing under manual entry link
+        $('#meanbee\\:shipping_address_selector').css('margin-top','1em');
+
+        // County not required - need to do it before submission too
+        $('#shipping\\:region').removeClass('required-entry');
+    }
 
     // Step 3 - Delivery Method
     // 
