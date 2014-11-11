@@ -17,7 +17,7 @@ var exp = {};
 console.log('Example experiment - dev 0.1');
 
 // Condition
-// If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
+// If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
 exp.condition = $('.unique-selector');
 
 // Check for a condition and return false if it has not been met
@@ -116,4 +116,5 @@ exp.init();
 return exp;
 
 // Close the IIFE, passing in jQuery and any other global variables as required
+// if jQuery is not already used on the site use optimizely.$ instead
 })(jQuery);
