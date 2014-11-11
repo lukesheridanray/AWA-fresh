@@ -1,38 +1,3 @@
-/*
-
-20% (50/50 split) initially, moving up to 100% (50/50 split)
-
-GA slot 2
-
-Numerous (crazy egg, ethnio etc.)
-
-"Revenue per visitor / AOV
-Number of transactions"
-
-
-- Delivery tier selection page (during checkout).  Only standard delivery is free so other 
-options still need to be available.  For the test audience who do not hit the threshold, 
-standard delivery should be displayed with, ""Spend £60 to get free delivery"".  Once 
-threshold has been reached, price is replaced by ""FREE"" and radio button is pre-selected. 
-TBC by Jamie.
-
-- Free delivery terms and conditions:
-
-Free delivery is provided on shopping baskets of £60 and over.  It applies to web and 
-phone orders and is available on standard delivery only.  To redeem, the free delivery 
-promotion code must be entered in the promotion box in the shopping basket or on the 
-phone.  Cannot be used in conjunction with any other offer.
-
-to be added to:
-
-1) http://www.brightminds.co.uk/delivery-information/i5
-2) Deliveries & Returns Tab (On product page)
-3) 'Click for delivery options' popup (On product page)
-
-
-*/
-
-
 //
 // CGIT Optimizely Boilerplate - version 0.1.3
 //
@@ -45,7 +10,7 @@ var exp = (function($) {
 
 var exp = {};
 
-console.log('Free Delivery Threshold - 0.3');
+console.log('Free Delivery Threshold - 0.7');
 
 /*\
 |*|  :: cookies.js ::
@@ -124,14 +89,15 @@ exp.vars = {
     placeholders: {
         mainBanner: {},
         cartMainBanner: {},
-        cartSubBanner: {}
+        cartSubBanner: {},
+        addedBoxNotice: {}
     }
 };
 
 exp.vars.banner = {
-    initial: '<div class="del-banner--initial">FREE UK DELIVERY when you spend £60 or more - use promo code '+exp.vars.promoCode+'</div>',
-    nudge: '<div class="del-banner--nudge">Spend just £<span></span> more to get FREE UK DELIVERY</div>',
-    qualified: '<div class="del-banner--qualified">GREAT! You Qualify for FREE UK DELIVERY - remember to enter promo code '+exp.vars.promoCode+' when you check out</div>',
+    initial: '<div class="del-banner--initial"><strong>FREE UK DELIVERY</strong> when you spend £60 or more - use promo code <strong>'+exp.vars.promoCode+'</strong></div>',
+    nudge: '<div class="del-banner--nudge">Spend just £<span></span> more to get <strong>FREE UK DELIVERY</strong></div>',
+    qualified: '<div class="del-banner--qualified">GREAT! You Qualify for <strong>FREE UK DELIVERY</strong> - remember to enter promo code <strong>'+exp.vars.promoCode+'</strong> when you check out</div>',
     codeHint: 'FREE (enter code below)'
 };
 
@@ -234,7 +200,22 @@ exp.css = ' \
   position: relative; \
   left: -24px; \
   top: -4px; \
-} ';
+} \
+.del-popup-free-note { \
+  font-size: 0.9em; \
+  font-style: italic; \
+  color: #333; \
+} \
+.del-addbox-notice { \
+  background: #fff; \
+  text-align: center; \
+} \
+.del-addbox-notice div { \
+  padding: 10px; \
+} \
+.del-addbox-notice .del-banner--initial { color: #064C96; background: #FED10F; } \
+.del-addbox-notice .del-banner--nudge { color: #fff; background: #E5007E; } \
+.del-addbox-notice .del-banner--qualified { color: #E5007E; background: #FED10F; } ';
 
 // Functions
 exp.func = {};
@@ -294,6 +275,11 @@ exp.func.addPlaceholders = function() {
         $('#cart #promotions_basket').prepend( '<div class="del-banner-wrap--cart-sub" />' );
     }
     exp.vars.placeholders.cartSubBanner = $('.del-banner-wrap--cart-sub');
+
+    if( $('#added_item_box').length ) {
+        $('#added_item_box .subheading').after( '<div class="del-addbox-notice" />' );
+    }
+    exp.vars.placeholders.addedBoxNotice = $('.del-addbox-notice');
 };
 
 exp.func.updateCookie = function( newValue ) {
@@ -382,6 +368,11 @@ exp.func.mutateDOM = function() {
     if( exp.vars.placeholders.cartSubBanner.length ) {
         exp.vars.placeholders.cartSubBanner.html(
             exp.vars.banner[ bannerType ] + (exp.vars.threshold.reached && !exp.vars.qualify.reached ? exp.vars.banner.nudge : '')
+        );
+    }
+    if( exp.vars.placeholders.addedBoxNotice.length ) {
+        exp.vars.placeholders.addedBoxNotice.html(
+            (exp.vars.threshold.reached && !exp.vars.qualify.reached ? exp.vars.banner.nudge : exp.vars.banner[ bannerType ])
         );
     }
     // If we are on the cart page and have qualified, add a hint next to the code box
@@ -493,7 +484,6 @@ exp.init = function() {
     // unhide basket total in header
     $('#total').css({'color': '#4E4E4E'});
 
-
     if(
         $('#p_choose_shipping').length &&
         exp.vars.cookieVal >= exp.vars.qualify.amount &&
@@ -507,8 +497,51 @@ exp.init = function() {
     ) {
         // user has not qualified
         $('label[for="opt_1"]').append('<em class="del-opts-delivery-message">Spend £60 to get free delivery</em>');
-    
     }
+
+    if( $('#voucherFormBasket') ) {
+        $('#voucherFormBasket label[for="voucher"]').text('Do you have a promo code?');
+    }
+
+    // Delivery terms stuff
+
+    (function(){
+
+        var deliveryTab = $('.desc_area').filter(function(){
+            return $(this).find('h2:eq(0)').text().trim() === 'Mainland delivery';
+        });
+
+        if( deliveryTab.length ) {
+            deliveryTab.find('h2:eq(0)').before(
+                '<h2>Free delivery.</h2> \
+                <p>Free delivery is provided on shopping baskets of £60 and over. It applies to web and \
+                phone orders and is available on standard delivery only. To redeem, the free delivery \
+                promotion code must be entered in the promotion box in the shopping basket or on the \
+                phone. Cannot be used in conjunction with any other offer.</p>'
+            );
+        }
+
+        var deliveryPopup = $('#restricted.popup').filter(function(){
+            return $(this).find('.subheading span').text().trim() === 'These delivery methods are all available:';
+        });
+
+        if( deliveryPopup.length ) {
+            deliveryPopup.find('.inner p:eq(0)').append(
+                ' <span class="del-popup-free-note">(FREE when you spend £60 or more - use promo code '+exp.vars.promoCode+')</span>'
+            );
+        }
+
+        if( window.location.toString().indexOf('/delivery-information/') !== -1 ) {
+            $('.rtecontent h3:eq(0)').before(
+                '<h3><span style="font-size: 1.17em; font-weight: normal;">Free delivery.</span></h3> \
+                <p>Free delivery is provided on shopping baskets of £60 and over. It applies to web and \
+                phone orders and is available on standard delivery only. To redeem, the free delivery \
+                promotion code must be entered in the promotion box in the shopping basket or on the \
+                phone. Cannot be used in conjunction with any other offer.</p>'
+            );
+        }
+          
+    })();
 
 
 
