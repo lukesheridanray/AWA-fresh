@@ -98,7 +98,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Measurements panel - 0.2');
+console.log('Measurements panel v2 - 0.1');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -113,23 +113,26 @@ exp.vars = {
         step2heading: 'STEP 2 - INPUT MEASUREMENTS',
         step3heading: 'STEP 3',
         enterWidthHeight: 'Enter width and drop height in the boxes below.',
-        recessExactNote: 'Not sure about the difference between recess and exact or need any advice on how to take exact measurements? Click <a href="#" class="m-module-modal-trigger">here</a>.'
+        recessExactNote: 'Need advice with measuring or on the difference between recess and exact? Click <a href="#" class="m-module-modal-trigger">here</a>.'
     }
 };
 
 // Styles
 // String containing the CSS for the experiment
 exp.css = ' \
+.help-block measurement-help-two { \
+    display: block; \
+    margin-bottom: 0 !important; \
+} \
+.help-block measurement-help-one { \
+    display: none; \
+} \
 #advice-required-recess-exact-before { \
     display: none; \
     clear: both; \
 } \
 .option-label.required em, .option-label .required em { \
     display:none; \
-} \
-.product-shop .price-msg .price-pay, \
-.product-shop .price-msg .man-price { \
-    color: #50595E !important; \
 } \
 .m-module-heading { \
     font-weight: bold; \
@@ -143,9 +146,6 @@ exp.css = ' \
     margin-top: 15px; \
     margin-bottom: 0; \
     margin-left: 0; \
-} \
-.label-title, .label-content { \
-    color: #737373 !important; \
 } \
 .note.text-danger { \
     color: #737373; \
@@ -166,9 +166,11 @@ exp.css = ' \
     color: #7292CB; \
     text-decoration: underline; \
 } \
-.valid-green-ticks .m-module-step1:after, \
-.valid-green-ticks .m-module-step2:after, \
-.valid-green-ticks--step3 .m-module-step3:after { \
+.valid-green-ticks .radio-select-right:after, \
+.valid-green-ticks .field-label-drop-wrap:after, \
+.valid-green-ticks .product-option.slat_width:after, \
+.valid-green-ticks--step3 .field-label-control-position-wrap:after, \
+.valid-green-ticks--step3 .field-label-bunch-wrap:after { \
     content: ""; \
     display: block; \
     float: right; \
@@ -177,8 +179,19 @@ exp.css = ' \
     width: 16px; \
     position: relative; \
 } \
-.valid-green-ticks .m-module-step2:after { \
-    right: 5px; \
+.valid-green-ticks .product-option.slat_width:after { \
+    top: -20px; \
+} \
+.valid-green-ticks .field-label-drop-wrap:after { \
+    top: -50px; \
+} \
+.valid-green-ticks--step3 .field-label-control-position-wrap:after { \
+    top: -20px; \
+    left: 25px; \
+} \
+.valid-green-ticks--step3 .field-label-bunch-wrap:after { \
+    top: -20px; \
+    left: 25px; \
 } \
 .recess-exact-field-wrapper .more-info.pull-right, \
 .recess-exact-field-wrapper .label-title { \
@@ -186,18 +199,19 @@ exp.css = ' \
 } \
 .radio-select-left { \
     width: 50%; \
-    height: 20px; \
+    height: 30px; \
     float: left; \
     position: relative; \
-    top: -10px; \
+    left: 0px; \
+    top: 0px; \
 } \
 .radio-select-right { \
     width: 50%; \
-    height: 20px; \
+    height: 30px; \
     float: left; \
     position: relative; \
-    left: 5px; \
-    top: -10px; \
+    left: 0px; \
+    top: 0px; \
 } \
 .radio-select-left input,.radio-select-right input { \
     float: left; \
@@ -205,13 +219,13 @@ exp.css = ' \
 .radio-select-left label,.radio-select-right label { \
     float: left; \
     font-size: 0.7em; \
-    color: #737373; \
+    color: #333; \
     padding: 4px 0 0 3px; \
     font-weight: normal !important; \
 } \
 .radio-select-left label strong,.radio-select-right label strong { \
     font-size: 1.3em; \
-    color: #737373; \
+    color: #333; \
     font-weight: normal; \
 } \
 @media screen and (max-width: 1000px) { \
@@ -233,13 +247,16 @@ exp.func.modifyRecessExact = function() {
     
     $wrapper.addClass('recess-exact-field-wrapper');
     var newMarkup = ' \
+    <label class="option-label required" style="display: block !important"> \
+    <span class="label-title" style="display: block !important">Fitting Type</span> \
+    </label> \
         <div class="radio-select-left"> \
             <input type="radio" name="'+fieldName+'" value="'+recessVal+'" price="0" data-name="Recess" id="'+recessVal+'" /> \
-            <label for="'+recessVal+'"><strong>Recess</strong> (inside <span>window</span> frame)</label> \
+            <label for="'+recessVal+'"><strong>Recess</strong></label> \
         </div> \
         <div class="radio-select-right"> \
             <input type="radio" name="'+fieldName+'" value="'+exactVal+'" price="0" data-name="Exact" id="'+exactVal+'" /> \
-            <label for="'+exactVal+'"><strong>Exact</strong> (outside <span>window</span> frame)</label> \
+            <label for="'+exactVal+'"><strong>Exact</strong></label> \
         </div> \
         <p class="help-block">'+exp.vars.copy.recessExactNote+'</p> \
     ';
@@ -285,18 +302,18 @@ exp.func.getMoreOptions = function() {
     }
 };
 
-exp.func.addToCart = function( gaPage ) {
+exp.func.addToCart = function( gaPage, _this ) {
     var valid = true;
     $('#step2 select').each(function(){
         if( $(this).val() === '' ) {
             valid = false;
         }
-    })
+    });
+    productAddToCartForm.submit(_this);
+    ga('send', 'event', 'Navigation_buttons', 'add_to_basket', gaPage);
     if( valid ) {
         exp.func.ticks( 'step3' );
     }
-    productAddToCartForm.submit(this);
-    ga('send', 'event', 'Navigation_buttons', 'add_to_basket', gaPage);
 };
 
 exp.func.ticks = function( operation ) {
@@ -307,6 +324,7 @@ exp.func.ticks = function( operation ) {
     } else if ( operation === 'step3' ) {
         $('.product-options-wrapper').addClass('valid-green-ticks--step3');
     }
+    return;
 };
 
 // This function waits till a DOM element is available, then runs a callback function
@@ -366,22 +384,22 @@ exp.init = function() {
 
     // add headings and copy
 
-    $('.recess-exact-field-wrapper').prepend( '<p class="m-module-heading help-block m-module-step1">'+this.vars.copy.step1heading+'</p>' );
+//    $('.recess-exact-field-wrapper').prepend( '<p class="m-module-heading help-block m-module-step1">'+this.vars.copy.step1heading+'</p>' );
     $('.drop_down-0:eq(1) .label-title:eq(0)').html( 'Enter slat width.' );
 
-    $('.product-option.width').before(
-        '<p class="help-block">'+this.vars.copy.enterWidthHeight+'</p>'
-    );
+//    $('.product-option.width').before( '<p class="help-block">'+this.vars.copy.enterWidthHeight+'</p>' );
 
-    $('.recess-exact-field-wrapper').after(
-        '<p class="m-module-heading help-block m-module-step2">'+this.vars.copy.step2heading+'</p>'
-    );
+//    $('.recess-exact-field-wrapper').after( '<p class="m-module-heading help-block m-module-step2">'+this.vars.copy.step2heading+'</p>' );
 
-    this.vars.step2.prepend( '<p class="m-module-heading help-block m-module-step3">'+this.vars.copy.step3heading+'</p>' );
+//    this.vars.step2.prepend( '<p class="m-module-heading help-block m-module-step3">'+this.vars.copy.step3heading+'</p>' );
 
     $('.radio-select-right').after( ' \
         <div class="validation-advice" id="advice-required-recess-exact-before">You must select Recess or exact.</div> \
     ' );
+
+    $('.field-label-drop').parent('div').addClass('field-label-drop-wrap');
+    $('.field-label-control-position').parent('div').addClass('field-label-control-position-wrap');
+    $('.field-label-bunch').parent('div').addClass('field-label-bunch-wrap');
 
     // behaviour
 
@@ -393,7 +411,7 @@ exp.init = function() {
         var gaPage = cartButton.attr('onclick').match(/(basket', ')(.*)('\))/i)[2];
         cartButton.attr('onclick', '');
         cartButton.bind('click', function() {
-            exp.func.addToCart( gaPage );
+            exp.func.addToCart( gaPage, this );
         } );
     })();
 
