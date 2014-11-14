@@ -26,17 +26,17 @@ New to the Happy Puzzle Company?
 Next
 SECURE PAYMENT
 Your details are safe and fully protected.
-FREE DELIVERY 
+FREE DELIVERY
 When you spend £40 or more. (UK mainland)
 MONEY BACK GUARANTEE
 If you're not completely satisfied, we'll give you your money back.
-HOORAY! Your order is placed - thank you. 
- 
-We're now beavering away to get your goods to you as quickly as possible. An email confirming all the details will be winging its way to your inbox very soon. 
- 
-Here's your shiny new reference number, just for this order: HP234093489. If you have any queries, just call us on 0844 848 2822 or email info@happypuzzle.co.uk 
+HOORAY! Your order is placed - thank you.
+
+We're now beavering away to get your goods to you as quickly as possible. An email confirming all the details will be winging its way to your inbox very soon.
+
+Here's your shiny new reference number, just for this order: HP234093489. If you have any queries, just call us on 0844 848 2822 or email info@happypuzzle.co.uk
 Now save your details and get 10% OFF your next order
-Saving your details makes shopping at www.happypuzzle.co.uk quicker and easier next time 
+Saving your details makes shopping at www.happypuzzle.co.uk quicker and easier next time
 Choose a password:
 SAVE - and get 10% off your next order
 Plus you'll also receive exclusive web-only offers and news occasionally but NO SPAM (and we never share your email address).
@@ -55,11 +55,11 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Guest checkout - 0.1');
+console.log('Happy Puzzle Company: Guest Checkout v0.1');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
-exp.condition = $('.unique-selector');
+// exp.condition = $('.unique-selector');
 
 // Check for a condition and return false if it has not been met
 if(exp.condition && !exp.condition.length) {
@@ -74,7 +74,13 @@ exp.vars = {
 
 // Styles
 // String containing the CSS for the experiment
-exp.css = '';
+exp.css = '.optexp-box-container { margin: 17px 0; overflow: hidden; }'
++ '.optexp-box { border: 1px solid #ccc; float: left; font-size: 14px; margin-right: 17px; padding: 20px; text-align: center; width: 260px; height: 70px; }'
++ '.optexp-box-3 { margin-right: 0; }'
++ '.optexp-box h3 { font-size: 16px; letter-spacing: 0.025em; text-transform: uppercase; }'
++ '.optexp-box p { margin: 0.5em 0; }'
++ '.optexp-success-message { padding: 0 20px; }'
++ '.optexp-success-message p { margin: 0 0 1em 0; }';
 
 // Functions
 // Object containing functions, some helpful functions are included
@@ -123,9 +129,53 @@ exp.func.waitForFunction = function(func, callback, timeout, keepAlive) {
 // Init function
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
 exp.init = function() {
-        
+
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
+    
+    // Check page
+    var page = window.location.pathname + window.location.search;
+    
+    // Checkout login page
+    if (page === '/order-login.aspx?Flag=basket') {
+        $('.basket_sign_in .basket_signin_title').html('Shopped with us before?');
+        $('.basket_sign_up .basket_signin_title').html('New to the Happy Puzzle Company?');
+        $('.basket_sign_up .basket_signin_table_container').html('');
+    }
+    
+    // Checkout details page
+    if (page === '/order-register.aspx' && $('.optexp-box-container').length === 0 ) {
+        
+       var boxes = $('<div class="optexp-box-container">'
+                   + '<div class="optexp-box optexp-box-1"><h3>Secure Payment</h3><p>Your details are safe and fully protected.</p></div>'
+                   + '<div class="optexp-box optexp-box-2"><h3>Free Delivery</h3><p>When you spend &pound;40 or more (UK mainland)</p></div>'
+                   + '<div class="optexp-box optexp-box-3"><h3>Money Back Guarantee</h3><p>If you&rsquo;re not completely satisfied, we&lsquo;ll give you your money back.</p></div>'
+                   + '</div>');
+
+       $('.position_1 .basket_signin_table_container tr').eq(0).hide();
+       $('.position_1 .basket_signin_table_container tr').slice(6, 9).hide();
+       $('.position_2 .basket_signin_title').html('Billing address');
+       $('.default_btn_basket').html('Next');
+       $('#divButton1').hide();
+       $('#divButton2').show();
+       $('.main_action_detail_container').after(boxes);
+            
+    }
+    
+    // Success page
+    if ( page.indexOf('/success.aspx') === 0 && $('.optexp-success-message').length === 0 ) {
+        
+        var ref = $('#ctl00_cphMasterOrder_lblOrderNumber').html();
+        var message = $('<div class="optexp-success-message">'
+                      + '<p>HOORAY! Your order is placed &ndash; thank you.</p>'
+                      + '<p>We&rsquo;re now beavering away to get your goods to you as quickly as possible. An email confirming all the details will be winging its way to your inbox very soon.</p>'
+                      + '<p>Here&rsquo;s your shiny new reference number, just for this order: ' + ref + '. If you have any queries, just call us on 0844&nbsp;848&nbsp;2822 or email <a href="mailto:info@happypuzzle.co.uk">info@happypuzzle.co.uk</a>.</p>'
+                      + '</div>');
+        
+        $('.internal_middle_column tr').slice(1, 6).remove();
+        $('.internal_middle_column tr:eq(1) td').append(message);
+
+    }
 
 };
 
