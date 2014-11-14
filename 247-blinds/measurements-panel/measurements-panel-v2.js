@@ -3,7 +3,7 @@
 any product page with URL ending in blind$
 excluding any vertical blind product pages (where URL ends in vertical-blind$)
 
-
+loft-blind
 
 "10% of audience
 
@@ -98,7 +98,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Measurements panel v2 - 0.1');
+console.log('Measurements panel v2 - 0.2');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -113,19 +113,26 @@ exp.vars = {
         step2heading: 'STEP 2 - INPUT MEASUREMENTS',
         step3heading: 'STEP 3',
         enterWidthHeight: 'Enter width and drop height in the boxes below.',
-        recessExactNote: 'Need advice with measuring or on the difference between recess and exact? Click <a href="#" class="m-module-modal-trigger">here</a>.'
+        recessExactNote: 'Click <a href="#" class="m-module-modal-trigger">here</a> for advice on measuring recess or exact.'
     }
 };
 
 // Styles
 // String containing the CSS for the experiment
 exp.css = ' \
-.help-block measurement-help-two { \
+#step2 { \
+    padding-bottom: 0; \
+} \
+.help-block.measurement-help-two { \
     display: block; \
     margin-bottom: 0 !important; \
 } \
-.help-block measurement-help-one { \
+.help-block.measurement-help-one { \
     display: none; \
+} \
+.product-option.width, \
+.product-option.drop { \
+    margin-bottom: 4px; \
 } \
 #advice-required-recess-exact-before { \
     display: none; \
@@ -161,6 +168,7 @@ exp.css = ' \
 } \
 .recess-exact-field-wrapper { \
     width: 100% !important; \
+    margin-bottom: 4px !important; \
 } \
 .recess-exact-field-wrapper a { \
     color: #7292CB; \
@@ -170,6 +178,10 @@ exp.css = ' \
 .valid-green-ticks .field-label-drop-wrap:after, \
 .valid-green-ticks .product-option.slat_width:after, \
 .valid-green-ticks--step3 .field-label-control-position-wrap:after, \
+.valid-green-ticks--step3 .field-label-lining-wrap:after, \
+.valid-green-ticks--step3 .field-label-headrail-option-wrap:after, \
+.valid-green-ticks--step3 .field-label-ladder-tape-colour-wrap:after, \
+.valid-green-ticks--step3 .field-label-panel-bunch-wrap:after, \
 .valid-green-ticks--step3 .field-label-bunch-wrap:after { \
     content: ""; \
     display: block; \
@@ -185,13 +197,46 @@ exp.css = ' \
 .valid-green-ticks .field-label-drop-wrap:after { \
     top: -50px; \
 } \
-.valid-green-ticks--step3 .field-label-control-position-wrap:after { \
-    top: -20px; \
-    left: 25px; \
-} \
+.valid-green-ticks--step3 .field-label-control-position-wrap:after, \
+.valid-green-ticks--step3 .field-label-lining-wrap:after, \
+.valid-green-ticks--step3 .field-label-headrail-option-wrap:after, \
+.valid-green-ticks--step3 .field-label-panel-bunch-wrap:after, \
+.valid-green-ticks--step3 .field-label-ladder-tape-colour-wrap:after, \
 .valid-green-ticks--step3 .field-label-bunch-wrap:after { \
-    top: -20px; \
-    left: 25px; \
+    top: 0; \
+    left: 0; \
+} \
+.valid-green-ticks .product-option.slat_width { \
+    margin-bottom: 0 !important; \
+} \
+.valid-green-ticks .product-option.width, \
+.valid-green-ticks .product-option.drop { \
+    margin-bottom: -12px; \
+} \
+.product-option.control_position, \
+.product-option.lining, \
+.product-option.headrail_option, \
+.product-option.panel_bunch, \
+.product-option.ladder_tape_colour, \
+.product-option.bunch { \
+    width: 100%; \
+    max-width: 336px; \
+} \
+.product-option.control_position select, \
+.product-option.lining select, \
+.product-option.headrail_option select, \
+.product-option.panel_bunch select, \
+.product-option.ladder_tape_colour select, \
+.product-option.bunch select { \
+    width: 82%; \
+} \
+.product-option.control_position span.label-content, \
+.product-option.lining span.label-content, \
+.product-option.headrail-option span.label-content, \
+.product-option.ladder-tape-colour span.label-content, \
+.product-option.panel-bunch span.label-content, \
+.product-option.bunch span.label-content { \
+    font-weight: bold; \
 } \
 .recess-exact-field-wrapper .more-info.pull-right, \
 .recess-exact-field-wrapper .label-title { \
@@ -199,7 +244,7 @@ exp.css = ' \
 } \
 .radio-select-left { \
     width: 50%; \
-    height: 30px; \
+    height: 27px; \
     float: left; \
     position: relative; \
     left: 0px; \
@@ -207,7 +252,7 @@ exp.css = ' \
 } \
 .radio-select-right { \
     width: 50%; \
-    height: 30px; \
+    height: 27px; \
     float: left; \
     position: relative; \
     left: 0px; \
@@ -231,6 +276,36 @@ exp.css = ' \
 @media screen and (max-width: 1000px) { \
     .radio-select-left label span,.radio-select-right label span { \
         display: none; \
+    } \
+} \
+@media screen and (max-width: 810px) { \
+    .field-label-drop, \
+    .field-label-width, \
+    .product-option.slat_width select { \
+        max-width: 70% !important; \
+    } \
+} \
+@media screen and (max-width: 767px) { \
+    .initial-step { \
+     /*   padding-bottom: 10px; */ \
+    } \
+    .product-option.slat_width select { \
+        max-width: 100% !important; \
+        width: auto !important; \
+        padding-right: 5px; \
+    } \
+    .valid-green-ticks .product-option.width, \
+    .valid-green-ticks .product-option.drop { \
+        margin-bottom: 0; \
+    } \
+    #step2 { \
+        padding-top: 10px; \
+    } \
+    .product-option.slat_width select { \
+       overflow: auto; \
+    } \
+    .product-options-wrapper { \
+        margin-bottom: 10px; \
     } \
 } ';
 
@@ -266,11 +341,12 @@ exp.func.modifyRecessExact = function() {
     $('[data-target="#modal-help"]').removeClass('more-info pull-right').html('here');
 };
 
-exp.func.getMoreOptions = function() {
-    var widthMin = $('.product-option.width').text().toString().match(/(Min )([0-9]*)(cm)/i)[2];
-    var widthMax = $('.product-option.width').text().toString().match(/(Max )([0-9]*)(cm)/i)[2];
-    var heightMin = $('.product-option.drop').text().toString().match(/(Min )([0-9]*)(cm)/i)[2];
-    var heightMax = $('.product-option.drop').text().toString().match(/(Max )([0-9]*)(cm)/i)[2];
+exp.func.getMoreOptions = function( mobile ) {
+    mobile = mobile || false;
+    var widthMin = jQuery('.product-option.width').text().toString().match(/(Min )([\d]+(\.[\d]+)?)(cm)/i)[2];
+    var widthMax = jQuery('.product-option.width').text().toString().match(/(Max )([\d]+(\.[\d]+)?)(cm)/i)[2];
+    var heightMin = jQuery('.product-option.drop').text().toString().match(/(Min )([\d]+(\.[\d]+)?)(cm)/i)[2];
+    var heightMax = jQuery('.product-option.drop').text().toString().match(/(Max )([\d]+(\.[\d]+)?)(cm)/i)[2];
     var widthVal = $('.field-label-width').val();
     var heightVal = $('.field-label-drop').val();
     var widthError = true;
@@ -297,6 +373,12 @@ exp.func.getMoreOptions = function() {
         }
         if( !widthError && !heightError ) {
             exp.func.ticks( 'add' );
+            if( mobile ) {
+                console.log('whaaa!');
+                $('#step2').show();
+                $('.product-options-bottom').removeClass('hide');
+                $('#step2 .price-msg').show();
+            }
         }
         showMoreOptions();
     }
@@ -320,7 +402,7 @@ exp.func.ticks = function( operation ) {
     if ( operation === 'add' ) {
         $('.product-options-wrapper').addClass('valid-green-ticks');
     } else if ( operation === 'remove' ) {
-        $('.product-options-wrapper').removeClass('valid-green-ticks');
+        $('.product-options-wrapper').removeClass('valid-green-ticks').removeClass('valid-green-ticks--step3');
     } else if ( operation === 'step3' ) {
         $('.product-options-wrapper').addClass('valid-green-ticks--step3');
     }
@@ -400,11 +482,23 @@ exp.init = function() {
     $('.field-label-drop').parent('div').addClass('field-label-drop-wrap');
     $('.field-label-control-position').parent('div').addClass('field-label-control-position-wrap');
     $('.field-label-bunch').parent('div').addClass('field-label-bunch-wrap');
+    $('.field-label-lining').parent('div').addClass('field-label-lining-wrap');
+    $('.field-label-headrail-option').parent('div').addClass('field-label-headrail-option-wrap');
+    $('.field-label-panel-bunch').parent('div').addClass('field-label-panel-bunch-wrap');
+    $('.field-label-ladder-tape-colour').parent('div').addClass('field-label-ladder-tape-colour-wrap');
 
     // behaviour
 
     $('.get-price-row .btn-get-price').attr('onclick', '');
-    $('.get-price-row .btn-get-price').bind('click', this.func.getMoreOptions );
+    $('.get-price-row .btn-get-price').bind('click', function() {
+        exp.func.getMoreOptions( false );
+    });
+
+    $('.price-row .btn-get-price').bind('click', function() {
+        if( $('#configure').hasClass('in') ) {
+            exp.func.getMoreOptions( true );
+        }
+    } );
 
     (function(){
         var cartButton = $('.add-to-cart .btn-cart');
