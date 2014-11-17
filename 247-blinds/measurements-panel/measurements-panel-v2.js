@@ -75,7 +75,7 @@ The module as displayed BEFORE a price has been requested
 State 2
 The module as displayed AFTER a price has been selected.
 
-Additionally step 2 in both modules may also include an extra piece of functionality in the form of a slat width selector which is shown in relation to venetian blinds. 
+Additionally step 2 in both modules may also include an extra piece of functionality in the form of a slat width selector which is shown in relation to venetian blinds.
 
 
 
@@ -230,12 +230,12 @@ exp.css = ' \
 .product-option.bunch select { \
     width: 82%; \
 } \
-.product-option.control_position span.label-content, \
-.product-option.lining span.label-content, \
-.product-option.headrail-option span.label-content, \
-.product-option.ladder-tape-colour span.label-content, \
-.product-option.panel-bunch span.label-content, \
-.product-option.bunch span.label-content { \
+.product-option.control_position span.label-title, \
+.product-option.lining span.label-title, \
+.product-option.headrail-option span.label-title, \
+.product-option.ladder-tape-colour span.label-title, \
+.product-option.panel-bunch span.label-title, \
+.product-option.bunch span.label-title { \
     font-weight: bold; \
 } \
 .recess-exact-field-wrapper .more-info.pull-right, \
@@ -319,7 +319,7 @@ exp.func.modifyRecessExact = function() {
     var fieldName = $fields.find('select').attr('name');
     var recessVal = $fields.find('option[data-name="Recess"]').attr('value');
     var exactVal = $fields.find('option[data-name="Exact"]').attr('value');
-    
+
     $wrapper.addClass('recess-exact-field-wrapper');
     var newMarkup = ' \
     <label class="option-label required" style="display: block !important"> \
@@ -366,10 +366,12 @@ exp.func.getMoreOptions = function( mobile ) {
     if( typeError ) {
         exp.func.ticks( 'remove' );
         $('#advice-required-recess-exact-before').show(200);
+        $('body').scrollTop(0);
     } else {
         $('#advice-required-recess-exact-before').hide(200);
         if( widthError || heightError ) {
             exp.func.ticks( 'remove' );
+            $('body').scrollTop(0);
         }
         if( !widthError && !heightError ) {
             exp.func.ticks( 'add' );
@@ -379,6 +381,10 @@ exp.func.getMoreOptions = function( mobile ) {
                 $('.product-options-bottom').removeClass('hide');
                 $('#step2 .price-msg').show();
             }
+
+            $('body').scrollTop(
+                $('#product-options-wrapper').offset().top
+            );
         }
         showMoreOptions();
     }
@@ -452,7 +458,7 @@ exp.func.waitForFunction = function(func, callback, timeout, keepAlive) {
 // Init function
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
 exp.init = function() {
-        
+
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
 
