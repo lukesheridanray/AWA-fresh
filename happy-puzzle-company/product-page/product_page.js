@@ -14,7 +14,7 @@ var hp_product_page_exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Happy Puzzle Product Page experiment - 0.3');
+console.log('Happy Puzzle Product Page experiment - 0.4');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -46,11 +46,56 @@ exp.vars = {
     'add_to_card_button_cell'    : $('#ctl00_cphInnerMaster_imgbtnBuyNow').parent(),
     'reviews_row_template'       : '<tr class="AWA_reviews_row"><td> <a href="__REVIEW_LINK__"> <div class="AWA_stars">__REVIEW_STARS__</div> <p class="AWA_blurb">__REVIEW_BLURB__</p> </a> </td></tr>',
     'money_back_row'             : $('<tr class="AWA_moneyback_row"><td> <div class="AWA_well"> <p class="AWA_title">MONEY BACK GUARANTEE</p> <p>If you\'re not completely satisfied we\'ll give you your money back.</p> </div> </td></tr>'),
-    'free_delivery_row'          : $('<tr class="AWA_freedelivery_row"><td> <div class="AWA_well"> <p class="AWA_title">FREE DELIVERY UK mainland</p> <p>When you spend £40 or more.</p> </div> </td></tr>'),
+    'free_delivery_row'          : $('<tr class="AWA_freedelivery_row"><td> <div class="AWA_well"> <p class="AWA_title">FREE DELIVERY UK mainland</p> <p>When you spend £40 or more. <a href="" id="AWA_HP_PP_DeliveryModal">Find out more about postage</a></p> </div> </td></tr>'),
     'product_description_cell'   : $('#ctl00_cphInnerMaster_tdProductInformation'),
     'related_items_table'        : $('#ctl00_cphInnerMaster_tdYouMayAlsoLIkeProducts .Related_Products_table'),
 
-    'exclusivity_line': 'Exclusively available from the Happy Puzzle Company',
+    'exclusivity_line': $('<div class="AWA_HP_PP_ExclusivityLine">Exclusively available from the Happy Puzzle Company</div>'),
+
+    'delivery_modal': '<div class="AWA_Modal" id="deliveryModal">'+
+                            '<h2>Delivery costs</h2>' +
+                            '<table>'+
+                                '<thead>'+
+                                    '<tr>' +
+                                        '<th>UK MAINLAND</th>' +
+                                        '<th>Orders £40 or more</th>' +
+                                        '<th>Orders under £40</th>' +
+                                    '</tr>' +
+                                '</thead>'+
+                                '<tbody>'+
+                                    '<tr>' +
+                                        '<td>'+
+                                            '<strong>Standard Delivery</strong>' +
+                                            '(Approx 7-10 working days, but usually much quicker),' +
+                                        '</td>' +
+                                        '<td>FREE</td>' +
+                                        '<td>£3.95</td>' +
+                                    '</tr>' +
+                                    '<tr>' +
+                                        '<td><strong>Express Delivery</strong> (2 working days)</td>' +
+                                        '<td>£2</td>' +
+                                        '<td>£5.95</td>' +
+                                    '</tr>' +
+                                '</tbody>'+
+                            '</table>' +
+                            '<table>' +
+                                '<tbody>' +
+                                '<tr>' +
+                                    '<td><strong>International Delivery</strong></td>' +
+                                    '<td>International delivery is calculated individually, and varies depending on where you live and the weight of the parcel, You will have a chance to view your delivery costs before you pay.</td>' +
+                                '</tr>' +
+                                '</tbody>' +
+                            '</table>' +
+                            '<p>If you have any queries, just call us on <strong>0844 848 2822</strong></p>' +
+                       '</div>',
+
+    'discount_modal_link': $('<a href="" id="AWA_HP_PP_DiscountModal">Discount coupons</a>'),
+    'discount_modal': '<div class="AWA_Modal"> \
+        <h2>Using promotional codes</h2> \
+        <p>When you check out, please enter your code in the Promotional Code Box (see illustration below) and click the USE CODE button. Your discount will be applied automatically and deducted from your total.</p> \
+        <img src="//cdn.optimizely.com/img/174847139/fb0eef11daf44f7bbe5391742d2fe761.png" /> \
+        <p>If you have any queries, just call us on <strong>0844 848 2822</strong></p> \
+    </div>',
 
     'rating_star': '<div class="AWA_star"><img alt="trustpilot stars" src="//images-static.trustpilot.com/community/shared/sprite_star.png" class="star-image"></div>',
     'review_data': {
@@ -257,6 +302,43 @@ exp.css += '.AWA_well { \
 } \
 .AWA_freedelivery_row .AWA_well { \
     margin-bottom: 1em; \
+} \
+#AWA_HP_PP_DeliveryModal { \
+    color: black; \
+    text-decoration: underline; \
+}';
+
+// Modal box styling
+exp.css += '.AWA_Modal { \
+    padding: 1em; \
+} \
+.AWA_Modal h2 { \
+    margin-bottom: 1em; \
+} \
+.AWA_Modal#deliveryModal table { \
+    margin-bottom: 1em; \
+    width: 100%; \
+} \
+.AWA_Modal#deliveryModal table th { \
+    text-align: left; \
+} \
+.AWA_Modal#deliveryModal table tbody td { \
+    width: 180px; \
+} \
+.AWA_Modal#deliveryModal table:first-of-type tbody td:first-of-type { \
+    width: 200px; \
+} \
+.AWA_Modal#deliveryModal table:nth-of-type(2) tbody td:first-of-type { \
+    width: 100px; \
+} \
+.AWA_Modal#deliveryModal table tbody td:first-of-type strong { \
+    display: block; \
+}';
+
+// discount link styling
+exp.css += '.AWA_HP_PP_ExclusivityLine, #AWA_HP_PP_DiscountModal { \
+    margin-top: 1em; \
+    display: block; \
 }';
 
 // Reviews styling
@@ -270,6 +352,57 @@ exp.css += ' .AWA_reviews_row a .AWA_stars .AWA_star { \
     background: #007f4e; \
 } ';
 exp.css += ' .AWA_reviews_row a .AWA_stars .AWA_star img { height: 20px; } ';
+
+// Fix colorbox styling. Loaded colorbox CSS seems incorrect for the given controls asset
+exp.css += '#colorbox, #cboxOverlay, #cboxWrapper{position:absolute; top:0; left:0; z-index:9999; overflow:hidden;} \
+#cboxWrapper {max-width:none;} \
+#cboxOverlay{position:fixed; width:100%; height:100%;} \
+#cboxMiddleLeft, #cboxBottomLeft{clear:left;} \
+#cboxContent{position:relative; margin-top: 0;} \
+#cboxLoadedContent{overflow:auto; -webkit-overflow-scrolling: touch;} \
+#cboxTitle{margin:0;} \
+#cboxLoadingOverlay, #cboxLoadingGraphic{position:absolute; top:0; left:0; width:100%; height:100%;} \
+#cboxPrevious, #cboxNext, #cboxClose, #cboxSlideshow{cursor:pointer;} \
+.cboxPhoto{float:left; margin:auto; border:0; display:block; max-width:none; -ms-interpolation-mode:bicubic;} \
+.cboxIframe{width:100%; height:100%; display:block; border:0; padding:0; margin:0;} \
+#colorbox, #cboxContent, #cboxLoadedContent{box-sizing:content-box; -moz-box-sizing:content-box; -webkit-box-sizing:content-box;} \
+#cboxOverlay{background:url(/images/overlay.png) repeat 0 0;} \
+#colorbox{outline:0;} \
+    #cboxTopLeft{width:21px; height:21px; background:url(/images/controls.png) no-repeat -100px 0;} \
+    #cboxTopRight{width:21px; height:21px; background:url(/images/controls.png) no-repeat -129px 0;} \
+    #cboxBottomLeft{width:21px; height:21px; background:url(/images/controls.png) no-repeat -100px -29px;} \
+    #cboxBottomRight{width:21px; height:21px; background:url(/images/controls.png) no-repeat -129px -29px;} \
+    #cboxMiddleLeft{width:21px; background:url(/images/controls.png) left top repeat-y;} \
+    #cboxMiddleRight{width:21px; background:url(/images/controls.png) right top repeat-y;} \
+    #cboxTopCenter{height:21px; background:url(/images/border.png) 0 0 repeat-x;} \
+    #cboxBottomCenter{height:21px; background:url(/images/border.png) 0 -29px repeat-x;} \
+    #cboxContent{background:#fff; overflow:hidden;} \
+        .cboxIframe{background:#fff;} \
+        #cboxError{padding:50px; border:1px solid #ccc;} \
+        #cboxLoadedContent{margin-bottom:28px; border: 0; } \
+        #cboxTitle{position:absolute; bottom:4px; left:0; text-align:center; width:100%; color:#949494;} \
+        #cboxCurrent{position:absolute; bottom:4px; left:58px; color:#949494;} \
+        #cboxLoadingOverlay{background:url(/images/loading_background.png) no-repeat center center;} \
+        #cboxLoadingGraphic{background:url(/images/loading.gif) no-repeat center center;} \
+        #cboxPrevious, #cboxNext, #cboxSlideshow, #cboxClose {border:0; padding:0; margin:0; overflow:visible; width:auto; background:none; } \
+        #cboxPrevious:active, #cboxNext:active, #cboxSlideshow:active, #cboxClose:active {outline:0;} \
+        #cboxSlideshow{position:absolute; bottom:4px; right:30px; color:#0092ef;} \
+        #cboxPrevious{position:absolute; bottom:0; left:0; background:url(/images/controls.png) no-repeat -75px 0; width:25px; height:25px; text-indent:-9999px;} \
+        #cboxPrevious:hover{background-position:-75px -25px;} \
+        #cboxNext{position:absolute; bottom:0; left:27px; background:url(/images/controls.png) no-repeat -50px 0; width:25px; height:25px; text-indent:-9999px;} \
+        #cboxNext:hover{background-position:-50px -25px;} \
+        #cboxClose{position:absolute; bottom:0; right:0; background:url(/images/controls.png) no-repeat -25px 0; width:25px; height:25px; text-indent:-9999px;} \
+        #cboxClose:hover{background-position:-25px -25px;} \
+.cboxIE #cboxTopLeft, \
+.cboxIE #cboxTopCenter, \
+.cboxIE #cboxTopRight, \
+.cboxIE #cboxBottomLeft, \
+.cboxIE #cboxBottomCenter, \
+.cboxIE #cboxBottomRight, \
+.cboxIE #cboxMiddleLeft, \
+.cboxIE #cboxMiddleRight { \
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF); \
+}';
 
 // Init function
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
@@ -347,6 +480,12 @@ exp.init = function() {
         this.vars.free_delivery_row
     );
 
+    // Add modal for delivery info
+    this.vars.free_delivery_row.find('#AWA_HP_PP_DeliveryModal').click(function(e){
+        e.preventDefault();
+        $.colorbox({ html: exp.vars.delivery_modal, scrolling: false, maxWidth: '640px' });
+    });
+
     // Check if we have a review for this product, if we do then add the reviews row
     var product_title_text = this.vars.product_title.text().trim();
     if (Object.keys(this.vars.review_data).indexOf(product_title_text) !== -1)
@@ -363,7 +502,15 @@ exp.init = function() {
     }
 
     // Add product-exclusivity wording to the end of the description
-    this.vars.product_description_cell.append($("<div></div>", { text: this.vars.exclusivity_line }));
+    this.vars.product_description_cell.append(this.vars.exclusivity_line);
+
+    // Add link to discount modal and set up modal
+    this.vars.product_description_cell.append(this.vars.discount_modal_link);
+    this.vars.discount_modal_link.click(function(e){
+        e.preventDefault();
+        $.colorbox({ html: exp.vars.discount_modal, scrolling: false, maxWidth: '640px' });
+        setTimeout($.colorbox.resize, 1000);  // Hack around the height being wrong because iamge is not loaded when first opened.
+    });
 
     var extra_products_row = this.vars.related_items_table.find('tr');
     // Add extra recmmended products
