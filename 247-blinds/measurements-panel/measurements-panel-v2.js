@@ -98,7 +98,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Measurements panel v2 - 0.2');
+console.log('Measurements panel v2 - 0.4');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -375,12 +375,6 @@ exp.func.getMoreOptions = function( mobile ) {
         }
         if( !widthError && !heightError ) {
             exp.func.ticks( 'add' );
-            if( mobile ) {
-                console.log('whaaa!');
-                $('#step2').show();
-                $('.product-options-bottom').removeClass('hide');
-                $('#step2 .price-msg').show();
-            }
 
             $('body').scrollTop(
                 $('#product-options-wrapper').offset().top
@@ -514,6 +508,24 @@ exp.init = function() {
             exp.func.addToCart( gaPage, this );
         } );
     })();
+
+    // On the mobile website the measurements panel upon a click of the
+    // "get-price" button, which submits some javascript on the site that we
+    // can't monkey patch.  This javascript re-binds the button to validate the
+    // measurements panel input - which is problematic for us, because it means
+    // our validation gets skipped on the mobile layout.
+    // This snippet of code is to work around that, it binds to the event that is
+    // fired when the form is shown, waits half a second, and clears all event
+    // handlers and re-binds our custom event handlers.
+    $('#configure').on('show.bs.collapse',function(){
+        setTimeout(function(){
+            $('.btn-get-price').off('click').on('click', function(){
+                if( $('#configure').hasClass('in') ) {
+                    exp.func.getMoreOptions( true );
+                }
+            });
+        });
+    });
 
 };
 
