@@ -30,9 +30,6 @@
     // Variables
     // Object containing variables, generally these would be strings or jQuery objects
     exp.vars = {
-        'myCustomTagLine': 'This split test is the best!',
-        'productDesc': $('.description').length ? $('.description').text() : 'default description',
-        'productSku': $('.sku-code span')
     };
 
     // Styles
