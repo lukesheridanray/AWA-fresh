@@ -90,6 +90,11 @@ Additionally step 2 in both modules may also include an extra piece of functiona
 // jshint multistr: true
 // jshint jquery: true
 
+// 'console' is undefined in IE9 when dev tools are not open, so any calls to
+// console.log() stop execution of Javascript.  Let's thus define an empty
+// function for console.log when 'console' is undefined.
+var console=console||{"log":function(){}};
+
 // Wrap the experiment code in an IIFE, this creates a local scope and allows us to
 // pass in jQuery to use as $. Other globals could be passed in if required.
 var exp = (function($) {

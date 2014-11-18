@@ -13,6 +13,11 @@ rev per visitor
 
 all URLs ending in blind$*/
 
+// 'console' is undefined in IE9 when dev tools are not open, so any calls to
+// console.log() stop execution of Javascript.  Let's thus define an empty
+// function for console.log when 'console' is undefined.
+var console=console||{"log":function(){}};
+
 // Wrap the experiment code in an IIFE, this creates a local scope and allows us to
 // pass in jQuery to use as $. Other globals could be passed in if required.
 var exp = (function($) {
@@ -21,7 +26,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Measurements modal - 0.6');
+console.log('Measurements modal - 0.7');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -233,7 +238,7 @@ exp.func.waitForFunction = function(func, callback, timeout, keepAlive) {
 // Init function
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
 exp.init = function() {
-        
+
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
 
