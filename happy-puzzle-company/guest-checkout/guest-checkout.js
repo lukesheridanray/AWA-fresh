@@ -54,6 +54,11 @@ var exp = (function($) {
 // Initialise the experiment object
 var exp = {};
 
+// 'console' is undefined in IE9 when dev tools are not open, so any calls to
+// console.log() stop execution of Javascript.  Let's thus define an empty
+// function for console.log when 'console' is undefined.
+var console=console||{"log":function(){}};
+
 // Log the experiment, useful when multiple experiments are running
 console.log('Happy Puzzle Company: Guest Checkout v0.1');
 
