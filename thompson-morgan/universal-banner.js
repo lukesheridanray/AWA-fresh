@@ -1,3 +1,4 @@
+function () {
     //
     // Thomson & Morgan - Universal Banner
     // Based on CGIT Optimizely Boilerplate - version 0.1.3
@@ -15,7 +16,7 @@
     var exp = {};
 
     // Log the experiment, useful when multiple experiments are running
-    console.log('Thomson & Morgan - Universal Banner - 1.0');
+    console.log('Thompson & Morgan - Universal Banner - 1.0');
 
     // Condition
     // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -37,6 +38,7 @@
     exp.css = ' \
     .universal-banner { \
         width: 960px; \
+        margin: auto; \
     } \
     .ubanner { \
         border: 2px solid #eee; \
@@ -46,7 +48,7 @@
         font-weight: bold; \
         border-radius: 5px; \
         background-repeat: no-repeat; \
-        margin: 0 auto .5em auto; \
+        margin: 0 0 .5em 0; \
     } \
      \
     .money-back { \
@@ -105,6 +107,10 @@
     } \
     #money-back-modal { \
         width: 480px; \
+    } \
+    #facebox_overlay { \
+        position: fixed; \
+        height: 100%; \
     }';
 
     // Functions
@@ -204,3 +210,4 @@
     // Close the IIFE, passing in jQuery and any other global variables as required
     // if jQuery is not already used on the site use optimizely.$ instead
     })(jQuery);
+}

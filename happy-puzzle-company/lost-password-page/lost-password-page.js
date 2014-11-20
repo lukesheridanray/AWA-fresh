@@ -55,6 +55,8 @@ exp.init = function() {
 
     $(".main_title_box h1").text("Check your e-mail");
 
+    $("#ctl00_cphMaster_txtEmail").val(email);
+
     $(".internal_middle_column tr:first > td:first").removeClass("existing_titles");
     $(".internal_middle_column tr:first > td:first").html(text);
     $(".internal_middle_column tr:first > td:first").css('font-size', '1.3em');
