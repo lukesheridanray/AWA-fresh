@@ -38,7 +38,7 @@ exp.log('Bright Minds: Product Page Test 1 v0.1');
 exp.vars = {
     
     // Complete benefit box and copy
-    benefit_content: '<div class="exp-box exp-box-benefit"> <img src="http://www.brightminds.co.uk/rte_img_standard_8.jpg" alt="" /> <h3>Alison Quill, ex-teacher and founder of Bright Minds says &hellip;</h3> <blockquote> <p>I personally handpick and test each innovative product. They all must:</p> </blockquote> <ul><li>Stimulate learning through play &ndash; the best learning environment.</li><li>Encourage a child&rsquo;s (or adult&rsquo;s) individual interests.</li><li>Feed creativity, imagination and curiosity.</li><li>Hold interest longer than generic high street toys.</li><li>Be more personal and individual than the latest toy craze.</li><li>BE FUN!</li></ul> </div>',
+    benefit_content: '<div class="exp-box exp-box-benefit"> <img src="http://www.brightminds.co.uk/rte_img_standard_8.jpg" alt="" /> <h3>Alison Quill, ex-teacher and founder of BrightMinds says &hellip;</h3> <blockquote> <p>I personally handpick and test each innovative product. They all must:</p> </blockquote> <ul><li>Stimulate learning through play &ndash; the best learning environment.</li><li>Encourage a child&rsquo;s (or adult&rsquo;s) individual interests.</li><li>Feed creativity, imagination and curiosity.</li><li>Hold interest longer than generic high street toys.</li><li>Be more personal and individual than the latest toy craze.</li><li>BE FUN!</li></ul> </div>',
 
     // Delivery information for product pages (variations 0 and 1)
     delivery_info: [
@@ -70,14 +70,16 @@ exp.css = '\
 .exp-box-benefit img { border-radius: 50%; float: left; margin: 0 20px 20px 0; width: 150px; } \
 .exp-box-benefit h3 { margin: 20px 0; } \
 .exp-box-benefit blockquote { background: transparent; font-style: italic; font-size: 14px; margin: 1.5em 0; padding: 0; } \
-.exp-box-benefit blockquote + ul { clear: both; margin: 0; } \
+.exp-box-benefit blockquote + ul { clear: both; font-style: italic; margin: 0; } \
 .exp-box-benefit blockquote + ul li { margin: 0.5em 0; } \
+.exp-box-description { font-size: 13px; } \
 .exp-delivery-info { font-size: 14px; margin: 1em 0; width: 100%; } \
 .exp-delivery-info td, \
 .exp-delivery-info th { padding: 0.5em 1em; } \
 .exp-delivery-info th { font-weight: bold; } \
 .exp-delivery-image { float: left; margin: 0 1em 2em 0; } \
 .exp-delivery-image + p { font-size: 16px; font-weight: bold; margin: 2em 0; } \
+.exp-model { color: #A7A7A7; display: block; margin-bottom: 15px; font-size: 14px; } \
 #product .pageheading { border: 0; padding: 0; text-align: right; } \
 #product #summary { float: none; margin: 0; text-align: right; width: auto; } \
 #product #summary #details dd.rating { position: static; } \
@@ -89,7 +91,8 @@ exp.css = '\
 #product #summary #addthis { display: none; } \
 #product #summary #attriblist { display: none; } \
 #product #summary .restrictions { display: none; } \
-#product #summary .message { position: absolute; left: 0; bottom: 0; width: 100px; height: 40px; } \
+#product #summary .message { position: absolute; left: 0; bottom: -22px; width: 100px; height: 100px; text-align: center; display: block; } \
+#product #summary .message .exp-message-inner { display: block; position: relative; top: 50%; transform: translateY(-50%); transform: -ms-translateY(-50%); -webkit-transform: translateY(-50%); } \
 #product #summary #reviews_link { text-decoration: underline; } \
 #product #eimgHoverscontainer { padding-top: 0; } \
 .has-extra-images #product #imagewrapper, \
@@ -97,6 +100,7 @@ exp.css = '\
 #product #imagewrapper #eimgHovers { height: auto; } \
 #product #imagewrapper #eimgHoverswrapper { width: 90px; } \
 #product #imagewrapper #eimgHoverswrapper.exp-overflow-scroll { max-height: 320px; overflow-y: scroll; } \
+#product #imagewrapper #eimgHoverscontrols { display: none; } \
 .has-extra-images #product #imagewrapper #prod_img, \
 #product #imagewrapper #prod_img { margin-left: 95px; width: 340px; } \
 .has-extra-images #product #imagewrapper #prod_img a, \
@@ -109,6 +113,7 @@ exp.css = '\
 #product #questions .prompt h3, #product #reviews .prompt h3 { height: auto; } \
 #product #questions .prompt h3, #product #reviews .prompt h3 a { display: inline-block; margin-top: 0.5em; } \
 #product .prodlist.galleryview { float: none; margin: 0 auto; } \
+#p_page .rtecontent h3 { margin-top: 24px; } \
 ';
 
 // Functions
@@ -154,6 +159,25 @@ exp.func.waitForFunction = function(func, callback, timeout, keepAlive) {
             attempts ++;
         }, intervalTime);
 };
+    
+exp.func.waitForObject = function (obj, callback, timeout, keepAlive) {
+    timeout = timeout || 20000;
+    keepAlive = keepAlive || false;
+    var intervalTime = 50,
+        maxAttempts = timeout / intervalTime,
+        attempts = 0,
+        interval = setInterval(function() {
+            if (typeof obj !== 'undefined') {
+                if (!keepAlive) {
+                    clearInterval(interval);
+                }
+                callback();
+            } else if (attempts > maxAttempts) {
+                clearInterval(interval);
+            }
+            attempts ++;
+        }, intervalTime);
+}
 
 // Init function
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
@@ -199,17 +223,27 @@ exp.init = function() {
         $('#centre').addClass('exp-centre');
 
         // Select existing elements
+        var model_no    = $('#prodModel').text();
         var product     = $('#product');
         var images      = $('<div class="exp-box"></div>').append( $('#imagewrapper') );
         var summary     = $('<div class="exp-box"></div>').append( $('#summary') );
         var description = $('<div class="exp-box exp-box-description"></div>').append( $('#desc_1').show() );
-        var deliveries  = $('<div class="exp-box exp-box-deliveries">' + exp.vars.delivery_info[variation] + '</div>');
+        var deliveries  = $('<div class="exp-box exp-box-deliveries"></div>').append( $('#desc_2').show() );
         var reviews     = $('<div class="exp-box exp-box-returns"></div>').append( $('#desc_6').show() );
         var title       = $('.pageheading');
         var stars       = $('#reviews_link');
         var form        = $('#cmform');
         var obsolete    = $('#right, #tabwrapper, .refer, #print-page, .model, #prodModel');
         var message     = summary.find('.message');
+        
+        // Add model number
+        images.prepend( $('<span class="exp-model">Code: ' + model_no + '</span>') );
+        
+        // Update delivery content (and variation variable)
+        this.func.waitForObject(window.optimizely.data.state.variationMap, function () {
+            variation = window.optimizely.data.state.variationMap[2202620370];
+            deliveries.html(exp.vars.delivery_info[variation]);
+        });
 
         // Create new elements (to apply new layout)
         var expInner = $('<div class="exp-inner"></div>');
@@ -226,7 +260,10 @@ exp.init = function() {
         var benefit = $( exp.vars.benefit_content.replace('innovative', benefit_cat) );
 
         // Edit "back in stock soon" message
-        message.html( message.html().replace(/back in stock soon/i, 'Available for Christmas &ndash; Order Now') );
+        message.html( message.html().replace(/back in stock soon|available for christmas/i, 'Available for Christmas &ndash; Order Now') );
+        
+        // Wrap message in span for styling
+        message.wrapInner('<span class="exp-message-inner"></span>');
 
         // Rearrange elements to create new layout
         summary.prepend(title);
@@ -272,8 +309,11 @@ exp.init = function() {
     // Apply content changes to delivery information page    
     // Use URL to determine whether on delivery page
     if ( window.location.pathname.indexOf('/delivery-information/i5') === 0 ) {
-        exp.log('Found delivery page: running experiment');
-        $('.rtecontent').html(exp.vars.delivery_page[variation]);
+        this.func.waitForObject(window.optimizely.data.state.variationMap, function () {
+            exp.log('Found delivery page: running experiment');
+            variation = window.optimizely.data.state.variationMap[2202620370];
+            $('.rtecontent').html(exp.vars.delivery_page[variation]);
+        });
     }
 
 };
