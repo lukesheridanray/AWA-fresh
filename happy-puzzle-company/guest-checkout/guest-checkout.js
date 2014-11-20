@@ -54,13 +54,15 @@ var exp = (function($) {
 // Initialise the experiment object
 var exp = {};
 
-// 'console' is undefined in IE9 when dev tools are not open, so any calls to
-// console.log() stop execution of Javascript.  Let's thus define an empty
-// function for console.log when 'console' is undefined.
-var console=console||{"log":function(){}};
+// Define safe console log function
+exp.log = function (str) {
+    if (typeof window.console !== 'undefined') {
+        console.log(str);
+    }
+};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Happy Puzzle Company: Guest Checkout v0.1');
+exp.log('Happy Puzzle Company: Guest Checkout v0.1');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -68,7 +70,7 @@ console.log('Happy Puzzle Company: Guest Checkout v0.1');
 
 // Check for a condition and return false if it has not been met
 if(exp.condition && !exp.condition.length) {
-    console.log('Experiment failed a condition');
+    exp.log('Experiment failed a condition');
     return false;
 }
 
