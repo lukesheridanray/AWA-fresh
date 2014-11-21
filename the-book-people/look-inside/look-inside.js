@@ -423,7 +423,7 @@ exp.css = ' \
 .see-inside--scroller p a span { font-size: 0.8em; display: block; position: relative; top: -4px; font-style: italic; } \
 .see-inside--scroller img { border: 2px solid #fff; width: 260px; height: auto; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; } \
 .see-inside--zoom-container { width: 831px; height: 550px; background: #fff; } \
-.see-inside--zoom-container--inner { position: relative; width: 827px; height: auto; border: 2px solid '+exp.vars.colorOrange+'; cursor: zoom-in; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; } \
+.see-inside--zoom-container--inner { position: relative; width: 827px; height: auto; max-height:535px; border: 2px solid '+exp.vars.colorOrange+'; cursor: zoom-in; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; } \
 .see-inside--zoom-container--inner:after { content:""; display: block; width: 40px; height: 40px; position: absolute; top: 0px; right: 0; background: url('+exp.vars.imageZoomIcon+') center no-repeat #F0F8FB; } \
 .see-inside--zoom-container--inner:hover { height: 535px; } \
 .see-inside--zoom-container--inner:hover:before { content:""; display: block; width: 64px; height: 64px; position: absolute; top: 233px; right: 385px; background: url('+exp.vars.imageSpinner+') center no-repeat #F0F8FB; } \
