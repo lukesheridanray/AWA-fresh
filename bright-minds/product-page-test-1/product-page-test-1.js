@@ -25,18 +25,18 @@ exp.log('Bright Minds: Product Page Test 1 v0.1');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
-// exp.condition = $('.unique-selector');
+exp.condition = $('#product');
 
 // Check for a condition and return false if it has not been met
-// if(exp.condition && !exp.condition.length) {
-//     exp.log('Experiment failed a condition');
-//     return false;
-// }
+if(exp.condition && !exp.condition.length) {
+    exp.log('Experiment failed a condition');
+    return false;
+}
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
-    
+
     // Complete benefit box and copy
     benefit_content: '<div class="exp-box exp-box-benefit"> <img src="http://www.brightminds.co.uk/rte_img_standard_8.jpg" alt="" /> <h3>Alison Quill, ex-teacher and founder of BrightMinds says &hellip;</h3> <blockquote> <p>I personally handpick and test each innovative product. They all must:</p> </blockquote> <ul><li>Stimulate learning through play &ndash; the best learning environment.</li><li>Encourage a child&rsquo;s (or adult&rsquo;s) individual interests.</li><li>Feed creativity, imagination and curiosity.</li><li>Hold interest longer than generic high street toys.</li><li>Be more personal and individual than the latest toy craze.</li><li>BE FUN!</li></ul> </div>',
 
@@ -45,13 +45,13 @@ exp.vars = {
         '<h2>Delivery &amp; Returns</h2> <img src="//cdn.optimizely.com/img/174847139/9eaaadf2dedb4d4785ecddfad85006fc.png" alt="" class="exp-delivery-image" /> <p>We can deliver anywhere in the world, and offer a generous 90 days returns policy.</p> <table class="exp-delivery-info"> <tr> <th>UK Mainland</th> <th>Time</th> <th>Delivery Charge</th> </tr> <tr> <td>Standard Delivery</td> <td>5-7 working days</td> <td>£4.95</td> </tr> <tr> <td>48 Hours Delivery</td> <td>2 working days</td> <td>£7.95</td> </tr> <tr> <td>24 Hours Delivery</td> <td>Next working day</td> <td>£9.95</td> </tr> </table> <ul> <li>48 Hours and 24 Hours Delivery are only available on items marked &lsquo;In-Stock&rsquo;.</li> <li>Please order before 12noon for 24 Hour Delivery and before 5pm for 48 Hours Delivery.</li> <li>48 Hour &amp; 24 Hour Delivery: Items in your order shown as In Stock will be shipped immediately. Other items will be sent in a single, separate shipment as soon as new stock arrives. We will let you know by email.</li> </ul> <p>Standard Delivery:  If your order includes any goods which are currently not in stock, we will hold your order for up to 5 working days so that you receive your complete order in one shipment. If, after that time, some items are still out of stock we will dispatch part of your order and send the remaining items as soon as we receive them.  We will let you know by email.</p> <p>Personalised items will follow 7-10 days following your order.  Please choose Standard Delivery for personalised items.</p> <p>If we send your order in part-shipments, there will be no extra charge to you after your first delivery.</p> <h3>UK Offshore, overseas and BFPO</h3> <p>We can deliver anywhere in the world. Your delivery charge will be calculated at the checkout and clearly shown before you pay.  Delivery times vary depending on weight and destination.</p> <p><strong>For full information please see our <a href="/delivery-information/i5">Delivery information</a> page.</strong></p>',
         '<h2>Delivery &amp; Returns</h2> <img src="//cdn.optimizely.com/img/174847139/9eaaadf2dedb4d4785ecddfad85006fc.png" alt="" class="exp-delivery-image" /> <p>We can deliver anywhere in the world, and offer a generous 90 days returns policy.</p> <table class="exp-delivery-info"> <tr> <th>UK Mainland</th> <th>Time</th> <th>Delivery Charge</th> </tr> <tr> <td>Standard Delivery</td> <td>5-7 working days</td> <td>FREE when you spend £60 or more<br /> £4.95 for orders under £60.</td> </tr> <tr> <td>48 Hours Delivery</td> <td>2 working days</td> <td>£7.95</td> </tr> <tr> <td>24 Hours Delivery</td> <td>Next working day</td> <td>£9.95</td> </tr> </table> <ul> <li>48 Hours and 24 Hours Delivery are only available on items marked &lsquo;In-Stock&rsquo;.</li> <li>Please order before 12noon for 24 Hour Delivery and before 5pm for 48 Hours Delivery.</li> <li>48 Hour &amp; 24 Hour Delivery: Items in your order shown as In Stock will be shipped immediately. Other items will be sent in a single, separate shipment as soon as new stock arrives. We will let you know by email.</li> </ul> <p>Standard Delivery:  If your order includes any goods which are currently not in stock, we will hold your order for up to 5 working days so that you receive your complete order in one shipment. If, after that time, some items are still out of stock we will dispatch part of your order and send the remaining items as soon as we receive them.  We will let you know by email.</p> <p>Personalised items will follow 7-10 days following your order.  Please choose Standard Delivery for personalised items.</p> <p>If we send your order in part-shipments, there will be no extra charge to you after your first delivery.</p> <h3>UK Offshore, overseas and BFPO</h3> <p>We can deliver anywhere in the world. UK orders &pound;60 or more are free (including Highlands, Islands and Northern Ireland). All other delivery charges are calculated at the checkout and clearly shown before you pay.  Delivery times vary depending on weight and destination.</p> <p><strong>For full information please see our <a href="/delivery-information/i5">Delivery information</a> page.</strong></p>'
     ],
-    
+
     // Delivery page copy (variations 0 and 1)
     delivery_page: [
         '<p>We can deliver anywhere in the world, and offer a generous 90 Days returns policy. Please see below for full information.</p> <h3>UK Mainland Delivery</h3> <table class="exp-delivery-info"> <tr> <th>UK Mainland</th> <th>Time</th> <th>Delivery Charge</th> </tr> <tr> <td>Standard Delivery</td> <td>5-7 working days</td> <td>&pound;4.95</td> </tr> <tr> <td>48 Hours Delivery<br /> Order must be placed by 5pm Monday-Friday</td> <td>2 working days</td> <td>&pound;7.95</td> </tr> <tr> <td>24 Hours Delivery<br /> Order must be by 12 noon, Monday-Friday</td> <td>Next working day</td> <td>&pound;9.95</td> </tr> <tr> <td colspan="3"> <p>24 and 48 Hour Delivery is only available on &lsquo;In-Stock&rsquo; items. It is not available on items marked as:</p> <ul> <li>&lsquo;Direct From Supplier&rsquo;</li> <li>Personalised Items</li> <li>Made-to-Order Items such as furniture </li> <li>Not in Stock </li> </ul> </td> </tr> </table> <h3>UK Offshore Delivery</h3> <table class="exp-delivery-info"> <tr> <td>Delivery to addresses outwith the UK Mainland, including Isles of Scilly, Isle of Man and Scottish Islands.</td> <td>Delivery charge will be calculated at the checkout when you enter your address. You will be able to review your order and see all charges before you pay.</td> </tr> </table> <h3>International Delivery – EU COUNTRIES</h3> <table class="exp-delivery-info"> <tr> <th>Destination</th> <th>Delivery Costs</th> <th>Taxes &amp; Surcharges</th> </tr> <tr> <td>Delivery to addresses in EU Member States.</td> <td>Delivery charge is based on weight, and will be calculated at the checkout when you enter your address. You will be able to review your order and see all charges before you pay.</td> <td>All prices include VAT at 20% (where applicable)</td> </tr> </table> <h3>International Delivery – Non EU Countries</h3> <table class="exp-delivery-info"> <tr> <th>Destination</th> <th>Delivery Costs</th> <th>Taxes &amp; Surcharges</th> </tr> <tr> <td>Delivery to addresses outside the EU.</td> <td>Delivery charge is based on weight, and will be calculated at the checkout when you enter your address. You will be able to review your order and see all our charges before you pay. However, you may have to pay additional import duty charges when your parcel arrives.</td> <td>VAT will be deducted where appropriate. Please ensure you have correctly entered the destination country.<br /> Your goods may be subject to import duty. These are not included in our prices and are the responsibility the purchaser.</td> </tr> </table> <h3>B.F.P.O.</h3> <table class="exp-delivery-info"> <tr> <td>We are delighted to support British Forces Posted Overseas.<br /> Please make sure you select BFPO from the country field when you enter your address, otherwise you will be charged at overseas rates.</td> <td>Delivery charges are in line with our MOD Contract and calculated during the checkout. You will be able to see all charges and review your order before you pay.</td> </tr> </table> <h3>Returns and Refunds</h3> <p>We want you to be delighted with the quality of the goods you receive from BrightMinds. If for any reason you wish to return any items from your order, please do so within 90 days of receipt and in resalable condition. You will be offered a full refund of the value of the goods or an exchange - whichever you prefer. </p> <p>Refunds are normally processed within 7 days of receipt although please allow extra time over busy periods such as Christmas, January and Easter. </p> <p>We recommend you use recorded delivery and obtain insurance, as we are only responsible for the goods once they are back with us in resalable condition.   The exception to this is on the rare occasions when your goods arrive faulty or in error, when the cost of returning them is at our expense. </p> <h3>Faulty Goods</h3> <p>If you receive goods which are faulty or have been damaged in transit, please let us know straight away and we will either offer you a full refund or replace the goods at our cost. </p> <h3>Cancelling an Order</h3> <p>If you wish to cancel your order, please call us on 0844 41 222 49 or email us <a href="mailto:info@brightminds.co.uk">info@brightminds.co.uk</a>. We will do our best to stop the goods coming to you,</p> <p>If they have already been despatched we ask you to package them up, unused in original packaging and return them as soon as possible. </p> <p>You will need to pay the delivery costs, and we can only refund your money when the goods have been returned. We recommend you use a signed-for insured service. </p> <h3>Your consumer rights</h3> <p>Our generous 90 Day No Quibble Guarantee is provided in addition to your statutory rights as a consumer.</p>',
         '<p>We can deliver anywhere in the world, and offer a generous 90 Days returns policy. Please see below for full information. </p> <h3>UK Mainland Delivery</h3> <table class="exp-delivery-info"> <tr> <th>UK Mainland</th> <th>Time</th> <th>Delivery Charge</th> </tr> <tr> <td>Standard Delivery</td> <td>5-7 working days</td> <td>FREE on orders &pound;XX or more<br /> &pound;4.95 on orders under &pound;XX</td> </tr> <tr> <td>48 Hours Delivery<br /> Order must be placed by 5pm Monday-Friday</td> <td>2 working days</td> <td>&pound;7.95</td> </tr> <tr> <td>24 Hours Delivery<br /> Order must be by 12 noon, Monday-Friday</td> <td>Next working day</td> <td>&pound;9.95</td> </tr> <tr> <td colspan="3"> <p>24 and 48 Hour Delivery is only available on &lsquo;In-Stock&rsquo; items. It is not available on items marked as:</p> <ul> <li>&lsquo;Direct From Supplier&rsquo;</li> <li>Personalised Items</li> <li>Made-to-Order Items such as furniture </li> <li>Not in Stock </li> </ul> </td> </tr> </table> <h3>UK Offshore Delivery</h3> <table class="exp-delivery-info"> <tr> <td>Delivery to addresses outwith the UK Mainland, including Isles of Scilly, Isle of Man and Scottish Islands</td> <td>FREE on orders &pound;60 or more<br /> On orders under &pound;60, delivery charge will be calculated at the checkout when you enter your address. You will be able to review your order and see all charges before you pay.</td> </tr> </table> <h3>International Delivery – EU COUNTRIES</h3> <table class="exp-delivery-info"> <tr> <th>Destination</th> <th>Delivery Costs</th> <th>Taxes &amp; Surcharges</th> </tr> <tr> <td>Delivery to addresses in EU Member States</td> <td>Delivery charge is based on weight, and will be calculated at the checkout when you enter your address. You will be able to review your order and see all charges before you pay.</td> <td>All prices include VAT at 20% (where applicable)</td> </tr> </table> <h3>International Delivery – Non EU Countries</h3> <table class="exp-delivery-info"> <tr> <th>Destination</th> <th>Delivery Costs</th> <th>Taxes &amp; Surcharges</th> </tr> <tr> <td>Delivery to addresses outside the EU.</td> <td>Delivery charge is based on weight, and will be calculated at the checkout when you enter your address. You will be able to review your order and see all our charges before you pay. However, you may have to pay additional import duty charges when your parcel arrives.</td> <td>VAT will be deducted where appropriate. Please ensure you have correctly entered the destination country.<br /> Your goods may be subject to import duty. These are not included in our prices and are the responsibility the purchaser.</td> </tr> </table> <h3>B.F.P.O.</h3> <table class="exp-delivery-info"> <tr> <td>We are delighted to support British Forces Posted Overseas. <br /> Please make sure you select BFPO from the country field when you enter your address, otherwise you will be charged at overseas rates.</td> <td>Delivery charges are in line with our MOD Contract and calculated during the checkout. You will be able to see all charges and review your order before you pay.</td> </tr> </table> <h3>Returns and Refunds</h3> <p>We want you to be delighted with the quality of the goods you receive from BrightMinds. If for any reason you wish to return any items from your order, please do so within 90 days of receipt and in resalable condition. You will be offered a full refund of the value of the goods or an exchange - whichever you prefer. </p> <p>Refunds are normally processed within 7 days of receipt although please allow extra time over busy periods such as Christmas, January and Easter. </p> <p>We recommend you use recorded delivery and obtain insurance, as we are only responsible for the goods once they have arrived back with us in resalable condition.   The exception to this is on the rare occasions when your goods arrive faulty or in error, when the cost of returning them is at our expense. </p> <h3>Faulty Goods</h3> <p>If you receive goods which are faulty or have been damaged in transit, please let us know straight away and we will either offer you a full refund or replace the goods at our cost. </p> <h3>Cancelling an Order</h3> <p>If you wish to cancel your order, please call us on 0844 41 222 49 or email us <a href="mailto:info@brightminds.co.uk">info@brightminds.co.uk</a>. We will do our best to stop the goods coming to you,</p> <p>If they have already been despatched we ask you to package them up, unused in original packaging and return them as soon as possible. </p> <p>You will need to pay the delivery costs, and we can only refund your money when the goods have been returned. We recommend you use a signed-for insured service. </p> <h3>Your consumer rights</h3> <p>Our generous 90 Day No Quibble Guarantee is provided in addition to your statutory rights as a consumer.</p>'
     ]
-    
+
 };
 
 // Styles
@@ -159,7 +159,7 @@ exp.func.waitForFunction = function(func, callback, timeout, keepAlive) {
             attempts ++;
         }, intervalTime);
 };
-    
+
 exp.func.waitForObject = function (obj, callback, timeout, keepAlive) {
     timeout = timeout || 20000;
     keepAlive = keepAlive || false;
@@ -182,12 +182,6 @@ exp.func.waitForObject = function (obj, callback, timeout, keepAlive) {
 // Init function
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
 exp.init = function() {
-
-    // Check for required query string (development version)
-    if ( ! window.location.search.match(/[?&]dev/) ) {
-        exp.log('Error: experiment requires query string "dev"');
-        return;
-    }
 
     // Add or update inline CSS
     var style = $('#exp-style');
@@ -235,10 +229,10 @@ exp.init = function() {
         var form        = $('#cmform');
         var obsolete    = $('#right, #tabwrapper, .refer, #print-page, .model, #prodModel');
         var message     = summary.find('.message');
-        
+
         // Add model number
         images.prepend( $('<span class="exp-model">Code: ' + model_no + '</span>') );
-        
+
         // Update delivery content (and variation variable)
         this.func.waitForObject(window.optimizely.data.state.variationMap, function () {
             variation = window.optimizely.data.state.variationMap[2202620370];
@@ -260,8 +254,10 @@ exp.init = function() {
         var benefit = $( exp.vars.benefit_content.replace('innovative', benefit_cat) );
 
         // Edit "back in stock soon" message
+        // Note:  We check for this "Available for Christmas" ... later on for
+        // a custom goal.  If it is changed here, please also change below.
         message.html( message.html().replace(/back in stock soon|available for christmas/i, 'Available for Christmas &ndash; Order Now') );
-        
+
         // Wrap message in span for styling
         message.wrapInner('<span class="exp-message-inner"></span>');
 
@@ -304,9 +300,18 @@ exp.init = function() {
             });
         });
 
+        // If the product is out of stock track clicks on Add To Basket with a custom event
+        if (message.html().indexOf('Available for Christmas') !== -1)
+        {
+            $('#addtobasket #action_button').click(function(){
+                optimizely.push(["trackEvent", "AddToBasketOutOfStock"]);
+                return true;
+            });
+        }
+
     }
 
-    // Apply content changes to delivery information page    
+    // Apply content changes to delivery information page
     // Use URL to determine whether on delivery page
     if ( window.location.pathname.indexOf('/delivery-information/i5') === 0 ) {
         this.func.waitForObject(window.optimizely.data.state.variationMap, function () {
