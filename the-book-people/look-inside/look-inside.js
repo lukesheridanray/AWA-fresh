@@ -29,9 +29,9 @@ gsutil -h "Cache-Control:public,max-age=259200" cp -m -a public-read -R /images/
 
 Optimizely
 
-User name: bookpeople.awadigital@gmail.com
+User name: [Ask Jamie or Rob]
 
-Password: testhero1
+Password: [Ask Jamie or Rob]
 
 They're not used to sharing access, so for any experiments that you build, please start the name with AWA_TEST. 
 
