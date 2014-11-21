@@ -125,20 +125,242 @@ exp.vars = {
         'zoomed': '/fullsize-for-zoom/'
     },
     'productName': {
-        '439365': 'julia-donaldson'
+        '439365': 'julia-donaldson',
+        '484168': 'ladybird-collection',
+        '218821': 'songbirds-phonics',
+        '458336': 'early-reader',
+        '396465': 'wimpy-kid',
+        '393572': 'bestever-fiction',
+        '503162': 'scarecrows',
+        '494738': 'frozen',
+        '529219': '1000-dot-to-dot-book-animals',
+        '496918': 'loombands',
+        '502488': 'beekeepers-daughter',
+        '519189': 'tom-gates',
+        '519185': 'marvel-readers-collection',
+        '519665': '1411-facts-to-knock-you-sideways',
+        '509816': 'awful-auntie',
+        '255845': 'winter-wonderland',
+        '518158': 'official-strictly-come-dancing-annual-2015'
     },
     'images': {
+        // product_name: {
+        //     index: [image_name, alt_text, no_idea, hide_from_thumbnails]
+        // }
         'julia-donaldson': {
-            '0': [ 'TheGruffalosChild', 'The Gruffalo\'s Child', ''  ],
-            '1': [ 'WakeUpDoLydiaLou', 'Wake Up Do, Lydia Lou!', '' ],
-            '2': [ 'CharlieCooksFavouriteBook', 'Charlie Cook\'s Favourite Book', '' ],
-            '3': [ 'FreddieAndtheFairy', 'Freddie and the Fairy', '' ],
-            '4': [ 'MonkeyPuzzle', 'Monkey Puzzle', '' ],
-            '5': [ 'WiggleAndRoar', 'Wriggle and Roar!', '', true ],
-            '6': [ 'TheSnailAndTheWhale', 'The Snail and the Whale', '' ],
-            '7': [ 'RoomOnTheBroom', 'Room on the Broom', '' ],
-            '8': [ 'GoatGoesToPlaygroup', 'Goat Goes To Playgroup', '', true ],
-            '9': [ 'ToddleWaddle', 'Toddle Waddle', '' ]
+            '0': [ 'TheGruffalosChild',         'The Gruffalo\'s Child',          '', false],
+            '1': [ 'WakeUpDoLydiaLou',          'Wake Up Do, Lydia Lou!',         '', false],
+            '2': [ 'CharlieCooksFavouriteBook', 'Charlie Cook\'s Favourite Book', '', false],
+            '3': [ 'FreddieAndtheFairy',        'Freddie and the Fairy',          '', false],
+            '4': [ 'MonkeyPuzzle',              'Monkey Puzzle',                  '', false],
+            '5': [ 'WiggleAndRoar',             'Wriggle and Roar!',              '', true ],
+            '6': [ 'TheSnailAndTheWhale',       'The Snail and the Whale',        '', false],
+            '7': [ 'RoomOnTheBroom',            'Room on the Broom',              '', false],
+            '8': [ 'GoatGoesToPlaygroup',       'Goat Goes To Playgroup',         '', true ],
+            '9': [ 'ToddleWaddle',              'Toddle Waddle',                  '', false]
+        },
+        'ladybird-collection': {
+            '0':  ['BeautyAndTheBeast',                              'Beauty and the Beast',                          '', false],
+            '1':  ['ChalieAndLolaYouWontLikeThisPresentAsMuchASIDo', 'You Won\'t Like this Present as Much as I do!', '', true ],
+            '2':  ['CharlieAndLolaIAmInventingAnInvention',          'I am Inventing An Invention',                   '', true ],
+            '3':  ['ChickenLicken',                                  'Chicken Licken',                                '', true ],
+            '4':  ['Cinderella',                                     'Cinderella',                                    '', true ],
+            '5':  ['DomsGragon',                                     'Dom\'s Dragon',                                 '', true ],
+            '6':  ['FairyFriends',                                   'Fairy Friends',                                 '', true ],
+            '7':  ['FuriONMusicIsland',                              'Moshi Monsters - Furi On Music Island',         '', true ],
+            '8':  ['GoldilocksAndTheThreeBears',                     'Goldilocks and the Three Bears',                '', true ],
+            '9':  ['HanselAndGretel',                                'Hansel and Gretel',                             '', true ],
+            '10': ['HarryAndTheBucketfulOfDinosaurs',                'Harry and the Bucketful of Dinosaurs',          '', false],
+            '11': ['HarryAndTheDinosaursUnited',                     'Harry and the Dinosaurs United',                '', true ],
+            '12': ['Heidi',                                          'Heidi',                                         '', true ],
+            '13': ['JackAndTheBeanstalk',                            'Jack and the Beanstalk',                        '', true ],
+            '14': ['KatsumaAndTheThief',                             'Moshi Monsters - Katsuma and the Art Thief',    '', true ],
+            '15': ['LittleCreatures',                                'Peppa Pig - Little Creatures',                  '', true ],
+            '16': ['LittleRedHen',                                   'Little Red Hen',                                '', true ],
+            '17': ['LittleRedRidingHood',                            'Little Red Riding Hood',                        '', true ],
+            '18': ['LuvliAndTheGlumpatron',                          'Moshi Monsters - Luvli and the Glump-A-Tron',   '', true ],
+            '19': ['PeppaPigNatureTrail',                            'Peppa Pig - Nature Trail',                      '', true ],
+            '20': ['PeppaPigRecyclingFun',                           'Peppa Pig - Recycling Fun!',                    '', true ],
+            '21': ['PeppaPigSportsDay',                              'Peppa Pig - Sports Day',                        '', true ],
+            '22': ['PirateSchool',                                   'Pirate School',                                 '', false],
+            '23': ['PoppetStowsAway',                                'Moshi Monsters - Poppet Stows Away',            '', true ],
+            '24': ['Rapunzel',                                       'Rapunzel',                                      '', true ],
+            '25': ['RexTheBigDinosaur',                              'Rex the Big Dinosaur',                          '', true ],
+            '26': ['Rumpelstiltskin',                                'Rumpelstiltskin',                               '', true ],
+            '27': ['SamAndTheRobots',                                'Sam and the Robots',                            '', true ],
+            '28': ['SleepingBeauty',                                 'Sleeping Beauty',                               '', true ],
+            '29': ['SlyFoxAndRedHen',                                'Sly Fox and Red Hen',                           '', true ],
+            '30': ['SnowWhiteAndTheSeven-Dwarfs',                    'Snow White and the Seven Dwarfs',               '', true ],
+            '31': ['TheElvesAndTheShoemaker',                        'The Elves and the Shoemaker',                   '', true ],
+            '32': ['TheEmperorsNewClothes',                          'The Emperor\'s New Clothes',                    '', true ],
+            '33': ['TheEnormousTurnip',                              'The Enormous Turnip',                           '', true ],
+            '34': ['THeGingerbreadMan',                              'The Gingerbread Man',                           '', true ],
+            '35': ['TheMagicPorridgePot',                            'The Magic Porridge Pot',                        '', true ],
+            '36': ['ThePiedPiperOfHamelin',                          'The Pied Piper of Hamelin',                     '', true ],
+            '37': ['ThePrincessAndThePea',                           'The Princess and the Pea',                      '', false],
+            '38': ['TheRedKnight',                                   'The Red Knight',                                '', true ],
+            '39': ['TheTaleOfJemimaPuddleDuck',                      'The Tale of Jemina Puddle-Duck',                '', false],
+            '40': ['TheTaleOfPeterRabbit',                           'The Tale of Peter Rabbit',                      '', false],
+            '41': ['TheThreeBillyGoatsGruff',                        'The Three Billy Goats Gruff',                   '', true ],
+            '42': ['TheThreeLittlePigs',                             'The Three Little Pigs',                         '', true ],
+            '43': ['TheUglyDuckling',                                'The Ugly Duckling',                             '', true ],
+            '44': ['TheWizardOfOz',                                  'The Wizard of Oz',                              '', true ],
+            '45': ['TopsyAndTimGoToTheZoo',                          'Topsy and Tim - Go to the Zoo',                 '', false],
+            '46': ['TopsyandTimTheBigRace',                          'Topsy and Tim - the Big Race',                  '', false],
+            '47': ['TownMouseAndCountryMouse',                       'Town Mouse and Country Mouse',                  '', true ],
+            '48': ['WhyGiraffeHasALongNeck',                         'Why Giraffe Has A Long Neck',                   '', true ],
+            '49': ['WhyLionRoarrrs',                                 'Why Lion Roars!',                               '', true ]
+        },
+        'songbirds-phonics': {
+            '0':  ['BobBug',               'Bob Bug',                  '', true ],
+            '1':  ['ClareAndTheFair',      'Clare and the Fair',       '', true ],
+            '2':  ['DigDigDig',            'Dig, Dig, Dig',            '', true ],
+            '3':  ['DoctorDuck',           'Doctor Duck',              '', false],
+            '4':  ['FishAndChips',         'Fish and Chips',           '', true ],
+            '5':  ['GranIsCross',          'Gran is Cross',            '', true ],
+            '6':  ['JackAndTheGiants',     'Jack and the Giants',      '', true ],
+            '7':  ['Leroy',                'Leroy',                    '', true ],
+            '8':  ['MissMiss',             'Miss! Miss!',              '', true ],
+            '9':  ['MoanMoanMoan',         'Moan, Moan, Moan!',        '', false],
+            '10': ['MumBugsBag',           'Mum Bug\'s Bag',           '', true ],
+            '11': ['NoMilkToday',          'No Milk Today',            '', false],
+            '12': ['PaulaTheVet',          'Paula the Vet',            '', true ],
+            '13': ['QueenAnneenasFeast',   'Queen Anneena\'s Feast',   '', true ],
+            '14': ['SamsPot',              'Sam\'s Pot',               '', true ],
+            '15': ['SingingDad',           'Singing Dad',              '', true ],
+            '16': ['SpikeSays',            'Spike Says',               '', true ],
+            '17': ['SplashAndSquelch',     'Splash and Squelch',       '', true ],
+            '18': ['SueKangaroo',          'Sue Kangaroo',             '', true ],
+            '19': ['Tadpoles',             'Tadpoles',                 '', true ],
+            '20': ['TarasParty',           'Tara\'s Party',            '', true ],
+            '21': ['TheBigMatch',          'The Big Match',            '', true ],
+            '22': ['TheCinderella',        'The Cinderella Play',      '', true ],
+            '23': ['TheDeerAndTheEarwig',  'The Deer and the Earwig',  '', true ],
+            '24': ['TheOldPet',            'The Odd Pet',              '', false],
+            '25': ['TheScrapRocket',       'The Scrap Rocket',         '', false],
+            '26': ['TheShoppingList',      'The Shopping List',        '', false],
+            '27': ['TheSnakeAndTheDrake',  'The Snake and the Drake',  '', false],
+            '28': ['theTrunkAndTheSkunk',  'The Trunk and the Skunk',  '', false],
+            '29': ['TheUpsideDownBrowns',  'The Upside-down Browns',   '', true ],
+            '30': ['TheWrongKindOfKnight', 'The Wrong Kind of Knight', '', true ],
+            '31': ['ThisAndThat',          'This and That',            '', true ],
+            '32': ['TopCat',               'Top Cat',                  '', true ],
+            '33': ['UsmansBooks',          'Usman\'s Books',           '', true ],
+            '34': ['WhereWereYouBert',     'Where Were You Bert?',     '', true ],
+            '35': ['ZakAndTheVet',         'Zak and the Vet',          '', true ]
+        },
+        'early-reader': {
+            '0':  ['AlgysAmazingAdventuresInTheArtic', 'Algy\'s Amazing Adventures In The Arctic', '', false],
+            '1':  ['ALionInTheMeadow',                 'A Lion in the Meadow',                     '', false],
+            '2':  ['BloodAndGutsAndRatsTailPizza',     'Blood And Guts and Rats\' Tail Pizza',     '', true ],
+            '3':  ['DownInTheJungle',                  'Down In The Jungle',                       '', false],
+            '4':  ['HorridHenryAndTheBogeyBabysitter', 'Horrid Henry and the Bogey Babysitter',    '', false],
+            '5':  ['HorridHenryAndTheDemonDinnerLady', 'Horrid Henry and the Demon Dinner Lady',   '', true ],
+            '6':  ['HorridHenryGetsRichQuick',         'Horrid Henry Gets Rich Quick',             '', false],
+            '7':  ['HorridHenryMeetsTheQueen',         'Horrid Henry Meets the Queen',             '', true ],
+            '8':  ['HorridHenrysHomework',             'Horrid Henry\'s Homework',                 '', true ],
+            '9':  ['Horrid-HenrysSportsDay',           'Horrid Henry\'s Sports Day',               '', true ],
+            '10': ['HorridHenryTricksAndTreats',       'Horrid Henry Tricks and Treats',           '', true ],
+            '11': ['HorridHenryTricksTheToothFairy',   'Horrid Henry Tricks the Tooth Fairy',      '', true ],
+            '12': ['JoggersBigAdventure',              'Jogger\'s Big Adventure',                  '', true ],
+            '13': ['LookAtMe',                         'Look at Me',                               '', true ],
+            '14': ['MirandaTheExplorer',               'Miranda the Explorer',                     '', true ],
+            '15': ['MondaysAtMonsterSchool',           'Mondays At Monster School',                '', true ],
+            '16': ['MoodyMargaretsMakeover',           'Moody Margaret\'s Makeover',               '', true ],
+            '17': ['MoodyMargretCastssASpell',         'Moody Margaret Casts a Spell',             '', true ],
+            '18': ['MurdochMolesBigIdea',              'Murdoch Mole\'s Big Idea',                 '', false],
+            '19': ['PoppyThePirateDog',                'Poppy the Pirate Dog',                     '', true ],
+            '20': ['PoppyThePirateDogsNewShipmate',    'Poppy the Pirate Dog\'s New Shipmate',     '', true ],
+            '21': ['RampageInPrincesGarden',           'Rampage in Prince\'s Garden',              '', false],
+            '22': ['ShumbasBigAdventure',              'Shumba\'s Big Adventure',                  '', false],
+            '23': ['SophiesDanceClass',                'Sophie\'s Dance Class',                    '', true ],
+            '24': ['TheBigStickyBun',                  'The Big Sticky Bun',                       '', true ],
+            '25': ['TheHauntedHouseOfBuffinStreet',    'The Haunted House of Buffin Street',       '', true ],
+            '26': ['TheManWhoseMotherWasAPirate',      'The Man Whose Mother Was A Pirate',        '', true ],
+            '27': ['ThePerfectPetShop',                'The Perfect Pet Shop',                     '', true ],
+            '28': ['TheTopsyTurvies',                  'The Topsy Turvies',                        '', true ],
+            '29': ['TwitTheOwlWhoWasntWise',           'Twit The owl who wasn\'t wise',            '', true ]
+        },
+        'wimpy-kid': {
+            '0': ['CabinFever',       'Cabin Fever',          '', false],
+            '1': ['DiaryOfAWimpyKid', 'Diary of a Wimpy Kid', '', false],
+            '2': ['DogDays',          'Dog Days',             '', false],
+            '3': ['DoItYourselfBook', 'Do-It-Yourself Book',  '', false],
+            '4': ['KidRodrickRules',  'Roderick Rules',       '', false],
+            '5': ['TheLastStraw',     'The Last Straw',       '', false],
+            '6': ['TheUglyTruth',     'The Ugly Truth',       '', false]
+        },
+        'bestever-fiction': {
+            '0': ['AliceBliss',               'Alice Bliss',                  '', true ],
+            '1': ['MateshipWithBirds',        'Mateship with Birds',          '', false],
+            '2': ['OneMomentOneMorning',      'One Moment, One Morning',      '', false],
+            '3': ['OneSummer',                'One Summer',                   '', false],
+            '4': ['TheHouseofEliott',         'The House of Eliott',          '', false],
+            '5': ['TheSilverLiningsPlayBook', 'The Silver Linings Play Book', '', false],
+            '6': ['TheSummerOfTheBear',       'The Summer of the Bear',       '', false],
+            '7': ['ThisPerfectWorld',         'This Perfect World',           '', false],
+            '8': ['TimesEcho',                'Time\'s Echo',                 '', false],
+            '9': ['WhenWeWereBad',            'When We Were Bad',             '', true ]
+        },
+        'scarecrows': {
+            '0': ['scarecrows', 'The Scarecrows\' Wedding', '', false]
+        },
+        'frozen': {
+            '0': ['frozen', 'Disney\'s Frozen: The Essential Guide', '', false]
+        },
+        '1000-dot-to-dot-book-animals': {
+            '0': ['1000DotToToBookAnimals', 'The 1000 Dot-to-Dot Book: Animals', '', false]
+        },
+        'loombands': {
+            '0': ['loombands', 'Rubber Band Loom Bracelets', '', false]
+        },
+        'beekeepers-daughter': {
+            '0': ['BeekeepersDaughter', 'The Beekeeper\'s Daughter', '', false]
+        },
+        'tom-gates': {
+            '0': ['thebrilliantworldoftomgates',   'The Brilliant World of Tom Gates', '', false],
+            '1': ['tomgateseverythingsamazing',    'Tom Gates Everything\'s Amazing',  '', false],
+            '2': ['tomgatesexcellentexcuses',      'Tom Gates Excellent Excuses',      '', false],
+            '3': ['tomgatesgeniusideas',           'Tom Gates Genius Ideas',           '', false],
+            '4': ['tomgatesisabsolutelyfantastic', 'Tom Gates Absolutely Fantastic',   '', false]
+        },
+        'marvel-readers-collection': {
+            '0':   ['AmazingPowers',                        'Amazing Powers - Catherine Saunders',                         '', true ],
+            '1':   ['AvengersAssemble',                     'Avengers Assemble - Victoria Taylor::',                       '', false],
+            '2':   ['FantasticFourEvilAdversaries',         'Fantastic Four Evil Adversaries - Simon Beecroft',            '', false ],
+            '3':   ['FantasticFourWorldsGreatestSuperteam', 'Fantastic Four The World\'s Greatest Superteam - Neil Kelly', '', true ],
+            '4':   ['GreatestBattles',                      'Greatest Battles - Matthew K Manning',                        '', false],
+            '5':   ['IronManFriendsAndEnemies',             'Iron Man Friends and Enemies - Michael Teitelbaum',           '', false],
+            '6':   ['MeetTheXMen',                          'Meet the X-Men - Clare Hibbert',                              '', true ],
+            '7':   ['SpiderMansAmazingPowers',              'Spider-Man Amazing Powers - James Buckley, Jr.',              '', true ],
+            '8':   ['SpidermanTheamazingStory',             'Spider-Man The Amazing Story - Catherine Saunders',           '', false],
+            '9':   ['SpidermanTheStoryofSpiderman',         'The Story of Spider-Man - Michael Teitelbaum',                '', true ],
+            '10':  ['SpidermanWorstEnemies',                'Spider-Man Worst Enemies - Catherine Saunders',               '', true ],
+            '11':  ['TheRiseOfIronMan',                     'The Rise of Iron Man - Michael Teitelbaum',                   '', false],
+            '12':  ['TheWorldsMightiestSuperHeroTeam',      'The World\'s Mightiest Super Hero Team - Julia March',        '', false],
+            '13':  ['TheXmenSchool',                        'The X-Men School - Michael Teitelbaum',                       '', false],
+            '14':  ['XMenHowItAllBegan',                    'X-Men How It All Began - Michae Teitelbaum',                 '', true ]
+        },
+        '1411-facts-to-knock-you-sideways': {
+            '0': ['1411FactsToKnockYouSideways', '1,411 QI Facts to Knock You Sideways', '', false]
+        },
+        'awful-auntie': {
+            '0': ['AwfulAuntie', 'Awful Auntie', '', false]
+        },
+        'winter-wonderland': {
+            '0': ['BellaGetsHerSkatesOn',      'Bella Gets Her Skates On',        '', false ],
+            '1': ['BettyAndTheYeti',           'Betty and the Yeti',              '', false ],
+            '2': ['BIgBearLittleBrother',      'Big Bear Little Brother',         '', false ],
+            '3': ['CharlieCrowInTheSnow',      'Charlie Crow in the Snow',        '', false ],
+            '4': ['FoxesInTheSnow',            'Foxes in the Snow',               '', false ],
+            '5': ['JackFrost',                 'Jack Frost',                      '', false ],
+            '6': ['RabbitsInTheSnow',          'Rabbits in the Snow',             '', true ],
+            '7': ['SamsSnowflake',             'Sam\'s Snowflake',                '', false ],
+            '8': ['SayHelloToTheSnowyAnimals', 'Say Hello to the Snowy Animals!', '', false ],
+            '9': ['TheGruffalosChild',         'The Gruffalo\'s Child',           '', true ],
+        },
+        'official-strictly-come-dancing-annual-2015': {
+            '0': ['OfficialStrictlyComeDancingAnnual2015', '', '', false]
         }
     }
 };
@@ -212,7 +434,7 @@ exp.css = ' \
 .see-inside--zoom-nav-up { top: -20px; background: url('+exp.vars.imageZoomNavUp+') 0 0 no-repeat transparent; } \
 .see-inside--zoom-nav-bottom { bottom: -35px; background: url('+exp.vars.imageZoomNavDown+') 0 0 no-repeat transparent; } \
 /*.see-inside--zoom-icon { z-index: 100; width: 40px; height: 40px; position: absolute; top: 15px; right: 0; border-top: 2px solid '+exp.vars.colorOrange+'; border-right: 2px solid '+exp.vars.colorOrange+'; background: url('+exp.vars.imageZoomIcon+') center no-repeat #F0F8FB; } \
-*/.zoom-item { padding: 0 0 20px 0; height: 200px; } \
+*/.zoom-item { padding: 0 0 20px 0; height: auto; } \
 .zoom-item.current a, .zoom-item:hover a { color: '+exp.vars.colorOrange+'; } \
 .zoom-item.current img, .zoom-item:hover img { border-color: '+exp.vars.colorOrange+'; } \
 /* Responsive */ \
@@ -225,6 +447,7 @@ exp.css = ' \
     .see-inside--zoom-nav-up { top: -6px; } \
     .see-inside--zoom-nav-bottom { bottom: -25px; } \
     .see-inside--zoom-container { width: 581px; height: 390px; } \
+    .see-inside--zoom-container--inner { max-height: 410px; } \
     .see-inside--zoom-container img, .see-inside--zoom-container--inner { width: 577px; } \
     .see-inside--zoom-container--inner:hover { height: 410px; } \
     .see-inside--zoom-container--inner:hover:before { top: 173px; right: 260px; } \
@@ -265,8 +488,8 @@ exp.func.productThumbs = function(_vars) {
         if( !value[3] ) {
             thumbs += '<a href="#" data-behaviour="lookInsideModal" data-thumb-id="' + key + '">' +
                       '<img '+((i===1 || i===5 || i===9 ) ? 'class="look-inside-thumbs--first" ' : '')+'src="' + _vars.imagesBase + thisProduct + _vars.imagesTypeFolders['thumbs'] + value[0] + _vars.imagesExtension + '" alt="'+value[1]+'" /></a>';
+            i++;
         }
-        i++;
     });
     thumbs += '</div>';
     return thumbs;
