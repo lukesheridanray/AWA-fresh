@@ -21,7 +21,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Bright Minds: Product Page Test 1 v0.2');
+exp.log('Bright Minds: Product Page Test 1 v0.3');
 
 // // Condition
 // // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -114,7 +114,12 @@ exp.css = '\
 #product #questions .prompt h3, #product #reviews .prompt h3 a { display: inline-block; margin-top: 0.5em; } \
 #product .prodlist.galleryview { float: none; margin: 0 auto; } \
 #p_page .rtecontent h3 { margin-top: 24px; } \
-#product .prodlist.offerlist { float: none; }';
+#product .prodlist.offerlist { float: none; } \
+@media only screen  \
+and (max-width : 950px) { \
+    .exp-column { width: 100%; } \
+    #product #summary .message { position: static; width: 100%; } \
+}';
 
 // Functions
 // Object containing functions, some helpful functions are included
