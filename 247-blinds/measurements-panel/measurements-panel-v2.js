@@ -90,11 +90,6 @@ Additionally step 2 in both modules may also include an extra piece of functiona
 // jshint multistr: true
 // jshint jquery: true
 
-// 'console' is undefined in IE9 when dev tools are not open, so any calls to
-// console.log() stop execution of Javascript.  Let's thus define an empty
-// function for console.log when 'console' is undefined.
-var console=console||{"log":function(){}};
-
 // Wrap the experiment code in an IIFE, this creates a local scope and allows us to
 // pass in jQuery to use as $. Other globals could be passed in if required.
 var exp = (function($) {
@@ -102,8 +97,14 @@ var exp = (function($) {
 // Initialise the experiment object
 var exp = {};
 
+exp.log = function (str) {
+    if (typeof window.console !== 'undefined') {
+        console.log(str);
+    }
+};
+
 // Log the experiment, useful when multiple experiments are running
-console.log('Measurements panel v2 - 0.4');
+exp.log('Measurements panel v2 - 0.5');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -111,7 +112,6 @@ exp.vars = {
     isVenetian: ( window.location.pathname.indexOf('venetian-blind') !== -1 ) ? true : false,
     step1: $('#configure .initial-step'),
     step2: $('#configure #step2'),
-    greenTick: '//cdn.optimizely.com/img/174847139/791fbbec404a4c4b9752b3d21f901426.png',
     copy: {
         introduction: 'Enter your blind measurement details to get an exact made to measure price.',
         step1heading: 'STEP 1 - SELECT FITTING TYPE',
@@ -178,45 +178,6 @@ exp.css = ' \
 .recess-exact-field-wrapper a { \
     color: #7292CB; \
     text-decoration: underline; \
-} \
-.valid-green-ticks .radio-select-right:after, \
-.valid-green-ticks .field-label-drop-wrap:after, \
-.valid-green-ticks .product-option.slat_width:after, \
-.valid-green-ticks--step3 .field-label-control-position-wrap:after, \
-.valid-green-ticks--step3 .field-label-lining-wrap:after, \
-.valid-green-ticks--step3 .field-label-headrail-option-wrap:after, \
-.valid-green-ticks--step3 .field-label-ladder-tape-colour-wrap:after, \
-.valid-green-ticks--step3 .field-label-panel-bunch-wrap:after, \
-.valid-green-ticks--step3 .field-label-bunch-wrap:after { \
-    content: ""; \
-    display: block; \
-    float: right; \
-    background: url("'+exp.vars.greenTick+'") no-repeat 0 0 transparent; \
-    height: 16px; \
-    width: 16px; \
-    position: relative; \
-} \
-.valid-green-ticks .product-option.slat_width:after { \
-    top: -20px; \
-} \
-.valid-green-ticks .field-label-drop-wrap:after { \
-    top: -50px; \
-} \
-.valid-green-ticks--step3 .field-label-control-position-wrap:after, \
-.valid-green-ticks--step3 .field-label-lining-wrap:after, \
-.valid-green-ticks--step3 .field-label-headrail-option-wrap:after, \
-.valid-green-ticks--step3 .field-label-panel-bunch-wrap:after, \
-.valid-green-ticks--step3 .field-label-ladder-tape-colour-wrap:after, \
-.valid-green-ticks--step3 .field-label-bunch-wrap:after { \
-    top: 0; \
-    left: 0; \
-} \
-.valid-green-ticks .product-option.slat_width { \
-    margin-bottom: 0 !important; \
-} \
-.valid-green-ticks .product-option.width, \
-.valid-green-ticks .product-option.drop { \
-    margin-bottom: -12px; \
 } \
 .product-option.control_position, \
 .product-option.lining, \
@@ -299,10 +260,6 @@ exp.css = ' \
         width: auto !important; \
         padding-right: 5px; \
     } \
-    .valid-green-ticks .product-option.width, \
-    .valid-green-ticks .product-option.drop { \
-        margin-bottom: 0; \
-    } \
     #step2 { \
         padding-top: 10px; \
     } \
@@ -369,21 +326,20 @@ exp.func.getMoreOptions = function( mobile ) {
         heightError = false;
     }
     if( typeError ) {
-        exp.func.ticks( 'remove' );
         $('#advice-required-recess-exact-before').show(200);
-        $('body').scrollTop(0);
+        if (exp.func.isMobile()) { $('body').scrollTop(0); }
     } else {
         $('#advice-required-recess-exact-before').hide(200);
         if( widthError || heightError ) {
-            exp.func.ticks( 'remove' );
-            $('body').scrollTop(0);
+            if (exp.func.isMobile()) { $('body').scrollTop(0); }
         }
         if( !widthError && !heightError ) {
-            exp.func.ticks( 'add' );
 
-            $('body').scrollTop(
-                $('#product-options-wrapper').offset().top
-            );
+            if (exp.func.isMobile()) {
+                $('body').scrollTop(
+                    $('#product-options-wrapper').offset().top
+                );
+            }
         }
         showMoreOptions();
     }
@@ -398,20 +354,6 @@ exp.func.addToCart = function( gaPage, _this ) {
     });
     productAddToCartForm.submit(_this);
     ga('send', 'event', 'Navigation_buttons', 'add_to_basket', gaPage);
-    if( valid ) {
-        exp.func.ticks( 'step3' );
-    }
-};
-
-exp.func.ticks = function( operation ) {
-    if ( operation === 'add' ) {
-        $('.product-options-wrapper').addClass('valid-green-ticks');
-    } else if ( operation === 'remove' ) {
-        $('.product-options-wrapper').removeClass('valid-green-ticks').removeClass('valid-green-ticks--step3');
-    } else if ( operation === 'step3' ) {
-        $('.product-options-wrapper').addClass('valid-green-ticks--step3');
-    }
-    return;
 };
 
 // This function waits till a DOM element is available, then runs a callback function
@@ -452,6 +394,11 @@ exp.func.waitForFunction = function(func, callback, timeout, keepAlive) {
             }
             attempts ++;
         }, intervalTime);
+};
+
+// Detect if we are on a mobile device or not.
+exp.func.isMobile = function(cb){
+    return (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)).length > 0;
 };
 
 // Init function
