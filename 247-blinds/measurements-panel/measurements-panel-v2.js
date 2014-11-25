@@ -398,7 +398,7 @@ exp.func.waitForFunction = function(func, callback, timeout, keepAlive) {
 
 // Detect if we are on a mobile device or not.
 exp.func.isMobile = function(cb){
-    return (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)).length > 0;
+    return (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)) !== null;
 };
 
 // Init function
