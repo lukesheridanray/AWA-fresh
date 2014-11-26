@@ -176,7 +176,7 @@ exp.vars = {
             <li>Moisture levels</li> \
         </ul> \
         <p>Above all, we ask the question ‘Would I be happy to receive this \
-        plant?’.If the answer is no, the plant is rejected.</p> \
+        plant?’ If the answer is no, the plant is rejected.</p> \
         <p>That’s why we confidently offer a unique Money Back “Triple” Guarantee \
         on every plant you buy.</p>',
 
@@ -388,7 +388,8 @@ exp.init = function() {
         p_type_tmp,
         delivery_blurb = '',
         make_review_link,
-        read_reviews;
+        read_reviews,
+        anySize;
 
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
@@ -444,12 +445,19 @@ exp.init = function() {
     }
 
     // Size
-    // 
+    //
+    anySize = false;
     for (i in plant_size) {
         if (plant_size.hasOwnProperty(i) && plant_size[i] !== null) {
             $("#prodSizeList").append('<dl class="clearFloat"><dt>'
                 + i.replace(/_/g," ") + ':</dt>' + '<dd>' + plant_size[i] + '</dd></dl>');
+            anySize = true;
         }
+    }
+
+    // If there are no sizes, we don't need a size list
+    if (!anySize) {
+        $("#prodSizeList").remove();
     }
 
     // are there review stars?
@@ -486,7 +494,7 @@ exp.init = function() {
     $("#productCont .despatch.prodPageDes").each(function () {
         var month = $(this).text().split(' ').splice(-2,1).join('').trim();
         var date = new Date();
-        if (month && isNaN(month) && month != exp.vars.month[ date.getMonth() ]) {
+        if (month && exp.vars.month.indexOf(month) != -1 && month != exp.vars.month[ date.getMonth() ]) {
             $(this).append('<a href="#" class="hasTooltip'
                     + ' modal-link not-sooner-link">why not sooner?</a>'
                     + '<div class="hidden tooltip">' + exp.vars.notsoonerModal + '</div>');
@@ -564,6 +572,8 @@ exp.init = function() {
         // Set up tooltips
         // Grab all elements with the class "hasTooltip"
         $('.hasTooltip').each(function() { // Notice the .each() loop, discussed below
+            var is_picked_modal = $(this).hasClass('how-picked');
+
             $(this).qtip({
                 content: {
                     text: $(this).next('div') // Use the "div" element next to this for the content
@@ -572,8 +582,8 @@ exp.init = function() {
                     classes: 'qtip-rounded qtip-light'
                 },
                 position: {
-                    at: 'top center',
-                    my: 'bottom center'
+                    at: is_picked_modal ? 'top right' : 'top center',
+                    my: is_picked_modal ? 'bottom right' : 'bottom center'
                 }//, // DEBUG
                 //hide: {
                 //    event: false
