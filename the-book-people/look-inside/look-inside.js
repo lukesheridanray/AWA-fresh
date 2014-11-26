@@ -33,7 +33,7 @@ User name: [Ask Jamie or Rob]
 
 Password: [Ask Jamie or Rob]
 
-They're not used to sharing access, so for any experiments that you build, please start the name with AWA_TEST. 
+They're not used to sharing access, so for any experiments that you build, please start the name with AWA_TEST.
 
 "Product pages for the following products:
 Ladybird Read It Yourself Collection - 50 Books
@@ -141,7 +141,9 @@ exp.vars = {
         '519665': '1411-facts-to-knock-you-sideways',
         '509816': 'awful-auntie',
         '255845': 'winter-wonderland',
-        '518158': 'official-strictly-come-dancing-annual-2015'
+        '518158': 'official-strictly-come-dancing-annual-2015',
+        '519175': 'peppa-pig',
+        '527220': 'oxford-childrens-classic'
     },
     'images': {
         // product_name: {
@@ -361,7 +363,31 @@ exp.vars = {
         },
         'official-strictly-come-dancing-annual-2015': {
             '0': ['OfficialStrictlyComeDancingAnnual2015', '', '', false]
-        }
+        },
+        'peppa-pig': {
+            '0': ['DaddyPigsLostKeys',          'Daddy Pig\'s Lost Keys',           '', false ],
+            '1': ['FunAtTheFair',               'Fun at the Fair',                  '', false ],
+            '2': ['GeorgesFirstDayAtPlaygroup', 'George\'s First Day at Playgroup', '', false ],
+            '3': ['MissRabbitsDayOff',          'Miss Rabbit\'s Day Off',           '', false ],
+            '4': ['PeppaGoesBoating',           'Peppa Goes Boating',               '', false ],
+            '5': ['PeppaGoesCamping',           'Peppa Goes Camping',               '', false ],
+            '6': ['PeppaPigsFamilyComputer',    'Peppa Pig\'s Family Computer',     '', false ],
+            '7': ['PeppaPlaysFootball',         'Peppa Plays Football',             '', false ],
+            '8': ['PeppasFirstSleepover',       'Peppa\'s First Sleepover',         '', true ],
+            '9': ['PeppasNewNeighbours',        'Peppa\'s New Neighbours',          '', true ],
+        },
+        'oxford-childrens-classic': {
+            '0': ['AdventuresOfTomSawyer', 'The Adventures of Tom Sawyer', '', false ],
+            '1': ['AliceInWonderland',     'Alice in Wonderland',          '', true ],
+            '2': ['AnneOfGreenGables',     'Anne of Green Gables',         '', false ],
+            '3': ['BlackBeauty',           'Black Beauty',                 '', false ],
+            '4': ['LittleWomen',           'Little Women',                 '', true ],
+            '5': ['TheJungleBook',         'The Jungle Book',              '', false ],
+            '6': ['TheSecretGarden',       'The Secret Garden',            '', false ],
+            '7': ['TreasureIsland',        'Treasure Island',              '', false ],
+            '8': ['WindInTheWillows',      'The Wind in the Willows',      '', false ],
+            '9': ['WizardOfOz',            'The Wonderful Wizard of Oz',   '', false ],
+        },
     }
 };
 
@@ -679,7 +705,7 @@ exp.func.tryUntil = function(action, condition, timeout, keepAlive) {
 // Init function
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
 exp.init = function() {
-        
+
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
 
