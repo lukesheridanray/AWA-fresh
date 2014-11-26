@@ -1,6 +1,6 @@
 function () {
     //
-    // Thomson & Morgan - Universal Banner
+    // Thompson & Morgan - Universal Banner
     // Based on CGIT Optimizely Boilerplate - version 0.1.3
     //
 
@@ -20,10 +20,10 @@ function () {
 
     // Condition
     // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
-    exp.condition = $('html');
+    exp.condition = $(".universal-banner").length === 0;
 
     // Check for a condition and return false if it has not been met
-    if(exp.condition && !exp.condition.length) {
+    if(!exp.condition) {
         console.log('Experiment failed a condition');
         return false;
     }
@@ -193,6 +193,25 @@ function () {
 
         $(".centerContainer:eq(1)").before(universalBanner);
         $(".centerContainer:eq(1)").before(moneybackModal);
+
+        // Add click trackers
+        var sendUVEvent = function(action) {
+            window.universal_variable = window.universal_variable || {};
+            universal_variable.events = universal_variable.events || [];
+            universal_variable.events.push({
+                "category": "qubit-deliver",
+                "action": action,
+                "experiment_name": "TM Universal Banner",
+                "experiment_id": "19615", // found after /deliver/ in the dashboard url
+                "creative_master": "87958" // found after ?vid in the dashboard url
+            });
+        };
+        $('.money-back').click(function() {
+          sendUVEvent("tm-moneyback-banner:click");
+        });
+        $('.free-delivery').click(function() {
+          sendUVEvent("tm-freedelivery-banner:click");
+        });
 
         $(".facebox").facebox();
 
