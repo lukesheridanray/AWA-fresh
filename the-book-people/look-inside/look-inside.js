@@ -439,7 +439,7 @@ exp.css = ' \
 .see-inside--header .priceWrapper fieldset select { float: left; } \
 .see-inside--header .priceWrapper .price-string { margin: 0px -2px 0px 0px; padding: 0px; font-size: 21px; font-weight: bold; color: #000; } \
 .see-inside--header .priceWrapper .saving, .see-inside--header .priceWrapper .rrp { padding: 0px 5px 0px 0px; margin: 0px; } \
-.see-inside--header .add-to-basket-button { height: auto !important; margin: 0 !important; position: absolute !important; top: 0 !important; right: 0 !important; font-size: 13px !important; font-weight: normal !important; width: 130px !important; float: right !important; } \
+.see-inside--header .add-to-basket-button { height: 40px !important; margin: 0 !important; position: absolute !important; top: 0 !important; right: 0 !important; font-size: 13px !important; font-weight: normal !important; width: 130px !important; float: right !important; line-height: 20px; } \
 .see-inside--header .addToBasketForm { margin: 0; } \
 .see-inside--zoom { height: 542px; } \
 .see-inside--scroller { width: 300px; float: left; margin: 35px 0px 0px; height: 644px; overflow: auto; } \
