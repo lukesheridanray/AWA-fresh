@@ -88,7 +88,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Look inside experiment - 0.10');
+console.log('Look inside experiment - 0.11');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -629,7 +629,7 @@ exp.vars.generateModalBody = function(_vars) {
 '</div> \
 <div class="see-inside--header"> \
     <h3>'+_vars.productTitle+'</h3>' +
-    _vars.buyBlock.wrap('<div />').parent('div').html().toString().replace('<br>','') +
+    _vars.buyBlock.wrap('<div />').parent('div').html().toString().replace('<br>','').replace('<span class="hidden-phone">Quantity</span>','') +
     '<div class="see-inside--wishlist">'+_vars.wishlistLink.wrap('<div />').parent('div').html()+'</div> \
 </div><!-- .see-inside--header --> \
 <div class="see-inside--zoom"> \
