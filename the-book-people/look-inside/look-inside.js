@@ -7,16 +7,6 @@
 // jshint multistr: true
 // jshint jquery: true
 
-/* Third party libs */
-
-/*!
-    Zoom 1.7.13
-    license: MIT
-    http://www.jacklmoore.com/zoom
-*/
-(function(o){var t={url:!1,callback:!1,target:!1,duration:120,on:"mouseover",touch:!0,onZoomIn:!1,onZoomOut:!1,magnify:1};o.zoom=function(t,n,e,i){var u,c,a,m,l,r,s,f=o(t).css("position"),h=o(n);return t.style.position=/(absolute|fixed)/.test(f)?f:"relative",t.style.overflow="hidden",e.style.width=e.style.height="",o(e).addClass("zoomImg").css({position:"absolute",top:0,left:0,opacity:0,width:e.width*i,height:e.height*i,border:"none",maxWidth:"none",maxHeight:"none"}).appendTo(t),{init:function(){c=o(t).outerWidth(),u=o(t).outerHeight(),n===t?(m=c,a=u):(m=h.outerWidth(),a=h.outerHeight()),l=(e.width-c)/m,r=(e.height-u)/a,s=h.offset()},move:function(o){var t=o.pageX-s.left,n=o.pageY-s.top;n=Math.max(Math.min(n,a),0),t=Math.max(Math.min(t,m),0),e.style.left=t*-l+"px",e.style.top=n*-r+"px"}}},o.fn.zoom=function(n){return this.each(function(){var e,i=o.extend({},t,n||{}),u=i.target||this,c=this,a=o(c),m=document.createElement("img"),l=o(m),r="mousemove.zoom",s=!1,f=!1;(i.url||(e=a.find("img"),e[0]&&(i.url=e.data("src")||e.attr("src")),i.url))&&(function(){var o=u.style.position,t=u.style.overflow;a.one("zoom.destroy",function(){a.off(".zoom"),u.style.position=o,u.style.overflow=t,l.remove()})}(),m.onload=function(){function t(t){e.init(),e.move(t),l.stop().fadeTo(o.support.opacity?i.duration:0,1,o.isFunction(i.onZoomIn)?i.onZoomIn.call(m):!1)}function n(){l.stop().fadeTo(i.duration,0,o.isFunction(i.onZoomOut)?i.onZoomOut.call(m):!1)}var e=o.zoom(u,c,m,i.magnify);"grab"===i.on?a.on("mousedown.zoom",function(i){1===i.which&&(o(document).one("mouseup.zoom",function(){n(),o(document).off(r,e.move)}),t(i),o(document).on(r,e.move),i.preventDefault())}):"click"===i.on?a.on("click.zoom",function(i){return s?void 0:(s=!0,t(i),o(document).on(r,e.move),o(document).one("click.zoom",function(){n(),s=!1,o(document).off(r,e.move)}),!1)}):"toggle"===i.on?a.on("click.zoom",function(o){s?n():t(o),s=!s}):"mouseover"===i.on&&(e.init(),a.on("mouseenter.zoom",t).on("mouseleave.zoom",n).on(r,e.move)),i.touch&&a.on("touchstart.zoom",function(o){o.preventDefault(),f?(f=!1,n()):(f=!0,t(o.originalEvent.touches[0]||o.originalEvent.changedTouches[0]))}).on("touchmove.zoom",function(o){o.preventDefault(),e.move(o.originalEvent.touches[0]||o.originalEvent.changedTouches[0])}),o.isFunction(i.callback)&&i.callback.call(m)},m.src=i.url)})},o.fn.zoom.defaults=t})(window.jQuery);
-
-
 /*
 I have given the use full access to the bucket gs://tbpawa
 
@@ -84,11 +74,280 @@ I'll provide all URL targeting details once we've worked out how the test will w
 // pass in jQuery to use as $. Other globals could be passed in if required.
 var exp = (function($) {
 
+
+
+/* Third party libs */
+
+/*!
+    Zoom 1.7.13
+    license: MIT
+    http://www.jacklmoore.com/zoom
+
+    MODIFIED FOR AWA EXPERIMENT: Defering loading of images.
+*/
+(function ($) {
+    var defaults = {
+        url: false,
+        callback: false,
+        target: false,
+        duration: 120,
+        on: 'mouseover', // other options: grab, click, toggle
+        touch: true, // enables a touch fallback
+        onZoomIn: false,
+        onZoomOut: false,
+        magnify: 1
+    };
+
+    // Core Zoom Logic, independent of event listeners.
+    $.zoom = function(target, source, img, magnify) {
+        var targetHeight,
+            targetWidth,
+            sourceHeight,
+            sourceWidth,
+            xRatio,
+            yRatio,
+            offset,
+            position = $(target).css('position'),
+            $source = $(source);
+
+        // The parent element needs positioning so that the zoomed element can be correctly positioned within.
+        target.style.position = /(absolute|fixed)/.test(position) ? position : 'relative';
+        target.style.overflow = 'hidden';
+
+        img.style.width = img.style.height = '';
+
+        $(img)
+            .addClass('zoomImg')
+            .css({
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                opacity: 0,
+                width: img.width * magnify,
+                height: img.height * magnify,
+                border: 'none',
+                maxWidth: 'none',
+                maxHeight: 'none'
+            })
+            .appendTo(target);
+
+        return {
+            init: function() {
+                targetWidth = $(target).outerWidth();
+                targetHeight = $(target).outerHeight();
+
+                if (source === target) {
+                    sourceWidth = targetWidth;
+                    sourceHeight = targetHeight;
+                } else {
+                    sourceWidth = $source.outerWidth();
+                    sourceHeight = $source.outerHeight();
+                }
+
+                xRatio = (img.width - targetWidth) / sourceWidth;
+                yRatio = (img.height - targetHeight) / sourceHeight;
+
+                offset = $source.offset();
+            },
+            move: function (e) {
+                var left = (e.pageX - offset.left),
+                    top = (e.pageY - offset.top);
+
+                top = Math.max(Math.min(top, sourceHeight), 0);
+                left = Math.max(Math.min(left, sourceWidth), 0);
+
+                img.style.left = (left * -xRatio) + 'px';
+                img.style.top = (top * -yRatio) + 'px';
+            }
+        };
+    };
+
+    $.fn.zoom = function (options) {
+        return this.each(function () {
+            var
+            settings = $.extend({}, defaults, options || {}),
+            //target will display the zoomed image
+            target = settings.target || this,
+            //source will provide zoom location info (thumbnail)
+            source = this,
+            $source = $(source),
+            img = document.createElement('img'),
+            $img = $(img),
+            mousemove = 'mousemove.zoom',
+            clicked = false,
+            touched = false,
+            $urlElement;
+
+            // If a url wasn't specified, look for an image element.
+            if (!settings.url) {
+                $urlElement = $source.find('img');
+                if ($urlElement[0]) {
+                    settings.url = $urlElement.data('src') || $urlElement.attr('src');
+                }
+                if (!settings.url) {
+                    return;
+                }
+            }
+
+            (function(){
+                var position = target.style.position;
+                var overflow = target.style.overflow;
+
+                $source.one('zoom.destroy', function(){
+                    $source.off(".zoom");
+                    target.style.position = position;
+                    target.style.overflow = overflow;
+                    $img.remove();
+                });
+
+            }());
+
+            img.onload = function () {
+                var zoom = $.zoom(target, source, img, settings.magnify);
+
+                function start(e) {
+                    zoom.init();
+                    zoom.move(e);
+
+                    // Skip the fade-in for IE8 and lower since it chokes on fading-in
+                    // and changing position based on mousemovement at the same time.
+                    $img.stop()
+                    .fadeTo($.support.opacity ? settings.duration : 0, 1, $.isFunction(settings.onZoomIn) ? settings.onZoomIn.call(img) : false);
+                }
+
+                function stop() {
+                    $img.stop()
+                    .fadeTo(settings.duration, 0, $.isFunction(settings.onZoomOut) ? settings.onZoomOut.call(img) : false);
+                }
+
+                // Quickly start-stop to reset zoom level
+                start({ pageX: 0, pageY: 0 });
+                stop();
+
+                // Mouse events
+                if (settings.on === 'grab') {
+                    $source
+                        .on('mousedown.zoom',
+                            function (e) {
+                                if (e.which === 1) {
+                                    $(document).one('mouseup.zoom',
+                                        function () {
+                                            stop();
+
+                                            $(document).off(mousemove, zoom.move);
+                                        }
+                                    );
+
+                                    start(e);
+
+                                    $(document).on(mousemove, zoom.move);
+
+                                    e.preventDefault();
+                                }
+                            }
+                        );
+                } else if (settings.on === 'click') {
+                    $source.on('click.zoom',
+                        function (e) {
+                            if (clicked) {
+                                // bubble the event up to the document to trigger the unbind.
+                                return;
+                            } else {
+                                clicked = true;
+                                start(e);
+                                $(document).on(mousemove, zoom.move);
+                                $(document).one('click.zoom',
+                                    function () {
+                                        stop();
+                                        clicked = false;
+                                        $(document).off(mousemove, zoom.move);
+                                    }
+                                );
+                                return false;
+                            }
+                        }
+                    );
+                } else if (settings.on === 'toggle') {
+                    $source.on('click.zoom',
+                        function (e) {
+                            if (clicked) {
+                                stop();
+                            } else {
+                                start(e);
+                            }
+                            clicked = !clicked;
+                        }
+                    );
+                } else if (settings.on === 'mouseover') {
+                    zoom.init(); // Preemptively call init because IE7 will fire the mousemove handler before the hover handler.
+
+                    $source
+                        .on('mouseenter.zoom', start)
+                        .on('mouseleave.zoom', stop)
+                        .on(mousemove, zoom.move);
+                }
+
+                // Touch fallback
+                if (settings.touch) {
+                    $source
+                        .on('touchstart.zoom', function (e) {
+                            e.preventDefault();
+                            if (touched) {
+                                touched = false;
+                                stop();
+                            } else {
+                                touched = true;
+                                start( e.originalEvent.touches[0] || e.originalEvent.changedTouches[0] );
+                            }
+                        })
+                        .on('touchmove.zoom', function (e) {
+                            e.preventDefault();
+                            zoom.move( e.originalEvent.touches[0] || e.originalEvent.changedTouches[0] );
+                        });
+                }
+
+                if ($.isFunction(settings.callback)) {
+                    settings.callback.call(img);
+                }
+            };
+
+            // MODIFICATIONS FOR AWA EXPERIMENT: Defering loading of images
+            img.setAttribute('data-src', settings.url);
+            img.className = "AWA_unveil_img AWA_zoom_img";
+            exp.vars.zoomImageNodes[settings.zoom_id] = img;
+
+        });
+    };
+
+    $.fn.zoom.defaults = defaults;
+}(window.jQuery));
+
+
+/**
+ * jQuery Unveil
+ * A very lightweight jQuery plugin to lazy load images
+ * http://luis-almeida.github.com/unveil
+ *
+ * Licensed under the MIT license.
+ * Copyright 2013 Luís Almeida
+ * https://github.com/luis-almeida
+ */
+
+(function($){$.fn.unveil=function(threshold,callback){var $w=$(window),th=threshold||0,retina=window.devicePixelRatio>1,attrib=retina?"data-src-retina":"data-src",images=this,loaded;this.one("unveil",function(){var source=this.getAttribute(attrib);source=source||this.getAttribute("data-src");if(source){this.setAttribute("src",source);if(typeof callback==="function")callback.call(this)}});function unveil(){var inview=images.filter(function(){var $e=$(this);if($e.is(":hidden"))return;var wt=$w.scrollTop(),
+wb=wt+$w.height(),et=$e.offset().top,eb=et+$e.height();return eb>=wt-th&&et<=wb+th});loaded=inview.trigger("unveil");images=images.not(loaded)}$w.on("scroll.unveil resize.unveil lookup.unveil",unveil);unveil();return this}})(window.jQuery||window.Zepto);
+
+
 // Initialise the experiment object
 var exp = {};
 
+exp.log = function (str) {
+    if (typeof window.console !== 'undefined') {
+        console.log(str);
+    }
+};
+
 // Log the experiment, useful when multiple experiments are running
-console.log('Look inside experiment - 0.11');
+exp.log('Look inside experiment - 0.13');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -108,6 +367,7 @@ exp.vars = {
     'imageZoomIcon': '//cdn.optimizely.com/img/579743489/56069e92745b4d44854a5454137108b7.png',
     'imageSpinner': '//cdn.optimizely.com/img/579743489/d1d5466f2fd04bfbb7a2f6ff53b7cfd2.gif',
     'zoomThumbs': {},
+    'zoomImageNodes': {},  // Nodes added by the zoom library.  Will be used to lazy-load them when a page is selected.
     'positionArray': [],
     'modalTemplate': ' \
         <div class="modal fade" id="lookInsideModal" tabindex="-1" role="dialog" aria-labelledby="lookInsideModal" aria-hidden="true"> \
@@ -541,6 +801,11 @@ exp.func.centralList = function(_vars) {
 exp.vars.selectZoom = function( pageId ) {
     $('script + .see-inside--zoom-container').css({'z-index':'-1'});
     $('.see-inside--zoom-container[data-zoom-id="'+pageId+'"]').css({'z-index':'99'});
+    $('.see-inside--zoom-container[data-zoom-id="'+pageId+'"]').find('.AWA_viewer_img').trigger('unveil');
+
+    if (exp.vars.zoomImageNodes[pageId].getAttribute('src') === null) {
+        exp.vars.zoomImageNodes[pageId].setAttribute('src', exp.vars.zoomImageNodes[pageId].getAttribute('data-src'));
+    }
 };
 
 exp.vars.zoomNav = function( _vars, direction ) {
@@ -582,6 +847,9 @@ exp.vars.lookInsideModal = function( pageId ) {
     theModal.off();
     theModal.on('shown',function(){
         exp.vars.scrollThumbs(pageId);
+
+        // Load in thumbs
+        $('.AWA_viewerThumb_img').trigger('unveil');
     });
 };
 
@@ -593,7 +861,7 @@ exp.vars.generateThumbs = function(_vars) {
     $.each( _vars.images[ thisProduct ], function( key, value ) {
         markup += '<div class="zoom-item" data-thumb-id="' + key + '"> \
                        <p><a href="#" data-behaviour="thumbSelectZoom" data-thumb-id="' + key + '">'+value[1]+'<span>'+((value[2] !== '') ? value[2] : '')+'</span></a></p> \
-                       <a href="#" data-behaviour="thumbSelectZoom" data-thumb-id="' + key + '"><img src="'+ _vars.imagesBase + thisProduct + _vars.imagesTypeFolders['viewerThumbs'] + value[0] + _vars.imagesExtension + '" alt="'+value[1]+'" /></a> \
+                       <a href="#" data-behaviour="thumbSelectZoom" data-thumb-id="' + key + '"><img class="AWA_unveil_img AWA_viewerThumb_img" data-src="'+ _vars.imagesBase + thisProduct + _vars.imagesTypeFolders['viewerThumbs'] + value[0] + _vars.imagesExtension + '" alt="'+value[1]+'" /></a> \
                    </div>';
     });
     return markup;
@@ -609,10 +877,10 @@ exp.vars.generateZooms = function(_vars) {
     $.each( _vars.images[ thisProduct ], function( key, value ) {
         markup += '<div class="see-inside--zoom-container" data-zoom-id="' + key + '"> \
                   <div class="see-inside--zoom-container--inner zoom'+i+'"> \
-        <img src="'+ _vars.imagesBase + thisProduct + _vars.imagesTypeFolders[ viewerSize ] + value[0] + _vars.imagesExtension + '" alt="'+value[1]+'" /> \
+        <img class="AWA_unveil_img AWA_viewer_img" data-src="'+ _vars.imagesBase + thisProduct + _vars.imagesTypeFolders[ viewerSize ] + value[0] + _vars.imagesExtension + '" alt="'+value[1]+'" /> \
         </div></div> \
         <script type="text/javascript"> \
-            $(".see-inside--zoom-container--inner.zoom'+i+'").zoom({touch: true, url: "'+_vars.imagesBase + thisProduct + _vars.imagesTypeFolders['zoomed'] + value[0] + _vars.imagesExtension+'", callback: function(){ $(this).trigger(\'mouseenter\').trigger(\'mousemove\') } }); \
+            $(".see-inside--zoom-container--inner.zoom'+i+'").zoom({zoom_id: "'+key+'", touch: true, url: "'+_vars.imagesBase + thisProduct + _vars.imagesTypeFolders['zoomed'] + value[0] + _vars.imagesExtension+'", callback: function(){  } }); \
         </script>';
         i++;
     });
@@ -752,6 +1020,8 @@ exp.init = function() {
         $('#lookInsideModal').modal('hide');
     });
 
+    // Apply lazy-loading of images
+    $('.AWA_unveil_img').unveil();
 
 };
 
