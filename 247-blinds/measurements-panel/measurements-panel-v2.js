@@ -104,7 +104,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Measurements panel v2 - 0.5');
+exp.log('Measurements panel v2 - 0.6');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -338,6 +338,12 @@ exp.func.getMoreOptions = function( mobile ) {
             if (exp.func.isMobile()) {
                 $('body').scrollTop(
                     $('#product-options-wrapper').offset().top
+                );
+            }
+            else {
+                // Scroll to just below the header.
+                $('body').scrollTop(
+                    $('#top').offset().top
                 );
             }
         }
