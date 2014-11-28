@@ -6,11 +6,6 @@
 // jshint multistr: true
 // jshint jquery: true
 
-// 'console' is undefined in IE9 when dev tools are not open, so any calls to
-// console.log() stop execution of Javascript.  Let's thus define an empty
-// function for console.log when 'console' is undefined.
-var console=console||{"log":function(){}};
-
 // Wrap the experiment code in an IIFE, this creates a local scope and allows us to
 // pass in jQuery to use as $. Other globals could be passed in if required.
 var paypal_creditcard_review_page = (function($) {
@@ -18,8 +13,14 @@ var paypal_creditcard_review_page = (function($) {
 // Initialise the experiment object
 var exp = {};
 
+exp.log = function (str) {
+    if (typeof window.console !== 'undefined') {
+        console.log(str);
+    }
+};
+
 // Log the experiment, useful when multiple experiments are running
-console.log('Paypal/Credit Card Review Page experiment PAGE: CC - 0.1');
+exp.log('Paypal/Credit Card Review Page experiment PAGE: CC - 0.2');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -27,7 +28,7 @@ exp.condition = $('#checkout-step-review');
 
 // Check for a condition and return false if it has not been met
 if(exp.condition && !exp.condition.length) {
-    console.log('Experiment failed a condition');
+    exp.log('Experiment failed a condition');
     return false;
 }
 
@@ -101,6 +102,7 @@ exp.css += ' \
 } \
 #checkout-review-table.data-table thead th { \
     color: black; \
+    border-bottom: 1px solid #bebcb7 !important; \
 } \
 #checkout-review-table.data-table thead th.' + exp.vars.edit_shopping_cart_class + ' a { \
     color: #9A9A9A; \
@@ -123,6 +125,9 @@ exp.css += ' \
 } \
 .AWA_review_table_image_cell img { \
     height: 128px; \
+} \
+#checkout-review-table > tbody > tr > td.last { \
+    text-align: right; \
 }';
 
 // Style tweaks for page title padlock
@@ -266,11 +271,6 @@ exp.init = function() {
             exp.vars.item_total_new_label);
         $(exp.vars.total_cell_selector).text(
             exp.vars.total_new_label);
-
-        // Center-align summary prices
-        $(exp.vars.summary_prices_selector)
-            .removeClass('a-right')
-            .addClass('a-center');
 
         // Fix height for checkout container (its fixed height, but our product
         // images can push the content beyond the height limit)
