@@ -98,9 +98,6 @@
     display: block;
     clear: both;
 }
-.stockInfo input.addToBasket[type="submit"] {
-    background-position: 0 -20px;
-}
 .promo {
     margin-left: 16px;
     text-align: center;
@@ -130,18 +127,25 @@
     border: 1px black solid;
     padding: 5px;
 }
-.button.addToBasket {
+#addToBasket input.button.addToBasket {
     background-color: #345e2e;
     background-image: none !important;
     text-indent: 0;
     color: white;
     font-size: 1.1em;
+    height: 30px !important;
+    line-height: 30px !important;
+    padding: 0 !important;
+    font-weight: bold;
 }
 .button.addToBasket:hover {
     opacity: .9;
 }
 .stockInfo li.size {
     width: 280px !important;
+}
+.stockInfo li.price {
+    width: 50px !important;
 }
 #productCont { float: right !important }
 #product-media { display: none !important }

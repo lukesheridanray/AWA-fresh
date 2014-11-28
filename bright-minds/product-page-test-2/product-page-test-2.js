@@ -21,7 +21,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Bright Minds: Product Page Test 1 v0.3');
+exp.log('Bright Minds: Product Page Test 2 v0.3');
 
 // // Condition
 // // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -53,9 +53,241 @@ exp.vars = {
     ],
 
     copy: {
-        'http://www.brightminds.co.uk/rainbow-in-your-room/p841': ''
+        "http://www.brightminds.co.uk/rainbow-in-your-room/p841": {
+            specs: ["Age 4 and above"],
+            description: "<p>Bring nature's most beautiful light-show into your bedroom. \
+            This enchanting light projector displays a rainbow on walls or ceilings in \
+            a darkened room. Includes a sunlight crystal for daytime rainbows.</p> \
+            <p>Requires 4 AAA batteries, supplied separately.</p>"
+            },
+        "http://www.brightminds.co.uk/atm-bank/p202": {
+            specs: ["Age 8+"],
+            description: "<p>A superb way to learn about money handling and setting \
+            a target for saving, whilst protecting pocket money from prying eyes.</p> \
+            <p>To bank money, notes are automatically drawn into the slot and the \
+            cashpoint identifies coins and adds the coin values to your running \
+            total. Realistic ATM noises and lights help you set a target figure you \
+            want to save to and compare your coin total to this value. When you are \
+            ready, draw out your cash by setting your own 4 digit PIN and using \
+            the ATM included.</p> \
+            <p>A fun and engaging learning toy for any child who knows their \
+            number bonds and is starting to take an interest in money.</p> \
+            <p>Works with £ currency. Size: H 22cm x W 26cm.</p> \
+            <p>Requires 3 AA batteries, not supplied.</p>"
+            },
+        "http://www.brightminds.co.uk/junior-carpenter-tool-set/p132": {
+            specs: ["Age 8 to adult"],
+            description: "<p>A scaled-down working version of a <strong>real carpenter's tool set</strong> this \
+            set is an ideal kids tool set for children who like working with the real thing.</p> \
+            <p>Contents (which may vary) include a saw with metal blade, claw hammer, \
+            pliers, chisel, 2 screwdrivers, mallet, plane, clamp, nail puller, set \
+            square, retractable tape measure and nails, pins and screws plus a leaflet \
+            explaining the function of each tool.</p> \
+            <p>Packed in a tough solid wooden storage cabinet with hinged winged doors \
+            and metal carrying handle, this makes a great gift for a Junior Carpenter.</p> \
+            <p>Cabinet Size:  36 x 24 x 8.5 cm.</p>"
+            },
+        "http://www.brightminds.co.uk/design-and-drill-centre/p133": {
+            specs: ["Ages 3 to 6"],
+            description: "<p>Creativity and construction come together in this Award winning \
+            activity set that engages fine motor skills as kids create their own designs, \
+            or those featured in the 20 included activity cards.</p> \
+            <p>This kit blends creativity with 'hands-on doing' activity as you build \
+            patterns up from the chunky, colourful bolts.</p> \
+            <p>Includes plastic bolts, reversible power drill, screwdriver, three drill \
+            bits and combination wrench.</p> \
+            <p>Requires 3 AA batteries, not included.</p>"
+            },
+        "http://www.brightminds.co.uk/city-of-zombies-maths-game/p2787": {
+            specs: ["Age 8+", "For 1 to 6 players"],
+            description: "<p>Lock and Load your dice – the Zombies are coming! You’ll need to \
+            use your brains if they’re not going to get you. Select your heroes and team \
+            up to fight for your lives against an advancing Zombie horde. Roll the dice \
+            and combine all the numbers on the dice to take out as many Zombies as possible.</p> \
+            <p>Unlock power ups and battle the Zombie bosses. Clear the board for bonus \
+            survivor cards, but beware! The Zombies are after you and if your barricade \
+            gets overrun, it’s game over…</p> \
+            <p>City of Zombies is a co-operative, dice-based intense team survival game. \
+            Players must work together, discuss and share ideas in their fight for \
+            survival in this fun and frantic family game. They combine dice to target \
+            and remove Zombies from an ever-advancing horde before their barricade is overrun.</p> \
+            <p>City of Zombies only takes moments to set up and minutes to learn, and \
+            right from the start you’re thrown into the action. The game is suitable for \
+            all ages and abilities, and can be played in as little as 15 minutes (in the \
+            shorter version). The game involves manipulating the numbers rolled on the \
+            dice using different combinations of mathematical functions (from basic \
+            addition and subtraction through to squaring and cube rooting) to hit \
+            the exact numbers on the encroaching Zombie cards.</p> \
+            <p>Originally developed to assist the designer's daughter with her maths, \
+            City of Zombies is a fun way to improve numeracy, using non-threatening maths \
+            play.  It encourages confidence, communication & learning.</p> \
+            <p>Contents:</p> \
+            <ul> \
+                <li>Game Rules</li> \
+                <li>Dice</li> \
+                <li>Turn counter</li> \
+                <li>Family friendly Zombie cards</li> \
+                <li>‘Walker’ Zombie cards</li> \
+                <li>2 Styles of Hero cards</li> \
+                <li>Survivor cards</li> \
+                <li>Event cards</li> \
+                <li>Game Board</li> \
+            </ul>"
+            },
+        "http://www.brightminds.co.uk/bookmark-dictionary-white/p1784": {
+            specs: ["Age 6+"],
+            description: "<p>There will be no need to ask Mum next time you read a word you \
+                    don’t understand. This electronic dictionary bookmark can be used to \
+                    keep your place in the conventional way, but also offers 38,000 \
+                    definitions from The Collins English Dictionary at your fingertips.</p> \
+                    <p>Although this does not act as a spelling corrector it is a great \
+                    gadget for children and adults to enrich their reading experience.</p> \
+                    <p>Easy to use. Battery included. Size 17 x 4.5cm.</p>"
+            },
+        "http://www.brightminds.co.uk/anatomy-model/p15": {
+            specs: ["Ages 6+"],
+            description: "<p>Anatomy model with removable organs and a rubbery realistic feel.</p> \
+                    Kidneys remain attached to main back body part bit- half of lungs, \
+                    liver, stomach, gut, heart, eye, part of brain all remove. No sex organs. \
+                    Really helps children to identify organs and learn where they are located.</p> \
+                    <p>Size 27 cm tall.</p>"
+            },
+        "http://www.brightminds.co.uk/john-adams-science-is-magic/p262": {
+            specs: ["Ages 7 to 11"],
+            description: "<p>Over 30 experiments to learn about the magic of science, including \
+                    a flying phoenix, magic spinning broomstick and a warthog optical illusion.</p>"
+            },
+        "http://www.brightminds.co.uk/rc-illuminated-solar-system/p843": {
+            specs: ["Age 6+"],
+            description: "<p>A fabulous, motorised model of the solar system based around an \
+                    illuminated sun light. The eight planets rotate on three independent \
+                    orbits and can be controlled remotely, making this an ideal bedroom \
+                    accessory as well as an impressive educational toy.</p> \
+                    <p>Requires 3 AA and 2 AAA batteries, supplied separately.</p>"
+            },
+        "http://www.brightminds.co.uk/native-american-bead-loom/p245": {
+            specs: ["Age 8+"],
+            description: "<p>Learn the art of Native American beading. High quality bead loom \
+                    comes with over 2,000 beads and instructions for creating dozens of \
+                    beaded projects.</p>"
+            },
+        "http://www.brightminds.co.uk/introduction-to-engineering-thames-and-kosmos-little-labs/p801": {
+            specs: ["Age 5 +"],
+            description: "<p>A brilliant kit to welcome young children to the field of \
+                    engineering. Includes an excellent colour manual with 25 experiments \
+                    and building projects such as building a helicopter, a glider, a \
+                    pinwheel and a dragster. A Thames and Kosmos Little Labs kit of good quality.</p>"
+            },
+        "http://www.brightminds.co.uk/microscope-set-in-handy-carry-case/p164": {
+            specs: ["Age 10+"],
+            description: "<p>This is our best selling children's microscope in the under £50 \
+                    bracket, with excellent reviews.</p> \
+                    <p>A superior-quality children's microscope with a built-in light \
+                    source, giving a range of magnifications up to x1200.</p> \
+                    <p>The sturdy, fold-out storage case contains blank slides and a \
+                    prepared viewer card together with instruments for making your own slides.</p> \
+                    <p>The kit includes a selection of pre-made slides of algae, fibres, and other items.</p> \
+                    <p>Requires 2 AA batteries (not supplied) for the sub-stage light. \
+                    Please note that some of the instruments are some very sharp and only \
+                    be used under supervision. These include a scalpel, a micro-slicer \
+                    and a pointed seeker.)</p> \
+                    <p><em>Please note, this a high quality working toy microscope offering \
+                    great functionality at an excellent price. If you require a metal \
+                    body microscope we recommend the more expensive \
+                    <a href=\"http://www.brightminds.co.uk/tk2-scope-thames-and-kosmos/p802\" target=\"_blank\">TK2</a> \
+                    </em></p>"
+            },
+        "http://www.brightminds.co.uk/chemistry-lab-kit-senior-large/p375": {
+            specs: ["Age 10+"],
+            description: "<p>Complete Chemistry lab set with all the necessary instructions. \
+            Kit includes litmus paper, a glass beaker and rods, flask, test tube holder \
+            and rack with corks and stoppers, funnel and filter papers and a spirit \
+            burner lamp (without spirit). A detailed instruction manual for experiments \
+            is included, using the supplied chemicals plus, other easily obtainable \
+            household items. as is common with all chemistry sets.</p> \
+            <p>Contains:</p> \
+            <ul> \
+                <li>1 - 100ml beaker</li> \
+                <li>1 - Universal Indicator papers</li> \
+                <li>1 - 100ml conical flask</li> \
+                <li>2 - stoppers - cork</li> \
+                <li>3 - stoppers - cork with hole</li> \
+                <li>Filter papers</li> \
+                <li>Litmus papers</li> \
+                <li>1 - Plastic funnel</li> \
+                <li>1 - 120mm glass stirring rod</li> \
+                <li>3 - 100mm glass tubing</li> \
+                <li>1 - Measuring spoon</li> \
+                <li>1 - Plastic dropping pipette</li> \
+                <li>1 - 100mm rubber tubing</li> \
+                <li>1 - Safety goggles</li> \
+                <li>1 - Small scoop</li> \
+                <li>1 - Spirit burner</li> \
+                <li>4 - Test tube caps</li> \
+                <li>1 - Test tube cleaning brush</li> \
+                <li>1 - Test tube holder</li> \
+                <li>1 - Test tube rack</li> \
+                <li>4 - Test tubes</li> \
+                <li>Ammonium chloride</li> \
+                <li>Calcium Carbonate</li> \
+                <li>Iron fillings</li> \
+                <li>Copper (II) Sulphate</li> \
+                <li>Calcium Hydroxide</li> \
+                <li>Litmus Blue</li> \
+                <li>Copper Foil</li> \
+                <li>Copper (II) oxide</li> \
+                <li><strong>Magnesium Strip</strong></li> \
+                <li>Magnesium sulphate</li> \
+                <li>Methyl orange</li> \
+                <li>Sodium carbonate</li> \
+                <li>Sodium hydrogen sulphate</li> \
+                <li>Aluminium potassium sulphate</li> \
+                <li>Potassium iodide</li> \
+                <li>Sodium sulphate</li> \
+                <li>Sodium thiosulphate</li> \
+                <li>Zinc Pellets</li> \
+                <li>Iron (II) Sulphate</li> \
+                <li>100 experiments in a 71 page black and white booklet.</li> \
+            </ul>"
+            },
+        "http://www.brightminds.co.uk/thames-and-kosmos-electricity-magnetism/p803": {
+            specs: ["Age 8+"],
+            description: "<p>Explore electricity and magnetism with easy snap-together blocks \
+            which help you complete projects such as a loudspeaker, an electromagnet \
+            relay switch, and a Morse code telegraph key. The blocks are brightly \
+            coloured and have unique shapes, making this set a brilliant starter kit.</p> \
+            <p>Conduct more than 60 electrifying experiments with circuits and magnetic \
+            contraptions to learn about electricity and magnetism, and how these two \
+            fundamental properties are closely related. Children eight and up can safely \
+            and easily experiment with electric current and magnetic fields using the \
+            colorful snap-together blocks and components in this hands-on kit.</p> \
+            <p>Build series and parallel circuits to light up a light bulb. Experiment \
+            with push buttons and on-off switches. Assemble circuits that include a \
+            spinning motor, two switches, and up to three light bulbs.</p> \
+            <p>Conduct tests to see which materials are magnetic. Learn about the force \
+            of magnetism and magnetic poles. Magnetize a metal. Use iron fillings to \
+            make invisible magnetic fields visible. Investigate magnetic force and \
+            direction with a magnetic pendulum device. Learn how a compass works and \
+            about Earth's magnetic fields. Conduct a series of experiments with a \
+            sturdy electromagnet.</p> \
+            <p>Finally, put everything you have learned to good use by constructing a \
+            loudspeaker, an electromagnetic relay switch, and a morse code telegraph key.</p> \
+            <p>The components are specially designed to make learning fun and accessible. \
+            The electrical blocks fit together with simple plugand- socket connectors. \
+            Because the blocks are brightly coloured and have unique shapes, it is easy \
+            to follow the assembly diagrams to construct functional devices.</p> \
+            <p>The 64-page, full-colour experiment manual guides you through \
+            experiments with easy-to follow diagrams.</p> \
+            <p>60 components.</p>"
+            },
+        "http://www.brightminds.co.uk/spacebot/p1901": {
+            specs: ["Age 5+"],
+            description: "<p>Infrared remote control robot with walking, kind of talking actions \
+                    and the ability to shoot disks from his mouth. He lights up when in \
+                    action and makes typical robot noises!</p> \
+                    <p>Size 30cm. Requires 6 AA batteries.</p>"
+            }
     }
-
 };
 
 // Styles
@@ -123,6 +355,16 @@ exp.css = '\
 and (max-width : 950px) { \
     .exp-column { width: 100%; } \
     #product #summary .message { position: static; width: 100%; } \
+} \
+ul.product-specs { \
+    list-style-type: none; \
+    border: 2px solid #f0f1f2; \
+    padding: 7px; \
+} \
+.product-specs li { \
+    font-weight: bold; \
+    display: inline-block; \
+    margin-right: 1em; \
 }';
 
 // Functions
@@ -330,6 +572,16 @@ exp.init = function() {
         });
     }
 
+    // Update copy
+    var page_url = window.location.href.match(/http:.*\/p[0-9]+/)[0];
+    var copy = exp.vars.copy[page_url];
+    if (copy) {
+        $('#desc_1').html(copy.description);
+        if (copy.specs.length) {
+            $('#desc_1').prepend('<ul class="product-specs"><li>Key specifications:</li><li>'
+                + copy.specs.join('</li><li>') + '</li></ul>');
+        }
+    }
 };
 
 // Run the experiment

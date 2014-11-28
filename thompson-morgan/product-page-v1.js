@@ -6,9 +6,21 @@
 // JSHint flags
 // jshint multistr: true
 // jshint jquery: true
+// 
+// Fixing IE - http://stackoverflow.com/questions/2308134/trim-in-javascript-not-working-in-ie
+if(typeof String.prototype.trim !== 'function') {
+  String.prototype.trim = function() {
+    return this.replace(/^\s+|\s+$/g, ''); 
+  }
+}
 
 // Image experiment merged
 (function ($) {
+
+  if ($(".t011").length) {
+    console.log('Large image tweak already applied, skipping...');
+    return;
+  }
   
   //Extract image data
   var images = [];
@@ -209,7 +221,7 @@ exp.vars = {
                     "August","September","October","November","December"],
 
     packPlantImg: 'https://dd6zx4ibq538k.cloudfront.net/static/images/2841/b41b625c32b5367a2d2c26bb8ed8617a_213_320.jpeg',
-    packPlugImg:  'https://dd6zx4ibq538k.cloudfront.net/static/images/2841/89e991d1fc4cb643ed98e0ae777eadaf_320_213.jpeg',
+    packPlugImg:  'https://dd6zx4ibq538k.cloudfront.net/static/images/2841/3448c8dfe2877f76d53cd1d18e8b70e8_213_320.jpeg', //'https://dd6zx4ibq538k.cloudfront.net/static/images/2841/89e991d1fc4cb643ed98e0ae777eadaf_320_213.jpeg',
     pickPlantImg: 'https://dd6zx4ibq538k.cloudfront.net/static/images/2841/76cb2b9d0ef7eaae82253a3ba4229e25_213_320.jpeg',
 
     deliveryTable: '<table class="delivery-table"> \
@@ -400,7 +412,7 @@ exp.init = function() {
     $.getScript('http://cdn.jsdelivr.net/qtip2/2.0.1/jquery.qtip.min.js', tooltips_loaded);
 
     // Rejig prices
-    $(".stockInfo .quantity label").text('');
+    $(".stockInfo .quantity label").html('&nbsp;');
     $(".stockInfo").each(function () {
         $(this).find(".basket").append('<span class="promo">'
             + $(this).find(".promo").detach().text() + '</span>');
@@ -520,7 +532,12 @@ exp.init = function() {
             var html = $(data);
 
             html.find(".grid2").each(function () {
+                var image;
+
                 if ($(this).children('h2').text() == plant_type) {
+                    image = $(this).find('img');
+                    image.removeAttr('width');
+                    image.removeAttr('height');
                     exp.vars.packagingModal = $(this).html();
                 }
             });
