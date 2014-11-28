@@ -104,7 +104,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Measurements panel v2 - 0.6');
+exp.log('Measurements panel v2 - 0.7');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -327,22 +327,22 @@ exp.func.getMoreOptions = function( mobile ) {
     }
     if( typeError ) {
         $('#advice-required-recess-exact-before').show(200);
-        if (exp.func.isMobile()) { $('body').scrollTop(0); }
+        if (exp.func.isMobile()) { $('body,html').scrollTop(0); }
     } else {
         $('#advice-required-recess-exact-before').hide(200);
         if( widthError || heightError ) {
-            if (exp.func.isMobile()) { $('body').scrollTop(0); }
+            if (exp.func.isMobile()) { $('body,html').scrollTop(0); }
         }
         if( !widthError && !heightError ) {
 
             if (exp.func.isMobile()) {
-                $('body').scrollTop(
+                $('body,html').scrollTop(
                     $('#product-options-wrapper').offset().top
                 );
             }
             else {
                 // Scroll to just below the header.
-                $('body').scrollTop(
+                $('body,html').scrollTop(
                     $('#top').offset().top
                 );
             }
