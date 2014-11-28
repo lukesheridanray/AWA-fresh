@@ -6,11 +6,6 @@
 // jshint multistr: true
 // jshint jquery: true
 
-// 'console' is undefined in IE9 when dev tools are not open, so any calls to
-// console.log() stop execution of Javascript.  Let's thus define an empty
-// function for console.log when 'console' is undefined.
-var console=console||{"log":function(){}};
-
 // Wrap the experiment code in an IIFE, this creates a local scope and allows us to
 // pass in jQuery to use as $. Other globals could be passed in if required.
 var paypal_creditcard_review_page = (function($) {
@@ -18,8 +13,14 @@ var paypal_creditcard_review_page = (function($) {
 // Initialise the experiment object
 var exp = {};
 
+exp.log = function (str) {
+    if (typeof window.console !== 'undefined') {
+        console.log(str);
+    }
+};
+
 // Log the experiment, useful when multiple experiments are running
-console.log('Paypal/Credit Card Review Page experiment PAGE: PP - 0.1');
+exp.log('Paypal/Credit Card Review Page experiment PAGE: PP - 0.2');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -27,7 +28,7 @@ exp.condition = $('body.paypal-express-review');
 
 // Check for a condition and return false if it has not been met
 if(exp.condition && !exp.condition.length) {
-    console.log('Experiment failed a condition');
+    exp.log('Experiment failed a condition');
     return false;
 }
 
@@ -52,6 +53,7 @@ exp.vars = {
     'new_page_title_html' : '<h1> \
                                 <img src="//cdn.optimizely.com/img/174847139/d9318f7641174e0391002bddf33f7386.png" alt="" /> \
                                 Review and Confirm Your Order \
+                                <img class="AWA_pp_logo" src="//www.coxandcox.co.uk/skin/frontend/default/coxampcox/images/icon5.gif" alt="" /> \
                             </h1>',
 
     'review_table_rows_selector'        : '#details-table tbody tr',
@@ -77,7 +79,9 @@ exp.vars = {
     'review_billing'   : $('.review_billing'),
     'review_shipping'  : $('.review_shipping'),
     'billing_edit_li'  : $('<li class="AWA_edit_deets">edit</li>'),
-    'shipping_edit_li' : $('<li class="AWA_edit_deets">edit</li>')
+    'shipping_edit_li' : $('<li class="AWA_edit_deets">edit</li>'),
+
+    'place_order_button_selector' : '#review_button'
 };
 
 // Styles
@@ -114,6 +118,7 @@ exp.css += ' \
 } \
 #details-table.data-table thead th { \
     color: black; \
+    border-bottom: 1px solid #bebcb7 !important; \
 } \
 #details-table.data-table thead th.' + exp.vars.edit_shopping_cart_class + ' a { \
     color: #9A9A9A; \
@@ -142,15 +147,21 @@ exp.css += ' \
 } \
 .info-set .box.AWA_shipping_dropdown { \
     margin: 0; \
+} \
+#details-table > tbody > tr > td.last { \
+    text-align: right; \
 }';
 
-// Style tweaks for page title padlock
+// Style tweaks for page title
 exp.css += ' \
 .page-title h1 img { \
     vertical-align: text-bottom; \
 } \
 h2.sub-title { \
     display: none; \
+} \
+.page-title h1 img.AWA_pp_logo { \
+    float: right; \
 }';
 
 // Style tweaks for the "Place order" button
@@ -174,7 +185,7 @@ exp.css += '\
     float: left; \
     font: 10px/30px Arial,Helvetica,sans-serif; \
     height: 40px; \
-    padding: 0 0 0 7px; \
+    padding: 0 0 0 6px; \
     text-align: left; \
     white-space: nowrap; \
 } \
@@ -191,6 +202,12 @@ exp.css += '\
     font-size: 11pt; \
     text-transform: none; \
     font-weight: bold; \
+} \
+button.btn-checkout.no-checkout span { \
+    background-position: initial; \
+} \
+button.btn-checkout.no-checkout span span { \
+    background-position: 100% -38px; \
 }';
 
 // Styling for info review row
@@ -467,8 +484,7 @@ exp.func.pokeTable = function(){
         // Give dropdown a class so we can remove some unnecessary padding
         exp.vars.shipping_method_dropdown.addClass("AWA_shipping_dropdown");
 
-        // Re-call native function that reattaches event handlers to dropdown,
-        // because it was not in the DOM when this function originally ran.
+        // Re-call native function that reattaches event handlers to dropdown
         PayPalExpressAjax._updateShipping();
     }
     // Otherwise create a brand new shipping row
@@ -489,6 +505,9 @@ exp.func.pokeTable = function(){
 
         // Add the row to table footer
         $(exp.vars.review_table_selector).find('tfoot tr.last').before($new_row);
+
+        // Re-call native function that reattaches event handlers to dropdown
+        PayPalExpressAjax._updateShipping();
     }
 
 };
@@ -553,6 +572,10 @@ exp.init = function() {
         exp.vars.billing_edit_li.on('click', function(){ exp.vars.update_deets_row.slideDown(); });
         exp.vars.shipping_edit_li.on('click', function(){ exp.vars.update_deets_row.slideDown(); });
 
+        // Add padlock to place-order button
+        $(exp.vars.place_order_button_selector).find('> span > span').prepend(
+            $(exp.vars.padlock_image)
+        );
 
         // Do changes to table
         exp.func.pokeTable();
