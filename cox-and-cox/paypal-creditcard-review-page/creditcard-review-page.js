@@ -20,7 +20,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Paypal/Credit Card Review Page experiment PAGE: CC - 0.2');
+exp.log('Paypal/Credit Card Review Page experiment PAGE: CC - 0.3');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -72,7 +72,10 @@ exp.vars = {
     'review_step_selector'     : '#checkout-step-review',
 
     'place_order_button_selector' : '.button.btn-checkout:nth-child(2)',
-    'padlock_image': '<img src="//cdn.optimizely.com/img/174847139/97a250a00240473fb3eaeb11303abe38.png" alt="" />'
+    'padlock_image': '<img src="//cdn.optimizely.com/img/174847139/97a250a00240473fb3eaeb11303abe38.png" alt="" />',
+
+    'header': $('#header,.header-top'),
+    'footer': $('#footer,.bottom')
 };
 
 // Styles
@@ -174,6 +177,17 @@ exp.css += '\
     font-size: 11pt; \
     text-transform: none; \
     font-weight: bold; \
+}';
+
+// General style fixes
+exp.css += '.w1 .w2 .main-container { \
+    margin-bottom: 0; \
+} \
+.w1 .w2 { \
+    padding-bottom: 0; \
+} \
+.checkout-seperator-bottom { \
+    display: none; \
 }';
 
 // Functions
@@ -282,6 +296,9 @@ exp.init = function() {
             $(exp.vars.padlock_image)
         );
 
+        // Remove header and footer
+        exp.vars.header.hide();
+        exp.vars.footer.hide();
 
     }, 1000 * 60 * 5); // 5 minute timeout
 

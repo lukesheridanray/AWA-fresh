@@ -20,7 +20,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Paypal/Credit Card Review Page experiment PAGE: PP - 0.2');
+exp.log('Paypal/Credit Card Review Page experiment PAGE: PP - 0.3');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -81,7 +81,10 @@ exp.vars = {
     'billing_edit_li'  : $('<li class="AWA_edit_deets">edit</li>'),
     'shipping_edit_li' : $('<li class="AWA_edit_deets">edit</li>'),
 
-    'place_order_button_selector' : '#review_button'
+    'place_order_button_selector' : '#review_button',
+
+    'header': $('#header,.header-top'),
+    'footer': $('#footer,.bottom')
 };
 
 // Styles
@@ -576,6 +579,10 @@ exp.init = function() {
         $(exp.vars.place_order_button_selector).find('> span > span').prepend(
             $(exp.vars.padlock_image)
         );
+
+        // Remove header and footer
+        exp.vars.header.hide();
+        exp.vars.footer.hide();
 
         // Do changes to table
         exp.func.pokeTable();
