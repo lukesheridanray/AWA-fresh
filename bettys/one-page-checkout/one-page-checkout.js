@@ -1,25 +1,23 @@
 /*
 
-When user enters a postcode OR changes their country to be anything other than UK, address section expands
+delivery error message should not include the tick and bits
 
+listen for updates to delivery cost 
 
+Section 4 only changes when shipping costs are added to the order summary (this happens at the same time as Section 3 expands)
+
+---
+The test is responsive for tablets (but won’t be shown to mobiles). My tablets, we just mean iPads and iPad minis. You can see this if you view my version and compress the width
+
+// on pad make fields higher so they're easier to click on
+// on pad it's slightly to wide - only just 
+
+--
+
+browser testing
 
 */
 
-//Need to factor in countries that can't be delivered too - produces a sorry message in delivery section
-//Need to factor in "What's this?" message popup
-//Sign in link doesn't work at the moment
-//When cllosing poopup, sometimes window auto scrolls down a bit
-//Summary title and styling can disappear or title can be applie twice...
-//If already logged in, sign in button should be hidden if $(".links .last a").text() contains "Log Out"
-//REload page after a break, on a country with no delivery - delivery optyions doesn;t expand - prtobably fix by adding that loop earlier too...
-//2nd Perfection guarantee link doesn't work
-//include something for really massive baskets
-//Changing the date just didn't work!!
-//cover lower right margin just after compression - perhaps put an extra blank div there or something?
-// on pad make fields higher so they're easier to click on
-// on pad it's slightly to wide - only just 
-// Pressing enter on gift message form triggers the login link!
 
 
 //
@@ -51,8 +49,11 @@ exp.log('Bettys vertical checkout - dev 0.1');
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
+    'isLoggedIn': ( $('.links .last a').text().indexOf('Log Out') !== -1 ) ? true : false,
     'loginWidget': $('.onestepcheckout-login-link'),
     'NCcontentRImage': '//cdn.optimizely.com/img/14847832/b5ad0505be384613b7faa794bc1717bf.png',
+    'vanIcon': '//cdn.optimizely.com/img/14847832/310371129b3a437b96c450252efd4f12.png',
+    'awaTick': '//cdn.optimizely.com/img/14847832/f2f9b8bda86c404a81ea8252d09baa56.png',
     'step1Heading': '<h3>1. Billing Address</h3> \
                      <p>Please enter your details. Required information is indicated with a <span class="required">*</span></p>',
     'step2Heading': '<h3>2. Delivery Address</h3>',
@@ -62,18 +63,21 @@ exp.vars = {
     'orderButtonTitle': 'PLACE ORDER',
     'step1Fields': $('#billing_address'),
     'step2DelMethodOptions': ' \
+                          <div id="deliveryAddress" class="exp-del-method-options-wrap"><span class="exp-del-method-options"> \
                           <input class="radiobutton" name="" id="billingOptionUse" value="1" type="checkbox"> \
-                          <label for="billingOptionUse">Deliver to my billing address</label> \
+                          <label for="billingOptionUse">Deliver to my billing address</label></span> \
+                          <span class="exp-del-method-options"> \
                           <input class="radiobutton" name="" id="billingOptionDiff" value="1" type="checkbox"> \
-                          <label for="billingOptionDiff">Deliver to a different address</label>',
-    'step2ShipAddress': $('#shipping_address_list'),
+                          <label for="billingOptionDiff">Deliver to a different address</label></span></div> \
+                          <div class="validation-advice" id="expShipOptionValidation">You must specify a shipping address.</div>',
+    'step2ShipAddress': ( $('#shipping-address-select').length ) ? $('#shipping_address .form-alt') : $('#shipping_address_list'),
     'step3DelMethod': $('.onestepcheckout-shipping-method'),
     'step3GiftMessages': $('.onestepcheckout-giftmessages'),
     'step3Comments': $('.onestepcheckout-comments'),
     'step4PaymentMethods': $('.payment-methods'),
     'step4OrderButton': $('.onestepcheckout-place-order-wrapper'),
     'step4Terms': $('.onestepcheckout-place-order-message'),
-    'step4Summary': $('.onestepcheckout-summary'),
+    'step4Summary': $('div.onestepcheckout-summary'),
     'step4SecureLogo': $('.bettys-footer-secure'),
     'perfectPopup': '<div class="perfect_popup"> \
                       <div class="perfect_popup_in"><a class="perfect_close" href="#">X</a> \
@@ -82,152 +86,21 @@ exp.vars = {
                       it stays perfect. In the unlikely event that your goods are not fresh and perfect \
                       on arrival, we GUARANTEE to replace or refund at your convenience.</p> \
                       </div></div>',
-    'rememberLabel': '"Remember my card details so I can check out more quickly next time',
+    'rememberLabel': 'Remember my card details so I can check out more quickly next time',
     'deliveryInitial': $('<div class="exp-delmsg exp-delmsg--initial">Please complete steps 1 &amp; 2 above, dates, prices and gift options will \
                        then be shown here. Thank you.<br><br>(As always your order will be \
                        beautifully packaged and delivered with our <a class="change_style" href="#">Perfection Guarantee</a>)')
 
 };
 
-/*
+
 // Styles
 // String containing the CSS for the experiment
 exp.css = ' \
-/*.NC-row { \
-    width: 100%; \
-    position: relative; \
-    min-width: 700px \
-} \
-.NC-row-5 { \
-    overflow: visible; \
-} \
-.NC-heading, .topheading { \
-    color: #98002E; \
-    font-size: 16px; \
-    width: 200px; \
-    padding-right: 10px; \
-    float: left; \
-    padding-bottom: 20px \
-} \
-.NC-content { \
-    width: 400px; \
-    float: left; \
-    margin-right: 300px; \
-    padding-bottom: 25px \
-} \
-.NC-content-L { \
-    float: left \
-} \
-.NC-content-R { \
-    position: absolute; \
-    right: 0px; \
-    width: 300px \
-} \
-.NC-sumadjust { \
-    position: relative; \
-    padding-bottom: 15px \
-} \
-.newSummary { \
-    right: -470px; \
-    width: 450px; \
-    bottom: 10px; \
-    border-left: 50px white solid; \
-    border-right: solid white 170px; \
-    background-color: white \
-} \
-.NC-row-1 .NC-content-R { \
-    top: 0px; \
-    padding-top: 20px; \
-    padding-left: 35px; \
-    background-image: url('+exp.vars.NCcontentRImage+'); \
-    background-repeat: no-repeat; \
-    height: 212px; \
-} \
-.newOptions { \
-    width: 700px; \
-    font-size: 14px; \
-    margin-right: 0px; \
-    line-height: 20px; \
-    padding-bottom: 0; \
-} \
-.onestepcheckout-threecolumns { \
-    visibility: hidden; \
-    position: absolute; \
-    top: 0; \
-} \
-#shipping_address { \
-    display: none; \
-} \
-#shipping_address_list .name-prefix { \
-    padding-bottom: 0; \
-} \
-#shipping_address_list .input-box { \
-    padding-bottom: 7px; \
-} \
-.perfect_close, .perfect_close2 { \
-    width: 20px; \
-    height: 20px; \
-    position: absolute; \
-    background: #98002e; \
-    top: -10px; \
-    right: -10px; \
-    border-radius:10px; \
-    -moz-border-radius:10px; \
-    -webkit-border-radius:10px; \
-    color: #fff; \
-    line-height: 20px; \
-    text-align: center; \
-    font-size: 11px; \
-    text-indent: 3px; \
-} \
-.perfect_popup, .perfect_popup2 { \
-    border: 2px solid #98002e; \
-    border-radius: 5px; \
-    background: #fff; \
-    position: fixed; \
-    z-index: 999; \
-    top: 40%; \
-    left: 35%; \
-    margin-left: -12px; \
-    width: 30%; \
-    padding:15px; \
-    text-align:center; \
-    font-size:18px \
-} \
-.newButton { \
-  width: 700px; \
-  margin-right: 0; \
-} \
-.newButton button { \
-  float: left; \
-  margin-right: 200px; \
-} \
-.onestepcheckout-place-order-message { \
-  width: 400px; \
-  float: left; \
-} \
-.bettys-footer-secure { \
-  margin-left: 220px; \
-  margin-top: 55px; \
-  float: left; \
-  position: static; \
-  overflow: visible; \
-} \
-#shipping_address_list .name-prefix { \
-  padding-bottom: 0; \
-} \
-#shipping_address_list .input-box { \
-  padding-bottom: 7px; \
-} \
-.onestepcheckout-comments { \
-    display: none; \
-} ';
-*/
-
-exp.css = ' \
 .onestepcheckout-description, \
 .onestepcheckout-numbers, \
-.onestepcheckout-threecolumns { \
+.onestepcheckout-threecolumns, \
+#expShipOptionValidation { \
     display: none; \
 } \
 .exp-column-left { \
@@ -270,8 +143,12 @@ exp.css = ' \
     font-size: 16px; \
     padding-right: 50px; \
 } \
-.input-box label { \
+.input-box label, \
+.payment-method label { \
     margin: 16px 0 0 0; \
+} \
+.remember-label { \
+  margin: 2px 0 0 -20px !important; \
 } \
 select.validate-cc-exp { \
     width: 160px; \
@@ -282,11 +159,24 @@ select.year.required-entry { \
 .validate-ccsgpdp-cvn { \
     width: 102px !important; \
 } \
-.onestepcheckout-summary-wrap { \
-    width: 230px; \
+div.onestepcheckout-summary-wrap { \
+    width: 320px; \
     position: absolute; \
     bottom: 94px; \
-    right: 80px; \
+    right: 0px; \
+    padding: 0 80px 0 10px; \
+} \
+div.onestepcheckout-summary { \
+    width: 320px; \
+    padding: 0 80px 0 10px; \
+    background: #fff; \
+} \
+.onestepcheckout-summary-inner-wrap td { \
+    vertical-align: bottom; \
+} \
+.onestepcheckout-totals { \
+    position: relative; \
+    top: 0px; \
 } \
 .bettys-footer-secure-exp { \
     position: absolute; \
@@ -297,7 +187,7 @@ select.year.required-entry { \
     background-image: none; \
     padding-right: 10px; \
 } \
-.onestepcheckout-login-link button { \
+.onestepcheckout-login-link .button { \
     width: 237px; \
 } \
 .onestepcheckout-place-order-wrapper { \
@@ -327,7 +217,7 @@ select.year.required-entry { \
     line-height: 20px; \
     text-align: center; \
     font-size: 11px; \
-    text-indent: 3px; \
+    text-indent: 1px; \
     font-family: verdana, sans-serif; \
 } \
 .perfect_popup { \
@@ -360,8 +250,74 @@ select.year.required-entry { \
 .onestepcheckout-comments { \
     display: none; \
 } \
-#shipping_address_list { \
+.shipping-address-wrapper { \
     display: none; \
+} \
+.exp-delmsg .message #join_pop { \
+    width: 320px; \
+    margin: 15px 0 15px 0; \
+    background-image: url("'+exp.vars.vanIcon+'"); \
+    background-repeat: no-repeat; \
+    background-position: 12px 4px; \
+} \
+.exp-delmsg .message #join_pop:hover { \
+    background-position: 12px -52px; \
+} \
+.exp-delmsg .message #join_pop span span { \
+    padding-right: 0px; \
+    background: none; \
+} \
+.exp-delmsg .message #join_pop:hover span { \
+    color: #98002E; \
+    border-top-color: #fff; \
+    border-bottom-color: #fff; \
+} \
+.exp-delmsg .message, \
+.exp-delmsg .message strong { \
+    color: #98002E; \
+} \
+.exp-delmsg .message { \
+    margin-top: 6px; \
+} \
+.exp-delmsg .input-checkbox { \
+    margin-top: 5px; \
+} \
+.payment-methods { \
+    margin-top: 5px; \
+} \
+.exp-del-method-options { \
+    display: block; \
+    padding: 5px 0 2px 0; \
+} \
+.exp-delmsg--initial { \
+    font-size: 0.95em; \
+    position: relative; \
+    top: -14px; \
+} \
+.onestepcheckout-shipping-method-block p { \
+    border: 3px solid #e5e5e5; \
+    padding: 10px; \
+} \
+.bettys-footer-cards { \
+    margin-bottom: -20px; \
+} \
+.awatick { \
+    padding: 0px 0px 17px 30px; \
+    font-size: 13px; \
+    background-image: url("'+exp.vars.awaTick+'"); \
+    background-repeat: no-repeat; \
+    line-height: 25px; \
+} \
+.exp-del-instructions { \
+    margin-top: 25px !important; \
+} \
+.exp-del-method-options-wrap.error { \
+    border: 1px solid #f00; \
+    width: 362px; \
+    padding: 5px; \
+} \
+.exp-thin-column { \
+    padding-right: 400px !important; \
 }';
 
 
@@ -409,6 +365,74 @@ exp.func.waitForFunction = function(func, callback, timeout, keepAlive) {
         }, intervalTime);
 };
 
+exp.func.checkBillingFields = function() {
+    var isComplete = true;
+    if( $('#billing-address-select').length && $('#billing-address-select').val() === '' ) {
+        var requiredFields = $('[name="billing[firstname]"], [name="billing[lastname]"], \
+                                [name="billing[telephone]"], [name="billing[postcode]"], \
+                                [name="billing[street][]"]:eq(0), [name="billing[city]"], \
+                                [name="billing[region_id]"]');
+        requiredFields.each(function(){
+            if( $(this).val() === '' ) {
+                isComplete = false;
+            }
+        });
+    }
+    if( isComplete && $('#billingOptionUse').is(':checked') ) {
+        $('.exp-delmsg--loaded').show();
+        $('.exp-delmsg--initial').hide();
+    } else {
+        return;
+    }
+};
+
+exp.func.checkShippingFields = function() {
+    var isComplete = true;
+    if( $('#shipping-address-select').length && $('#shipping-address-select').val() === '' ) {
+        var requiredFields = $('[name="shipping[firstname]"], [name="shipping[lastname]"], \
+                                [name="shipping[telephone]"], [name="shipping[postcode]"], \
+                                [name="shipping[street][]"]:eq(0), [name="shipping[city]"], \
+                                [name="shipping[country_id]"]');
+        requiredFields.each(function(){
+            if( $(this).val() === '' ) {
+                isComplete = false;
+            }
+        });
+    }
+    if( isComplete ) {
+        $('.exp-delmsg--loaded').show();
+        $('.exp-delmsg--initial').hide();
+    } else {
+        return;
+    }
+};
+
+exp.func.checkSummaryHeight = function() {
+    var maxHeight = $('.exp-column-wrapper').height() - 300;
+    var summaryHeight = $('.onestepcheckout-summary').height();
+    var step4Height = $('.exp-step4').height();
+    $('.onestepcheckout-summary-inner-wrap').css({'height': maxHeight+'px'});
+    if( summaryHeight > step4Height) {
+        $('.exp-step3').addClass('exp-thin-column');
+    }
+    if( summaryHeight > maxHeight) {
+        $('.onestepcheckout-summary-inner-wrap').css({'height': 'auto'});
+        $('.onestepcheckout-summary-wrap').css({'position':'relative','float':'right','bottom':step4Height-200+'px'});
+    }
+/*
+    var summaryHeight = $('.onestepcheckout-summary-wrap').height();
+    var firstPoint = $('.exp-step4').height() - 80;
+    var limit = $('.exp-step4').height() + $('.exp-step3').height() + $('.exp-step2').height() + $('.exp-step1').height();
+
+    if( summaryHeight > firstPoint ) {
+        $('.exp-step3').addClass('exp-thin-column');
+    }
+    if( summaryHeight > limit ) {
+        $('.onestepcheckout-summary-wrap').css({'position':'relative','right':'400px','top':'-'+limit+'px'});
+    }
+*/
+};
+
 // Init function
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
 exp.init = function() {
@@ -417,7 +441,8 @@ exp.init = function() {
     $('head').append('<style type="text/css">'+this.css+'</style>');
 
     // add columns
-    this.vars.loginWidget.after( ' \
+    $('.onestepcheckout-threecolumns').before( ' \
+    <div class="exp-column-wrapper"> \
       <div class="exp-column-full exp-step1"> \
           <div class="exp-column-left"> \
               <div class="exp-column-heading"> \
@@ -437,15 +462,19 @@ exp.init = function() {
       <div class="exp-column-full exp-step4"> \
           <div class="exp-column-heading"> \
           </div> \
-      </div> '
+      </div> \
+    </div> '
     );
 
     // append content to columns
 
     $('.exp-step1')
     .find('.exp-column-left').append( this.vars.step1Fields )
-    .find('.exp-column-heading').append( this.vars.step1Heading )
-    .parents('.exp-column-full').find('.exp-column-right').append( this.vars.loginWidget );
+    .find('.exp-column-heading').append( this.vars.step1Heading );
+
+    if( !this.vars.isLoggedIn ) {
+        $('.exp-step1 .exp-column-right').append( this.vars.loginWidget );
+    }
 
     $('.exp-step2')
     .append( $('.input-different-shipping').add( this.vars.step2ShipAddress ) )
@@ -463,9 +492,69 @@ exp.init = function() {
     .append( this.vars.step4PaymentMethods.add( this.vars.step4OrderButton ).add( this.vars.step4Terms ).add( this.vars.step4Summary ).add( this.vars.step4SecureLogo ) )
     .find('.exp-column-heading').append( this.vars.step4Heading );
 
-    // Add popup
+
+    // DOM changes
 
     $('body').append( this.vars.perfectPopup );
+
+    this.vars.loginWidget
+    .prepend( this.vars.loginTitle )
+    .find('a').addClass('button').html( '<span><span class="signin-button">SIGN IN HERE</span></span></button>' );
+  
+    this.vars.step1Fields.find( '.onestepcheckout-numbers' ).next( 'small' ).remove();
+
+    $('.field.dob').parent('li').remove();
+
+    $('#onestepcheckout-place-order span span').html( this.vars.orderButtonTitle );
+
+    $('div.onestepcheckout-summary').wrap( '<table class="onestepcheckout-summary-inner-wrap"><tr><td>' );
+    $('.onestepcheckout-summary-inner-wrap').wrap( '<div class="onestepcheckout-summary-wrap" />' );
+    $('div.onestepcheckout-summary').prepend( '<h4>Order summary</h4>' );
+
+    this.vars.step4SecureLogo.addClass('bettys-footer-secure-exp').removeClass('bettys-footer-secure');
+
+    $('.remember-label').html( this.vars.rememberLabel );
+
+    $('.input-different-shipping input,.input-different-shipping label').wrapAll( '<div class="initialBillingCheckbox" />' );
+    $('.input-different-shipping').after( this.vars.step2DelMethodOptions );
+
+    $('.onestepcheckout-shipping-method-block,.onestepcheckout-giftmessages,.onestepcheckout-comments').wrapAll('<div class="exp-delmsg exp-delmsg--loaded" />');
+
+    this.vars.step2ShipAddress.wrap('<ul class="shipping-address-wrapper" />');
+
+    $('.onestepcheckout-comments').before( ' \
+        <div class="input-checkbox exp-del-instructions"> \
+            <input name="" id="openCloseComments" value="1" type="checkbox"> \
+            <label for="openCloseComments">Add extra delivery instructions for the courier.</label> \
+        </div> ');
+    $('.onestepcheckout-comments .small').prepend('e.g. "If not in leave with neighbour."<br />');
+    $('.onestepcheckout-comments').html( $('.onestepcheckout-comments textarea').add( $('.onestepcheckout-comments .small') ) );
+
+    $('#allow-gift-message-container .no-padding').html(
+        $('#allow-gift-message-container .input-box').filter( function(){ return !$(this).find('input').hasClass('validation-passed'); } ).add( $('#allow-gift-message-container .small') ).add( $('#allow-gift-message-container #gift-message-whole-message') )
+    );
+
+    $('#myModal').appendTo('body');
+
+    $('.onestepcheckout-giftmessages').before(
+        '<div class="awatick">Beautifully packaged</div> \
+        <div class="awatick">Delivered with our <a href="#" class="change_style">Perfection Guarantee</a></div>'
+    );
+    
+    // Behaviour
+
+    this.func.checkSummaryHeight();
+
+    // Initially check to see if we should open the delivery options
+
+    if( $('.input-different-shipping input').is(':checked') ) {
+        $('#billingOptionUse').prop('checked', true);
+        exp.func.checkBillingFields();
+    } else if( $('#billingOptionDiff').is(':checked') ) {
+        exp.func.checkShippingFields();
+    }
+
+    // Open perfect popup
 
     $('.change_style').click(function(e){
         e.preventDefault();
@@ -476,50 +565,13 @@ exp.init = function() {
         $('.perfect_popup').hide();
     });
 
-    // DOM changes
-
-    this.vars.loginWidget
-    .prepend( this.vars.loginTitle )
-    .find('a').html( '<button style="margin-top: 15px;" class="button"><span><span class="signin-button">SIGN IN HERE</span></span></button>' );
-  
-    this.vars.step1Fields.find( '.onestepcheckout-numbers' ).next( 'small' ).remove();
-
-    $('.field.dob').parent('li').remove();
-
-    $('#onestepcheckout-place-order span span').html( this.vars.orderButtonTitle );
-
-    $('.onestepcheckout-summary').wrapAll( '<div class="onestepcheckout-summary-wrap" />' );
-    $('div.onestepcheckout-summary').before( $('table.onestepcheckout-summary') );
-    $('.onestepcheckout-summary-wrap').prepend( '<h4>Order summary</h4>' );
-
-    this.vars.step4SecureLogo.addClass('bettys-footer-secure-exp').removeClass('bettys-footer-secure');
-
-    $('.remember-label').html( this.vars.rememberLabel );
-
-    $('.input-different-shipping input,.input-different-shipping label').wrapAll( '<div class="initialBillingCheckbox" />' );
-    $('.input-different-shipping').after( this.vars.step2DelMethodOptions );
-
-    $('.onestepcheckout-shipping-method-block,.onestepcheckout-giftmessages,.onestepcheckout-comments').wrapAll('<div class="exp-delmsg exp-delmsg--loaded" />')
-
-    $('.onestepcheckout-comments').before( ' \
-        <div class="input-checkbox"> \
-            <input name="" id="openCloseComments" value="1" type="checkbox"> \
-            <label for="openCloseComments">Add extra delivery instructions for the courier.</label> \
-        </div> ');
-    $('.onestepcheckout-comments .small').prepend('e.g. "If not in leave with neighbour."<br />');
-    $('.onestepcheckout-comments').html( $('.onestepcheckout-comments textarea').add( $('.onestepcheckout-comments .small') ) );
-
-    $('#allow-gift-message-container .no-padding').html( $('#allow-gift-message-container .input-box').add( $('#allow-gift-message-container .small') ).add( $('#allow-gift-message-container #gift-message-whole-message') ) );
-
-    // Behaviour
-
     // Show extra billing fields
 
     (function(){
         var pCode = $('.validate-zip-international');
         var country = $('[name="billing[country_id]"]');
         function showFields() {
-            $('.input-company, .input-fax, .input-address, .input-city, .input-region').show();
+            $('#billing_address_list .input-company, #billing_address_list .input-fax, #billing_address_list .input-address, #billing_address_list .input-city, #billing_address_list .input-region').show();
         }
         if( pCode.val() !== '' || country.val() !== 'GB' ) {
             showFields();
@@ -547,36 +599,52 @@ exp.init = function() {
             if( $('.input-different-shipping input').is(':checked') ) {
                 $('.input-different-shipping input').trigger('click');
             }
-            exp.vars.step2ShipAddress.show();
+            $('.shipping-address-wrapper').show();
+            exp.func.checkShippingFields();
         } else {
-            $('.exp-delmsg--loaded').show();
-            $('.exp-delmsg--initial').hide();
+            exp.func.checkBillingFields();
             if( !$('.input-different-shipping input').is(':checked') ) {
                 $('.input-different-shipping input').trigger('click');
             }
-            exp.vars.step2ShipAddress.hide();
+            $('.shipping-address-wrapper').hide();
         }
     });
 
-    // we need an event listener on the shipping address fields to check that the required fields have been completed
-    // we would then...
+    // Check something has been entered into shipping address
+    $('#shipping_address_list input').bind('keyup', exp.func.checkShippingFields);
+    $('#shipping_address_list select').bind('change', exp.func.checkShippingFields);
 
-    function() {
-      // successfull
-        $('.exp-delmsg--loaded').show();
-        $('.exp-delmsg--initial').hide();
-    }
+    // Check something has been entered into billing address
+    $('#billing_address_list input').bind('keyup', exp.func.checkBillingFields);
+    $('#billing_address_list select').bind('change', exp.func.checkBillingFields);
 
     // Open / close comments
 
     $('#openCloseComments').bind('click',function(){
-      if( $(this).is(':checked') ) {
-          $('.onestepcheckout-comments').show();
-      } else {
-          $('.onestepcheckout-comments').hide();
-      }
+        if( $(this).is(':checked') ) {
+            $('.onestepcheckout-comments').show();
+        } else {
+            $('.onestepcheckout-comments').hide();
+        }
     });
 
+    // Shipping address option validation
+
+    $('#onestepcheckout-place-order').bind('click',function(){
+        var use = $('#billingOptionUse');
+        var diff = $('#billingOptionDiff');
+        var errMsg = $('#expShipOptionValidation');
+        if( !use.is(':checked') && !diff.is(':checked') ) {
+            errMsg.show();
+            $('.exp-del-method-options-wrap').addClass('error');
+            location.hash = '#deliveryAddress';
+            return false;
+        } else {
+            $('.exp-del-method-options-wrap').removeClass('error');
+            errMsg.hide();
+            return;
+        }
+    });
 
 };
 
