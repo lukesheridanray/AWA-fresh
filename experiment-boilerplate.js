@@ -1,15 +1,10 @@
 //
-// CGIT Optimizely Boilerplate - version 0.1.3
+// CGIT Optimizely Boilerplate - version 0.1.4
 //
 
 // JSHint flags
 // jshint multistr: true
 // jshint jquery: true
-
-// 'console' is undefined in IE9 when dev tools are not open, so any calls to
-// console.log() stop execution of Javascript.  Let's thus define an empty
-// function for console.log when 'console' is undefined.
-var console=console||{"log":function(){}};
 
 // Wrap the experiment code in an IIFE, this creates a local scope and allows us to
 // pass in jQuery to use as $. Other globals could be passed in if required.
@@ -18,8 +13,16 @@ var exp = (function($) {
 // Initialise the experiment object
 var exp = {};
 
+// Wrapper for console.log, to prevent the exp breaking on browsers which don't
+// (always) have 'console' set (e.g. IE9)
+exp.log = function (str) {
+    if (typeof window.console !== 'undefined') {
+        console.log(str);
+    }
+};
+
 // Log the experiment, useful when multiple experiments are running
-console.log('Example experiment - dev 0.1');
+exp.log('Example experiment - dev 0.1');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -27,7 +30,7 @@ exp.condition = $('.unique-selector');
 
 // Check for a condition and return false if it has not been met
 if(exp.condition && !exp.condition.length) {
-    console.log('Experiment failed a condition');
+    exp.log('Experiment failed a condition');
     return false;
 }
 
