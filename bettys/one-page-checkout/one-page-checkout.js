@@ -1,25 +1,3 @@
-/*
-
-delivery error message should not include the tick and bits
-
-listen for updates to delivery cost 
-
-Section 4 only changes when shipping costs are added to the order summary (this happens at the same time as Section 3 expands)
-
----
-The test is responsive for tablets (but won’t be shown to mobiles). My tablets, we just mean iPads and iPad minis. You can see this if you view my version and compress the width
-
-// on pad make fields higher so they're easier to click on
-// on pad it's slightly to wide - only just 
-
---
-
-browser testing
-
-*/
-
-
-
 //
 // CGIT Optimizely Boilerplate - version 0.1.3
 //
@@ -43,7 +21,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Bettys vertical checkout - dev 0.1');
+exp.log('Bettys vertical checkout - 0.4');
 
 
 // Variables
@@ -100,7 +78,8 @@ exp.css = ' \
 .onestepcheckout-description, \
 .onestepcheckout-numbers, \
 .onestepcheckout-threecolumns, \
-#expShipOptionValidation { \
+#expShipOptionValidation, \
+.awatick, .onestepcheckout-giftmessages, .exp-del-instructions { \
     display: none; \
 } \
 .exp-column-left { \
@@ -181,7 +160,7 @@ div.onestepcheckout-summary { \
 .bettys-footer-secure-exp { \
     position: absolute; \
     bottom: 0; \
-    right: 80px; \
+    right: 70px; \
 } \
 .button span span { \
     background-image: none; \
@@ -192,10 +171,11 @@ div.onestepcheckout-summary { \
 } \
 .onestepcheckout-place-order-wrapper { \
    float: left; \
+   margin: -10px 0 10px 0 !important; \
 } \
 .onestepcheckout-place-order-message { \
     clear: both; \
-    padding: 15px 0 0 0;  \
+    padding: 15px 0 0 0; \
 } \
 .exp-delmsg--initial { \
     display: block; \
@@ -238,8 +218,31 @@ div.onestepcheckout-summary { \
 .input-company, .input-fax, .input-address, .input-city, .input-region { \
     display: block; \
 } \
+#billing_address_list .input-company, \
+#billing_address_list .input-fax, \
+#billing_address_list .input-address, \
+#billing_address_list .input-city, \
+#billing_address_list .input-region { \
+    display: none; \
+} \
+.input-firstname { \
+    margin-right: 16px; \
+} \
+.input-firstname, .input-lastname { \
+    width: 175px; \
+    float: left; \
+} \
+.input-country select { \
+    width: 365px; \
+} \
 .input-different-shipping { \
     display: none; \
+} \
+[type="checkbox"] { \
+    margin-bottom: 5px; \
+    margin-right: 5px; \
+    position: relative; \
+    top: 1px; \
 } \
 #onestepcheckout-form #allow-gift-message-container .group-select { \
     padding-left: 0 !important; \
@@ -252,6 +255,7 @@ div.onestepcheckout-summary { \
 } \
 .shipping-address-wrapper { \
     display: none; \
+    padding-bottom: 10px; \
 } \
 .exp-delmsg .message #join_pop { \
     width: 320px; \
@@ -309,15 +313,62 @@ div.onestepcheckout-summary { \
     line-height: 25px; \
 } \
 .exp-del-instructions { \
-    margin-top: 25px !important; \
+    margin-top: 20px !important; \
 } \
 .exp-del-method-options-wrap.error { \
     border: 1px solid #f00; \
     width: 362px; \
     padding: 5px; \
 } \
+.onestepcheckout-giftmessages label, \
+.exp-del-instructions label { \
+    margin-left: 9px; \
+} \
 .exp-thin-column { \
     padding-right: 400px !important; \
+} \
+.show-del-price { \
+    color: #98002E; \
+} \
+@media screen and (max-width: 990px) { \
+    .exp-column-heading { \
+        position: relative !important; \
+    } \
+    .exp-column-full { \
+        padding-left: 0 0 15px 0 !important; \
+    } \
+} \
+@media screen and (max-width: 790px) { \
+    .onestepcheckout-summary-wrap { \
+        position: static !important; \
+        padding: 0 !important; \
+    } \
+    .onestepcheckout-place-order-wrapper { \
+       margin: 10px 0 10px 0 !important; \
+    } \
+    .exp-column-right { \
+        width: auto !important; \
+        padding: 0 !important; \
+        top: 0 !important; \
+        background: none !important; \
+    } \
+    .exp-column-right h3 { \
+        display: none !important; \
+    } \
+    .exp-column-right .button { \
+        width: auto !important; \
+    } \
+    .exp-column-right .button span span { \
+        padding: 0 !important; \
+        font-size: 1.1em !important; \
+    } \
+} \
+@media screen and (max-width: 590px) { \
+    .exp-column-right { \
+        position: absolute !important; \
+        top: 0 !important; \
+        right: 0 !important; \
+    } \
 }';
 
 
@@ -367,11 +418,11 @@ exp.func.waitForFunction = function(func, callback, timeout, keepAlive) {
 
 exp.func.checkBillingFields = function() {
     var isComplete = true;
-    if( $('#billing-address-select').length && $('#billing-address-select').val() === '' ) {
+    if( !$('#billing-address-select').length || ( $('#billing-address-select').length && $('#billing-address-select').val() === '' ) ) {
         var requiredFields = $('[name="billing[firstname]"], [name="billing[lastname]"], \
                                 [name="billing[telephone]"], [name="billing[postcode]"], \
                                 [name="billing[street][]"]:eq(0), [name="billing[city]"], \
-                                [name="billing[region_id]"]');
+                                [name="billing[country_id]"]');
         requiredFields.each(function(){
             if( $(this).val() === '' ) {
                 isComplete = false;
@@ -382,13 +433,14 @@ exp.func.checkBillingFields = function() {
         $('.exp-delmsg--loaded').show();
         $('.exp-delmsg--initial').hide();
     } else {
-        return;
+        $('.exp-delmsg--loaded').hide();
+        $('.exp-delmsg--initial').show();
     }
 };
 
 exp.func.checkShippingFields = function() {
     var isComplete = true;
-    if( $('#shipping-address-select').length && $('#shipping-address-select').val() === '' ) {
+    if( !$('#shipping-address-select').length || ($('#shipping-address-select').length && $('#shipping-address-select').val() === '') ) {
         var requiredFields = $('[name="shipping[firstname]"], [name="shipping[lastname]"], \
                                 [name="shipping[telephone]"], [name="shipping[postcode]"], \
                                 [name="shipping[street][]"]:eq(0), [name="shipping[city]"], \
@@ -403,15 +455,16 @@ exp.func.checkShippingFields = function() {
         $('.exp-delmsg--loaded').show();
         $('.exp-delmsg--initial').hide();
     } else {
-        return;
+        $('.exp-delmsg--loaded').hide();
+        $('.exp-delmsg--initial').show();
     }
 };
 
 exp.func.checkSummaryHeight = function() {
     var maxHeight = $('.exp-column-wrapper').height() - 300;
     var summaryHeight = $('.onestepcheckout-summary').height();
-    var step4Height = $('.exp-step4').height();
-    $('.onestepcheckout-summary-inner-wrap').css({'height': maxHeight+'px'});
+    var step4Height = $('.exp-step4').height() - 100;
+//    $('.onestepcheckout-summary-inner-wrap').css({'height': maxHeight+'px'});
     if( summaryHeight > step4Height) {
         $('.exp-step3').addClass('exp-thin-column');
     }
@@ -419,18 +472,24 @@ exp.func.checkSummaryHeight = function() {
         $('.onestepcheckout-summary-inner-wrap').css({'height': 'auto'});
         $('.onestepcheckout-summary-wrap').css({'position':'relative','float':'right','bottom':step4Height-200+'px'});
     }
-/*
-    var summaryHeight = $('.onestepcheckout-summary-wrap').height();
-    var firstPoint = $('.exp-step4').height() - 80;
-    var limit = $('.exp-step4').height() + $('.exp-step3').height() + $('.exp-step2').height() + $('.exp-step1').height();
+};
 
-    if( summaryHeight > firstPoint ) {
-        $('.exp-step3').addClass('exp-thin-column');
+exp.func.updateDeliveryMessage = function() {
+    var shippingCell = $('.onestepcheckout-totals .title').filter(
+            function(){ return $(this).text().trim() === 'Shipping'; }
+    );
+    var shippingTotal;
+    var delMessage = $('.full-atp');
+    var delPrice = delMessage.find('.show-del-price');
+    if( shippingCell.length && delMessage.length && !delPrice.length ) {
+        shippingTotal = shippingCell.next('.value').text().trim();
+        delMessage.find('#join_pop').before( ' <span class="show-del-price">(' + shippingTotal + ')</span>' );
     }
-    if( summaryHeight > limit ) {
-        $('.onestepcheckout-summary-wrap').css({'position':'relative','right':'400px','top':'-'+limit+'px'});
+    if( delMessage.length ) {
+        $('.awatick, .onestepcheckout-giftmessages, .exp-del-instructions').show();
+    } else {
+        $('.awatick, .onestepcheckout-giftmessages, .exp-del-instructions').hide();
     }
-*/
 };
 
 // Init function
@@ -494,6 +553,12 @@ exp.init = function() {
 
 
     // DOM changes
+
+    $('[name="shipping[telephone]"]').next('small').css({'display':'block','padding-top':'5px'});
+
+    $('.onestepcheckout-place-order-message').html(
+        $('.onestepcheckout-place-order-message').html().toString().replace('and <a', 'and<br /><a')
+    );
 
     $('body').append( this.vars.perfectPopup );
 
@@ -578,7 +643,6 @@ exp.init = function() {
         }
         pCode.bind('keyup', function() {
             if( $(this).val() !== '' ) {
-                exp.log('can show fields');
                 showFields();
             }
         });
@@ -643,6 +707,41 @@ exp.init = function() {
             $('.exp-del-method-options-wrap').removeClass('error');
             errMsg.hide();
             return;
+        }
+    });
+
+    // Keep checking to see if we need to do anything with the delivery message
+    expInterval = setInterval(exp.func.updateDeliveryMessage, 1000);
+
+    // From Daves original code
+    //NEW INTERVENE IF LOGIN TAKES A LONG TIME - REFRESH PAGE
+    $("#onestepcheckout-login-button").click(function() {
+        setTimeout( function() {
+            if ($("#onestepcheckout-login-error").attr("style") == "display: none;"){
+                setTimeout( function() {
+                    if ($("#onestepcheckout-login-error").attr("style") == "display: none;"){
+                        setTimeout( function() {
+                            if ($("#onestepcheckout-login-error").attr("style") == "display: none;"){
+                                location.reload();
+                            }
+                        }, 3000);
+                    }
+                }, 3000);
+            }
+        }, 1000);
+    });
+
+    // Listen for changes to saved address list and check fields if new selected
+    $('#billing-address-select').bind('change',function(){
+        if( $(this).val() === '' ) {
+            exp.func.checkBillingFields();
+        }
+    });
+
+    // Listen for changes to saved address list and check fields if new selected
+    $('#shipping-address-select').bind('change',function(){
+        if( $(this).val() === '' ) {
+            exp.func.checkShippingFields();
         }
     });
 
