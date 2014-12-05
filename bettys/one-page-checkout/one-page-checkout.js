@@ -21,7 +21,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Bettys vertical checkout - 0.4');
+exp.log('Bettys vertical checkout - 0.5');
 
 
 // Variables
@@ -79,6 +79,7 @@ exp.css = ' \
 .onestepcheckout-numbers, \
 .onestepcheckout-threecolumns, \
 #expShipOptionValidation, \
+.input-fax, \
 .awatick, .onestepcheckout-giftmessages, .exp-del-instructions { \
     display: none; \
 } \
@@ -131,9 +132,16 @@ exp.css = ' \
 } \
 select.validate-cc-exp { \
     width: 160px; \
+    margin-right: 15px; \
 } \
 select.year.required-entry { \
     width: 90px; \
+} \
+.input-telephone, .input-postcode, .input-company { \
+    width: 175px; \
+} \
+.input-country { \
+    width: 240px; \
 } \
 .validate-ccsgpdp-cvn { \
     width: 102px !important; \
@@ -171,7 +179,7 @@ div.onestepcheckout-summary { \
 } \
 .onestepcheckout-place-order-wrapper { \
    float: left; \
-   margin: -10px 0 10px 0 !important; \
+   margin: -10px 0 30px 0 !important; \
 } \
 .onestepcheckout-place-order-message { \
     clear: both; \
@@ -215,7 +223,7 @@ div.onestepcheckout-summary { \
     font-size: 18px; \
     display: none; \
 } \
-.input-company, .input-fax, .input-address, .input-city, .input-region { \
+.input-company, .input-address, .input-city, .input-region { \
     display: block; \
 } \
 #billing_address_list .input-company, \
@@ -335,7 +343,7 @@ div.onestepcheckout-summary { \
         position: relative !important; \
     } \
     .exp-column-full { \
-        padding-left: 0 0 15px 0 !important; \
+        padding: 0 0 15px 0 !important; \
     } \
 } \
 @media screen and (max-width: 790px) { \
@@ -345,6 +353,10 @@ div.onestepcheckout-summary { \
     } \
     .onestepcheckout-place-order-wrapper { \
        margin: 10px 0 10px 0 !important; \
+    } \
+    .bettys-footer-secure-exp { \
+        position: static !important; \
+        float: left !important; \
     } \
     .exp-column-right { \
         width: auto !important; \
@@ -419,10 +431,8 @@ exp.func.waitForFunction = function(func, callback, timeout, keepAlive) {
 exp.func.checkBillingFields = function() {
     var isComplete = true;
     if( !$('#billing-address-select').length || ( $('#billing-address-select').length && $('#billing-address-select').val() === '' ) ) {
-        var requiredFields = $('[name="billing[firstname]"], [name="billing[lastname]"], \
-                                [name="billing[telephone]"], [name="billing[postcode]"], \
-                                [name="billing[street][]"]:eq(0), [name="billing[city]"], \
-                                [name="billing[country_id]"]');
+        var requiredFields = $('[name="billing[postcode]"], [name="billing[street][]"]:eq(0), \
+                                [name="billing[city]"], [name="billing[country_id]"]');
         requiredFields.each(function(){
             if( $(this).val() === '' ) {
                 isComplete = false;
@@ -432,7 +442,7 @@ exp.func.checkBillingFields = function() {
     if( isComplete && $('#billingOptionUse').is(':checked') ) {
         $('.exp-delmsg--loaded').show();
         $('.exp-delmsg--initial').hide();
-    } else {
+    } else if( $('#billingOptionUse').is(':checked') ) {
         $('.exp-delmsg--loaded').hide();
         $('.exp-delmsg--initial').show();
     }
@@ -441,10 +451,8 @@ exp.func.checkBillingFields = function() {
 exp.func.checkShippingFields = function() {
     var isComplete = true;
     if( !$('#shipping-address-select').length || ($('#shipping-address-select').length && $('#shipping-address-select').val() === '') ) {
-        var requiredFields = $('[name="shipping[firstname]"], [name="shipping[lastname]"], \
-                                [name="shipping[telephone]"], [name="shipping[postcode]"], \
-                                [name="shipping[street][]"]:eq(0), [name="shipping[city]"], \
-                                [name="shipping[country_id]"]');
+        var requiredFields = $('[name="shipping[postcode]"], [name="shipping[street][]"]:eq(0), \
+                                [name="shipping[city]"], [name="shipping[country_id]"]');
         requiredFields.each(function(){
             if( $(this).val() === '' ) {
                 isComplete = false;
@@ -464,32 +472,65 @@ exp.func.checkSummaryHeight = function() {
     var maxHeight = $('.exp-column-wrapper').height() - 300;
     var summaryHeight = $('.onestepcheckout-summary').height();
     var step4Height = $('.exp-step4').height() - 100;
-//    $('.onestepcheckout-summary-inner-wrap').css({'height': maxHeight+'px'});
+    var step3Height = $('.exp-step3').height() + step4Height;
     if( summaryHeight > step4Height) {
         $('.exp-step3').addClass('exp-thin-column');
     }
     if( summaryHeight > maxHeight) {
         $('.onestepcheckout-summary-inner-wrap').css({'height': 'auto'});
         $('.onestepcheckout-summary-wrap').css({'position':'relative','float':'right','bottom':step4Height-200+'px'});
+        $('.exp-step3').removeClass('exp-thin-column');
     }
 };
 
 exp.func.updateDeliveryMessage = function() {
     var shippingCell = $('.onestepcheckout-totals .title').filter(
-            function(){ return $(this).text().trim() === 'Shipping'; }
+        function(){ return $(this).text().trim() === 'Shipping'; }
     );
+    var popupCloseButton = $('a#close');
     var shippingTotal;
+    var date;
     var delMessage = $('.full-atp');
     var delPrice = delMessage.find('.show-del-price');
     if( shippingCell.length && delMessage.length && !delPrice.length ) {
         shippingTotal = shippingCell.next('.value').text().trim();
-        delMessage.find('#join_pop').before( ' <span class="show-del-price">(' + shippingTotal + ')</span>' );
+        date = delMessage.find('.message strong').text();
+        delMessage.find('.message').html(
+            delMessage.find('.message').html().toString()
+            .replace('We can deliver your order by', 'Your order will be delivered by')
+            .replace('Your order will be delivered on', 'Your order will be delivered by')
+            .replace('via ', 'via <strong>')
+        );
+        delMessage.find('#join_pop').before( '</strong> <span class="show-del-price">(' + shippingTotal + ')</span>' );
     }
     if( delMessage.length ) {
         $('.awatick, .onestepcheckout-giftmessages, .exp-del-instructions').show();
     } else {
         $('.awatick, .onestepcheckout-giftmessages, .exp-del-instructions').hide();
     }
+    if( popupCloseButton.length ) {
+        popupCloseButton.attr('href', '#join-form');
+    }
+    exp.func.checkSummaryHeight();
+};
+
+exp.func.interveneLogin = function() {
+    setTimeout( function() {
+        exp.log(1);
+        if ( $('#onestepcheckout-login-error').length && $('#onestepcheckout-login-error').css('display') === 'none' ) {
+            setTimeout( function() {
+                exp.log(2);
+                if ( $('#onestepcheckout-login-error').length && $('#onestepcheckout-login-error').css('display') === 'none' ) {
+                    setTimeout( function() {
+                        exp.log(3);
+                        if ( $('#onestepcheckout-login-error').length && $('#onestepcheckout-login-error').css('display') === 'none' ) {
+                            location.reload();
+                        }
+                    }, 3000);
+                }
+            }, 3000);
+        }
+    }, 1000);
 };
 
 // Init function
@@ -511,7 +552,9 @@ exp.init = function() {
           </div> \
       </div> \
       <div class="exp-column-full exp-step2"> \
-          <div class="exp-column-heading"> \
+          <div class="exp-column-left"> \
+                <div class="exp-column-heading"> \
+                </div> \
           </div> \
       </div> \
       <div class="exp-column-full exp-step3"> \
@@ -536,7 +579,7 @@ exp.init = function() {
     }
 
     $('.exp-step2')
-    .append( $('.input-different-shipping').add( this.vars.step2ShipAddress ) )
+    .find('.exp-column-left').append( $('.input-different-shipping').add( this.vars.step2ShipAddress ) )
     .find('.exp-column-heading').append( this.vars.step2Heading );
 
     $('.exp-step3')
@@ -554,7 +597,7 @@ exp.init = function() {
 
     // DOM changes
 
-    $('[name="shipping[telephone]"]').next('small').css({'display':'block','padding-top':'5px'});
+    $('[name="shipping[telephone]"]').next('small').css({'display':'block','padding-top':'5px','width':'370px'}).text('This is the number we use for delivery queries and notifications. If you are sending a gift as a suprise, you may wish to enter your own number here.');
 
     $('.onestepcheckout-place-order-message').html(
         $('.onestepcheckout-place-order-message').html().toString().replace('and <a', 'and<br /><a')
@@ -636,7 +679,7 @@ exp.init = function() {
         var pCode = $('.validate-zip-international');
         var country = $('[name="billing[country_id]"]');
         function showFields() {
-            $('#billing_address_list .input-company, #billing_address_list .input-fax, #billing_address_list .input-address, #billing_address_list .input-city, #billing_address_list .input-region').show();
+            $('#billing_address_list .input-company, #billing_address_list .input-address, #billing_address_list .input-city, #billing_address_list .input-region').show();
         }
         if( pCode.val() !== '' || country.val() !== 'GB' ) {
             showFields();
@@ -715,20 +758,11 @@ exp.init = function() {
 
     // From Daves original code
     //NEW INTERVENE IF LOGIN TAKES A LONG TIME - REFRESH PAGE
-    $("#onestepcheckout-login-button").click(function() {
-        setTimeout( function() {
-            if ($("#onestepcheckout-login-error").attr("style") == "display: none;"){
-                setTimeout( function() {
-                    if ($("#onestepcheckout-login-error").attr("style") == "display: none;"){
-                        setTimeout( function() {
-                            if ($("#onestepcheckout-login-error").attr("style") == "display: none;"){
-                                location.reload();
-                            }
-                        }, 3000);
-                    }
-                }, 3000);
-            }
-        }, 1000);
+    $("#onestepcheckout-login-button").click(exp.func.interveneLogin);
+    $('#onestepcheckout-login-form input').bind('keydown',function(e) {
+        if( e.keyCode == 13 ) {
+            exp.func.interveneLogin();
+        };
     });
 
     // Listen for changes to saved address list and check fields if new selected
