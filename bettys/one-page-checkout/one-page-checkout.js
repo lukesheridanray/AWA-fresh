@@ -21,12 +21,13 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Bettys vertical checkout - 0.5');
+exp.log('Bettys vertical checkout - 0.14');
 
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
+    'variation': 1,
     'isLoggedIn': ( $('.links .last a').text().indexOf('Log Out') !== -1 ) ? true : false,
     'loginWidget': $('.onestepcheckout-login-link'),
     'NCcontentRImage': '//cdn.optimizely.com/img/14847832/b5ad0505be384613b7faa794bc1717bf.png',
@@ -147,11 +148,11 @@ select.year.required-entry { \
     width: 102px !important; \
 } \
 div.onestepcheckout-summary-wrap { \
-    width: 320px; \
+    width: 330px; \
     position: absolute; \
     bottom: 94px; \
     right: 0px; \
-    padding: 0 80px 0 10px; \
+    padding: 0 80px 0 20px; \
 } \
 div.onestepcheckout-summary { \
     width: 320px; \
@@ -222,6 +223,10 @@ div.onestepcheckout-summary { \
     text-align: center; \
     font-size: 18px; \
     display: none; \
+} \
+.popup { \
+    overflow: auto !important; \
+    max-height: 500px !important; \
 } \
 .input-company, .input-address, .input-city, .input-region { \
     display: block; \
@@ -337,6 +342,37 @@ div.onestepcheckout-summary { \
 } \
 .show-del-price { \
     color: #98002E; \
+} \
+.exp-dummy-select { \
+    width: auto !important; \
+    max-width: 470px !important; \
+    padding: 0 16px 4px 8px !important; \
+    margin: 0 0 20px 0 !important; \
+    cursor: pointer; \
+/*    border: 1px solid #DDDDDD !important; \
+    width: auto !important; \
+    max-width: 470px; \
+    padding: 6px 16px 6px 8px !important; \
+    color: #5e5e5e !important; \
+    font: italic normal 0.9em Georgia,Times,"Times New Roman",serif !important; \
+    text-transform: none !important; \
+    margin: 10px 0 20px 0 !important; \
+    background: #fff !important; \
+    position: relative; \
+*/ \
+} \
+.exp-dummy-select:hover,\
+.exp-dummy-select:focus { \
+    border: 1px solid #DDDDDD !important; \
+} \
+.exp-dummy-select strong { \
+    position: absolute; \
+    top: 11px; \
+    right: 8px; \
+    display: block; \
+    width: 17px; \
+    height: 9px; \
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAJBAMAAAAmxto/AAAAA3NCSVQICAjb4U/gAAAAFVBMVEX///8zMzMzMzMzMzMzMzMzMzMzMzOZaqduAAAAB3RSTlMAEYiZu8z/X3YIJQAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAxMi8xMC8xNGb+Kj8AAAAYdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3Jrc0+zH04AAAA0SURBVAiZY1BxgQAFBtE0MEgVYGAMA7MCGRgggkAhBoggSAgsCBYCC0KEgIJQIaCgIYgEAFhHDtFKiaEUAAAAAElFTkSuQmCC") 0 0 no-repeat #fff !important; \
 } \
 @media screen and (max-width: 990px) { \
     .exp-column-heading { \
@@ -492,16 +528,51 @@ exp.func.updateDeliveryMessage = function() {
     var date;
     var delMessage = $('.full-atp');
     var delPrice = delMessage.find('.show-del-price');
+    var regmatch;
     if( shippingCell.length && delMessage.length && !delPrice.length ) {
-        shippingTotal = shippingCell.next('.value').text().trim();
-        date = delMessage.find('.message strong').text();
-        delMessage.find('.message').html(
-            delMessage.find('.message').html().toString()
-            .replace('We can deliver your order by', 'Your order will be delivered by')
-            .replace('Your order will be delivered on', 'Your order will be delivered by')
-            .replace('via ', 'via <strong>')
-        );
-        delMessage.find('#join_pop').before( '</strong> <span class="show-del-price">(' + shippingTotal + ')</span>' );
+
+        if(exp.vars.variation === 1) {
+
+            shippingTotal = shippingCell.next('.value').text().trim();
+            date = delMessage.find('.message strong').text();
+            delMessage.find('.message').html(
+                delMessage.find('.message').html().toString()
+                .replace('We can deliver your order by', 'Your order will be delivered by')
+                .replace('Your order will be delivered on', 'Your order will be delivered by')
+                .replace('via ', 'via <strong>')
+            );
+            delMessage.find('#join_pop').before( '</strong> <span class="show-del-price">(' + shippingTotal + ')</span>' );
+      
+        } else if(exp.vars.variation === 2) {
+
+            if( !$('.exp-dummy-select').length ) {
+
+                shippingTotal = shippingCell.next('.value').text().trim();
+                regmatch = delMessage.find('.message').html().toString().match(/(.*)(<strong>)(.*)(<\/strong>)(.*)(via )(.*)(\.<a)/);
+                
+                delMessage.find('.message #join_pop').hide();
+                delMessage.find('.message').html(
+                    delMessage.find('.message').html().toString().replace(/(.*)(<a )(.*)/,function(match,p1,p2,p3){
+                        var str = '<select class="exp-dummy-select" onmousedown="this.blur();window.focus();document.location.hash = \'#join_form\';return false;"> \
+                                <option>' + regmatch[3] + ' - ' + regmatch[7] + ' - ' + shippingTotal + '</option> \
+                                </select>' + p2 + p3;
+                        return str;
+                    })
+                );
+/*
+                delMessage.find('.message #join_pop').addClass('exp-dummy-select').html(
+                    regmatch[3] + ' - ' + regmatch[7] + ' - ' + shippingTotal + '<strong></strong>'
+                );
+                delMessage.find('.message').html(
+                    delMessage.find('.message').html().toString().replace(/(.*)(<a )(.*)/,function(match,p1,p2,p3){
+                        return p2 + p3;
+                    })
+                );
+*/
+
+            }
+        }
+
     }
     if( delMessage.length ) {
         $('.awatick, .onestepcheckout-giftmessages, .exp-del-instructions').show();
@@ -512,6 +583,12 @@ exp.func.updateDeliveryMessage = function() {
         popupCloseButton.attr('href', '#join-form');
     }
     exp.func.checkSummaryHeight();
+    if( !$('div.onestepcheckout-summary h4').length ) {
+        $('div.onestepcheckout-summary').prepend( '<h4>Order summary</h4>' );
+    }
+    if( $('.input-different-shipping input').is(':checked') ) {
+        $('#billingOptionUse').trigger('click');
+    }
 };
 
 exp.func.interveneLogin = function() {
@@ -536,6 +613,9 @@ exp.func.interveneLogin = function() {
 // Init function
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
 exp.init = function() {
+
+    // Unhide the form
+    $('#onestepcheckout-form').show();
 
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
@@ -659,6 +739,7 @@ exp.init = function() {
         $('#billingOptionUse').prop('checked', true);
         exp.func.checkBillingFields();
     } else if( $('#billingOptionDiff').is(':checked') ) {
+        $('.shipping-address-wrapper').show();
         exp.func.checkShippingFields();
     }
 
@@ -717,13 +798,23 @@ exp.init = function() {
         }
     });
 
-    // Check something has been entered into shipping address
-    $('#shipping_address_list input').bind('keyup', exp.func.checkShippingFields);
-    $('#shipping_address_list select').bind('change', exp.func.checkShippingFields);
-
     // Check something has been entered into billing address
-    $('#billing_address_list input').bind('keyup', exp.func.checkBillingFields);
-    $('#billing_address_list select').bind('change', exp.func.checkBillingFields);
+    $('#billing_address_list input').bind('keyup', function() { setTimeout(exp.func.checkBillingFields,500); } );
+    $('#billing_address_list input').bind('paste', exp.func.checkBillingFields );
+    $('#billing_address_list select, #billing_address_list input').bind('change', exp.func.checkBillingFields );
+
+    // Check something has been entered into shipping address
+    $('#shipping_address_list input').bind('keyup', function() { setTimeout(exp.func.checkShippingFields,500); } );
+    $('#shipping_address_list input').bind('paste', exp.func.checkShippingFields );
+    $('#shipping_address_list select, #shipping_address_list input').bind('change', exp.func.checkShippingFields );
+    
+    $('.pcaautocomplete').bind('click', function() {
+        setTimeout( function(){
+            exp.func.checkBillingFields();
+            exp.func.checkShippingFields();
+        }, 500);
+        
+    } );
 
     // Open / close comments
 
@@ -762,7 +853,7 @@ exp.init = function() {
     $('#onestepcheckout-login-form input').bind('keydown',function(e) {
         if( e.keyCode == 13 ) {
             exp.func.interveneLogin();
-        };
+        }
     });
 
     // Listen for changes to saved address list and check fields if new selected
