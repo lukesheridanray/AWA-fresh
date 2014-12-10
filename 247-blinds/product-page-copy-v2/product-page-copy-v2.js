@@ -72,7 +72,7 @@ exp.vars = {
         <p>When ordering, please note that the roller mechanism means that the cloth of your blind is always 3-4cm narrower than the overall width. See measuring guide below for more details. Not sure about colour, texture or pattern? Ask for a free sample before you order.  </p>',
 
         'http://www.247blinds.co.uk/rimini-white-vertical-blind':
-        '<p>Add height and elegance to your room with a Vertical Blind. Louvres are made high quality fabric in a plain white colour, and have weighted hems. This contemporary style blind from our Rimini collection is made to order to fit your window perfectly and normally arrives in less than a week.</p> \
+        '<p>Add height and elegance to your room with a Vertical Blind. Louvres are made high quality fabric in a plain white colour, and have weighted hems. This contemporary style blind from our Rimini collection is made to order to fit your window perfectly and normally arrives in around a week.</p> \
         <p>All our Vertical Blinds come ready to fit with a slimline, Easyglide headrail, matching draw rod to tilt and open the vanes and all the fixings you need. Not sure about colour, texture or pattern? Ask for a free sample before you order.  </p>'
     }
 };

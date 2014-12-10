@@ -213,7 +213,10 @@ function () {
           sendUVEvent("tm-freedelivery-banner:click");
         });
 
-        $(".facebox").facebox();
+        $(".facebox").facebox({
+            loadingImage: '/static-images/tandm/gardening-info-section/blog-medium-icon.png',
+            closeImage: '/static-images/tandm/gardening-info-section/blog-medium-icon.png'
+        });
 
         // Rearrange facebox a little
         $("#facebox .body").prepend($("#facebox .close").detach());
