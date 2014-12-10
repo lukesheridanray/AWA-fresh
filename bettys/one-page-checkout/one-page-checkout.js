@@ -21,13 +21,14 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Bettys vertical checkout - 0.14');
+exp.log('Bettys vertical checkout - 0.16');
 
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
-    'variation': 1,
+    'variation': 2,
+    'windowHeight': $(window).height(),
     'isLoggedIn': ( $('.links .last a').text().indexOf('Log Out') !== -1 ) ? true : false,
     'loginWidget': $('.onestepcheckout-login-link'),
     'NCcontentRImage': '//cdn.optimizely.com/img/14847832/b5ad0505be384613b7faa794bc1717bf.png',
@@ -226,8 +227,8 @@ div.onestepcheckout-summary { \
 } \
 .popup { \
     overflow: auto !important; \
-    max-height: 500px !important; \
-} \
+    max-height: '+exp.vars.windowHeight+'px !important; \
+}  \
 .input-company, .input-address, .input-city, .input-region { \
     display: block; \
 } \
@@ -346,7 +347,7 @@ div.onestepcheckout-summary { \
 .exp-dummy-select { \
     width: auto !important; \
     max-width: 470px !important; \
-    padding: 0 16px 4px 8px !important; \
+    padding: 0 0 4px 8px !important; \
     margin: 0 0 20px 0 !important; \
     cursor: pointer; \
 /*    border: 1px solid #DDDDDD !important; \
@@ -554,22 +555,11 @@ exp.func.updateDeliveryMessage = function() {
                 delMessage.find('.message').html(
                     delMessage.find('.message').html().toString().replace(/(.*)(<a )(.*)/,function(match,p1,p2,p3){
                         var str = '<select class="exp-dummy-select" onmousedown="this.blur();window.focus();document.location.hash = \'#join_form\';return false;"> \
-                                <option>' + regmatch[3] + ' - ' + regmatch[7] + ' - ' + shippingTotal + '</option> \
+                                <option>' + regmatch[3] + ' - ' + regmatch[7] + ' - ' + shippingTotal + ' &nbsp;&nbsp;&nbsp;</option> \
                                 </select>' + p2 + p3;
                         return str;
                     })
                 );
-/*
-                delMessage.find('.message #join_pop').addClass('exp-dummy-select').html(
-                    regmatch[3] + ' - ' + regmatch[7] + ' - ' + shippingTotal + '<strong></strong>'
-                );
-                delMessage.find('.message').html(
-                    delMessage.find('.message').html().toString().replace(/(.*)(<a )(.*)/,function(match,p1,p2,p3){
-                        return p2 + p3;
-                    })
-                );
-*/
-
             }
         }
 
