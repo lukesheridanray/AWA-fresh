@@ -21,13 +21,13 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Bettys vertical checkout - 0.16');
+exp.log('Bettys vertical checkout - 0.18');
 
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
-    'variation': 2,
+    'variation': 1,
     'windowHeight': $(window).height(),
     'isLoggedIn': ( $('.links .last a').text().indexOf('Log Out') !== -1 ) ? true : false,
     'loginWidget': $('.onestepcheckout-login-link'),
@@ -82,13 +82,17 @@ exp.css = ' \
 .onestepcheckout-threecolumns, \
 #expShipOptionValidation, \
 .input-fax, \
-.awatick, .onestepcheckout-giftmessages, .exp-del-instructions { \
+.awatick, .onestepcheckout-giftmessages, .exp-del-instructions, \
+.onestepcheckout-enable-newsletter, .id_create_account-wrap { \
     display: none; \
 } \
 .exp-column-left { \
     width: 400px; \
     float: left; \
     padding-bottom: 25px \
+} \
+.exp-step1 .exp-column-left { \
+    padding-bottom: 0; \
 } \
 .exp-column-right { \
     float: right; \
@@ -374,6 +378,9 @@ div.onestepcheckout-summary { \
     width: 17px; \
     height: 9px; \
     background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAJBAMAAAAmxto/AAAAA3NCSVQICAjb4U/gAAAAFVBMVEX///8zMzMzMzMzMzMzMzMzMzMzMzOZaqduAAAAB3RSTlMAEYiZu8z/X3YIJQAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAxMi8xMC8xNGb+Kj8AAAAYdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3Jrc0+zH04AAAA0SURBVAiZY1BxgQAFBtE0MEgVYGAMA7MCGRgggkAhBoggSAgsCBYCC0KEgIJQIaCgIYgEAFhHDtFKiaEUAAAAAElFTkSuQmCC") 0 0 no-repeat #fff !important; \
+} \
+.empty-li-fix { \
+  padding: 3px 0 0 0 !important; \
 } \
 @media screen and (max-width: 990px) { \
     .exp-column-heading { \
@@ -718,6 +725,11 @@ exp.init = function() {
         '<div class="awatick">Beautifully packaged</div> \
         <div class="awatick">Delivered with our <a href="#" class="change_style">Perfection Guarantee</a></div>'
     );
+
+    $('#id_create_account').parent('div').addClass('id_create_account-wrap');
+
+    $('#billing_address_list .input-company, #billing_address_list .input-address, #billing_address_list .input-city, #billing_address_list .input-region, .onestepcheckout-enable-newsletter, .id_create_account-wrap')
+    .parent('li').addClass('empty-li-fix');   
     
     // Behaviour
 
@@ -750,7 +762,9 @@ exp.init = function() {
         var pCode = $('.validate-zip-international');
         var country = $('[name="billing[country_id]"]');
         function showFields() {
-            $('#billing_address_list .input-company, #billing_address_list .input-address, #billing_address_list .input-city, #billing_address_list .input-region').show();
+            $('#billing_address_list .input-company, #billing_address_list .input-address, #billing_address_list .input-city, #billing_address_list .input-region, .onestepcheckout-enable-newsletter, .id_create_account-wrap')
+            .show()
+            .parent('li').removeClass('empty-li-fix');
         }
         if( pCode.val() !== '' || country.val() !== 'GB' ) {
             showFields();
