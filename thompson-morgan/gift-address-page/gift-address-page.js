@@ -22,7 +22,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Gift address page - 0.2');
+exp.log('Gift address page - 0.3');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -141,6 +141,28 @@ exp.css = ' \
     width: 60px; \
 }';
 
+exp.func = {};
+
+exp.func.populateAddressName = function(){
+    if( $('input#remarks').hasClass('exp-customised') ) {
+        return false;
+    }
+    var addressName = $('input#firstName').val();
+    if( $('input#lastName').val() !== '' ) {
+        addressName += ' ' + $('input#lastName').val();
+    }
+    $('input#remarks').val( addressName );
+};
+
+exp.func.customiseAddressName = function() {
+    var input = $('input#remarks');
+    if( input.val() === '' ) {
+        input.removeClass('exp-customised');
+    } else {
+        input.addClass('exp-customised');
+    }
+};
+
 // Init function
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
 exp.init = function() {
@@ -183,6 +205,14 @@ exp.init = function() {
         $('.add-address label:contains("Country")').parent('div').html(
                 $('.add-address label:contains("Country")').parent('div').html().replace('(We do not deliver outside the UK)', '')
         );
+        $('.add-address .actions').before( $('fieldset.add-address:eq(0) div:eq(0)') );
+        $('input#firstName,input#lastName').bind('keyup', exp.func.populateAddressName);
+        $('input#firstName,input#lastName').bind('paste', exp.func.populateAddressName);
+        $('input#remarks').bind('keyup', exp.func.customiseAddressName);
+        $('input#remarks').bind('paste', exp.func.customiseAddressName);
+
+        $('.add-address:eq(1)').prepend( $('input#country').parent('div') );
+        $('.add-address:eq(1)').prepend( $('input#town').parent('div') );
     }
 
     $('input[value="Add new recipient"]').attr('value','Add a new address').addClass('exp-green-button');
