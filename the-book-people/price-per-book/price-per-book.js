@@ -22,13 +22,14 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Product page: price per book, savings and reviews - 0.2');
+exp.log('Product page: price per book, savings and reviews - 0.4');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
     variation: 3,
     isCollection: ( $('#format-label').text().indexOf('Collection') !== -1 ) ? true : false,
+    iseBook: ( $('#format-label').text().indexOf('eBook') !== -1 ) ? true : false,
     totalPrice: $('.priceWrapper #price .price.price-string').text().trim(),
     books: $('#product-description-title').text().match(/([0-9]*)( Books)/i)
 };
@@ -107,7 +108,7 @@ exp.css = ' \
     font-size: 1.25em; \
 } \
 @media screen and (max-width: 1199px) { \
-    .exp-variation-2 .exp-price-per-book--red-circle { \
+    .exp-variation-1 .exp-price-per-book--red-circle { \
         padding: 24px 0 0 0; \
         height: 64px; \
     } \
@@ -174,8 +175,6 @@ exp.func.getPricePerBook = function(variation) {
     var books = parseFloat( exp.vars.books[1] );
     var priceString;
     var pricePerBook = exp.func.roundUp( (total / books), 2 );
-
-exp.log( 'toFixed: ' + (total / books).toFixed(2) + ' - roundUp: ' + pricePerBook );
 
     if( variation === false || pricePerBook > 9.99) {
         return false;
@@ -262,6 +261,12 @@ exp.func.waitForFunction = function(func, callback, timeout, keepAlive) {
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
 exp.init = function() {
 
+    // Check we are not an eBook
+
+    if( this.vars.iseBook ) {
+        return false;
+    }
+
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
 
@@ -276,7 +281,7 @@ exp.init = function() {
     $('#average-review-stars').bind('click', function(){
         var $target = $('#review-section');
         $('html,body').animate({
-          scrollTop: $target.offset().top
+          scrollTop: ( $target.offset().top ) - 30
         }, 800);
     });
 
