@@ -22,7 +22,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Product page: price per book, savings and reviews - 0.4');
+exp.log('Product page: price per book, savings and reviews - 0.5');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -155,8 +155,8 @@ exp.css = ' \
         top: 20px; \
         left: 0; \
     } \
-    .exp-price-per-book--price-box { \
-        padding-top: 22px; \
+    #saving { \
+        padding-top: 22px !important; \
     } \
 } ';
 
