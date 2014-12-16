@@ -31,7 +31,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('TTS Group Product Page Experiment - 0.3');
+exp.log('TTS Group Product Page Experiment - 0.6');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -81,6 +81,8 @@ exp.css += '\
 } \
 .AWA_product_price_row { \
     font-size: 1.5em; \
+    color: #2264a5; \
+    font-weight: bold; \
 }';
 
 // Quantity and "add to cart" box
@@ -91,8 +93,11 @@ exp.css += '\
     position: static; \
 } \
 .AWA_stock_cell .stock_msg { \
-    background-position-y: center; \
+    background-position: left center; \
     min-height: 0; \
+    height: 30px; \
+    display: table-cell; \
+    vertical-align: middle; \
 } \
 .AWA_qty_cell .qty_box { \
     background: transparent url(\'http://www.tts-group.co.uk/shops/app_themes/TTS/images/qty_box-reskin.png\') no-repeat 0 0; \
@@ -115,15 +120,16 @@ exp.css += '\
     margin: 0; \
 } \
 .AWA_qty_row > * { \
-    display: inline-block; \
-    margin-right: 1em; \
+    display: table-cell; \
+    padding-right: 1em; \
+    vertical-align: middle; \
 } \
 .AWA_qty_row { \
     margin-top: 1em; \
 } \
 .AWA_stock_cell { \
     width: 150px; \
-    vertical-align: middle; \
+    height: 30px; \
 }';
 
 // Fiddle with the cirruculum info
@@ -138,7 +144,7 @@ exp.css += ' \
     width: 33%; \
     box-sizing: border-box; \
     float: none; \
-    display: inline-block; \
+    display: table-cell; \
     vertical-align: top; \
     padding-left: 1em; \
     padding-right: 1em; \
@@ -188,7 +194,8 @@ exp.css += ' \
     width: 370px; \
 } \
 .product_header #right_box { \
-    width: 380px; \
+    width: 400px; \
+    padding: 0 0 0 10px; \
 } \
 .product_main_image, \
 .carousel_container { \
@@ -568,7 +575,9 @@ exp.init = function() {
     exp.func.reInitImageThumbs();
 
     // Give quantity box up-down arrows (browser-support permitting)
-    $('.qty_box')[0].type = "number";
+    $.each($('.qty_box'), function(i, elem){
+        elem.type = "number";
+    });
 
     // Move "People who looked at also looked at ..." to the right of the page
     $('#rr_placement_0').insertAfter('#right_box');
