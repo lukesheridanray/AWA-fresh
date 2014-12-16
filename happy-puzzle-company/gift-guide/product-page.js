@@ -41,7 +41,6 @@ exp.vars = {
     'new_gift_guide': $('<div class="AWA_HPC_gift_guide"><div class="AWA_HPC_gift_guide_title"><img src="//cdn.optimizely.com/img/174847139/f8a3234c304343abbda84e56d20e9802.png" alt="Santa hat"><h2>Christmas Gift Finder</h2></div><div class="AWA_HPC_gift_guide_content"><div class="AWA_HPC_gift_guide_row"><div class="AWA_HPC_gift_guide_col"><label>Age:</label><label for="ctl00_cphMaster_chkAgeAR51"><input id="ctl00_cphMaster_chkAgeAR51" type="checkbox" name="ctl00$cphMaster$chkAgeAR51">0-2 yrs</label><label for="ctl00_cphMaster_chkAgeAR52"><input id="ctl00_cphMaster_chkAgeAR52" type="checkbox" name="ctl00$cphMaster$chkAgeAR52">3-5 yrs</label><label for="ctl00_cphMaster_chkAgeAR53"><input id="ctl00_cphMaster_chkAgeAR53" type="checkbox" name="ctl00$cphMaster$chkAgeAR53">6-7 yrs</label><label for="ctl00_cphMaster_chkAgeAR54"><input id="ctl00_cphMaster_chkAgeAR54" type="checkbox" name="ctl00$cphMaster$chkAgeAR54">8-11 yrs</label><label for="ctl00_cphMaster_chkAgeAR55"><input id="ctl00_cphMaster_chkAgeAR55" type="checkbox" name="ctl00$cphMaster$chkAgeAR55">12-14 yrs</label><label for="ctl00_cphMaster_chkAgeAR56"><input id="ctl00_cphMaster_chkAgeAR56" type="checkbox" name="ctl00$cphMaster$chkAgeAR56">15-Adult</label></div><div class="AWA_HPC_gift_guide_col"><label>Skills/interests</label><label for="AWA_HPC_gift_guide_skill_1"><input id="AWA_HPC_gift_guide_skill_1" type="radio" name="ctl00$cphMaster$ddlSkills" value="0" checked="checked">All</label><label for="AWA_HPC_gift_guide_skill_2"><input id="AWA_HPC_gift_guide_skill_2" type="radio" name="ctl00$cphMaster$ddlSkills" value="SK05">Creativity</label><label for="AWA_HPC_gift_guide_skill_3"><input id="AWA_HPC_gift_guide_skill_3" type="radio" name="ctl00$cphMaster$ddlSkills" value="SK16">Maths</label><label for="AWA_HPC_gift_guide_skill_4"><input id="AWA_HPC_gift_guide_skill_4" type="radio" name="ctl00$cphMaster$ddlSkills" value="SK07">General Knowledge</label><label for="AWA_HPC_gift_guide_skill_5"><input id="AWA_HPC_gift_guide_skill_5" type="radio" name="ctl00$cphMaster$ddlSkills" value="SK10">Hand-Eye coordination</label></div></div><a id="AWA_HPC_gift_guide_submit" class="AWA_HPC_gift_guide_submit" href="javascript:__doPostBack(\'ctl00$cphMaster$lnkbtnSearch\',\'\')">Find the perfect gift</a></div></div>')
 };
 
-// Styles
 // New gift guide styling
 exp.css = ' \
 .AWA_HPC_gift_guide { \
@@ -80,6 +79,7 @@ exp.css = ' \
     box-sizing: border-box; \
     display: inline-block; \
     padding: 1em; \
+    padding-bottom: 0; \
 } \
 .AWA_HPC_gift_guide_col label:first-of-type { \
     display: block; \
@@ -94,6 +94,7 @@ exp.css = ' \
     box-sizing: border-box; \
     padding-right: 1em; \
     white-space: nowrap; \
+    margin-bottom: 1em; \
 } \
 .AWA_HPC_gift_guide_submit, \
 .AWA_HPC_gift_guide_submit:link, \
@@ -113,6 +114,14 @@ exp.css = ' \
     border-left: 1px solid #882776; \
     padding-left: 1em; \
     margin: 1em auto; \
+} \
+.AWA_HPC_gift_guide_col input[type=checkbox], \
+.AWA_HPC_gift_guide_col input[type=radio] { \
+    margin-right: 1em; \
+} \
+.AWA_HPC_gift_guide_col label[for=AWA_HPC_gift_guide_skill_4], \
+.AWA_HPC_gift_guide_col label[for=AWA_HPC_gift_guide_skill_5] { \
+    width: 40%; \
 }';
 
 // Functions

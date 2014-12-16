@@ -90,6 +90,7 @@ exp.css += ' \
     box-sizing: border-box; \
     display: inline-block; \
     padding: 1em; \
+    padding-bottom: 0; \
 } \
 .AWA_HPC_gift_guide_col label:first-of-type { \
     display: block; \
@@ -104,6 +105,7 @@ exp.css += ' \
     box-sizing: border-box; \
     padding-right: 1em; \
     white-space: nowrap; \
+    margin-bottom: 1em; \
 } \
 .AWA_HPC_gift_guide_submit, \
 .AWA_HPC_gift_guide_submit:link, \
@@ -123,6 +125,14 @@ exp.css += ' \
     border-left: 1px solid #882776; \
     padding-left: 1em; \
     margin: 1em auto; \
+} \
+.AWA_HPC_gift_guide_col input[type=checkbox], \
+.AWA_HPC_gift_guide_col input[type=radio] { \
+    margin-right: 1em; \
+} \
+.AWA_HPC_gift_guide_col label[for=AWA_HPC_gift_guide_skill_4], \
+.AWA_HPC_gift_guide_col label[for=AWA_HPC_gift_guide_skill_5] { \
+    width: 40%; \
 }';
 
 // Attractive box styling
