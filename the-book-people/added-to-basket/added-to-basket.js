@@ -133,21 +133,27 @@ var docCookies = {
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
+    variation: '1', // 1 or 2
+    subVariation: 'a', // a, b or c
     cookies: {
         total: 'optimizelyCartTotal',
-        fromThreshold: 'optimizelyAmountTillThreshold',
+        rrpTotal: 'optimizelyRRPTotal',
+//        discounts: 'optimizelyDiscounts',
         cartContents: 'optimizelyCartContents'
     },
-    threshold: {
-        amount: 25.00,
-        reached: false
-    },
+    threshold: 25.00, // float
+//    threshold: {
+//        amount: 25.00,
+//        reached: false
+//    },
     page: (window.location.toString().indexOf('qs_addedToBasket') !== -1) ? 'added' : 'cart',
-    siteTotal: '0.00',
-    currentTotal: '0.00',
-    currentCartContents: '{}',
-    currentDiscounts: 0
+    siteTotal: '0.00', // str
+    currentTotal: '0.00', // str
+    currentRRPTotal: '0.00', // str
+    currentDiscounts: '0.00', // str
+    currentCartContents: '{}'
 };
+
 
 // Styles
 // String containing the CSS for the experiment
@@ -197,11 +203,13 @@ exp.func.waitForFunction = function(func, callback, timeout, keepAlive) {
         }, intervalTime);
 };
 
+// Rounds 'up' to 2 decimal places
 exp.func.roundUp = function(number, digits){
     var factor = Math.pow(10,digits);
     return (Math.ceil(number*factor) / factor).toFixed(2);
 };
 
+// Gets the discounts if any from the cart / checkout pages
 exp.func.getDiscounts = function(){
     var discount = 0;
     $('#basketRight .hidden-phone dd.subTotal.discount').each(function(){
@@ -212,6 +220,35 @@ exp.func.getDiscounts = function(){
     });
     return exp.func.roundUp( discount );
 };
+
+// Update cookies and vars and init DOM changes if neccessary
+exp.func.addItems = function() {
+
+    // Free shipping
+    var freeShippingDistance = exp.vars.threshold - exp.func.roundUp( parseFloat( exp.vars.currentTotal ) );
+    if( parseFloat( freeShippingDistance ) < 0 ) {
+        freeShippingDistance = 0;
+    } else if( parseFloat( freeShippingDistance ) < 1 ) {
+        freeShippingDistance = freeShippingDistance.match(/([0-9]*)(.)([0-9]*)/)[3] + 'p';
+    } else {
+        freeShippingDistance = '£' + freeShippingDistance.replace('.00', '');
+    }
+    // Free shipping message
+    exp.func.freeShippingMessage( freeShippingDistance );
+
+};
+
+exp.func.freeShippingMessage = function( amount ) {
+    if( amount === 0 ) {
+        alert('You now qualify for FREE Delivery');
+    } else if(
+        (exp.vars.subVariation === 'a') ||
+        (exp.vars.subVariation === 'b' && amount <= 10.00)
+    ) {
+        alert('Spend just '+amount+' more to get FREE Delivery');
+    }
+};
+
 
 // Init function
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
@@ -228,19 +265,29 @@ exp.init = function() {
 
     // Get the current value of the cookies
     this.vars.currentTotal = docCookies.getItem( this.vars.cookies.total );
+    this.vars.currentRRPTotal = docCookies.getItem( this.vars.cookies.rrpTotal );
+//    this.vars.currentDiscounts = docCookies.getItem( this.vars.cookies.discounts );
     this.vars.currentCartContents = docCookies.getItem( this.vars.cookies.cartContents );
 
     // If our cookie values are null, initialise them
     if(
         this.vars.currentTotal === null &&
+        this.vars.currentRRPTotal === null &&
+//        this.vars.currentDiscounts === null &&
         this.vars.currentCartContents === null
     ) {
         docCookies.setItem( this.vars.cookies.total, '0.00', null, '/' );
+        docCookies.setItem( this.vars.cookies.rrpTotal, '0.00', null, '/' );
+//        docCookies.setItem( this.vars.cookies.discounts, '0.00', null, '/' );
         docCookies.setItem( this.vars.cookies.cartContents, '{}', null, '/' );
+        this.vars.currentTotal = '0.00';
+        this.vars.currentRRPTotal = '0.00';
+//        this.vars.currentDiscounts = '0.00';
+        this.vars.currentCartContents = '{}';
     }
 
-    // If either total or fromThreshold is not a number there has been a problem, so abort the experiment
-    if( typeof parseFloat(this.vars.currentTotal) !== 'number' || typeof parseFloat(this.vars.currentFromThreshold) !== 'number' ) {
+    // If either total or rrp total is not a number there has been a problem, so abort the experiment
+    if( typeof parseFloat(this.vars.currentTotal) !== 'number' || typeof parseFloat(this.vars.currentRRPTotal) !== 'number' ) {
         exp.log( 'AWA added to basket experiment encountered a problem. Cookie value invalid.');
         return false;
     }
@@ -252,10 +299,21 @@ exp.init = function() {
     }
 
     // If we have a total but no cart contents there has been a problem, so abort the experiment
-    if( parseFloat( this.vars.currentTotal ) > 0 && this.vars.currentFromThreshold === '{}' ) {
+    if( parseFloat( this.vars.currentTotal ) > 0 && this.vars.currentCartContents === '{}' ) {
         exp.log( 'AWA added to basket experiment encountered a problem. Total does not match contents.');
         return false;
     }
+
+    /*
+        General
+    */
+
+    // append styles to head
+    $('head').append('<style type="text/css">'+this.css+'</style>');
+
+    // Add Class to body depending on variation
+
+    $('body').addClass( 'exp-added-basket-' + this.vars.variation ); 
 
     /*
         Cart pages
@@ -277,15 +335,9 @@ exp.init = function() {
     if( this.vars.page === 'added') {
 
         // Calculate what we have just added and update our cookies and local vars
+        exp.vars.addItems();
 
     }
-
-    /*
-        General
-    */
-
-    // append styles to head
-    $('head').append('<style type="text/css">'+this.css+'</style>');
 
 };
 
