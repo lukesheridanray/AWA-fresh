@@ -22,16 +22,16 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Product page: price per book, savings and reviews - 0.5');
+exp.log('Product page: price per book, savings and reviews - 0.6');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
-    variation: 3,
+    variation: 1,
     isCollection: ( $('#format-label').text().indexOf('Collection') !== -1 ) ? true : false,
     iseBook: ( $('#format-label').text().indexOf('eBook') !== -1 ) ? true : false,
     totalPrice: $('.priceWrapper #price .price.price-string').text().trim(),
-    books: $('#product-description-title').text().match(/([0-9]*)( Books)/i)
+    books: $('#product-description-title').text().match(/([0-9]+)( Books)/i)
 };
 
 // Styles
