@@ -74,7 +74,11 @@ exp.vars = {
     'place_order_button_selector' : '.button.btn-checkout:nth-child(2)',
     'padlock_image': '<img src="//cdn.optimizely.com/img/174847139/97a250a00240473fb3eaeb11303abe38.png" alt="" />',
 
-    'header': $('#header,.header-top'),
+    'header': $(' \
+        #header .logo-num-wrapper, \
+        #header .nav-container, \
+        #header .header-holder, \
+        .header-top'),
     'footer': $('#footer,.bottom')
 };
 

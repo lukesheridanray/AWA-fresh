@@ -20,7 +20,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Paypal/Credit Card Review Page experiment PAGE: PP - 0.3');
+exp.log('Paypal/Credit Card Review Page experiment PAGE: PP - 0.3.1');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -83,7 +83,11 @@ exp.vars = {
 
     'place_order_button_selector' : '#review_button',
 
-    'header': $('#header,.header-top'),
+    'header': $(' \
+        #header .logo-num-wrapper, \
+        #header .nav-container, \
+        #header .header-holder, \
+        .header-top'),
     'footer': $('#footer,.bottom')
 };
 
@@ -518,7 +522,6 @@ exp.func.pokeTable = function(){
 // Init function
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
 exp.init = function() {
-
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
 
