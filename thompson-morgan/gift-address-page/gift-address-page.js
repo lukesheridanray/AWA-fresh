@@ -290,7 +290,9 @@ exp.init = function() {
 };
 
 // Run the experiment
-exp.init();
+setTimeout(function () {
+    exp.init();
+}, 500);
 
 // Return the experiment object so we can access it later if required
 return exp;
