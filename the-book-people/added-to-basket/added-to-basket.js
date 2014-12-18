@@ -151,13 +151,24 @@ exp.vars = {
     currentTotal: '0.00', // str
     currentRRPTotal: '0.00', // str
     currentDiscounts: '0.00', // str
-    currentCartContents: '{}'
+    currentCartContents: '{}' //obj as str
 };
 
 
 // Styles
 // String containing the CSS for the experiment
-exp.css = ' ';
+exp.css = ' \
+.exp-added-basket-1 .exp-free-delivery-message { \
+    clear: left; \
+} \
+.exp-added-basket-2 .exp-free-delivery-message { \
+    width: 100%; \
+    text-align: right; \
+    padding-top: 4px; \
+} \
+.exp-added-basket-2 .exp-free-delivery-message i { \
+    display: none; \
+}';
 
 // Functions
 // Object containing functions, some helpful functions are included
@@ -218,35 +229,85 @@ exp.func.getDiscounts = function(){
             discount += parseFloat(value);
         }
     });
-    return exp.func.roundUp( discount );
+    return exp.func.roundUp( discount, 2 );
 };
 
-// Update cookies and vars and init DOM changes if neccessary
-exp.func.addItems = function() {
 
-    // Free shipping
-    var freeShippingDistance = exp.vars.threshold - exp.func.roundUp( parseFloat( exp.vars.currentTotal ) );
-    if( parseFloat( freeShippingDistance ) < 0 ) {
-        freeShippingDistance = 0;
-    } else if( parseFloat( freeShippingDistance ) < 1 ) {
-        freeShippingDistance = freeShippingDistance.match(/([0-9]*)(.)([0-9]*)/)[3] + 'p';
-    } else {
-        freeShippingDistance = '£' + freeShippingDistance.replace('.00', '');
-    }
-    // Free shipping message
-    exp.func.freeShippingMessage( freeShippingDistance );
+// Update the cookie and local vars
+exp.func.updateValue = function( cookie, varr, value ) {
+    docCookies.setItem( exp.vars.cookies[cookie], value, null, '/' );
+    exp.vars[varr] = value;
+    exp.log('Cookie updated to value: '+ value);
+};
+
+// Update cookies and vars and init DOM changes
+exp.func.addItems = function() {
+    // rrp vars
+    var rrp = $('.hidden-phone .hidden-phone .rrp.muted').text().replace('RRP','').replace('£','').trim();
+    var qty = ( !$('.lead.pull-left.hidden-phone').text().match(/[0-9+]/) ) ? 1 : $('.lead.pull-left.hidden-phone').text().match(/[0-9+]/)[0];
+    var rrpCost = exp.func.roundUp( parseFloat( rrp ) * parseInt( qty ), 2 );
+    var rrpSavings = exp.func.roundUp( parseFloat( exp.vars.currentTotal ) - parseFloat( rrpCost ), 2 );
+    // free shpping vars
+    var freeShippingDiff = parseFloat( exp.func.roundUp( exp.vars.threshold - parseFloat( exp.vars.currentTotal ), 2 ) );
+    // cart contents vars
+    var productId = $('.productTitles a').attr('href').match(/(productId=)(.+)(&store)/)[2];
+    var contentsObj = JSON.parse(exp.vars.currentCartContents);
+    var contentsStr;
+    
+    contentsObj[productId] = qty;
+    contentsStr = JSON.stringify(contentsObj);
+
+    // Update cart contents
+    exp.func.updateValue('cartContents', 'currentCartContents', contentsStr);
+
+    // Update rrp total
+    exp.func.updateValue('rrpTotal', 'currentRRPTotal', rrpCost);
+
+    // Update site total
+    exp.func.updateValue('total', 'currentTotal', exp.vars.siteTotal);
+
+    // Display savings message
+    exp.func.savingsMessage( rrpSavings );
+
+    // Display free shipping message
+    exp.func.freeShippingMessage( freeShippingDiff );
 
 };
 
 exp.func.freeShippingMessage = function( amount ) {
+    if( amount < 0 ) {
+        amount = 0;
+    } else if( amount < 1 ) {
+        amount = amount.match(/([0-9]*)(.)([0-9]*)/)[3] + 'p';
+    } else {
+       amount = '£' + amount.toString().replace('.00', '');
+    }
     if( amount === 0 ) {
-        alert('You now qualify for FREE Delivery');
+        $('.lead.pull-left.hidden-phone').parent('div').append(
+            '<p class="lead pull-left hidden-phone exp-free-delivery-message"><i class="icon-ok"></i>&nbsp;You now qualify for FREE Delivery</p>'
+        );
+        exp.func.deliveryMessage();
     } else if(
         (exp.vars.subVariation === 'a') ||
         (exp.vars.subVariation === 'b' && amount <= 10.00)
     ) {
         alert('Spend just '+amount+' more to get FREE Delivery');
+        $('.lead.pull-left.hidden-phone').parent('div').append(
+            '<p class="lead pull-left hidden-phone exp-free-delivery-message"><i class="icon-exclamation-sign"></i>&nbsp;Spend just '+amount+' more to get FREE Delivery</p>'
+        );
     }
+};
+
+exp.func.savingsMessage = function(amount) {
+    $('.well h3 .JS_basketTotal.text-success').parent('h3').before(
+        '<h3 class="exp-savings-note">You save: <span>-£'+amount.replace('-','')+'</span></h3>'
+    );
+};
+
+exp.func.deliveryMessage = function() {
+    $('.exp-savings-note').after(
+        '<h3 class="exp-delivery-note">Delivery: <span>FREE</span></h3>'
+    );
 };
 
 
@@ -260,8 +321,6 @@ exp.init = function() {
 
     // Get basket total as shown on the site
     this.vars.siteTotal = $('.mini-basket-value .JS_basketTotal').text().trim().replace('£','');
-
-    exp.log(this.vars.siteTotal);
 
     // Get the current value of the cookies
     this.vars.currentTotal = docCookies.getItem( this.vars.cookies.total );
@@ -292,16 +351,16 @@ exp.init = function() {
         return false;
     }
 
-    // If our total and the site total do not match, abort the experiment
-    if( this.vars.currentTotal !== this.vars.siteTotal ) {
+    // If our total and the site total do not match, abort the experiment, unless we are on the cart page, in which case we need to calculate the new total first
+    if( (this.vars.currentTotal !== this.vars.siteTotal) && this.vars.page !== 'added') {
         exp.log( 'AWA added to basket experiment encountered a problem. Cart total mismatch.');
         return false;
     }
 
     // If we have a total but no cart contents there has been a problem, so abort the experiment
     if( parseFloat( this.vars.currentTotal ) > 0 && this.vars.currentCartContents === '{}' ) {
-        exp.log( 'AWA added to basket experiment encountered a problem. Total does not match contents.');
-        return false;
+        //exp.log( 'AWA added to basket experiment encountered a problem. Total does not match contents.');
+        //return false;
     }
 
     /*
@@ -335,7 +394,9 @@ exp.init = function() {
     if( this.vars.page === 'added') {
 
         // Calculate what we have just added and update our cookies and local vars
-        exp.vars.addItems();
+        exp.func.addItems();
+
+        // Validate the cookie against actual site total
 
     }
 
