@@ -54,8 +54,9 @@ console.log('Product listing - 0.9');
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
+    'variation': 1,
     'productJSON': {},
-    'productFeedURL': '//www.bakerross.co.uk/feeds/skus_json_v1.xml',
+    'productFeedURL': '//www.bakerross.co.uk/feeds/skus_json_v1.xml', // actually JSON
     'haveProductData': false,
     'catDesc': $('.category-description.std'),
     'primePromiseHeading': '<p class="price-promise-heading">Best Price Guaranteed - our <a href="#" data-behaviour="pricePromiseModal">100% Price Match Promise</a></p>',
@@ -135,8 +136,10 @@ background-color: #FFF; color: #0071B9; border: 1px solid #0071B9; padding: 3px 
 .mini-prod-form-option, .intro-content-item { background: #fff; position: relative; top: -14px; line-height: 16px; overflow: auto; padding: 0 0 5px 0; } \
 .mini-prod-form-option .price, .intro-content-item .price { float: right; } \
 .mini-prod-form-option .name, .intro-content-item .name { float: left; } \
-.mini-prod-form-option input, .intro-content-item input { float: left; margin: 0 5px 0 0; position: relative; top: 1px !important; } ' +
-/* Side Navigation */ ' \
+.mini-prod-form-option input, .intro-content-item input { float: left; margin: 0 5px 0 0; position: relative; top: 1px !important; }';
+
+if( exp.vars.variation === 1) {
+    exp.css += ' \
 dd.empty-filters,dt.empty-filters { display: none; } \
 .sidebar .currently { display: none; } \
 #narrow-by-list { padding-left: 7px; padding-right: 7px; } \
@@ -150,6 +153,7 @@ dd.empty-filters,dt.empty-filters { display: none; } \
 .price-range-filter label { float: left; line-height: 22px; font-size: 1.2em; margin: 0 4px 10px 0; } \
 .price-range-filter input { width: 28px; padding: 3px; float: left; margin: 0 6px 0 0; } \
 .price-range-filter .price-range-submit { height: 23px; margin-left: 2px; width: 36px; border: 0; background: #0071B9; color: #fff; font-weight: bold; } ';
+};    
 
 // Functions
 // Object containing functions, some helpful functions are included
@@ -478,6 +482,7 @@ if( $('.pages').length ) {
     // **
     // Side navigation
     //
+if( exp.vars.variation === 1 ) {
 
     $('.sidebar .block-title:eq(0)').html( '<strong><span>REFINE BY</span></strong>' );
 
@@ -515,6 +520,8 @@ if( $('.pages').length ) {
         e.preventDefault();
         exp.func.priceRangeFilter();
     });
+
+}
 
     // **
     // Product Grid
