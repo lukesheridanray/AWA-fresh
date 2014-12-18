@@ -1,0 +1,73 @@
+//
+// CGIT Optimizely Boilerplate - version 0.1.4
+//
+
+// JSHint flags
+// jshint multistr: true
+// jshint jquery: true
+
+// Wrap the experiment code in an IIFE, this creates a local scope and allows us to
+// pass in jQuery to use as $. Other globals could be passed in if required.
+var exp = (function($) {
+
+// Initialise the experiment object
+var exp = {};
+
+// Wrapper for console.log, to prevent the exp breaking on browsers which don't
+// (always) have 'console' set (e.g. IE9)
+exp.log = function (str) {
+    if (typeof window.console !== 'undefined') {
+        console.log(str);
+    }
+};
+
+// Log the experiment, useful when multiple experiments are running
+exp.log('Cox and Cox Indoor Living - 0.1');
+
+// Condition
+// If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
+exp.condition = $('.catalog-category-view.categorypath-home.category-home');
+// Check for a condition and return false if it has not been met
+if(exp.condition && !exp.condition.length) {
+    exp.log('Experiment failed a condition');
+    return false;
+}
+
+// Variables
+// Object containing variables, generally these would be strings or jQuery objects
+exp.vars = {
+    'new_page_html': '<style>.AWA_indoor_living {width: 960px;box-sizing: border-box;}.AWA_cell {width: 306px;height: 268px;box-sizing: border-box;display: inline-block;margin-right: 16px;margin-bottom: 16px;padding: 16px;vertical-align: top;}.AWA_cell ul {list-style: none;padding-left: 0;}.AWA_cell_large {width: 634px;border: 1px solid #b6b6b6;}.AWA_cell_large > div {width: 324px;display: inline-block;box-sizing: border-box;vertical-align: top;padding-left: 16px;}.AWA_cell_large h3 {margin-bottom: 16px;font-size: 1.5em;}.AWA_cell_large p {margin-bottom: 16px;}.AWA_cell_last {margin-right: 0;}.AWA_cell_link {display: inline-block;box-sizing: border-box;}.AWA_cell_link > div {height: 24px;line-height: 24px;background-image: url(\'https://cdn.optimizely.com/img/174847139/8f5b003c3af34ab887814ab440b50326.png\');background-position-x: right;background-repeat: no-repeat;margin-bottom: 8px;}.AWA_cell_large .AWA_cell_link > div {margin-bottom: 0;}#kitchen_and_dining_cell {padding-left: 4em;}#bed_and_bath_cell,#home_office_cell,#kids_cell {height: 400px;}.AWA_heading_panel,.AWA_inthemedia,.AWA_be_current_trends {width: 100%;}.AWA_heading_panel {height: auto;text-align: center;}.AWA_heading_panel h2 {font-size: 2em;}.AWA_inthemedia h3,.AWA_be_current_trends h3 {font-size: 2em;text-align: center;font-weight: normal;}.AWA_media_cell {width: 152px;display: inline-block;box-sizing: border-box;margin-top: 2em;}.AWA_media_cell img {margin: 0 auto;width: 80px;display: block;}.AWA_testimonial {width: 49%;text-align: center;display: inline-block;margin-top: 2em;}.AWA_testimonial p {font-size: 1.25em;font-style: italic;}.AWA_trend_cell {width: 229px;display: inline-block;margin-top: 2em;}.AWA_trend_cell a {width: 160px;display: block;margin: 0 auto;}</style><div class="AWA_indoor_living"><div class="AWA_cell AWA_heading_panel AWA_cell_last"><h2>Stylish homeware you can\'t find elsewhere</h2></div><div id="decorative_home_cell" class="AWA_cell AWA_cell_large"><a href="http://www.coxandcox.co.uk/home/decorative-home" class="AWA_cell_link"><img src="https://cdn.optimizely.com/img/174847139/24c59869a5474e63a2d3dd5070f7b7d7.png"><div>Decorative Home (290)</div></a><div><h3>What our customers say:</h3><p>&ldquo;Friends always ask where I got it&rdquo;</p><p>&ldquo;Unusual things that make excellent gifts &ndash; if you can bear to part with them!&rdquo;</p><ul><li><a href="http://www.coxandcox.co.uk/home/decorative-home/frames">Frames</a>                 (17)</li><li><a href="http://www.coxandcox.co.uk/home/decorative-home/candles-holders">Candle Holders</a>         (15)</li><li><a href="http://www.coxandcox.co.uk/home/decorative-home/rugs">Rugs</a>                   (34)</li><li><a href="http://www.coxandcox.co.uk/home/decorative-home/vases">Vases</a>                  (17)</li><li><a href="http://www.coxandcox.co.uk/home/decorative-home/decorative-acesssories">Decorative Accessories</a> (37)</li><li><a href="http://www.coxandcox.co.uk/home/decorative-home">View all</a></li></ul></div></div><div id="kitchen_and_dining_cell" class="AWA_cell AWA_cell_last"><a href="http://www.coxandcox.co.uk/home/kitchen-dining" class="AWA_cell_link"><img src="https://cdn.optimizely.com/img/174847139/f280cb256ca24fdba73f65c0fe0d8f07.png"><div>Kitchen &amp; Dining (148)</div></a><ul><li><a href="http://www.coxandcox.co.uk/home/kitchen-dining/stools">Stools &amp; Chairs</a>     (20)</li><li><a href="http://www.coxandcox.co.uk/home/kitchen-dining/casa-earthenware">Casa Tableware</a>          (14)</li><li><a href="http://www.coxandcox.co.uk/home/kitchen-dining/utility">Essential Utility</a>       (45)</li><li><a href="http://www.coxandcox.co.uk/home/kitchen-dining/everyday-range">Everyday Glassware Range</a> (9)</li><li><a href="http://www.coxandcox.co.uk/home/kitchen-dining/kitchen-essentials">Kitchen Essentials</a>      (47)</li><li><a href="http://www.coxandcox.co.uk/home/kitchen-dining">View all</a></li></ul></div><div id="bed_and_bath_cell" class="AWA_cell"><a href="http://www.coxandcox.co.uk/home/bed-bath" class="AWA_cell_link"><img src="https://cdn.optimizely.com/img/174847139/8f3e4abdca0f4d9e9aaec58112ecc64d.png"><div>Bed &amp; Bath (95) </div></a><ul><li><a href="http://www.coxandcox.co.uk/home/bed-bath/bathroom">Bathroom</a>                (10)</li><li><a href="http://www.coxandcox.co.uk/home/bed-bath/bedroom">Bedroom</a>                 (55)</li><li><a href="http://www.coxandcox.co.uk/home/bed-bath/quilts">Quilts</a>                  (16)</li><li><a href="http://www.coxandcox.co.uk/home/bed-bath/furniture">Furniture</a>               (18)</li><li><a href="http://www.coxandcox.co.uk/home/bed-bath/storage">Storage</a>                 (15)</li><li><a href="http://www.coxandcox.co.uk/home/bed-bath">View all</a></li></ul></div><div id="home_office_cell" class="AWA_cell"><a href="http://www.coxandcox.co.uk/home/home-office" class="AWA_cell_link"><img src="https://cdn.optimizely.com/img/174847139/4a00bd28acbc4b19a052fb7c31c8ce25.png"><div>Home Office (38)</div></a><ul><li><a href="http://www.coxandcox.co.uk/home/home-office/furniture">Furniture</a>               (11)</li><li><a href="http://www.coxandcox.co.uk/home/home-office/storage">Storage</a>                 (15)</li><li><a href="http://www.coxandcox.co.uk/home/home-office/accessories">Accessories</a>             (20)</li><li><a href="http://www.coxandcox.co.uk/home/home-office/lighting">Lighting</a>                (12)</li><li><a href="http://www.coxandcox.co.uk/home/home-office/wrap-craft">Wrap</a>                    (19)</li><li><a href="http://www.coxandcox.co.uk/home/home-office">View all</a></li></ul></div><div id="kids_cell" class="AWA_cell AWA_cell_last"><a href="http://www.coxandcox.co.uk/home/kids-314" class="AWA_cell_link"><img src="https://cdn.optimizely.com/img/174847139/3d876e3cfdae4c968408ea638884a64a.png"><div>Kids (150)</div></a><ul><li><a href="http://www.coxandcox.co.uk/home/kids-314/kids-room">Kids Room</a>       (47)</li><li><a href="http://www.coxandcox.co.uk/home/kids-314/teen-room">Teen Room</a>       (29)</li><li><a href="http://www.coxandcox.co.uk/home/kids-314/play">Play</a>            (100)</li><li><a href="http://www.coxandcox.co.uk/home/kids-314/outer-space">Outer Space</a>     (9)</li><li><a href="http://www.coxandcox.co.uk/home/kids-314">View all</a></li></ul></div><div class="AWA_cell AWA_inthemedia AWA_cell_last"><h3>In the Media</h3><div class="AWA_media_cell"><img src="//cdn.optimizely.com/img/174847139/761f12577b7b43d99ac7d52433105504.jpg" alt=""></div><div class="AWA_media_cell"><img src="//cdn.optimizely.com/img/174847139/9c89a0826c154ca7bf1b7e89547a9ae3.jpg" alt=""></div><div class="AWA_media_cell"><img src="//cdn.optimizely.com/img/174847139/4c6912e7736648c1b0e8cff8e1e87477.jpg" alt=""></div><div class="AWA_media_cell"><img src="//cdn.optimizely.com/img/174847139/dc32b6a434ea47e1acf96d416290b45f.jpg" alt=""></div><div class="AWA_media_cell"><img src="//cdn.optimizely.com/img/174847139/9a05727290144dbbabb5beecccda9220.jpg" alt=""></div><div class="AWA_media_cell"><img src="//cdn.optimizely.com/img/174847139/d6e5b72bad174af7be1b40a4ccb73a1c.jpg" alt=""></div><div class="AWA_testimonial"><p class="AWA_message">&ldquo;Unique, stylish &amp; practical&rdquo;</p><p class="AWA_entity">Sarah Slade, ELLE Decoration UK</p></div><div class="AWA_testimonial"><p class="AWA_message">&ldquo;A classic look to love for years&rdquo;</p><p class="AWA_entity">Sarah Keady, Red Magazine Living Editor</p></div></div><div class="AWA_cell AWA_be_current_trends AWA_cell_last"><h3>Be current with these trends</h3><div class="AWA_trend_cell"><a href="http://www.coxandcox.co.uk/home/trend-chalet-chic" class="AWA_cell_link"><img src="//cdn.optimizely.com/img/174847139/57539f8563724282bb4ace2430380529.png" alt=""><div>Trend - Chalet Chic (41)</div></a></div><div class="AWA_trend_cell"><a href="http://www.coxandcox.co.uk/home/trend-winter-scandi" class="AWA_cell_link"><img src="//cdn.optimizely.com/img/174847139/6b3f4bd414b8489fa714e4989667e673.png" alt=""><div>Trend - Winter Scandi (27)</div></a></div><div class="AWA_trend_cell"><a href="http://www.coxandcox.co.uk/home/trend-mixed-metals" class="AWA_cell_link"><img src="//cdn.optimizely.com/img/174847139/53a4c59afe63470b89333c1df9a91297.png" alt=""><div>Trend - Mixed Metals (37)</div></a></div><div class="AWA_trend_cell"><a href="http://www.coxandcox.co.uk/home/trend-soft-maroq" class="AWA_cell_link"><img src="//cdn.optimizely.com/img/174847139/bec16bed63de4d4e8b92b6a693707cf1.png" alt=""><div>Trend - Soft Maroq (24)</div></a></div></div></div>'
+};
+
+// Styles
+// String containing the CSS for the experiment
+exp.css = '';
+
+// Functions
+// Object containing functions, some helpful functions are included
+exp.func = {};
+
+// Init function
+// Called to run the actual experiment, DOM manipulation, event listeners, etc
+exp.init = function() {
+
+    // append styles to head
+    $('head').append('<style type="text/css">'+this.css+'</style>');
+
+    // DELETE ALL OF THE EXISTING CONTENT FOR IT IS FORBODE
+    $('.col-left.sidebar,.col-main').remove();
+
+    // Add new layout
+    $('.breadcrumbs').after(this.vars.new_page_html);
+
+};
+
+// Run the experiment
+exp.init();
+
+// Return the experiment object so we can access it later if required
+return exp;
+
+// Close the IIFE, passing in jQuery and any other global variables as required
+// if jQuery is not already used on the site use optimizely.$ instead
+})(jQuery);
