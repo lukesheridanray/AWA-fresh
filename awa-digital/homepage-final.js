@@ -19,7 +19,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Home page - 1.3');
+console.log('Home page - 1.4');
 
 // Variables
 // Object containing variables for use in the experiment, generally these would be strings or jQuery objects
@@ -106,7 +106,7 @@ exp.formSubmit = function(e){
       e.preventDefault();
       var nameVal = $('#afullname').val();
       var emailVal = $('#aemail').val();
-      var queryString = 'afullname='+nameVal+'&aemail='+emailVal+'&aemail-result=&submit1=Send+it+now';
+      var queryString = 'aname_second='+nameVal+'&aemail='+emailVal+'&aemail-result=&submit1=Send+it+now';
         console.log(queryString);
       if ( nameVal === '' || emailVal === '' || !exp.emailValid(emailVal)) {
            $('.form-error').show(0);
