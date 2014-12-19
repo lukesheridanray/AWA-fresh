@@ -15,7 +15,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Basket page v2 -  0.1');
+console.log('Basket page v4 -  0.3');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -32,6 +32,8 @@ exp.vars = {
         <div id="coupon-modal-content" class="coupon-modal-content--hidden">'+
              $('.basket_promotional_code').html() +
         '</div>',
+    'recommendedModal': ' \
+        <div id="recommended-modal-content"></div>',
     'benefitsMarkup': ' \
        <div class="benefits-boxes"> \
           <div class="benefits-box benefits-box--secure"> \
@@ -46,7 +48,11 @@ exp.vars = {
              <h2>MONEY BACK GUARANTEE</h2> \
              <p>If you\'re not completely satisfied,<br />we\'ll give you your money back.</p> \
           </div> \
-       </div> '
+       </div> ',
+       'recommendedProduct1': $('#ctl00_divCustomersAlsoBought .product-wrapper:eq(0)'),
+       'recommendedProduct2': $('#ctl00_divCustomersAlsoBought .product-wrapper:eq(1)'),
+       'recommendedProduct3': $('#ctl00_divCustomersAlsoBought .product-wrapper:eq(2)'),
+       'recommendedProduct4': $('#ctl00_divCustomersAlsoBought .product-wrapper:eq(3)'),
 };
     
 // Styles
@@ -54,6 +60,12 @@ exp.vars = {
 exp.css = ' \
 #dvSuggestions { height: 355px !important; } \
 #dvSuggestions h2 { font-size: 1.3em; padding-top: 15px; } \
+\
+#recommended-modal-content { display: none; width: 980px; height: 300px; overflow: hidden; } \
+#recommended-modal-content .product-wrapper { margin: 5px 10px 0 0 !important; position: relative; left: 5px; } \
+.recommended-modal-title { font-size: 24px; text-align: center; font-weight: bold; margin: 0 0 10px 0; } \
+\
+#dvSuggestions .product_tabs { display: none; } \
 \
 .basket_step2, .basket_step3 { position: relative; } \
 .basket_step2:before, .basket_step3:before { \
@@ -161,8 +173,6 @@ exp.init = function() {
     
     $('.basket_info_summary tr:last-child').remove();
     
-    $('.basket_info_summary').prepend( '<p><a href="#" class="underline-link js-coupon-info">Got a coupon?</a></p>' );
-    
     $('.basket_info_summary td').filter(function(){ return $(this).html() === 'Delivery:'; }).parent('tr').remove();
     
     $('.basket_info_summary td:first-child').filter(function(){ return $(this).html() === 'Subtotal <small>(inc.VAT)</small>:'; }).html('Subtotal before Delivery Charges');
@@ -172,6 +182,43 @@ exp.init = function() {
     $('.basket_info_summary tr:first-child').after( $('.basket_delivery_options .basket_info tr:eq(0)') );
     
     $('#tblDelivery tr:first-child td.first-child').after( $('#tblDelivery tr:first-child td.last-child') );
+
+if (this.vars.recommendedProduct1.length) {
+
+    // add recommended modal content to DOM
+    
+    $('#aspnetForm').append( this.vars.recommendedModal );
+
+    $('#recommended-modal-content').html(
+        '<p class="recommended-modal-title">Customers who bought this item also bought</p>' + 
+        '<div class="product-wrapper">' + (this.vars.recommendedProduct1.length ? this.vars.recommendedProduct1.html() : '') + '</div>' +
+        '<div class="product-wrapper">' + (this.vars.recommendedProduct2.length ? this.vars.recommendedProduct2.html() : '') + '</div>' +
+        '<div class="product-wrapper">' + (this.vars.recommendedProduct3.length ? this.vars.recommendedProduct3.html() : '') + '</div>' +
+        '<div class="product-wrapper">' + (this.vars.recommendedProduct4.length ? this.vars.recommendedProduct4.html() : '') + '</div>'
+    );
+
+    // Add event listener to recommended products link
+    
+    $('a[href="#dvSuggestions"]').bind('click', function(e){
+        e.preventDefault();
+        $.fancybox({
+            'autoScale': true,
+            'speedIn': 500,
+            'speedOut': 300,
+            'width': 660,
+            'height': 386,
+            'autoDimensions': true,
+            'centerOnScroll': true,
+            'href': '#recommended-modal-content',
+        });
+    });
+
+
+} else {
+
+    $('#ctl00_cphInnerMaster_spSuggestions').remove();
+
+}
     
     // Add event listener to coupon link
     
