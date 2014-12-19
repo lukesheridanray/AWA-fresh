@@ -31,7 +31,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('TTS Group Product Page Experiment - 0.6');
+exp.log('TTS Group Product Page Experiment - 0.7');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -48,7 +48,7 @@ if(exp.condition && !exp.condition.length) {
 exp.vars = {
     '$product_code_row'  : $('#right_box .product_table tr:first-of-type'),
     'product_code'       : $('.product_table tr:first-of-type th:nth-of-type(2)').length === 1 ? $('.product_table tr:first-of-type th:nth-of-type(2)').text() : false,
-    '$free_delivery_line': $("<p>", { text: 'FREE DELIVERY on all UK online orders. NO minimum order value.' }),
+    '$free_delivery_line': $("<p>", { text: 'FREE DELIVERY on all UK online orders.' }),
     '$small_description': $('#product_strapline'),
     'reviews_count_text': ' reviews - ',
     'reviews_link_text' : 'read all',
@@ -139,8 +139,7 @@ exp.css += ' \
     width: 100%; \
     padding-top: 1em; \
 } \
-.curriculum_information .subject_description, \
-.curriculum_information .subject_areas { \
+.curriculum_information .subject_description { \
     width: 33%; \
     box-sizing: border-box; \
     float: none; \
@@ -153,19 +152,12 @@ exp.css += ' \
 .curriculum_information .subject_description:first-of-type { \
     padding-left: 0; \
 } \
-.curriculum_information .subject_areas { \
+.curriculum_information .subject_description:nth-of-type(2) { \
     border-right: 0; \
     padding-right: 0; \
 } \
-.curriculum_information .subject_areas .subject_images { \
-    float: none; \
-} \
-.curriculum_information .subject_areas p { \
-    font-size: 12px; \
-    margin: 0; \
-} \
-.curriculum_information .subject_areas .subject_images img { \
-    width: 24px; \
+.curriculum_information .subject_areas { \
+    display: none; \
 }';
 
 // Restyle the reviews widget
