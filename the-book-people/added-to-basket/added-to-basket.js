@@ -1,5 +1,12 @@
 /*
 
+Jamie notes
+----------
+
+possibly prevent a page refresh from logging as a new purchase? perhaps by keeping a record of the last added product
+
+dealing with a 3 for 2 offer
+
 AWA SPEC
 --------
 
@@ -161,6 +168,14 @@ exp.css = ' \
 .exp-added-basket-1 .exp-free-delivery-message { \
     clear: left; \
 } \
+.exp-added-basket-1 .exp-free-delivery-message.not-reached-threshold i { \
+    background-image: url("data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABkAAD/4QOPaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjAtYzA2MSA2NC4xNDA5NDksIDIwMTAvMTIvMDctMTA6NTc6MDEgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6ZTBjZmUwY2YtMGQxZi00YWJlLWEyNGMtYzc0YmZkYzQ0YmM0IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjBBRjc4MjExODZCRjExRTQ5Q0FEQ0ZCMkYzRjMwRTg4IiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjBBRjc4MjEwODZCRjExRTQ5Q0FEQ0ZCMkYzRjMwRTg4IiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE0IChNYWNpbnRvc2gpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NTkwNTA3ZjEtMTYxYi00NWY5LWFlNTgtMzg1NDJlMzA1MjJlIiBzdFJlZjpkb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6OWQ4OGE0YTctYmFjZS0xMTc3LThkODctYmM1ZmQ1N2JiMmUwIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/+4ADkFkb2JlAGTAAAAAAf/bAIQAAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQICAgICAgICAgICAwMDAwMDAwMDAwEBAQEBAQECAQECAgIBAgIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMD/8AAEQgAEAAMAwERAAIRAQMRAf/EAH8AAQEBAAAAAAAAAAAAAAAAAAcGCgEBAAMAAAAAAAAAAAAAAAAABAIDBxAAAAMFBgYDAAAAAAAAAAAAAQIFBBQVBgcREgMTFhcAISIjCBgyJAkRAAADBQUFCQAAAAAAAAAAAAEREgBBAgMTMXEEFAUhUYEiMmHB0UIjQxUGFv/aAAwDAQACEQMRAD8A0d/pnOdTKceL7fO9LJuWJLXUKepQK3LKA1izqYIqoKmkNWAQAKfsmbG5mvCBeYiFo8uMlxM0YQEYd3i2P/cp2J+OlT8OEYwwxAAkZjsGwnbGW3upPo9ej7TvF6pPseiB3rcXaiIxp9tti+pO1lXPn18ErzMko/e49LQp6v8AnV81PJ1E86uhVlnZe9pzz1lOpk/UBaZNpVIiFUdeWJqQjKUtruEl4zMVET8YVQ6kQFdXR2UMbAUWFnIBSnNiYgHEQKIEEQbPlKB5NbrsWoTsBl5MtQhGfTELhB1+5kfOqf6pZuj0De/YC7oFyYYRuztfZoC5GIK462+m8vblZ3c7L6uDZf0keVR8SuZea1b8/TohVy1IkRmSU2GZd7m//9k="); \
+    width: 12px; \
+    height: 16px; \
+    display: inline-block; \
+    position: relative; \
+    top: 3px; \
+} \
 .exp-added-basket-2 .exp-free-delivery-message { \
     width: 100%; \
     text-align: right; \
@@ -168,6 +183,29 @@ exp.css = ' \
 } \
 .exp-added-basket-2 .exp-free-delivery-message i { \
     display: none; \
+} \
+.well h3 { \
+    border-bottom: 0; \
+    padding-bottom: 0; \
+    position: relative; \
+} \
+.well h3 span { \
+    display: block; \
+    width: 110px; \
+    position: absolute; \
+    right: 0; \
+    top: 0; \
+} \
+.exp-savings-note, .exp-delivery-note { \
+    font-size: 1.25em !important; \
+} \
+.exp-savings-note span, .exp-delivery-note span { \
+    color: #E32B1E; \
+} \
+@media screen and (max-width: 1199px) { \
+    .well h3 span { \
+        width: 70px; \
+    } \
 }';
 
 // Functions
@@ -232,12 +270,11 @@ exp.func.getDiscounts = function(){
     return exp.func.roundUp( discount, 2 );
 };
 
-
 // Update the cookie and local vars
 exp.func.updateValue = function( cookie, varr, value ) {
     docCookies.setItem( exp.vars.cookies[cookie], value, null, '/' );
     exp.vars[varr] = value;
-    exp.log('Cookie updated to value: '+ value);
+    exp.log('Cookie ' + cookie + ' updated to value: '+ value);
 };
 
 // Update cookies and vars and init DOM changes
@@ -246,30 +283,42 @@ exp.func.addItems = function() {
     var rrp = $('.hidden-phone .hidden-phone .rrp.muted').text().replace('RRP','').replace('£','').trim();
     var qty = ( !$('.lead.pull-left.hidden-phone').text().match(/[0-9+]/) ) ? 1 : $('.lead.pull-left.hidden-phone').text().match(/[0-9+]/)[0];
     var rrpCost = exp.func.roundUp( parseFloat( rrp ) * parseInt( qty ), 2 );
-    var rrpSavings = exp.func.roundUp( parseFloat( exp.vars.currentTotal ) - parseFloat( rrpCost ), 2 );
+    var rrpSavings;
     // free shpping vars
-    var freeShippingDiff = parseFloat( exp.func.roundUp( exp.vars.threshold - parseFloat( exp.vars.currentTotal ), 2 ) );
+    var freeShippingDiff;
     // cart contents vars
     var productId = $('.productTitles a').attr('href').match(/(productId=)(.+)(&store)/)[2];
     var contentsObj = JSON.parse(exp.vars.currentCartContents);
     var contentsStr;
     
-    contentsObj[productId] = qty;
+    if( contentsObj.hasOwnProperty( productId ) ) {
+        contentsObj[productId] = [ (parseInt( contentsObj[productId][0] ) + parseInt( qty ) ), rrp];
+    } else {
+        contentsObj[productId] = [qty, rrp];
+    }
     contentsStr = JSON.stringify(contentsObj);
 
     // Update cart contents
     exp.func.updateValue('cartContents', 'currentCartContents', contentsStr);
 
     // Update rrp total
-    exp.func.updateValue('rrpTotal', 'currentRRPTotal', rrpCost);
+
+    exp.vars.currentRRPTotal = parseFloat( exp.vars.currentRRPTotal ) + parseFloat( rrpCost );
+    exp.func.updateValue('rrpTotal', 'currentRRPTotal', exp.func.roundUp( exp.vars.currentRRPTotal, 2 ) );
 
     // Update site total
     exp.func.updateValue('total', 'currentTotal', exp.vars.siteTotal);
 
+    if( !exp.func.validateTotal() ) {
+        return false;
+    }
+
     // Display savings message
+    rrpSavings = parseFloat( exp.vars.currentTotal ) - parseFloat( exp.vars.currentRRPTotal );
     exp.func.savingsMessage( rrpSavings );
 
     // Display free shipping message
+    freeShippingDiff = parseFloat( exp.func.roundUp( exp.vars.threshold - parseFloat( exp.vars.currentTotal ), 2 ) );
     exp.func.freeShippingMessage( freeShippingDiff );
 
 };
@@ -277,10 +326,8 @@ exp.func.addItems = function() {
 exp.func.freeShippingMessage = function( amount ) {
     if( amount < 0 ) {
         amount = 0;
-    } else if( amount < 1 ) {
+    } else if( amount < 1 && amount > 0 ) {
         amount = amount.match(/([0-9]*)(.)([0-9]*)/)[3] + 'p';
-    } else {
-       amount = '£' + amount.toString().replace('.00', '');
     }
     if( amount === 0 ) {
         $('.lead.pull-left.hidden-phone').parent('div').append(
@@ -291,17 +338,19 @@ exp.func.freeShippingMessage = function( amount ) {
         (exp.vars.subVariation === 'a') ||
         (exp.vars.subVariation === 'b' && amount <= 10.00)
     ) {
-        alert('Spend just '+amount+' more to get FREE Delivery');
+        amount = '£' + amount.toString().replace('.00', '');
         $('.lead.pull-left.hidden-phone').parent('div').append(
-            '<p class="lead pull-left hidden-phone exp-free-delivery-message"><i class="icon-exclamation-sign"></i>&nbsp;Spend just '+amount+' more to get FREE Delivery</p>'
+            '<p class="lead pull-left hidden-phone exp-free-delivery-message not-reached-threshold"><i></i>&nbsp;Spend just '+amount+' more to get FREE Delivery</p>'
         );
     }
 };
 
 exp.func.savingsMessage = function(amount) {
-    $('.well h3 .JS_basketTotal.text-success').parent('h3').before(
-        '<h3 class="exp-savings-note">You save: <span>-£'+amount.replace('-','')+'</span></h3>'
-    );
+    if( amount < 0 ) {
+        $('.well h3 .JS_basketTotal.text-success').parent('h3').before(
+            '<h3 class="exp-savings-note">You save: <span>-£'+exp.func.roundUp(amount, 2).replace('-','')+'</span></h3>'
+        );
+    }
 };
 
 exp.func.deliveryMessage = function() {
@@ -310,6 +359,66 @@ exp.func.deliveryMessage = function() {
     );
 };
 
+ // If we have a total but no cart contents there has been a problem, so abort the experiment
+exp.func.validateTotal = function() {
+    if( parseFloat( exp.vars.currentTotal ) > 0 && exp.vars.currentCartContents === '{}' ) {
+        exp.log( 'AWA added to basket experiment encountered a problem. Total does not match contents.');
+        docCookies.setItem( this.vars.cookies.total, '0.00', null, '/' );
+        docCookies.setItem( this.vars.cookies.rrpTotal, '0.00', null, '/' );
+//        docCookies.setItem( this.vars.cookies.discounts, '0.00', null, '/' );
+        docCookies.setItem( this.vars.cookies.cartContents, '{}', null, '/' );
+        return false;
+    } else {
+        return true;
+    }
+};
+
+exp.func.deleteProduct = function() {
+    var productId = $(this).parents('tr').find('.basket-row-title a').attr('href').match(/(productId=)(.+)(&store)/)[2];
+    var contentsObj = JSON.parse(exp.vars.currentCartContents);
+    var priceTotal = _this.parents('tr').find('.basket-row-total').text().replace('£','').trim();
+    var RRPTotal = contentsObj[productId][0] * contentsObj[productId][1];
+    var contentsStr;
+
+    // Update cart contents
+    delete contentsObj[productId];
+    contentsStr = JSON.stringify(contentsObj);
+    exp.func.updateValue('cartContents', 'currentCartContents', contentsStr);
+
+    // Update rrp total
+    exp.vars.currentRRPTotal = parseFloat( exp.vars.currentRRPTotal ) - RRPTotal;
+    exp.func.updateValue('rrpTotal', 'currentRRPTotal', exp.func.roundUp( exp.vars.currentRRPTotal, 2) );
+
+    // Update site total
+    exp.vars.siteTotal = parseFloat( exp.vars.siteTotal ) - priceTotal;
+    exp.func.updateValue('total', 'currentTotal', exp.func.roundUp( exp.vars.siteTotal, 2) );
+};
+
+exp.func.changeQuantity = function() {
+    var _this = $(this);
+    var productId = _this.parents('tr').find('.basket-row-title a').attr('href').match(/(productId=)(.+)(&store)/)[2];
+    var qty = _this.val();
+    var price = _this.parents('tr').find('.basket-row-price').text().replace('£','').trim();
+    var contentsObj = JSON.parse(exp.vars.currentCartContents);
+    var contentsStr;
+    var oldTotal = contentsObj[productId][0] * parseFloat( price );
+    var newTotal = parseFloat(qty) * parseFloat( price );
+    var oldRRPTotal = contentsObj[productId][0] * contentsObj[productId][1];
+    var newRRPTotal = parseFloat(qty) * contentsObj[productId][1];
+
+    // Update cart contents
+    contentsObj[productId][0] = qty;
+    contentsStr = JSON.stringify(contentsObj);
+    exp.func.updateValue('cartContents', 'currentCartContents', contentsStr);
+
+    // Update rrp total
+    exp.vars.currentRRPTotal = ( parseFloat( exp.vars.currentRRPTotal ) - oldRRPTotal) + newRRPTotal;
+    exp.func.updateValue('rrpTotal', 'currentRRPTotal', exp.func.roundUp( exp.vars.currentRRPTotal, 2) );
+
+    // Update site total
+    exp.vars.siteTotal = ( parseFloat( exp.vars.siteTotal ) - oldTotal) + newTotal;
+    exp.func.updateValue('total', 'currentTotal', exp.func.roundUp( exp.vars.siteTotal, 2) );
+};
 
 // Init function
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
@@ -321,6 +430,7 @@ exp.init = function() {
 
     // Get basket total as shown on the site
     this.vars.siteTotal = $('.mini-basket-value .JS_basketTotal').text().trim().replace('£','');
+    exp.log(this.vars.siteTotal);
 
     // Get the current value of the cookies
     this.vars.currentTotal = docCookies.getItem( this.vars.cookies.total );
@@ -348,19 +458,21 @@ exp.init = function() {
     // If either total or rrp total is not a number there has been a problem, so abort the experiment
     if( typeof parseFloat(this.vars.currentTotal) !== 'number' || typeof parseFloat(this.vars.currentRRPTotal) !== 'number' ) {
         exp.log( 'AWA added to basket experiment encountered a problem. Cookie value invalid.');
+        docCookies.setItem( this.vars.cookies.total, '0.00', null, '/' );
+        docCookies.setItem( this.vars.cookies.rrpTotal, '0.00', null, '/' );
+//        docCookies.setItem( this.vars.cookies.discounts, '0.00', null, '/' );
+        docCookies.setItem( this.vars.cookies.cartContents, '{}', null, '/' );
         return false;
     }
 
     // If our total and the site total do not match, abort the experiment, unless we are on the cart page, in which case we need to calculate the new total first
     if( (this.vars.currentTotal !== this.vars.siteTotal) && this.vars.page !== 'added') {
         exp.log( 'AWA added to basket experiment encountered a problem. Cart total mismatch.');
+        docCookies.setItem( this.vars.cookies.total, '0.00', null, '/' );
+        docCookies.setItem( this.vars.cookies.rrpTotal, '0.00', null, '/' );
+//        docCookies.setItem( this.vars.cookies.discounts, '0.00', null, '/' );
+        docCookies.setItem( this.vars.cookies.cartContents, '{}', null, '/' );
         return false;
-    }
-
-    // If we have a total but no cart contents there has been a problem, so abort the experiment
-    if( parseFloat( this.vars.currentTotal ) > 0 && this.vars.currentCartContents === '{}' ) {
-        //exp.log( 'AWA added to basket experiment encountered a problem. Total does not match contents.');
-        //return false;
     }
 
     /*
@@ -370,9 +482,9 @@ exp.init = function() {
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
 
-    // Add Class to body depending on variation
+    // Add class to body depending on variation
+    $('body').addClass( 'exp-added-basket-' + this.vars.variation );
 
-    $('body').addClass( 'exp-added-basket-' + this.vars.variation ); 
 
     /*
         Cart pages
@@ -384,6 +496,9 @@ exp.init = function() {
         this.vars.currentDiscounts = this.func.getDiscounts();
 
         // Bind event listeners to listen for removing items or updating quantity
+        $('.basket-row-delete .hidden-phone.delete-line').parents('form').bind('click', exp.func.deleteProduct );
+        $('.basket-row-delete .hidden-phone.delete-line').parents('form').bind('keyup', exp.func.deleteProduct );
+        $('.basket-row-qty .basket-row-quantity').bind('change', exp.func.changeQuantity );
 
     }
 
@@ -393,10 +508,13 @@ exp.init = function() {
 
     if( this.vars.page === 'added') {
 
+        // Alter text of subtotal display
+        $('.well h3 .JS_basketTotal.text-success').parent('h3').html(
+            $('.well h3 .JS_basketTotal.text-success').parent('h3').html().replace('Sub-Total', 'Total')
+        );
+
         // Calculate what we have just added and update our cookies and local vars
         exp.func.addItems();
-
-        // Validate the cookie against actual site total
 
     }
 
