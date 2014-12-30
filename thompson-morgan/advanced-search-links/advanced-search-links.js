@@ -22,7 +22,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Thompson & Morgan - Advanced search links - 0.1');
+exp.log('Thompson & Morgan - Advanced search links - 0.2');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -31,7 +31,7 @@ exp.vars = {
         variation1: $('.exp-advanced-search'),
         variation2: $('.exp-plant-finder')
     },
-    variation: 1,
+    variation: 2,
     browseEntire: {
         element: $('#siteSearch .popularSearches'),
         title: 'Or <strong>browse</strong> the entire <strong class="exp-green">A-Z Plant Index</strong>',
@@ -43,7 +43,7 @@ exp.vars = {
         url: 'http://search.thompson-morgan.com/gardenplantfinder'
     },
     banner: {
-        element: $('#mainNav').parent('.navigation-portlet'),
+        element: $('#mainNav').parents('.navigation-portlet'),
         html: '<div class="exp-plant-finder"> \
                    <a href="http://search.thompson-morgan.com/gardenplantfinder" class="exp-plant-finder--text-link">Find plants by colour, hardiness, position, flowering month and more</a> \
                    <a href="http://search.thompson-morgan.com/gardenplantfinder" class="exp-plant-finder--button">Find Plants</a> \
