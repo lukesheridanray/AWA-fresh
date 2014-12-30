@@ -48,15 +48,23 @@ var exp = (function($) {
 // Initialise the experiment object
 var exp = {};
 
+// Wrapper for console.log, to prevent the exp breaking on browsers which don't
+// (always) have 'console' set (e.g. IE9)
+exp.log = function (str) {
+    if (typeof window.console !== 'undefined') {
+        console.log(str);
+    }
+};
+
 // Log the experiment, useful when multiple experiments are running
-console.log('Product listing - 0.9');
+exp.log('Product listing - 0.10');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
     'variation': 1,
     'productJSON': {},
-    'productFeedURL': '//www.bakerross.co.uk/feeds/skus_json_v1.xml', // actually JSON
+    'productFeedURL': '//www.bakerross.co.uk/feeds/skus_json_v3.xml', // actually JSON
     'haveProductData': false,
     'catDesc': $('.category-description.std'),
     'primePromiseHeading': '<p class="price-promise-heading">Best Price Guaranteed - our <a href="#" data-behaviour="pricePromiseModal">100% Price Match Promise</a></p>',
@@ -135,6 +143,8 @@ background-color: #FFF; color: #0071B9; border: 1px solid #0071B9; padding: 3px 
 .mutated:hover .intro-content-item { display: none; } \
 .mini-prod-form-option, .intro-content-item { background: #fff; position: relative; top: -14px; line-height: 16px; overflow: auto; padding: 0 0 5px 0; } \
 .mini-prod-form-option .price, .intro-content-item .price { float: right; } \
+.mini-prod-form-option .was-price, .intro-content-item .was-price { color: #EA002E; } \
+.mini-prod-form-option .was-price em, .intro-content-item .was-price em { color: #666; text-decoration: line-through; font-style: normal; } \
 .mini-prod-form-option .name, .intro-content-item .name { float: left; } \
 .mini-prod-form-option input, .intro-content-item input { float: left; margin: 0 5px 0 0; position: relative; top: 1px !important; }';
 
@@ -257,13 +267,13 @@ exp.func.modifyProducts = function() {
             if( optionsArray.length > 3 ) {
                 introcontent = '<div class="intro-content-item"> \
                     <span class="name">'+optionsArray.length+' options available</span> \
-                    <span class="price">&pound;'+parseFloat(optionsArray[0]['price']).toFixed(2)+'</span> \
+                    <span class="price'+(optionsArray[0]['was_price'] !== '' ? ' was-price' : '')+'">'+(optionsArray[0]['was_price'] !== '' ? '<em>&pound;'+parseFloat(optionsArray[0]['was_price']).toFixed(2)+'</em> ' : '')+'&pound;'+parseFloat(optionsArray[0]['price']).toFixed(2)+'</span> \
                     </div>';
             } else {
                 $.each(optionsArray, function(index, value) {
                     introcontent += '<div class="intro-content-item"> \
                     <span class="name">'+optionsArray[index]['name']+'</span> \
-                    <span class="price">&pound;'+parseFloat(optionsArray[index]['price']).toFixed(2)+'</span> \
+                    <span class="price'+(optionsArray[index]['was_price'] !== '' ? ' was-price' : '')+'">'+(optionsArray[index]['was_price'] !== '' ? '<em>&pound;'+parseFloat(optionsArray[index]['was_price']).toFixed(2)+'</em> ' : '')+'&pound;'+parseFloat(optionsArray[index]['price']).toFixed(2)+'</span> \
                     </div>';
                 });
             }
@@ -273,7 +283,7 @@ exp.func.modifyProducts = function() {
                 <input name="related_product" id="related-products-field" value="" type="hidden"> \
                 <span class="input"><input id="i'+id+optionsArray[index]['code']+'" name="super_group%5B'+optionsArray[index]['code']+'%5D" value="1" title="Qty" type="checkbox"></span> \
                 <label for="i'+id+optionsArray[index]['code']+'" class="name">'+optionsArray[index]['name']+'</label> \
-                <span class="price">&pound;'+parseFloat(optionsArray[index]['price']).toFixed(2)+'</span> \
+                <span class="price'+(optionsArray[index]['was_price'] !== '' ? ' was-price' : '')+'">&pound;'+parseFloat(optionsArray[index]['price']).toFixed(2)+'</span> \
                 </div>';
             });
             pricebox.html( introcontent + formcontent );
@@ -542,6 +552,7 @@ if( exp.vars.variation === 1 ) {
                 url: exp.vars.productFeedURL,
                 dataType: 'text',
                 type: 'GET',
+                contentType: 'text/plain',
                 success: function( response ) {
                     exp.vars.productJSON = $.parseJSON(
                         response.replace('" ','inch')
