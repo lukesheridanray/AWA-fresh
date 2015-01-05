@@ -57,7 +57,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Product listing - 0.10');
+exp.log('Product listing - 0.11');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
