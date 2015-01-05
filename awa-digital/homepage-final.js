@@ -153,7 +153,7 @@ exp.init = function() {
     
     $('.main-wrap').wrap('<div class="main-wrap-blue-background-wrapper" />');
 
-    $('.header a img').attr('src','/images/header-logo--split-test-xmas.gif');
+    //$('.header a img').attr('src','/images/header-logo--split-test-xmas.gif');
     
     $('.header-quote').html('<p><img src="/images/split-test/strapline.png" /></p>');
     
