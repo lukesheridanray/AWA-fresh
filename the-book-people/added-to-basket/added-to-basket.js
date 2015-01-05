@@ -1,58 +1,3 @@
-/*
-
-Jamie notes
-----------
-
-possibly prevent a page refresh from logging as a new purchase? perhaps by keeping a record of the last added product
-
-dealing with a 3 for 2 offer
-
-AWA SPEC
---------
-
-qs_addedToBasket
-
-This test will do two key things:
-
-1. Indicate how close the user is to qualifying for free shipping (very straight forward: just subtract the order total from £25)
-
-2. Display the users total savings. This one is more complex. I suggest:
-
-Scrape RRP from product page when item is added to basket. Also scrape the quantity being added. Use this to keep a running total of what the basket should cost and subtract it from the actual basket value to get the total savings. This way we will capture any type of offer that is applied e.g:
-
- - General saving compared to RRP
- - Further discounts such as buy 2 get one free
- - Discount codes applied in the checkout
-
-There are three scenarios where this becomes more complex:
-
- - The user returns with a saved basket, before we started recording savings
- - The user returns and logs in to a saved basket
- - The user returns (or shops past midnight) and discounts have changed
-
-We could recognise when any of these have happened by keeping a record of what we expect the user's basket value to be and flagging up if it is not as expected. In that scenario we could scrape the basket page to see what they have in their basket. For items we expected them to have, we can assume the RRP hasn't changed and compare that with the price listed on the basket page to calculate their savings. For any products that we didn't know the user had, we could theoretically scrape their product pages for an RRP, but I suspect this would put too much load on the client's server (they're very sensitive to page speed issues).
-
-Assuming we don't scrape the product pages, we'd be left knowing their savings for some or none of their basket items. In this scanrio we can keep track of what we do know and only display when savings reach £50 thresholds "You save: Over £50!", "You save: Over £100!" etc...
-
-If the user completes their purchase we'd need to note that and delete our stored info. I've seen Optimizely mess with Google Analytics ecommerce data, so I'd rather not run the experiment on the purchase confirmation page. Could we instead note if basket suddenly becomes "0" and mark their existing data as probably to be wiped. Then when it next changes value, if it suddenly becomes the value we had stored, keep going with their existing data, but if it's anything else, wipe the old data and start from scratch.
-
-FYI We're likely to use this same mechanism to display total savings in other tests too (e.g. on the basket icon at the top left of every page)
-
-(Feel free to suggest a better mechanism for any of this - this is just my suggestion to make sure we don't miss anything)
-
-The display of these two values is pretty straight forward. I'll email designs to show this.
-
-VERSIONS
-
-There are two different designs.
-
-Within these designs there will be three versions: one where the figure they need to spend to reach free delivery is always shown, one where it is only shown if they are within £10 of the target and one where it is only shown when the user reaches free delivery
-
-This makes 6 versions + the control.
-
-*/
-
-
 //
 // CGIT Optimizely Boilerplate - version 0.1.4
 //
@@ -77,7 +22,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('AWA - Added to basket - 0.1');
+exp.log('AWA - Added to basket - 0.2');
 
 /*\
 |*|  :: cookies.js ::
@@ -145,7 +90,7 @@ exp.vars = {
     cookies: {
         total: 'optimizelyCartTotal',
         rrpTotal: 'optimizelyRRPTotal',
-//        discounts: 'optimizelyDiscounts',
+        discounts: 'optimizelyDiscounts',
         cartContents: 'optimizelyCartContents'
     },
     threshold: 25.00, // float
@@ -212,6 +157,26 @@ exp.css = ' \
 // Object containing functions, some helpful functions are included
 exp.func = {};
 
+// This function waits till a condition returns true
+exp.func.waitForCondition = function(condition, callback, timeout, keepAlive) {
+    timeout = timeout || 20000;
+    keepAlive = keepAlive || false;
+    var intervalTime = 50,
+        maxAttempts = timeout / intervalTime,
+        attempts = 0,
+        interval = setInterval(function() {
+            if ( condition() ) {
+                if (!keepAlive) {
+                    clearInterval(interval);
+                }
+                callback();
+            } else if (attempts > maxAttempts) {
+                clearInterval(interval);
+            }
+            attempts ++;
+        }, intervalTime);
+};
+
 // This function waits till a DOM element is available, then runs a callback function
 exp.func.waitForElement = function(selector, callback, timeout, keepAlive) {
     timeout = timeout || 20000;
@@ -252,21 +217,29 @@ exp.func.waitForFunction = function(func, callback, timeout, keepAlive) {
         }, intervalTime);
 };
 
-// Rounds 'up' to 2 decimal places
+// Rounds 'up' to specified decimal places
 exp.func.roundUp = function(number, digits){
     var factor = Math.pow(10,digits);
     return (Math.ceil(number*factor) / factor).toFixed(2);
 };
 
+// Rounds 'down' to specified decimal places
+exp.func.roundDown = function(number, digits){
+    var factor = Math.pow(10,digits);
+    return (Math.floor(number*factor) / factor).toFixed(2);
+};
+
 // Gets the discounts if any from the cart / checkout pages
 exp.func.getDiscounts = function(){
     var discount = 0;
-    $('#basketRight .hidden-phone dd.subTotal.discount').each(function(){
+    var selector = ( !$('#basketRight dd.subTotal.discount').length ) ? 'dd.subTotal.discount' : '#basketRight .hidden-phone dd.subTotal.discount';
+    $( selector ).each(function(){
         var value = $(this).text().trim().replace('£','');
         if( !isNaN( parseFloat(value) ) ) {
             discount += parseFloat(value);
         }
     });
+    exp.log( exp.func.roundUp( discount, 2 ) );
     return exp.func.roundUp( discount, 2 );
 };
 
@@ -284,17 +257,34 @@ exp.func.addItems = function() {
     var qty = ( !$('.lead.pull-left.hidden-phone').text().match(/[0-9+]/) ) ? 1 : $('.lead.pull-left.hidden-phone').text().match(/[0-9+]/)[0];
     var rrpCost = exp.func.roundUp( parseFloat( rrp ) * parseInt( qty ), 2 );
     var rrpSavings;
+    // promo vars
+    var promoBox = $('.productBox .promoInfo.hidden-phone');
+    var promoText;
+    var promo = '';
     // free shpping vars
     var freeShippingDiff;
     // cart contents vars
     var productId = $('.productTitles a').attr('href').match(/(productId=)(.+)(&store)/)[2];
     var contentsObj = JSON.parse(exp.vars.currentCartContents);
     var contentsStr;
+
+    if( promoBox.length ) {
+        promoText = promoBox.text().trim().match(/([0-9])( for )([0-9])/);
+        if( promoText === null ) {
+            promoText = promoBox.text().trim().match(/([0-9])( books for only £)([0-9]+)/);
+        }
+        if( promoText !== null ) {
+            promo = [
+                promoText[1],
+                promoText[3]
+            ];
+        }
+    }
     
     if( contentsObj.hasOwnProperty( productId ) ) {
-        contentsObj[productId] = [ (parseInt( contentsObj[productId][0] ) + parseInt( qty ) ), rrp];
+        contentsObj[productId] = [ (parseInt( contentsObj[productId][0] ) + parseInt( qty ) ), rrp, promo];
     } else {
-        contentsObj[productId] = [qty, rrp];
+        contentsObj[productId] = [qty, rrp, promo];
     }
     contentsStr = JSON.stringify(contentsObj);
 
@@ -302,7 +292,6 @@ exp.func.addItems = function() {
     exp.func.updateValue('cartContents', 'currentCartContents', contentsStr);
 
     // Update rrp total
-
     exp.vars.currentRRPTotal = parseFloat( exp.vars.currentRRPTotal ) + parseFloat( rrpCost );
     exp.func.updateValue('rrpTotal', 'currentRRPTotal', exp.func.roundUp( exp.vars.currentRRPTotal, 2 ) );
 
@@ -363,10 +352,10 @@ exp.func.deliveryMessage = function() {
 exp.func.validateTotal = function() {
     if( parseFloat( exp.vars.currentTotal ) > 0 && exp.vars.currentCartContents === '{}' ) {
         exp.log( 'AWA added to basket experiment encountered a problem. Total does not match contents.');
-        docCookies.setItem( this.vars.cookies.total, '0.00', null, '/' );
-        docCookies.setItem( this.vars.cookies.rrpTotal, '0.00', null, '/' );
-//        docCookies.setItem( this.vars.cookies.discounts, '0.00', null, '/' );
-        docCookies.setItem( this.vars.cookies.cartContents, '{}', null, '/' );
+        docCookies.setItem( exp.vars.cookies.total, '0.00', null, '/' );
+        docCookies.setItem( exp.vars.cookies.rrpTotal, '0.00', null, '/' );
+        docCookies.setItem( exp.vars.cookies.discounts, '0.00', null, '/' );
+        docCookies.setItem( exp.vars.cookies.cartContents, '{}', null, '/' );
         return false;
     } else {
         return true;
@@ -374,9 +363,14 @@ exp.func.validateTotal = function() {
 };
 
 exp.func.deleteProduct = function() {
-    var productId = $(this).parents('tr').find('.basket-row-title a').attr('href').match(/(productId=)(.+)(&store)/)[2];
+    var _this = $(this);
+    var productId = _this.parents('tr').find('.basket-row-title a').attr('href').match(/(productId=)(.+)(&store)/)[2];
     var contentsObj = JSON.parse(exp.vars.currentCartContents);
-    var priceTotal = _this.parents('tr').find('.basket-row-total').text().replace('£','').trim();
+    var priceTotal = _this.parents('tr').find('.basket-row-total').clone();
+        if( priceTotal.find('del').length ) {
+            priceTotal.find('del').remove();
+        }
+        priceTotal = priceTotal.text().replace('£','').trim();
     var RRPTotal = contentsObj[productId][0] * contentsObj[productId][1];
     var contentsStr;
 
@@ -396,15 +390,36 @@ exp.func.deleteProduct = function() {
 
 exp.func.changeQuantity = function() {
     var _this = $(this);
+//    var _this = $('.basket-row-quantity');
     var productId = _this.parents('tr').find('.basket-row-title a').attr('href').match(/(productId=)(.+)(&store)/)[2];
     var qty = _this.val();
+//    var qty = testNum;
     var price = _this.parents('tr').find('.basket-row-price').text().replace('£','').trim();
     var contentsObj = JSON.parse(exp.vars.currentCartContents);
+exp.log( contentsObj );
     var contentsStr;
-    var oldTotal = contentsObj[productId][0] * parseFloat( price );
-    var newTotal = parseFloat(qty) * parseFloat( price );
+    var promoType;
     var oldRRPTotal = contentsObj[productId][0] * contentsObj[productId][1];
     var newRRPTotal = parseFloat(qty) * contentsObj[productId][1];
+//    var oldTotal = contentsObj[productId][0] * parseFloat( price );
+    var oldTotal = _this.parents('tr').find('.basket-row-total').clone();
+        if( oldTotal.find('del').length ) {
+            oldTotal.find('del').remove();
+        }
+        oldTotal = oldTotal.text().replace('£','').trim();
+    var newTotal;
+    if( contentsObj[productId][2] !== '' ) {
+        // we have to take the promo offer into account#
+        if( parseFloat( contentsObj[productId][2][1] ) > parseFloat( contentsObj[productId][2][0] ) ) {
+            promoType = '5for15';
+        } else {
+            promoType = '3for2';
+        }
+        newTotal = exp.func.calculatePromoCost( parseFloat(qty), contentsObj[productId], parseFloat(price), promoType );
+    } else {
+        newTotal = parseFloat(qty) * parseFloat( price );
+    }
+//    exp.log( newTotal );
 
     // Update cart contents
     contentsObj[productId][0] = qty;
@@ -416,63 +431,84 @@ exp.func.changeQuantity = function() {
     exp.func.updateValue('rrpTotal', 'currentRRPTotal', exp.func.roundUp( exp.vars.currentRRPTotal, 2) );
 
     // Update site total
+//    exp.log(exp.vars.siteTotal + ' ' + oldTotal + ' ' + newTotal );
     exp.vars.siteTotal = ( parseFloat( exp.vars.siteTotal ) - oldTotal) + newTotal;
     exp.func.updateValue('total', 'currentTotal', exp.func.roundUp( exp.vars.siteTotal, 2) );
 };
 
+exp.func.calculatePromoCost = function(qty, prod, price, promoType) {
+    var newTotal;
+    var offersGained = parseInt( qty / prod[2][0] );
+    var booksLeft = qty - ( offersGained * prod[2][0] );
+    if( promoType === '3for2' ) {
+        newTotal = ((offersGained * prod[2][1]) * price) + (booksLeft * price);
+    } else if( promoType === '5for15' ) {
+        newTotal = (offersGained * parseFloat( prod[2][1] ) ) + (booksLeft * price);
+    }
+    return parseFloat( newTotal.toFixed(2) );
+};
+
 // Init function
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
-exp.init = function() {
+exp.init = function( _this ) {
 
     /*
         Cookies, initialisation and validation
     */
 
     // Get basket total as shown on the site
-    this.vars.siteTotal = $('.mini-basket-value .JS_basketTotal').text().trim().replace('£','');
-    exp.log(this.vars.siteTotal);
+    exp.vars.siteTotal = $('.mini-basket-value .JS_basketTotal').text().trim().replace('£','');
 
     // Get the current value of the cookies
-    this.vars.currentTotal = docCookies.getItem( this.vars.cookies.total );
-    this.vars.currentRRPTotal = docCookies.getItem( this.vars.cookies.rrpTotal );
-//    this.vars.currentDiscounts = docCookies.getItem( this.vars.cookies.discounts );
-    this.vars.currentCartContents = docCookies.getItem( this.vars.cookies.cartContents );
+    exp.vars.currentTotal = docCookies.getItem( exp.vars.cookies.total );
+    exp.vars.currentRRPTotal = docCookies.getItem( exp.vars.cookies.rrpTotal );
+    exp.vars.currentDiscounts = docCookies.getItem( exp.vars.cookies.discounts );
+    exp.vars.currentCartContents = docCookies.getItem( exp.vars.cookies.cartContents );
 
     // If our cookie values are null, initialise them
     if(
-        this.vars.currentTotal === null &&
-        this.vars.currentRRPTotal === null &&
-//        this.vars.currentDiscounts === null &&
-        this.vars.currentCartContents === null
+        exp.vars.currentTotal === null &&
+        exp.vars.currentRRPTotal === null &&
+        exp.vars.currentDiscounts === null &&
+        exp.vars.currentCartContents === null
     ) {
-        docCookies.setItem( this.vars.cookies.total, '0.00', null, '/' );
-        docCookies.setItem( this.vars.cookies.rrpTotal, '0.00', null, '/' );
-//        docCookies.setItem( this.vars.cookies.discounts, '0.00', null, '/' );
-        docCookies.setItem( this.vars.cookies.cartContents, '{}', null, '/' );
-        this.vars.currentTotal = '0.00';
-        this.vars.currentRRPTotal = '0.00';
-//        this.vars.currentDiscounts = '0.00';
-        this.vars.currentCartContents = '{}';
+        docCookies.setItem( exp.vars.cookies.total, '0.00', null, '/' );
+        docCookies.setItem( exp.vars.cookies.rrpTotal, '0.00', null, '/' );
+        docCookies.setItem( exp.vars.cookies.discounts, '0.00', null, '/' );
+        docCookies.setItem( exp.vars.cookies.cartContents, '{}', null, '/' );
+        exp.vars.currentTotal = '0.00';
+        exp.vars.currentRRPTotal = '0.00';
+        exp.vars.currentDiscounts = '0.00';
+        exp.vars.currentCartContents = '{}';
     }
 
     // If either total or rrp total is not a number there has been a problem, so abort the experiment
-    if( typeof parseFloat(this.vars.currentTotal) !== 'number' || typeof parseFloat(this.vars.currentRRPTotal) !== 'number' ) {
+    if( typeof parseFloat(exp.vars.currentTotal) !== 'number' || typeof parseFloat(exp.vars.currentRRPTotal) !== 'number' ) {
         exp.log( 'AWA added to basket experiment encountered a problem. Cookie value invalid.');
-        docCookies.setItem( this.vars.cookies.total, '0.00', null, '/' );
-        docCookies.setItem( this.vars.cookies.rrpTotal, '0.00', null, '/' );
-//        docCookies.setItem( this.vars.cookies.discounts, '0.00', null, '/' );
-        docCookies.setItem( this.vars.cookies.cartContents, '{}', null, '/' );
+        docCookies.setItem( exp.vars.cookies.total, '0.00', null, '/' );
+        docCookies.setItem( exp.vars.cookies.rrpTotal, '0.00', null, '/' );
+        docCookies.setItem( exp.vars.cookies.discounts, '0.00', null, '/' );
+        docCookies.setItem( exp.vars.cookies.cartContents, '{}', null, '/' );
         return false;
     }
 
     // If our total and the site total do not match, abort the experiment, unless we are on the cart page, in which case we need to calculate the new total first
-    if( (this.vars.currentTotal !== this.vars.siteTotal) && this.vars.page !== 'added') {
-        exp.log( 'AWA added to basket experiment encountered a problem. Cart total mismatch.');
-        docCookies.setItem( this.vars.cookies.total, '0.00', null, '/' );
-        docCookies.setItem( this.vars.cookies.rrpTotal, '0.00', null, '/' );
-//        docCookies.setItem( this.vars.cookies.discounts, '0.00', null, '/' );
-        docCookies.setItem( this.vars.cookies.cartContents, '{}', null, '/' );
-        return false;
+    if( (exp.vars.currentTotal !== exp.vars.siteTotal) && exp.vars.page !== 'added') {
+
+        // There may be a mismatch because we have added a voucher code, so check for this first
+        exp.vars.currentDiscounts = exp.func.getDiscounts();
+        exp.func.updateValue('discounts', 'currentDiscounts', exp.vars.currentDiscounts );
+        if(
+            (exp.vars.currentDiscounts === '0.00') ||
+            ( exp.func.roundDown( (parseFloat(exp.vars.currentDiscounts) + parseFloat(exp.vars.currentTotal)), 2) !== exp.vars.siteTotal )
+        ) {
+            exp.log( 'AWA added to basket experiment encountered a problem. Cart total mismatch.');
+            docCookies.setItem( exp.vars.cookies.total, '0.00', null, '/' );
+            docCookies.setItem( exp.vars.cookies.rrpTotal, '0.00', null, '/' );
+            docCookies.setItem( exp.vars.cookies.discounts, '0.00', null, '/' );
+            docCookies.setItem( exp.vars.cookies.cartContents, '{}', null, '/' );
+            return false;
+        }
     }
 
     /*
@@ -480,20 +516,21 @@ exp.init = function() {
     */
 
     // append styles to head
-    $('head').append('<style type="text/css">'+this.css+'</style>');
+    $('head').append('<style type="text/css">'+exp.css+'</style>');
 
     // Add class to body depending on variation
-    $('body').addClass( 'exp-added-basket-' + this.vars.variation );
+    $('body').addClass( 'exp-added-basket-' + exp.vars.variation );
 
 
     /*
         Cart pages
     */
 
-    if( this.vars.page === 'cart') {
+    if( exp.vars.page === 'cart') {
 
         // Get the value of any discounts (vouchers) that have been applied
-        this.vars.currentDiscounts = this.func.getDiscounts();
+        exp.vars.currentDiscounts = exp.func.getDiscounts();
+        exp.func.updateValue('discounts', 'currentDiscounts', exp.vars.currentDiscounts );
 
         // Bind event listeners to listen for removing items or updating quantity
         $('.basket-row-delete .hidden-phone.delete-line').parents('form').bind('click', exp.func.deleteProduct );
@@ -506,7 +543,7 @@ exp.init = function() {
         Added to basket page
     */
 
-    if( this.vars.page === 'added') {
+    if( exp.vars.page === 'added') {
 
         // Alter text of subtotal display
         $('.well h3 .JS_basketTotal.text-success').parent('h3').html(
@@ -520,14 +557,10 @@ exp.init = function() {
 
 };
 
-exp.init();
-
-/*
-!!!!
-// We can't do any of our checks until we have a basket value we can check against
-// so we wait for this element to load before running the experiment
-exp.func.waitForElement('.mini-basket-value .JS_basketTotal', exp.init );
-*/
+// wait for basket value before we can run test
+exp.func.waitForCondition( function() {
+    return $('.mini-basket-value .JS_basketTotal').text().trim().replace('£','') !== '';
+}, exp.init );
 
 // Return the experiment object so we can access it later if required
 return exp;
