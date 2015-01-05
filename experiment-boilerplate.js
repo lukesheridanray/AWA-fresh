@@ -39,7 +39,8 @@ if(exp.condition && !exp.condition.length) {
 exp.vars = {
     'myCustomTagLine': 'This split test is the best!',
     'productDesc': $('.description').length ? $('.description').text() : 'default description',
-    'productSku': $('.sku-code span')
+    'productSku': $('.sku-code span'),
+    'productSavings': $('.product-price').text() - $('.rrp-price').text()
 };
 
 // Styles
@@ -52,15 +53,15 @@ exp.css = ' \
 // Object containing functions, some helpful functions are included
 exp.func = {};
 
-// This function waits till a DOM element is available, then runs a callback function
-exp.func.waitForElement = function(selector, callback, timeout, keepAlive) {
+// This function waits till a condition returns true
+exp.func.waitFor = function(condition, callback, timeout, keepAlive) {
     timeout = timeout || 20000;
     keepAlive = keepAlive || false;
     var intervalTime = 50,
         maxAttempts = timeout / intervalTime,
         attempts = 0,
         interval = setInterval(function() {
-            if ($(selector).length) {
+            if (condition()) {
                 if (!keepAlive) {
                     clearInterval(interval);
                 }
@@ -72,24 +73,17 @@ exp.func.waitForElement = function(selector, callback, timeout, keepAlive) {
         }, intervalTime);
 };
 
-// This function waits till a function is available, then runs a callback function
-exp.func.waitForFunction = function(func, callback, timeout, keepAlive) {
-    timeout = timeout || 20000;
-    keepAlive = keepAlive || false;
-    var intervalTime = 50,
-        maxAttempts = timeout / intervalTime,
-        attempts = 0,
-        interval = setInterval(function() {
-            if ($.isFunction(func)) {
-                if (!keepAlive) {
-                    clearInterval(interval);
-                }
-                callback();
-            } else if (attempts > maxAttempts) {
-                clearInterval(interval);
-            }
-            attempts ++;
-        }, intervalTime);
+// This function allows you to always round a number 'up', 'down', or normally, returns a string
+exp.func.roundNum = function(number, decimals, direction) {
+    decimals = decimals || 0;
+    var factor = Math.pow(10,decimals);
+    var base;
+    if( direction === 'up') {
+        base = Math.ceil(number*factor);
+    } else if( direction === 'down') {
+        base = Math.floor(number*factor);
+    }
+    return direction ? (base/factor).toFixed(decimals) : number.toFixed(decimals);
 };
 
 // Init function
@@ -107,13 +101,27 @@ exp.init = function() {
         $('#tagLine').html(this.vars.productSku);
     }
 
-    this.func.waitForFunction( openModal, function myCallback() {
-        openModal('modal content');
-    });
+    $('.pricing').append(
+        'Your savings are: £' + this.func.roundNum(this.vars.productSavings, 2, 'down')
+    );
 
-    this.func.waitForElement( '.reviews-widget', function anotherCallback() {
-        $('.reviews-widget').append('Appending some content to the widget');
-    });
+    this.func.waitFor(
+        function condition() {
+            return $.isFunction(openModal);
+        },
+        function callback() {
+            openModal('modal content');
+        }
+    );
+
+    this.func.waitFor(
+        function condition() {
+            return $('.reviews-widget').length;
+        },
+        function callback() {
+            $('.reviews-widget').append('Appending some content to the widget');
+        }
+    );
 
 };
 
