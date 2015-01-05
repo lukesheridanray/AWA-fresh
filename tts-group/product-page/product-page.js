@@ -31,7 +31,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('TTS Group Product Page Experiment - 0.7');
+exp.log('TTS Group Product Page Experiment - 0.8');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -199,6 +199,7 @@ exp.css += ' \
     overflow: hidden; \
     vertical-align: top; \
     margin-top: 55px; \
+    height: 303px; \
 } \
  \
 .carousel_images { \
@@ -248,6 +249,7 @@ exp.css += '\
 #rr_placement_0 { \
     float: right; \
     width: 200px; \
+    margin-top: 54px; \
 } \
 #rr_placement_0 h4 { \
     font-size: 12pt; \
@@ -282,12 +284,16 @@ if ($('#right_box .add_to_basket .buy_button').length === 0) {
     .AWA_variants .part_content h1 { \
         display: none; \
     } \
+    .AWA_variant_dropdown { \
+        width: 50%; \
+    } \
     .AWA_choose_your { \
         margin-left: 1em; \
         float: right; \
         display: block; \
         line-height: 19px; \
         margin-top: 5px; \
+        width: 45%; \
     } \
     .AWA_choose_your_newline { \
         margin-top: 1em; \
@@ -489,11 +495,6 @@ exp.init = function() {
         $variantDropdown.after($variantsDiv);
         var $chooseYourToy = $('<span>', { 'class': 'AWA_choose_your', text: 'Choose your ' + $('.breadcrumbing').contents().last().text().trim() });
         $variantDropdown.before($chooseYourToy);
-
-        // Move the "Choose your..." on to a new line _before_ the dropdown IF we can't fit it inline
-        if ($variantDropdown.width() + $chooseYourToy.width() > $variantDropdown.parent().width()) {
-            $chooseYourToy.addClass('AWA_choose_your_newline');
-        }
 
 
         // Set up change handler for variatnDropdown
