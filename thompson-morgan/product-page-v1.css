@@ -190,3 +190,10 @@
   .thumbs img:hover { border-color: #efefef; }
   .thumbs img.active { border-color: #eee; }
 }
+
+.info-icon {
+    position: relative;
+    cursor: pointer
+    top: 2px;
+    left: 2px;
+}

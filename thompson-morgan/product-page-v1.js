@@ -206,15 +206,22 @@ exp.vars = {
     
     packagingModal: 'Loading...', // Loaded by AJAX
 
+    hardinessModal: '<h3>Hardiness</h3> \
+    <p><b style="color: #00572D;">Hardy</b> - Tolerates temperatures down to -15°C (5°F)</p> \
+    <p><b style="color: #00572D;">Half-hardy</b> - Tolerates temperatures to 0°C (32°F)</p> \
+    <p><b style="color: #00572D;">Tender</b> - Plant liable to damage or may not survive at \
+    temperatures below 5°C (41F).</p></div>',
+
     plant_types: {
         plug:   'Plug', // will be overriden in the loop, if a more specific variation is found (e.g. Mini plug)
         mini:   'Mini-plug',
         jumbo:  'Jumbo',
-        posti:  'Postiplugs&reg;',
+        posti:  'Postiplugs®',
         garden: 'Garden Ready Plants',
         potted: 'Potted plants',
         bulb:   'Bulbs',
-        bare:   'Bareroots'
+        bare:   'Bareroots',
+        large:  'Mature, Large Plants'
     },
 
     month: ["January","February","March","April","May","June","July",
@@ -404,7 +411,8 @@ exp.init = function() {
         delivery_blurb = '',
         make_review_link,
         read_reviews,
-        anySize;
+        anySize,
+        height_and_spread;
 
     if ($('.stockInfo:eq(0)').hasClass('stockInfo-first')) {
       console.log('Product page v1 experiment already run, exiting...');
@@ -434,18 +442,18 @@ exp.init = function() {
     hardiness = $(".facetValueClass dd").text().split(/\s/m)[0];
 
     // Get dimensions
-    plant_size.Height_and_spread = $("#productCont").text().match(/(?:H|h)eight\s*(?:and|&amp;|&)\s*(?:s|S)pread:\s*([0-9.]+(?:cm)?\s*\(.*?\))/m);
-    plant_size.Height = $("#productCont").text().match(/(?:H|h)eight:\s*([0-9.]+(?:cm)?\s*\(.*?\))/m);
-    if (plant_size.Height_and_spread === null) {
-        plant_size.Spread = $("#productCont").text().match(/(?:S|s)pread:\s*([0-9.]+(?:cm)?\s*\(.*?\))/m);
+    height_and_spread = $("#productCont").text().match(/(?:H|h)eight\s*(?:and|&amp;|&)\s*(?:s|S)pread:\s*((?:(?:U|u)p to )?[0-9.]+(?:cm)?\s*\(.*?\))/m);
+    if (height_and_spread === null) {
+        plant_size.Spread = $("#productCont").text().match(/(?:S|s)pread:\s*((?:(?:U|u)p to )?[0-9.]+(?:cm)?\s*\(.*?\))/m);
+        plant_size.Height = $("#productCont").text().match(/(?:H|h)eight:\s*((?:(?:U|u)p to )?[0-9.]+(?:cm)?\s*\(.*?\))/m);
     }
     else {
-        plant_size.Spread = null;
+        plant_size.Spread = plant_size.Height = height_and_spread;
     }
-    plant_size.Bulbs  = $("#productCont").text().match(/(?:B|b)ulb (S|s)ize:\s*([0-9.]+(?:cm)?\s*\(.*?\))/m);
-    plant_size.Diameter = $("#productCont").text().match(/(?:D|d)iameter:\s*([0-9.]+(?:cm)?\s*\(.*?\))/m);
+    plant_size.Bulbs  = $("#productCont").text().match(/(?:B|b)ulb (S|s)ize:\s*((?:(?:U|u)p to )?[0-9.]+(?:cm)?\s*\(.*?\))/m);
+    plant_size.Diameter = $("#productCont").text().match(/(?:D|d)iameter:\s*((?:(?:U|u)p to )?[0-9.]+(?:cm)?\s*\(.*?\))/m);
     // Dimensions: 22cm x 14cm x 31.5cm
-    plant_size.Dimensions = $("#productCont").text().match(/(?:D|d)imensions:\s*((?:[0-9.]+(?:cm)?\s*(?:\(.*?\))?\s?x?\s?){2,3})/m);
+    plant_size.Dimensions = $("#productCont").text().match(/(?:D|d)imensions:\s*((?:(?:(?:U|u)p to )?[0-9.]+(?:cm)?\s*(?:\(.*?\))?\s?x?\s?){2,3})/m);
     
     for (i in plant_size) {
         if (plant_size.hasOwnProperty(i)) {
@@ -461,7 +469,10 @@ exp.init = function() {
     $('#productCont .prodDesc').before($('#prodFeatures').detach());
     if (hardiness) {
         $('#prodFeatures').append('<dl class="clearFloat"><dt>Hardiness:</dt>'
-                + '<dd>' + hardiness + '</dd></dl>');
+                + '<dd>' + hardiness
+                + '<img src="http://search.thompson-morgan.com/includes/images/info.png" class="info-icon hasTooltip" alt="" title="More info" />'
+                + '<div class="hidden tooltip">' + exp.vars.hardinessModal + '</div>'
+                + '</dd></dl>');
     }
 
     // Size
@@ -534,12 +545,18 @@ exp.init = function() {
         }
     }
 
+    if (window.location.href.indexOf('large-plant') !== -1
+      || $(".productClass").text().indexOf('Large Plant') !== -1)
+    {
+        plant_type = exp.vars.plant_types.large;
+    }
+
     $.ajax({
         url: 'http://www.thompson-morgan.com/how-we-grow-and-send-your-plants',
         success: function (data) {
             var html = $(data);
 
-            html.find(".grid2").each(function () {
+            html.find(".grid2, .footerPanel100").each(function () {
                 var image;
 
                 if ($(this).children('h2').text() == plant_type) {

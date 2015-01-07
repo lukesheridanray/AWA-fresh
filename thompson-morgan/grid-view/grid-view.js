@@ -24,6 +24,7 @@ exp.log = function (str) {
 // Log the experiment, useful when multiple experiments are running
 exp.log('Grid View - v0.1');
 
+/*
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
 exp.condition = $('body');
@@ -32,7 +33,35 @@ exp.condition = $('body');
 if(exp.condition && !exp.condition.length) {
     exp.log('Experiment failed a condition');
     return false;
-}
+}*/
+
+// Cookie management
+// based on: http://www.w3schools.com/js/js_cookies.asp
+exp.cookies = {
+    getCookie: function (cname) {
+        var name, ca, i, c;
+
+        name = cname + "=";
+        ca = document.cookie.split(';');
+        for (i = 0; i < ca.length; i += 1) {
+            c = ca[i];
+            while (c.charAt(0) === ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) !== -1) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    },
+    setCookie: function (cname, cvalue) {
+        var expires, d = new Date();
+
+        d.setTime(d.getTime() + (5 * 24 * 60 * 60 * 1000));
+        expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + "; " + expires;
+    }
+};
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -142,14 +171,17 @@ exp.func = {};
 
 var cnt = 0; // product counter
 
-var async_queue = [];
+var async_queue = {
+    product: [],
+    listing: []
+};
 var processingQueue = false;
 var elementsProcessed = 0;
 var noMoreProducts = false;
 
 exp.processQueue = function () {
 
-    if (elementsProcessed >= 25) {
+    if (elementsProcessed >= 25 && !async_queue.listing.length) {
         // Pause queue
         processingQueue = false;
         return;
@@ -157,17 +189,38 @@ exp.processQueue = function () {
 
     processingQueue = true;
 
-    var action = async_queue.shift();
+    var action = async_queue.listing.shift();
 
     if (action) {
         action(function () {
-            if (!async_queue.length) {
-                //console.log('processing ends here');
+            // These need to be processed whatever happens, so don't increment elementsProcessed
+
+            if (!async_queue.listing.length && !async_queue.product.length) {
+                //exp.log('processing ends here');
                 processingQueue = false;
                 return;
             }
-            //console.log('processing goes on', async_queue.length, async_queue);
+            //exp.log('processing goes on', async_queue.length, async_queue);
+
+            exp.processQueue();
+        });
+
+        // We've already processed an action
+        return;
+    }
+
+    action = async_queue.product.shift();
+
+    if (action) {
+        action(function () {
             elementsProcessed += 1;
+            
+            if (!async_queue.listing.length && !async_queue.product.length) {
+                //exp.log('processing ends here');
+                processingQueue = false;
+                return;
+            }
+            //exp.log('processing goes on', async_queue.length, async_queue);
 
             exp.processQueue();
         });
@@ -180,10 +233,10 @@ exp.resumeQueue = function() {
 
 // Process queue if processing has stopped
 setInterval(function() {
-    //console.log(processingQueue);
-    if (!processingQueue && async_queue.length) {
+    //exp.log(processingQueue);
+    if (!processingQueue && (async_queue.listing.length || async_queue.product.length)) {
         exp.processQueue();
-        //console.log('processing');
+        //exp.log('processing');
     }
 }, 1000);
 
@@ -211,7 +264,7 @@ exp.buildProductHTML = function (product) {
         productHTML;
 
     productHTML = '<div class="product" id="product-' + product.id + '">\
-        <a href="' + product.url + '">\
+        <a href="' + product.url + '" data-product="' + product.id + '">\
         <img src="' + product.smallimg + '" class="product-image" width="230" height="230" />\
         <h3>' + exp.wordLimit(product.title) + '</h3>\
         <h4>' + product.latin + '</h4>\
@@ -276,7 +329,7 @@ exp.fetchDetails = function (product) {
                 dom = $(data);
 
             // DEBUG
-            //console.log(data.match(/<span class="productClass">(.*?)<\/span>/)[1], product.title);
+            //exp.log(data.match(/<span class="productClass">(.*?)<\/span>/)[1], product.title);
 
             product.image = dom.find('#myZoom img').attr('src'); // 252 x 252 image
             hardiness_match = dom.find('#productCont .facetValueClass dd').text().split(/\s/);
@@ -349,15 +402,21 @@ exp.processPage = function (resultsDom, pagenum) {
     productsDom.each(function () {
         var prodDom = $(this),
             product,
-            ajax_callback;
+            ajax_callback,
+            prod_url = prodDom.find('a.moreInfo').attr('href'),
+            url_parts = prod_url.split('/'),
+            prod_id = url_parts[url_parts.length - 1];
+
+        // To be displayed on page
+        cnt++;
 
         // Construct product object, fill in straightforward fields
         product = {
-            id:    cnt++,
+            id:    prod_id,
             title: prodDom.find('h3').text().trim(),
             latin: prodDom.find('.latin').text().trim(),
             buying_options: [], // to populate
-            url: prodDom.find('a.moreInfo').attr('href'),
+            url:   prod_url,
             smallimg: prodDom.find('.floatLeft a img').attr('src'),
             // populate async
             image: null,
@@ -396,7 +455,7 @@ exp.processPage = function (resultsDom, pagenum) {
     if (pagenum % 2 === 1) {
         // If page was loaded organically, prioritise products
         for (i = product_callbacks.length - 1; i >= 0; i -= 1) {
-            async_queue.unshift(product_callbacks[i]);
+            async_queue.product.unshift(product_callbacks[i]);
         }
 
         // Load the next page too, so we have 24 elements!
@@ -405,7 +464,7 @@ exp.processPage = function (resultsDom, pagenum) {
     else {
         // If page was loaded automatically, put after the twelwth element
         // to load after the first 12
-        Array.prototype.splice.apply(async_queue, [11, 0].concat(product_callbacks));
+        Array.prototype.splice.apply(async_queue.product, [11, 0].concat(product_callbacks));
     }
 
     $("#displaying").text(cnt);
@@ -415,7 +474,7 @@ exp.queueGetPage = function (pagenum) {
 
     // Closure to protect pagenum
     return (function (pagenum) {
-        async_queue.unshift(function (callback) {
+        async_queue.listing.unshift(function (callback) {
 
             // Hide button, show loading icon
             $(".load-more").hide();
@@ -425,7 +484,8 @@ exp.queueGetPage = function (pagenum) {
                 function (data) {
                     var resultsTable = $(data).find('#results');
                     var o = resultsTable.contents().wrap('<tbody></tbody>');
-                    o.addClass('listing-page-' + pagenum);
+                    o.addClass('listing-page listing-page-' + pagenum);
+                    o.data('page', pagenum);
                     $('#results').append(o);
 
                     exp.processPage($('#results > .listing-page-' + pagenum), pagenum);
@@ -440,90 +500,128 @@ exp.queueGetPage = function (pagenum) {
                 });
         });
 
-        //console.log(async_queue);
+        //exp.log(async_queue);
     }(pagenum));
 };
 
 // Init function
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
 exp.init = function() {
+
     var curpage = 1,
         scrollLoadLock  = false,
-        scrollDeltaLock = false;
-        lastScrollPosition = 0;
+        scrollDeltaLock = false,
+        lastScrollPosition = 0,
+        last_page,
+        last_product,
+        i;
 
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
 
-    // Updated wording for "displaying x of y products"
-    var displaying = $('#facetResults .searchResults');
-    displaying.html('Displaying <strong id="displaying">24</strong> of '
-        + displaying.children('b').text()
-        + ' products.');
+    $(document).ready(function () {
+        // Process first page
+        $('#results > tbody').addClass('listing-page listing-page-1');
+        exp.processPage($('#results > .listing-page-1'), 1);
 
-    // No need for pagination
-    $('.pagination-links').hide();
+        // Updated wording for "displaying x of y products"
+        var displaying = $('#facetResults .searchResults');
+        displaying.html('Displaying <strong id="displaying">24</strong> of '
+            + displaying.children('b').text()
+            + ' products.');
 
-    // Load more (continous scrolling)
-    $('#results').after('<input type="button" class="load-more" value="Load More" />');
-    $('#results').after('<div class="icon-loading-more"></div>');
-    $(".load-more").click(function () {
-        exp.queueGetPage((curpage += 2));
-    });
+        // No need for pagination
+        $('.pagination-links').hide();
 
-    $(window).scroll(function() {
-        //console.log($(window).scrollTop(), $('#results').height());
-        if (scrollLoadLock === false && $(window).scrollTop() // Coordinates at the top
-            >= $('#results').height() - $(window).height() / 2
-                // when the bottom of #results is approx in the middle of the viewport
-                // (the header pushes it down by about 350px, but it works well)
-            ) {
+        // Load more (continous scrolling)
+        $('#results').after('<input type="button" class="load-more" value="Load More" />');
+        $('#results').after('<div class="icon-loading-more"></div>');
+        $(".load-more").click(function () {
             exp.queueGetPage((curpage += 2));
-            scrollLoadLock = true;
-            setTimeout(function () { scrollLoadLock = false; }, 1000);
+        });
+
+        $(window).scroll(function() {
+            //exp.log($(window).scrollTop(), $('#results').height());
+            if (scrollLoadLock === false && $(window).scrollTop() // Coordinates at the top
+                >= $('#results').height() - $(window).height() / 2
+                    // when the bottom of #results is approx in the middle of the viewport
+                    // (the header pushes it down by about 350px, but it works well)
+                ) {
+                exp.queueGetPage((curpage += 2));
+                scrollLoadLock = true;
+                setTimeout(function () { scrollLoadLock = false; }, 1000);
+            }
+
+            // Calculate scroll delta to resume queue
+            if (scrollDeltaLock === false && Math.abs(lastScrollPosition - $(window).scrollTop()) > 1000) {
+                scrollDeltaLock = true;
+                lastScrollPosition = $(window).scrollTop();
+                exp.resumeQueue();
+                setTimeout(function () { scrollDeltaLock = false; }, 1000);
+            }
+        });
+
+        // Load pages up to the last visited page
+        last_page    = exp.cookies.getCookie('last_page');
+        last_product = exp.cookies.getCookie('last_product');
+        exp.cookies.setCookie('last_page', '');
+        exp.cookies.setCookie('last_product', '');
+        if (last_page && last_page > 2) {
+            if (last_page % 2 === 0) {
+                last_page -= 1;
+            }
+            for (i = last_page; i > 2; i -= 2) {
+                exp.queueGetPage(i);
+            }
+            curpage = last_page;
         }
 
-        // Calculate scroll delta to resume queue
-        if (scrollDeltaLock === false && Math.abs(lastScrollPosition - $(window).scrollTop()) > 1000) {
-            scrollDeltaLock = true;
-            lastScrollPosition = $(window).scrollTop();
-            exp.resumeQueue();
-            setTimeout(function () { scrollDeltaLock = false; }, 1000);
+        if (last_product) {
+            // Scroll to last visited page
+            async_queue.listing.push(function(callback) {
+                    $('html, body').animate({
+                        scrollTop: $("#product-" + last_product).offset() && $("#product-" + last_product).offset().top
+                    }, 1000);
+
+                callback();
+            });
         }
-    });
 
-    // Process first page
-    $('#results > tbody').addClass('listing-page-1');
-    exp.processPage($('#results > .listing-page-1'), 1);
+        // Open product
+        $('#results').delegate('.product > a', 'click', function (e) {
+            var href = $(this).attr('href'),
+                page = $(this).parents('.listing-page').data('page')
+                product_id = $(this).attr('data-product');
 
-    // Open product
-    $('#results').delegate('.product > a', 'click', function (e) {
-        var href = $(this).attr('href');
+            e.preventDefault();
 
-        e.preventDefault();
+            if (2 === e.which || e.metaKey || e.ctrlKey) {
+                // Ctrl/Cmd - click
+                // pause queue
+                elementsProcessed = 25; // Ensure no more queued elements are processed
+                window.open(href); // Popup blocker kicks in if we delay it
+            }
+            else {
+                // Normal click
+                elementsProcessed = 0; // Ensure this one will get processed
+                exp.cookies.setCookie('last_page', page);
+                exp.cookies.setCookie('last_product', product_id);
+                async_queue.listing = [function(callback) { // Clear queue, do this
+                    setTimeout(function() {
+                        window.location.assign(href);
+                    }, 250);
+                }];
+            }
+        });
 
-        if (2 === e.which || e.metaKey || e.ctrlKey) {
-            // Ctrl/Cmd - click
+        // Right click, stop queue
+        $('#results').delegate('.product > a', 'contextmenu', function (e) {
             // pause queue
             elementsProcessed = 25; // Ensure no more queued elements are processed
-            window.open(href); // Popup blocker kicks in if we delay it
-        }
-        else {
-            // Normal click
-            elementsProcessed = 0; // Ensure this one will get processed
-            async_queue = [function(callback) { // Clear queue, do this
-                    window.location.href = href;
-            }];
-        }
-    });
+        });
 
-    // Right click, stop queue
-    $('#results').delegate('.product > a', 'contextmenu', function (e) {
-        // pause queue
-        elementsProcessed = 25; // Ensure no more queued elements are processed
+        exp.processQueue();
     });
-
-    exp.processQueue();
 };
 
 // Run the experiment
