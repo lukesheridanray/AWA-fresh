@@ -94,10 +94,6 @@ exp.vars = {
         cartContents: 'optimizelyCartContents'
     },
     threshold: 25.00, // float
-//    threshold: {
-//        amount: 25.00,
-//        reached: false
-//    },
     page: (window.location.toString().indexOf('qs_addedToBasket') !== -1) ? 'added' : 'cart',
     siteTotal: '0.00', // str
     currentTotal: '0.00', // str
@@ -129,12 +125,12 @@ exp.css = ' \
 .exp-added-basket-2 .exp-free-delivery-message i { \
     display: none; \
 } \
-.well h3 { \
+#page-added-to-basket .well h3 { \
     border-bottom: 0; \
     padding-bottom: 0; \
     position: relative; \
 } \
-.well h3 span { \
+#page-added-to-basket .well h3 span { \
     display: block; \
     width: 110px; \
     position: absolute; \
@@ -507,7 +503,7 @@ exp.init = function( _this ) {
             docCookies.setItem( exp.vars.cookies.rrpTotal, '0.00', null, '/' );
             docCookies.setItem( exp.vars.cookies.discounts, '0.00', null, '/' );
             docCookies.setItem( exp.vars.cookies.cartContents, '{}', null, '/' );
-            return false;
+            //return false;
         }
     }
 
