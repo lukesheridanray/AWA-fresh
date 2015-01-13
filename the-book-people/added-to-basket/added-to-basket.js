@@ -85,8 +85,8 @@ var docCookies = {
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
-    variation: '1', // 1 or 2
-    subVariation: 'a', // a, b or c
+    variation: '2', // 1 or 2
+    subVariation: 'c', // a, b or c
     cookies: {
         total: 'optimizelyCartTotal',
         rrpTotal: 'optimizelyRRPTotal',
@@ -327,7 +327,7 @@ exp.func.freeShippingMessage = function( amount ) {
         (exp.vars.subVariation === 'a') ||
         (exp.vars.subVariation === 'b' && amount <= 10.00)
     ) {
-        amount = '£' + amount.toString().replace('.00', '');
+        amount = '£' + amount.toFixed(2).replace('.00', '');
         $('.lead.pull-left.hidden-phone').parent('div').append(
             '<p class="lead pull-left hidden-phone exp-free-delivery-message not-reached-threshold"><i></i>&nbsp;Spend just '+amount+' more to get FREE Delivery</p>'
         );
