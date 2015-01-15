@@ -21,7 +21,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Bettys vertical checkout - 0.19');
+exp.log('Bettys vertical checkout - 0.20');
 
 
 // Variables
@@ -77,6 +77,7 @@ exp.vars = {
 // Styles
 // String containing the CSS for the experiment
 exp.css = ' \
+select { padding-top: 0 !important; } \
 .onestepcheckout-description, \
 .onestepcheckout-numbers, \
 .onestepcheckout-threecolumns, \
