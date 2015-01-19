@@ -24,7 +24,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Price per book, including category pages and search results - category page - ribbon - 0.2');
+exp.log('Price per book, including category pages and search results - category page - ribbon - 0.3');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -380,7 +380,7 @@ exp.init = function() {
     // Add ribbons to categories
     $.each(this.vars.products, function(i, product) {
         var $product = $(product),
-            totalPriceStr = $product.find('.formattedPrice .price').text().trim(),
+            totalPriceStr = $product.find('.formattedPrice .price').first().text().trim(),
             totalPrice = totalPriceStr.substr(0, 1) == "£" ? totalPriceStr.substr(1) : totalPriceStr,
             bookCountMatches = $product.find('.productTitles .url, h2 .url').length ? $product.find('.productTitles .url, h2 .url').text().match(/([0-9]+)( Books)/i) : false,
             bookCount = bookCountMatches ? bookCountMatches[1] : false,
