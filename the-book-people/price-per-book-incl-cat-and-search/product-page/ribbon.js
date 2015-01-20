@@ -22,7 +22,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Price per book, including category pages and search results - product page - ribbon - 0.3');
+exp.log('Price per book, including category pages and search results - product page - ribbon - 0.4');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -81,7 +81,7 @@ exp.css = ' \
 .productImage { \
     position: relative; \
 } \
-.productImage.hidden-phone { \
+.exp-price-per-book.productImage.hidden-phone { \
     height: 302px; \
 } \
 /* Circle outline */ \
@@ -151,7 +151,7 @@ exp.css = ' \
     right: 35px; \
 } \
 @media screen and (max-width: 1199px) { \
-    .productImage.hidden-phone { \
+    .exp-price-per-book.productImage.hidden-phone { \
         height: 249px; \
     } \
     .exp-price-per-book--ribbon-main { \
@@ -459,6 +459,9 @@ exp.init = function() {
     */
 
     if( this.vars.isCollection) {
+
+        // Add class to productImage so we target the right ones
+        $('.productImage').addClass('exp-price-per-book');
 
         if (this.vars.mainRibbon) {
 
