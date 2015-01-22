@@ -301,6 +301,9 @@ exp.css = '.resultSet + .resultSet {\
   background-color: #000;\
   opacity: 0.4;\
   z-index: 100000;\
+}\
+.hidden {\
+  display: none; \
 }';
 
 // Functions
@@ -457,7 +460,7 @@ exp.buildProductHTML = function (product) {
         productHTML;
 
     productHTML = '<div class="product loading" id="product-' + product.id + '">\
-        <a class="colorbox" href="' + product.url + '#product-portlet" data-product="' + product.id + '">\
+        <a class="colorbox" href="#quickview-' + product.id + '" data-product="' + product.id + '">\
         <img src="' + product.smallimg + '" class="product-image" width="230" height="230" />\
         <h3>' + exp.wordLimit(product.title) + '</h3>\
         <h4>' + product.latin + '</h4>\
@@ -483,15 +486,10 @@ exp.buildProductHTML = function (product) {
         <button class="basket button" data-action="' + product.formAction
         + '">Quick View</button> \
         <span class="despatch"><span>Despatch:</span> ' + product.despatch + '</span> \
-        <a href="' + product.url + '" class="more-info">Need more info? &gt;&gt;</a> \
-        <div class="hidden" id="quickview-' + product.id + '"> \
-            <h1>' + product.title + '</h1> \
-            <h2>' + product.latin + '</h2> \
-            <p class="desc">' + product.desc + '</p> \
-            <div class="bullets"></div> \
-        </div> \
-        <span class="despatch"><span>Despatch:</span> ' + product.despatch + '</span> \
         </a>\
+        <div style="display:none;" id="quickview-' + product.id + '"> \
+            Loading... \
+        </div> \
         <a href="' + product.url + '" class="more-info">View product detail &gt;&gt;</a> \
         </div>';
 
@@ -522,6 +520,8 @@ exp.addDetails = function (product) {
             dom.find('.product-features-listing').remove();
         }
 
+        //$('#quickview-' + product.id).html(product.dom.html());
+
         // Add ready
         dom.removeClass('loading');
         dom.addClass('loaded');
@@ -545,6 +545,8 @@ exp.fetchDetails = function (product) {
 
             // DEBUG
             //exp.log(data.match(/<span class="productClass">(.*?)<\/span>/)[1], product.title);
+
+            product.dom = dom.find('#product-portlet');
 
             product.image = dom.find('#myZoom img').attr('src'); // 252 x 252 image
             hardiness_match = dom.find('#productCont .facetValueClass dd').text().split(/\s/);
@@ -655,15 +657,14 @@ exp.processPage = function (resultsDom, pagenum) {
             id:    prod_id,
             title: prodDom.find('h3').text().trim(),
             latin: prodDom.find('.latin').text().trim(),
-            desc:  prodDom.find('.season').html(),
             buying_options: [], // to populate
             url:   prod_url,
             smallimg: prodDom.find('.floatLeft a img').attr('src'),
-            stockDom: prodDom.find('.stockInfo'),
             // populate async
             image: null,
             hardiness: null,
-            bullets: null
+            bullets: null,
+            dom: null
         };
 
         // callback when all details are fetched
@@ -833,7 +834,7 @@ exp.init = function() {
     $.getScript('https://cdnjs.cloudflare.com/ajax/libs/jquery.colorbox/1.4.33/jquery.colorbox-min.js', function() {
         colorbox_loaded = true;
 
-        $("a.colorbox").colorbox({iframe: true});
+        $("a.colorbox").colorbox();
     });
 
     $(document).ready(function () {

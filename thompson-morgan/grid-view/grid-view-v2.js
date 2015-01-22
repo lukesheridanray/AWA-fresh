@@ -432,14 +432,16 @@ exp.addToBasket = function (productDom, form_action) {
                     callback_count += 1;
 
                     if (callback_count === request_count) {
-//                        $.get('/basket', function () {
+                        $.get('/basket', function (data) {
+                                var header_basket = $(data).find('#headerBasket').html();
+                                $('#headerBasket').html(header_basket);
                                 $(document).unbind('click');
                                 $(".basketloading").remove();
                                 $('#addBasketSuccessDIV .pageTitleContent').text(product_title);
                                 $('#addBasketSuccessDIV a').click(function (e) { e.preventDefault(); });
                                 $('#addBasketSuccessDIV h3 + p').text('added to your basket.');
                                 $('#addBasketSuccessDIV').css("display","block");
-//                        });
+                        });
                     }
                 }
             );
@@ -487,6 +489,8 @@ exp.buildProductHTML = function (product) {
     productHTML += '</ul> \
         <button class="basket button" data-action="' + product.formAction
         + '">Add to basket</button> \
+        <span class="despatch"><span>Despatch:</span> ' + product.despatch + '</span> \
+        <a href="' + product.url + '" class="more-info">Need more info? &gt;&gt;</a> \
         </div>';
 
     return productHTML;
