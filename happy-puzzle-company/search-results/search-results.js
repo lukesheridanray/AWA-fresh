@@ -14,7 +14,7 @@ var hp_search_page_exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Happy Puzzle Search Results Experiment - 0.2');
+console.log('Happy Puzzle Search Results Experiment - 0.5');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -73,18 +73,23 @@ exp.vars = {
             'Understanding The Human Body',
             'Understanding Programming'
         ],
-        'Social': [
-            'Communication Skills',
-            'Memory',
-            'Observation Skills',
-            'Social Skills',
-            'Team Building',
-        ],
-        'Hand-Eye Co-ordination': [
-            'Fine Motor Skills',
-            'Gross Motor Skills',
-            'Hand/Eye Co-ordination',
-            'Understanding Balance',
+        // 'Social': [
+        //     'Communication Skills',
+        //     'Memory',
+        //     'Observation Skills',
+        //     'Social Skills',
+        //     'Team Building',
+        // ],
+        'Creativity': [
+            'Concentration',
+            'Creative Thinking',
+            'Creativity',
+            'Lateral Thinking',
+            'Logical Deduction',
+            'Problem Solving',
+            'Speed Of Thought',
+            'Strategic Planning',
+            'Thinking Skills'
         ],
         'Maths': [
             'Code Breaking',
@@ -106,16 +111,11 @@ exp.vars = {
             'General Skills',
             'Literacy'
         ],
-        'Creativity': [
-            'Concentration',
-            'Creative Thinking',
-            'Creativity',
-            'Lateral Thinking',
-            'Logical Deduction',
-            'Problem Solving',
-            'Speed Of Thought',
-            'Strategic Planning',
-            'Thinking Skills'
+        'Hand-Eye Co-ordination': [
+            'Fine Motor Skills',
+            'Gross Motor Skills',
+            'Hand/Eye Co-ordination',
+            'Understanding Balance',
         ]
     },
     'skill_map': {}, // Used to map skill nodes to their names
@@ -124,7 +124,15 @@ exp.vars = {
 
 // Styles
 // String containing the CSS for the experiment
-exp.css = '';
+exp.css = 'div.skill_scroller { \
+    height: 130px; \
+    overflow-y: hidden; \
+} \
+.left_nav_list_ul:nth-of-type(2) { \
+    border-bottom: 0; \
+    padding-bottom: 0; \
+    margin-bottom: 0; \
+}';
 
 // Functions
 // Object containing functions, some helpful functions are included
@@ -236,7 +244,8 @@ exp.init = function() {
     });
 
     // Check whether the "All" skill group cshould be ticked. It will be ticked if all of the other boxes are ticked, and then we will untick the other boxes.
-    var checkAll = true;
+    var checkAll = true,
+        areAnyBoxesTicked = false;
 
     // Iterate though the skill nodes. If any are not checked then we set "checkAll" to false.
     $.each(this.vars.aggregate_skill_nodes, function(){
@@ -247,14 +256,19 @@ exp.init = function() {
             return;
         }
 
-        if (!$this.find('input').prop('checked'))
+        if ($this.find('input').prop('checked'))
+        {
+            areAnyBoxesTicked = true;
+        }
+        else
         {
             checkAll = false;
         }
     });
 
     // If every skill grouyp was indeed ticked then untick them all and tick "All".
-    if (checkAll) {
+    // Alternatively, if nothing is ticked then tick "All" as a default.
+    if (checkAll || !areAnyBoxesTicked) {
         // Uncheck everything else
         $.each(this.vars.aggregate_skill_nodes, function(){
             $(this).find('input').prop('checked', false);
@@ -263,6 +277,28 @@ exp.init = function() {
         // Check all
         this.vars.aggregate_skill_nodes[0].find('input').prop('checked', true);
     }
+
+    // -------------------------------------------------------------------------
+
+    // Rearrange filter box
+    var $price_title = $('#ctl00_cphInnerMaster_spanPrice'),
+        $price_options = $price_title.next(),
+        $age_title = $('#ctl00_cphInnerMaster_spanAgeRange'),
+        $age_options = $age_title.next(),
+        $skills_title = $('#ctl00_cphInnerMaster_spanSkills'),
+        $skills_options = $skills_title.next();
+
+    // Move age filters to the top
+    $age_title.insertBefore($price_title);
+    $age_options.insertAfter($age_title);
+
+    // Move skills to the middle
+    $skills_title.insertBefore($price_title);
+    $skills_options.insertAfter($skills_title);
+
+    // Which leaves prices last
+
+    // -------------------------------------------------------------------------
 
 };
 

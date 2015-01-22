@@ -85,8 +85,8 @@ var docCookies = {
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
-    variation: '1', // 1 or 2
-    subVariation: 'a', // a, b or c
+    variation: '2', // 1 or 2
+    subVariation: 'c', // a, b or c
     cookies: {
         total: 'optimizelyCartTotal',
         rrpTotal: 'optimizelyRRPTotal',
@@ -94,10 +94,6 @@ exp.vars = {
         cartContents: 'optimizelyCartContents'
     },
     threshold: 25.00, // float
-//    threshold: {
-//        amount: 25.00,
-//        reached: false
-//    },
     page: (window.location.toString().indexOf('qs_addedToBasket') !== -1) ? 'added' : 'cart',
     siteTotal: '0.00', // str
     currentTotal: '0.00', // str
@@ -129,12 +125,12 @@ exp.css = ' \
 .exp-added-basket-2 .exp-free-delivery-message i { \
     display: none; \
 } \
-.well h3 { \
+#page-added-to-basket .well h3 { \
     border-bottom: 0; \
     padding-bottom: 0; \
     position: relative; \
 } \
-.well h3 span { \
+#page-added-to-basket .well h3 span { \
     display: block; \
     width: 110px; \
     position: absolute; \
@@ -327,7 +323,7 @@ exp.func.freeShippingMessage = function( amount ) {
         (exp.vars.subVariation === 'a') ||
         (exp.vars.subVariation === 'b' && amount <= 10.00)
     ) {
-        amount = '£' + amount.toString().replace('.00', '');
+        amount = '£' + amount.toFixed(2).replace('.00', '');
         $('.lead.pull-left.hidden-phone').parent('div').append(
             '<p class="lead pull-left hidden-phone exp-free-delivery-message not-reached-threshold"><i></i>&nbsp;Spend just '+amount+' more to get FREE Delivery</p>'
         );
@@ -507,7 +503,7 @@ exp.init = function( _this ) {
             docCookies.setItem( exp.vars.cookies.rrpTotal, '0.00', null, '/' );
             docCookies.setItem( exp.vars.cookies.discounts, '0.00', null, '/' );
             docCookies.setItem( exp.vars.cookies.cartContents, '{}', null, '/' );
-            return false;
+            //return false;
         }
     }
 

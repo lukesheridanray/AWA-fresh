@@ -21,7 +21,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Bettys vertical checkout - 0.18');
+exp.log('Bettys vertical checkout - 0.20');
 
 
 // Variables
@@ -77,6 +77,7 @@ exp.vars = {
 // Styles
 // String containing the CSS for the experiment
 exp.css = ' \
+select { padding-top: 0 !important; } \
 .onestepcheckout-description, \
 .onestepcheckout-numbers, \
 .onestepcheckout-threecolumns, \
@@ -472,6 +473,19 @@ exp.func.waitForFunction = function(func, callback, timeout, keepAlive) {
         }, intervalTime);
 };
 
+// Function to fill in the gift message
+exp.func.giftMessage = function() {
+    var giftmsg = '';
+    $('.checkout-line').each(function(){
+        if ($(this).val() == '') {
+            giftmsg = giftmsg + $(this).val();
+        } else {
+            giftmsg = giftmsg + $(this).val() + '\n';
+        }
+    });
+    $('#gift-message-whole-message').val(giftmsg);
+};
+
 exp.func.checkBillingFields = function() {
     var isComplete = true;
     if( !$('#billing-address-select').length || ( $('#billing-address-select').length && $('#billing-address-select').val() === '' ) ) {
@@ -527,6 +541,19 @@ exp.func.checkSummaryHeight = function() {
     }
 };
 
+exp.func.doubleCheckPriceInMessage = function( shippingCell ) {
+    var msgElement = $('.show-del-price');
+    var shownPrice;
+    var realPrice;
+    if( msgElement.length && shippingCell.length ) {
+        shownPrice = msgElement.text().trim().replace('(','').replace(')','');
+        realPrice = shippingCell.next('.value').text().trim();
+        if( shownPrice !== realPrice ) {
+            msgElement.text('(' + realPrice + ')');
+        }
+    }
+};
+
 exp.func.updateDeliveryMessage = function() {
     var shippingCell = $('.onestepcheckout-totals .title').filter(
         function(){ return $(this).text().trim() === 'Shipping'; }
@@ -537,6 +564,9 @@ exp.func.updateDeliveryMessage = function() {
     var delMessage = $('.full-atp');
     var delPrice = delMessage.find('.show-del-price');
     var regmatch;
+
+    exp.func.doubleCheckPriceInMessage( shippingCell );
+
     if( shippingCell.length && delMessage.length && !delPrice.length ) {
 
         if(exp.vars.variation === 1) {
@@ -590,13 +620,10 @@ exp.func.updateDeliveryMessage = function() {
 
 exp.func.interveneLogin = function() {
     setTimeout( function() {
-        exp.log(1);
         if ( $('#onestepcheckout-login-error').length && $('#onestepcheckout-login-error').css('display') === 'none' ) {
             setTimeout( function() {
-                exp.log(2);
                 if ( $('#onestepcheckout-login-error').length && $('#onestepcheckout-login-error').css('display') === 'none' ) {
                     setTimeout( function() {
-                        exp.log(3);
                         if ( $('#onestepcheckout-login-error').length && $('#onestepcheckout-login-error').css('display') === 'none' ) {
                             location.reload();
                         }
@@ -847,6 +874,9 @@ exp.init = function() {
             return;
         }
     });
+
+    // Fill out gift message
+    $('.checkout-line').bind('blur', exp.func.giftMessage );
 
     // Keep checking to see if we need to do anything with the delivery message
     expInterval = setInterval(exp.func.updateDeliveryMessage, 1000);
