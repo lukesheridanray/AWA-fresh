@@ -489,7 +489,6 @@ exp.buildProductHTML = function (product) {
             <h2>' + product.latin + '</h2> \
             <p class="desc">' + product.desc + '</p> \
             <div class="bullets"></div> \
-            
         </div> \
         <span class="despatch"><span>Despatch:</span> ' + product.despatch + '</span> \
         </a>\
