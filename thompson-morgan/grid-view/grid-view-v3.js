@@ -487,8 +487,10 @@ exp.buildProductHTML = function (product) {
         + '">Quick View</button> \
         <span class="despatch"><span>Despatch:</span> ' + product.despatch + '</span> \
         </a>\
-        <div style="display:none;" id="quickview-' + product.id + '"> \
-            Loading... \
+        <div class="hidden">\
+            <div id="quickview-' + product.id + '"> \
+                Loading... \
+            </div>\
         </div> \
         <a href="' + product.url + '" class="more-info">View product detail &gt;&gt;</a> \
         </div>';
@@ -520,7 +522,7 @@ exp.addDetails = function (product) {
             dom.find('.product-features-listing').remove();
         }
 
-        //$('#quickview-' + product.id).html(product.dom.html());
+        $('#quickview-' + product.id).html(product.dom.find('h1').html());
 
         // Add ready
         dom.removeClass('loading');
@@ -834,7 +836,7 @@ exp.init = function() {
     $.getScript('https://cdnjs.cloudflare.com/ajax/libs/jquery.colorbox/1.4.33/jquery.colorbox-min.js', function() {
         colorbox_loaded = true;
 
-        $("a.colorbox").colorbox();
+        $("a.colorbox").colorbox({inline: true});
     });
 
     $(document).ready(function () {
