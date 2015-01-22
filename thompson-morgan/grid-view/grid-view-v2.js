@@ -520,6 +520,11 @@ exp.addDetails = function (product) {
             dom.find('.product-features-listing').remove();
         }
 
+        dom.find('.basket.button').click(function (e) {
+            e.preventDefault();
+            exp.addToBasket($(this).parents('.product'), $(this).attr('data-action'));
+        });
+
         // Add ready
         dom.removeClass('loading');
         dom.addClass('loaded');
@@ -971,11 +976,6 @@ exp.init = function() {
         $("#results").delegate('.product', 'mouseleave', function () {
             exp.blur($(this).parent('.resultSet'));
             //console.log('blur');
-        });
-    
-        $('.basket.button').click(function (e) {
-            e.preventDefault();
-            exp.addToBasket($(this).parents('.product'), $(this).attr('data-action'));
         });
     });
 };
