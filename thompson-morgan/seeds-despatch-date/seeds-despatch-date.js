@@ -5,10 +5,16 @@
 // JSHint flags
 // jshint multistr: true
 // jshint jquery: true
+// 
+'use strict';
+if (typeof String.prototype.trim !== 'function') {
+  String.prototype.trim = function() {
+    return this.replace(/^\s+|\s+$/g, ''); 
+  };
+}
 
 // Wrap the experiment code in an IIFE, this creates a local scope and allows us to
 // pass in jQuery to use as $. Other globals could be passed in if required.
-'use strict';
 var exp = (function($) {
 
 // Initialise the experiment object
@@ -82,7 +88,7 @@ exp.init = function() {
             )
         ) {
         
-        by = ' by tomorrow';
+        by = ' Within 24 hours';
     } else {
         by = ' by Monday';
     }

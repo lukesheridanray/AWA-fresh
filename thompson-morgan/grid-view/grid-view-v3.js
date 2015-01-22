@@ -13,6 +13,11 @@ if (typeof String.prototype.trim !== 'function') {
   };
 }
 
+// Missing from jquery, let's mock it for the lightbox
+$.type = function () {
+    return 'object';
+};
+
 // Wrap the experiment code in an IIFE, this creates a local scope and allows us to
 // pass in jQuery to use as $. Other globals could be passed in if required.
 var exp = (function($) {
@@ -248,9 +253,54 @@ exp.css = '.resultSet + .resultSet {\
     display: none;\
 }\
 .qty-heading {\
-    margin-left: 147px;\
+    margin-left: 142px;\
     margin-bottom: .5em;\
     display: none;\
+}\
+.highlighted .basket.button {\
+    display: block;\
+}\
+.highlighted .despatch {\
+    display: block;\
+}\
+.highlighted .promo {\
+    display: block;\
+}\
+.highlighted .more-info {\
+    display: block;\
+}\
+#addBasketSuccessDIV {\
+    z-index: 10000; \
+}\
+.basketloading.spinner {\
+    display: block;\
+    position: fixed;\
+    margin: auto;\
+    top: 0;\
+    left: 0;\
+    bottom: 0;\
+    right: 0;\
+    height: 50px;\
+    width: 50px;\
+    background-repeat: no-repeat;\
+    background-image: url("data:image/gif;base64,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"); \
+    background-color: white;\
+    background-position: 10px;\
+    z-index: 100001;\
+    border-radius: 5px;\
+    box-shadow: 2px 2px 5px #222;\
+}\
+.basketloading.overlay {\
+  content: "";\
+  display: block;\
+  position: fixed;\
+  top: 0;\
+  left: 0;\
+  width: 100%;\
+  height: 100%;\
+  background-color: #000;\
+  opacity: 0.4;\
+  z-index: 100000;\
 }';
 
 // Functions
@@ -325,6 +375,10 @@ exp.resumeQueue = function() {
     elementsProcessed = 0;
 };
 
+exp.pauseQueue = function() {
+    elementsProcessed = LIMIT_PROCESSED;
+};
+
 // Process queue if processing has stopped
 setInterval(function() {
     //exp.log(processingQueue);
@@ -350,6 +404,51 @@ exp.wordLimit = function (word, limit) {
     return word;
 };
 
+exp.addToBasket = function (productDom, form_action) {
+
+    var product_title = productDom.find('h3').text(),
+        request_count = 0,
+        callback_count = 0;
+
+    $('body').after('<div class="basketloading spinner" /><div class="basketloading overlay" />');
+
+    // Pause processing
+    exp.pauseQueue();
+
+    productDom.find('.qty').each(function() {
+        var qty = parseInt($(this).val(),10);
+        if (qty) {
+            $.post(form_action,
+                {
+                    addToBasket: true,
+                    quantity: qty,
+                    skuCodes: $(this).attr('data-sku')
+                },
+                function () {
+                    callback_count += 1;
+
+                    if (callback_count === request_count) {
+//                        $.get('/basket', function () {
+                                $(document).unbind('click');
+                                $(".basketloading").remove();
+                                $('#addBasketSuccessDIV .pageTitleContent').text(product_title);
+                                $('#addBasketSuccessDIV a').click(function (e) { e.preventDefault(); });
+                                $('#addBasketSuccessDIV h3 + p').text('added to your basket.');
+                                $('#addBasketSuccessDIV').css("display","block");
+//                        });
+                    }
+                }
+            );
+
+            request_count += 1;
+        }
+    });
+
+    if (!request_count) {
+        $(".basketloading").remove();
+    }
+};
+
 exp.buildProductHTML = function (product) {
     // display product
     var i,
@@ -358,11 +457,10 @@ exp.buildProductHTML = function (product) {
         productHTML;
 
     productHTML = '<div class="product loading" id="product-' + product.id + '">\
-        <a href="' + product.url + '" data-product="' + product.id + '">\
+        <a class="colorbox" href="' + product.url + '#product-portlet" data-product="' + product.id + '">\
         <img src="' + product.smallimg + '" class="product-image" width="230" height="230" />\
         <h3>' + exp.wordLimit(product.title) + '</h3>\
         <h4>' + product.latin + '</h4>\
-        </a>\
         <dl class="product-features-listing" style="display:none;">';
 
     productHTML += '</dl> \
@@ -371,21 +469,31 @@ exp.buildProductHTML = function (product) {
     
     for (i = 0; i < buying_options_len; i += 1) {
         option = product.buying_options[i];
-        productHTML += '<li class="buying-option-listing" data-sku="'
-                        + option.skuCodes + '" data-cat="'
-                        + option.catCode + '"> \
+        productHTML += '<li class="buying-option-listing"> \
                         <span class="buying-option-name">' + option.name + '</span> \
                         <span class="buying-option-price">' + option.price + '</span> \
                         <strike class="buying-option-oldprice">' + option.oldprice + '</strike> \
-                        <span class="buying-option-qty"><input type="text" class="qty" size="1" value="0" /></span> \
-                        <div class="promo">' + option.promo + '</div>\
+                        <span class="buying-option-qty"><input type="text" class="qty" \
+                            size="1" value="0" data-sku="' + option.skuCodes + '" /></span> \
+                        <div class="promo">&nbsp;' + option.promo + '</div>\
                     </li>';
     }
 
     productHTML += '</ul> \
-        <button class="basket button">Add to basket</button> \
+        <button class="basket button" data-action="' + product.formAction
+        + '">Quick View</button> \
         <span class="despatch"><span>Despatch:</span> ' + product.despatch + '</span> \
         <a href="' + product.url + '" class="more-info">Need more info? &gt;&gt;</a> \
+        <div class="hidden" id="quickview-' + product.id + '"> \
+            <h1>' + product.title + '</h1> \
+            <h2>' + product.latin + '</h2> \
+            <p class="desc">' + product.desc + '</p> \
+            <div class="bullets"></div> \
+            
+        </div> \
+        <span class="despatch"><span>Despatch:</span> ' + product.despatch + '</span> \
+        </a>\
+        <a href="' + product.url + '" class="more-info">View product detail &gt;&gt;</a> \
         </div>';
 
     return productHTML;
@@ -548,9 +656,11 @@ exp.processPage = function (resultsDom, pagenum) {
             id:    prod_id,
             title: prodDom.find('h3').text().trim(),
             latin: prodDom.find('.latin').text().trim(),
+            desc:  prodDom.find('.season').html(),
             buying_options: [], // to populate
             url:   prod_url,
             smallimg: prodDom.find('.floatLeft a img').attr('src'),
+            stockDom: prodDom.find('.stockInfo'),
             // populate async
             image: null,
             hardiness: null,
@@ -567,14 +677,13 @@ exp.processPage = function (resultsDom, pagenum) {
             product.buying_options.push({
                 name:     optDom.find('.size').text().trim(),
                 promo:    optDom.find('.promo').length ? optDom.find('.promo').text().split('&')[0].trim() : '',
-                action:   optDom.find('form').attr('action'),
                 oldprice: optDom.find('.price strike').text(),
                 price:    optDom.find('.price').contents()[2].textContent.trim(),
-                skuCodes: optDom.find('input[name="skuCodes"]'),
-                catCode:  optDom.find('input[name="categoryCode"]')
+                skuCodes: optDom.find('input[name="skuCodes"]').val()
             });
 
-            product.despatch = optDom.find('.despatch').contents()[1].textContent.trim();
+            product.formAction = optDom.find('form').attr('action');
+            product.despatch   = optDom.find('.despatch').contents()[1].textContent.trim();
         });
 
         // Replace HTML
@@ -716,10 +825,17 @@ exp.init = function() {
         lastScrollPosition = 0,
         last_page,
         last_product,
-        i;
+        i,
+        colorbox_loaded = false;
 
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
+    $('head').append('<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.colorbox/1.4.33/example1/colorbox.min.css" />');
+    $.getScript('https://cdnjs.cloudflare.com/ajax/libs/jquery.colorbox/1.4.33/jquery.colorbox-min.js', function() {
+        colorbox_loaded = true;
+
+        $("a.colorbox").colorbox({iframe: true});
+    });
 
     $(document).ready(function () {
         // Process first page
@@ -798,7 +914,7 @@ exp.init = function() {
         }
 
         // Open product
-        $('#results').delegate('.product > a', 'click', function (e) {
+        $('#results').delegate('.product > a:not(.colorbox)', 'click', function (e) {
             var href = $(this).attr('href'),
                 page = $(this).parents('.listing-page').data('page')
                 product_id = $(this).attr('data-product');
@@ -808,12 +924,11 @@ exp.init = function() {
             if (2 === e.which || e.metaKey || e.ctrlKey) {
                 // Ctrl/Cmd - click
                 // pause queue
-                elementsProcessed = LIMIT_PROCESSED; // Ensure no more queued elements are processed
+                exp.pauseQueue(); // Ensure no more queued elements are processed
                 window.open(href); // Popup blocker kicks in if we delay it
             }
             else {
                 // Normal click
-                elementsProcessed = 0; // Ensure this one will get processed
                 exp.cookies.setCookie('last_page', page);
                 exp.cookies.setCookie('last_product', product_id);
                 async_queue.listing = [function(callback) { // Clear queue, do this
@@ -821,23 +936,28 @@ exp.init = function() {
                         window.location.assign(href);
                     }, 250);
                 }];
+                exp.resumeQueue(); // Process
             }
         });
 
         $(':not(.results) a').click(function (e) {
             var href = $(this).attr('href');
 
+            if (!href || href === '#') {
+                return false;
+            }
+
             e.preventDefault();
 
             if (2 === e.which || e.metaKey || e.ctrlKey) {
                 // Ctrl/Cmd - click
                 // pause queue
-                elementsProcessed = LIMIT_PROCESSED; // Ensure no more queued elements are processed
+                exp.pauseQueue(); // Ensure no more queued elements are processed
                 window.open(href); // Popup blocker kicks in if we delay it
             }
             else {
                 // Normal click
-                elementsProcessed = 0; // Ensure this one will get processed
+                exp.resumeQueue(); // Ensure this one will get processed
                 async_queue.listing = [function(callback) { // Clear queue, do this
                     setTimeout(function() {
                         window.location.assign(href);
@@ -849,7 +969,7 @@ exp.init = function() {
         // Right click, stop queue
         $('#results').delegate('.product > a', 'contextmenu', function (e) {
             // pause queue
-            elementsProcessed = LIMIT_PROCESSED; // Ensure no more queued elements are processed
+            exp.pauseQueue(); // Ensure no more queued elements are processed
         });
 
         exp.processQueue();

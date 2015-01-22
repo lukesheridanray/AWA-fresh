@@ -11,7 +11,7 @@
 if (typeof String.prototype.trim !== 'function') {
   String.prototype.trim = function() {
     return this.replace(/^\s+|\s+$/g, ''); 
-  }
+  };
 }
 
 // Image experiment merged
@@ -63,6 +63,10 @@ if (typeof String.prototype.trim !== 'function') {
     $el.data("active", index);
     $el.find(".thumbs img").removeClass("active");
     $el.find(".thumbs img:eq(" + index + ")").addClass("active");
+    
+    if (!image) {
+      return;
+    }
     
     //Video type
     if (image.video) {
@@ -535,45 +539,66 @@ exp.init = function() {
 
     // Packaging modal
     // Preload packaging modal based on the type of the current plant
-    p_type_tmp = $("#addToBasket .size:eq(0)").text();
+    // 
+    // Determine plant_type
+      p_type_tmp = $("#addToBasket .size:eq(0)").text();
 
-    for (i in exp.vars.plant_types) {
-        if (exp.vars.plant_types.hasOwnProperty(i)) {
-            if (p_type_tmp.search(i) !== -1) {
-                plant_type = exp.vars.plant_types[i]; // determine plant type
-            }
-        }
-    }
+      for (i in exp.vars.plant_types) {
+          if (exp.vars.plant_types.hasOwnProperty(i)) {
+              if (p_type_tmp.search(i) !== -1) {
+                  plant_type = exp.vars.plant_types[i]; // determine plant type
+              }
+          }
+      }
 
-    if (window.location.href.indexOf('large-plant') !== -1
-      || $(".productClass").text().indexOf('Large Plant') !== -1)
-    {
-        plant_type = exp.vars.plant_types.large;
-    }
+      if (window.location.href.indexOf('large-plant') !== -1
+        || $(".productClass").text().indexOf('Large Plant') !== -1)
+      {
+          plant_type = exp.vars.plant_types.large;
+      }
 
     $.ajax({
         url: 'http://www.thompson-morgan.com/how-we-grow-and-send-your-plants',
         success: function (data) {
             var html = $(data);
 
-            html.find(".grid2, .footerPanel100").each(function () {
-                var image;
+            $("#addToBasket .size").each(function () {
 
-                if ($(this).children('h2').text() == plant_type) {
-                    image = $(this).find('img');
-                    image.removeAttr('width');
-                    image.removeAttr('height');
-                    exp.vars.packagingModal = $(this).html();
-                }
+              // Determine plant type again for this item
+              p_type_tmp = $(this).text();
+
+              for (i in exp.vars.plant_types) {
+                  if (exp.vars.plant_types.hasOwnProperty(i)) {
+                      if (p_type_tmp.search(i) !== -1) {
+                          plant_type = exp.vars.plant_types[i]; // determine plant type
+                      }
+                  }
+              }
+
+              if (window.location.href.indexOf('large-plant') !== -1
+                || $(".productClass").text().indexOf('Large Plant') !== -1)
+              {
+                  plant_type = exp.vars.plant_types.large;
+              }
+
+              html.find(".grid2, .footerPanel100").each(function () {
+                  var image;
+
+                  if ($(this).children('h2').text() == plant_type) {
+                      image = $(this).find('img');
+                      image.removeAttr('width');
+                      image.removeAttr('height');
+                      exp.vars.packagingModal = $(this).html();
+                  }
+              });
+
+              // Set up packaging modal, if applicable
+              $(this).append('<a href="#" class="hasTooltip'
+                  + ' modal-link packaging-info-link">what\'s this?</a>'
+                  + '<div class="hidden tooltip more-vertical-space pkg-modal">'
+                  + exp.vars.packagingModal + '</div>');
+
             });
-
-            // Set up packaging modal, if applicable
-            if (exp.vars.packagingModal != 'Loading...') {
-                $("#addToBasket .size").append('<a href="#" class="hasTooltip'
-                    + ' modal-link packaging-info-link">what\'s this?</a>'
-                    + '<div class="hidden tooltip more-vertical-space pkg-modal">'
-                    + exp.vars.packagingModal + '</div>');
-            }
 
             // Green light for tooltips
             modals_created = true;
