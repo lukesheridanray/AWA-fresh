@@ -31,7 +31,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('TTS Group Product Page Experiment - 0.8');
+exp.log('TTS Group Product Page Experiment - 0.10');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -47,7 +47,7 @@ if(exp.condition && !exp.condition.length) {
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
     '$product_code_row'  : $('#right_box .product_table tr:first-of-type'),
-    'product_code'       : $('.product_table tr:first-of-type th:nth-of-type(2)').length === 1 ? $('.product_table tr:first-of-type th:nth-of-type(2)').text() : false,
+    'product_code'       : $('.product_table tr').first().find('th:nth-of-type(2)').length === 1 ? $('.product_table tr').first().find('th:nth-of-type(2)').text().trim() : false,
     '$free_delivery_line': $("<p>", { text: 'FREE DELIVERY on all UK online orders.' }),
     '$small_description': $('#product_strapline'),
     'reviews_count_text': ' reviews - ',
@@ -306,6 +306,25 @@ if ($('#right_box .add_to_basket .buy_button').length === 0) {
 // Object containing functions, some helpful functions are included
 exp.func = {};
 
+exp.func.waitFor = function(condition, callback, timeout, keepAlive) {
+    timeout = timeout || 20000;
+    keepAlive = keepAlive || false;
+    var intervalTime = 50,
+        maxAttempts = timeout / intervalTime,
+        attempts = 0,
+        interval = setInterval(function() {
+            if (condition()) {
+                if (!keepAlive) {
+                    clearInterval(interval);
+                }
+                callback();
+            } else if (attempts > maxAttempts) {
+                clearInterval(interval);
+            }
+            attempts ++;
+        }, intervalTime);
+};
+
 // Reinitalize image thumbnail sliding.  Adapted from site's own code.
 exp.func.reInitImageThumbs = function(){
     var carouselImages = $("ul.carousel_images li").length;
@@ -378,6 +397,13 @@ exp.func.getHighestRatedReviewWithText = function(cb) {
 // Init function
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
 exp.init = function() {
+
+    // DO NOT RUN ON "Personalised Products" PAGES
+    // Check if "Personalised Products" is in the breadcrumbs, if so quit the experiment now.
+    if ($('.breadcrumbing').text().indexOf('Personalised Products') > 0) {
+        exp.log('We are on a personalised product page, which holds a strong dislike for this experiment. Terminating experiment.');
+        return;
+    }
 
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
@@ -574,6 +600,14 @@ exp.init = function() {
 
     // Move "People who looked at also looked at ..." to the right of the page
     $('#rr_placement_0').insertAfter('#right_box');
+
+    // Only show 3 products in the "People who also looked at ..." box
+    exp.func.waitFor(function(){
+        return $('#rr_placement_0 li').length > 0;
+    }, function(){
+        $('#rr_placement_0').find('li').hide();
+        $('#rr_placement_0').find('li').slice(0, 3).show();
+    });
 
 };
 
