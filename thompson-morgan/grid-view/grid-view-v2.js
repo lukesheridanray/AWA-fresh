@@ -9,7 +9,7 @@
 'use strict';
 if (typeof String.prototype.trim !== 'function') {
   String.prototype.trim = function() {
-    return this.replace(/^\s+|\s+$/g, ''); 
+    return this.replace(/^\s+|\s+$/g, '');
   };
 }
 
@@ -163,7 +163,10 @@ exp.css = '.resultSet + .resultSet {\
     cursor: pointer;\
 }\
 .load-more:hover { \
-    opacity: .9;\
+    /* Opacity, for best cross-browser support */ \
+    zoom: 1; \
+    filter: alpha(opacity=90); \
+    opacity: 0.9; \
 }\
 .icon-loading-more {\
     display: none;\
@@ -184,7 +187,10 @@ exp.css = '.resultSet + .resultSet {\
     border-color: green; \
 }\
 .loading .product-image {\
-    opacity: .6; \
+    /* Opacity, for best cross-browser support */ \
+    zoom: 1; \
+    filter: alpha(opacity=60); \
+    opacity: 0.6; \
 }\
 .button.basket { \
     background-color: #345e2e; \
@@ -199,7 +205,10 @@ exp.css = '.resultSet + .resultSet {\
     width: 113px; \
 } \
 .button.basket:hover { \
-    opacity: .9; \
+    /* Opacity, for best cross-browser support */ \
+    zoom: 1; \
+    filter: alpha(opacity=90); \
+    opacity: 0.9; \
 }\
 .qty {\
     width: 11px;\
@@ -303,8 +312,11 @@ exp.css = '.resultSet + .resultSet {\
   width: 100%;\
   height: 100%;\
   background-color: #000;\
-  opacity: 0.4;\
   z-index: 100000;\
+  /* Opacity, for best cross-browser support */ \
+  zoom: 1; \
+  filter: alpha(opacity=40); \
+  opacity: 0.4; \
 }';
 
 // Functions
@@ -362,7 +374,7 @@ exp.processQueue = function () {
     if (action) {
         action(function () {
             elementsProcessed += 1;
-            
+
             if (!async_queue.listing.length && !async_queue.product.length) {
                 //exp.log('processing ends here');
                 processingQueue = false;
@@ -473,7 +485,7 @@ exp.buildProductHTML = function (product) {
     productHTML += '</dl> \
         <span class="qty-heading">QTY</span>\
         <ul class="buying-options-listing">'
-    
+
     for (i = 0; i < buying_options_len; i += 1) {
         option = product.buying_options[i];
         productHTML += '<li class="buying-option-listing"> \
@@ -510,7 +522,7 @@ exp.addDetails = function (product) {
 
         for (i = 0; i < bullets_len; i += 1) {
             productDom += '<dt>' + product.bullets[i].title + '</dt>'
-            + '<dd>' + product.bullets[i].value + '</dd>';   
+            + '<dd>' + product.bullets[i].value + '</dd>';
         }
 
         if (bullets_len) {
@@ -593,7 +605,7 @@ exp.fetchDetails = function (product) {
                 if (b.title.substring(0,9) === 'Flowering') {
                     return -1;
                 }
-                
+
                 return 0;
             });
 
@@ -605,7 +617,7 @@ exp.fetchDetails = function (product) {
                 if (b.title.substring(0,6) === 'Sowing') {
                     return -1;
                 }
-                
+
                 return 0;
             });
 
@@ -614,7 +626,7 @@ exp.fetchDetails = function (product) {
                 img.src = product.image;
                 img.onload = exp.updateImage(product);
             }
-            
+
             product.ready();
 
             callback();
@@ -679,19 +691,19 @@ exp.processPage = function (resultsDom, pagenum) {
                 name:     optDom.find('.size').text().trim(),
                 promo:    optDom.find('.promo').length ? optDom.find('.promo').text().split('&')[0].trim() : '',
                 oldprice: optDom.find('.price strike').text(),
-                price:    optDom.find('.price').contents()[2].textContent.trim(),
+                price:    optDom.find('.price').contents()[2] ? $.trim(optDom.find('.price').contents()[2].textContent) : '',
                 skuCodes: optDom.find('input[name="skuCodes"]').val()
             });
 
             product.formAction = optDom.find('form').attr('action');
-            product.despatch   = optDom.find('.despatch').contents()[1].textContent.trim();
+            product.despatch   = optDom.find('.despatch').contents()[1] ? $.trim(optDom.find('.despatch').contents()[1].textContent) : '';
         });
 
         // Replace HTML
         prodDom.html(exp.buildProductHTML(product));
-        
+
         product_callbacks.push(exp.fetchDetails(product));
-            
+
         // Render incomplete product
     });
 
