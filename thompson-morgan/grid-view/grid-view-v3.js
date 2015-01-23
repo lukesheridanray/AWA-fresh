@@ -168,7 +168,10 @@ exp.css = '.resultSet + .resultSet {\
     cursor: pointer;\
 }\
 .load-more:hover { \
-    opacity: .9;\
+    /* Opacity, for best cross-browser support */ \
+    zoom: 1; \
+    filter: alpha(opacity=90); \
+    opacity: 0.9; \
 }\
 .icon-loading-more {\
     display: none;\
@@ -189,7 +192,10 @@ exp.css = '.resultSet + .resultSet {\
     border-color: green; \
 }\
 .loading .product-image {\
-    opacity: .6; \
+    /* Opacity, for best cross-browser support */ \
+    zoom: 1; \
+    filter: alpha(opacity=60); \
+    opacity: 0.6; \
 }\
 .button.basket { \
     background-color: #345e2e; \
@@ -204,7 +210,10 @@ exp.css = '.resultSet + .resultSet {\
     width: 113px; \
 } \
 .button.basket:hover { \
-    opacity: .9; \
+    /* Opacity, for best cross-browser support */ \
+    zoom: 1; \
+    filter: alpha(opacity=90); \
+    opacity: 0.9; \
 }\
 .qty {\
     width: 11px;\
@@ -299,8 +308,11 @@ exp.css = '.resultSet + .resultSet {\
   width: 100%;\
   height: 100%;\
   background-color: #000;\
-  opacity: 0.4;\
   z-index: 100000;\
+  /* Opacity, for best cross-browser support */ \
+  zoom: 1; \
+  filter: alpha(opacity=40); \
+  opacity: 0.4; \
 }\
 .hidden {\
   display: none; \
