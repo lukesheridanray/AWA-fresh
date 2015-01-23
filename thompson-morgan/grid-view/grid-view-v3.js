@@ -496,9 +496,9 @@ exp.buildProductHTML = function (product) {
 
     productHTML += '</ul> \
         <button class="basket button" data-action="' + product.formAction
-        + '">Quick View</button> \
-        <span class="despatch"><span>Despatch:</span> ' + product.despatch + '</span> \
-        </a>\
+        + '">Quick View</button>' +
+        (product.despatch ? '<span class="despatch"><span>Despatch:</span> ' + product.despatch + '</span>' : '')
+        + '</a>\
         <div class="hidden">\
             <div id="quickview-' + product.id + '"> \
                 Loading... \
@@ -692,12 +692,12 @@ exp.processPage = function (resultsDom, pagenum) {
                 name:     optDom.find('.size').text().trim(),
                 promo:    optDom.find('.promo').length ? optDom.find('.promo').text().split('&')[0].trim() : '',
                 oldprice: optDom.find('.price strike').text(),
-                price:    optDom.find('.price').contents()[2] ? $.trim(optDom.find('.price').contents()[2].textContent) : '',
+                price:    optDom.find('.price').contents()..text().trim(),
                 skuCodes: optDom.find('input[name="skuCodes"]').val()
             });
 
             product.formAction = optDom.find('form').attr('action');
-            product.despatch   = optDom.find('.despatch').contents()[1] ? $.trim(optDom.find('.despatch').contents()[1].textContent) : '';
+            product.despatch   = optDom.find('.despatch').contents().eq(1).text().trim();
         });
 
         // Replace HTML
