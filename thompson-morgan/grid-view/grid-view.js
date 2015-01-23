@@ -9,7 +9,7 @@
 'use strict';
 if (typeof String.prototype.trim !== 'function') {
   String.prototype.trim = function() {
-    return this.replace(/^\s+|\s+$/g, ''); 
+    return this.replace(/^\s+|\s+$/g, '');
   };
 }
 
@@ -308,7 +308,7 @@ exp.processQueue = function () {
     if (action) {
         action(function () {
             elementsProcessed += 1;
-            
+
             if (!async_queue.listing.length && !async_queue.product.length) {
                 //exp.log('processing ends here');
                 processingQueue = false;
@@ -368,7 +368,7 @@ exp.buildProductHTML = function (product) {
     productHTML += '</dl> \
         <span class="qty-heading">QTY</span>\
         <ul class="buying-options-listing">'
-    
+
     for (i = 0; i < buying_options_len; i += 1) {
         option = product.buying_options[i];
         productHTML += '<li class="buying-option-listing" data-sku="'
@@ -405,7 +405,7 @@ exp.addDetails = function (product) {
 
         for (i = 0; i < bullets_len; i += 1) {
             productDom += '<dt>' + product.bullets[i].title + '</dt>'
-            + '<dd>' + product.bullets[i].value + '</dd>';   
+            + '<dd>' + product.bullets[i].value + '</dd>';
         }
 
         if (bullets_len) {
@@ -483,7 +483,7 @@ exp.fetchDetails = function (product) {
                 if (b.title.substring(0,9) === 'Flowering') {
                     return -1;
                 }
-                
+
                 return 0;
             });
 
@@ -495,7 +495,7 @@ exp.fetchDetails = function (product) {
                 if (b.title.substring(0,6) === 'Sowing') {
                     return -1;
                 }
-                
+
                 return 0;
             });
 
@@ -504,7 +504,7 @@ exp.fetchDetails = function (product) {
                 img.src = product.image;
                 img.onload = exp.updateImage(product);
             }
-            
+
             product.ready();
 
             callback();
@@ -569,19 +569,19 @@ exp.processPage = function (resultsDom, pagenum) {
                 promo:    optDom.find('.promo').length ? optDom.find('.promo').text().split('&')[0].trim() : '',
                 action:   optDom.find('form').attr('action'),
                 oldprice: optDom.find('.price strike').text(),
-                price:    optDom.find('.price').contents()[2].textContent.trim(),
+                price:    optDom.find('.price').contents()[2] ? $.trim(optDom.find('.price').contents()[2].textContent) : '',
                 skuCodes: optDom.find('input[name="skuCodes"]'),
                 catCode:  optDom.find('input[name="categoryCode"]')
             });
 
-            product.despatch = optDom.find('.despatch').contents()[1].textContent.trim();
+            product.despatch = optDom.find('.despatch').contents()[1] ? $.trim(optDom.find('.despatch').contents()[1].textContent) : '';
         });
 
         // Replace HTML
         prodDom.html(exp.buildProductHTML(product));
-        
+
         product_callbacks.push(exp.fetchDetails(product));
-            
+
         // Render incomplete product
     });
 
