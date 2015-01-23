@@ -623,8 +623,8 @@ exp.fetchDetails = function (product) {
 
             if (product.image) {
                 var img = new Image();
-                img.src = product.image;
                 img.onload = exp.updateImage(product);
+                img.src = product.image;  // src has to be set after the onload event is set, otherwise there's a chance onload won't be fired
             }
 
             product.ready();
