@@ -6,11 +6,11 @@
 // JSHint flags
 // jshint multistr: true
 // jshint jquery: true
-// 
+//
 // Fixing IE - http://stackoverflow.com/questions/2308134/trim-in-javascript-not-working-in-ie
 if (typeof String.prototype.trim !== 'function') {
   String.prototype.trim = function() {
-    return this.replace(/^\s+|\s+$/g, ''); 
+    return this.replace(/^\s+|\s+$/g, '');
   };
 }
 
@@ -21,7 +21,7 @@ if (typeof String.prototype.trim !== 'function') {
     console.log('Large image tweak already applied, skipping...');
     return;
   }
-  
+
   //Extract image data
   var images = [];
   $(".product-alternative-images a").each(function() {
@@ -30,7 +30,7 @@ if (typeof String.prototype.trim !== 'function') {
       full: $(this).attr("href")
     });
   });
-  
+
   //Extract video
   if ($("#productDetailsThumbs .videos a").length) {
     var match = $("#productDetailsThumbs .videos a").attr("onclick").toString().match(/\/medias\/sys_tandm\/\d+.video.x-flv/);
@@ -39,7 +39,7 @@ if (typeof String.prototype.trim !== 'function') {
       video: match[0]
     });
   }
-  
+
   var html = [
     "<div class='t011'>",
       "<div class='main'>",
@@ -50,24 +50,24 @@ if (typeof String.prototype.trim !== 'function') {
       "<div class='thumbs'></div>",
     "</div>"
   ].join("");
-  
+
   var $el = $(html).insertAfter("#product-media");
-  
+
   if ($('#calendar-display').length) {
     $('.t011').append($('#calendar-display'));
   }
-  
+
   var showImage = function (index) {
     index = parseInt(index, 10);
     var image = images[index];
     $el.data("active", index);
     $el.find(".thumbs img").removeClass("active");
     $el.find(".thumbs img:eq(" + index + ")").addClass("active");
-    
+
     if (!image) {
       return;
     }
-    
+
     //Video type
     if (image.video) {
       $el.find(".main .video").addClass("show");
@@ -93,29 +93,29 @@ if (typeof String.prototype.trim !== 'function') {
         }
       });
     }
-    
+
     //normal image type
     else {
       $el.find(".main .video").removeClass("show");
       $el.find(".main img").attr("src", image.full).removeClass("hide");
     }
   };
-  
+
   //Build thumbs
   for (var i = 0; i < images.length; i++) {
     $el.find(".thumbs").append("<img src='" + images[i].thumb + "' data-index='" + i + "' />");
   }
-  
+
   //If there is only one image
   if (images.length === 1) {
     $el.find(".thumbs").hide();
   }
-  
+
   //Thumb click
   $el.find(".thumbs img").click(function () {
     showImage($(this).attr("data-index"));
   });
-  
+
   //Controls click
   if ($el.find(".thumbs img").length > 1) {
     $el.find("div.control").show();
@@ -136,13 +136,13 @@ if (typeof String.prototype.trim !== 'function') {
       }
     });
   }
-  
+
   //Show first image
   showImage(0);
 }(jQuery));
 
 // Our experiment
-// 
+//
 // Wrap the experiment code in an IIFE, this creates a local scope and allows us to
 // pass in jQuery to use as $. Other globals could be passed in if required.
 var exp = (function($) {
@@ -207,7 +207,7 @@ exp.vars = {
         we aim to give you healthy, long-lasting plants for continuous garden performance.</p> \
         <p>That’s why we confidently offer a unique Money Back “Triple” Guarantee \
         on every plant you buy.</p>',
-    
+
     packagingModal: 'Loading...', // Loaded by AJAX
 
     hardinessModal: '<h3>Hardiness</h3> \
@@ -458,7 +458,7 @@ exp.init = function() {
     plant_size.Diameter = $("#productCont").text().match(/(?:D|d)iameter:\s*((?:(?:U|u)p to )?[0-9.]+(?:cm)?\s*\(.*?\))/m);
     // Dimensions: 22cm x 14cm x 31.5cm
     plant_size.Dimensions = $("#productCont").text().match(/(?:D|d)imensions:\s*((?:(?:(?:U|u)p to )?[0-9.]+(?:cm)?\s*(?:\(.*?\))?\s?x?\s?){2,3})/m);
-    
+
     for (i in plant_size) {
         if (plant_size.hasOwnProperty(i)) {
             if (plant_size[i] instanceof Array && plant_size[i].length > 1) {
@@ -522,7 +522,7 @@ exp.init = function() {
     }
 
     // Set up tooltips
-    // 
+    //
     $('.stockInfo:eq(0)').addClass('stockInfo-first');
 
     // Why not sooner modal
@@ -539,7 +539,7 @@ exp.init = function() {
 
     // Packaging modal
     // Preload packaging modal based on the type of the current plant
-    // 
+    //
     // Determine plant_type
       p_type_tmp = $("#addToBasket .size:eq(0)").text();
 
@@ -592,12 +592,13 @@ exp.init = function() {
                   }
               });
 
-              // Set up packaging modal, if applicable
-              $(this).append('<a href="#" class="hasTooltip'
-                  + ' modal-link packaging-info-link">what\'s this?</a>'
-                  + '<div class="hidden tooltip more-vertical-space pkg-modal">'
-                  + exp.vars.packagingModal + '</div>');
-
+              if (exp.vars.packagingModal !== 'Loading...') {
+                // Set up packaging modal, if applicable
+                $(this).append('<a href="#" class="hasTooltip'
+                    + ' modal-link packaging-info-link">what\'s this?</a>'
+                    + '<div class="hidden tooltip more-vertical-space pkg-modal">'
+                    + exp.vars.packagingModal + '</div>');
+              }
             });
 
             // Green light for tooltips
@@ -612,9 +613,9 @@ exp.init = function() {
 
     // How packed and picked, plants only
     if ( ! window.location.href.match(/\/garden-supplies\//) && ! window.location.href.match(/-seeds\//)) {
-        
+
         $('.stockInfo:eq(0)').before('<div class="how-box">'
-            + '<span class="hasTooltip how-packed how-link">How plants are packed</span>' 
+            + '<span class="hasTooltip how-packed how-link">How plants are packed</span>'
             + '<div class="hidden tooltip"><h3>Unique packaging to protect your plants</h3>'
             + '<div class="image-box"><img alt="How plants are packed" src="'
             + (plant_type == 'Plug' || plant_type == 'Mini-plug' || plant_type == 'Jumbo' || plant_type == 'Postiplugs&reg;'
@@ -684,7 +685,7 @@ exp.init = function() {
     // Update surcharge
     if (exp.vars.surchargeSkus.indexOf(universal_variable.product.sku_code) !== -1) {
         // Delivery surcharge - remove that section as it is
-        
+
         $(".delivery-except-text").show();
         $(".delivery-table > tbody").append(exp.vars.surchargeTable);
     }
