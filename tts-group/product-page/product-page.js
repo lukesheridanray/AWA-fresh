@@ -31,7 +31,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('TTS Group Product Page Experiment - 0.10');
+exp.log('TTS Group Product Page Experiment - 0.11');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -63,6 +63,12 @@ exp.css = 'h1#product_title { \
 .AWA_product_code { \
     font-size: 16px; \
     margin-left: 1em; \
+} \
+.AWA_product_code.AWA_product_code_newline { \
+    margin-left: 0; \
+    display: block; \
+    margin-bottom: 0.5em; \
+    margin-top: -1em; \
 }';
 
 // Product prices
@@ -419,6 +425,13 @@ exp.init = function() {
         $product_code_span
     );
 
+    // If the title and product code are too wide to fit on a single line, make the product code sit on a new line.
+    var parent_width = $('h1#product_title').parent().width(),
+        title_and_code_width = $('h1#product_title').width() + $product_code_span.width();
+    if (title_and_code_width >= parent_width) {
+        $product_code_span.addClass('AWA_product_code_newline');
+    }
+
     // Move prices to new ow
     var $product_price_row = $('<div>', { 'class': 'AWA_product_price_row' });
     $product_price_row.append(
@@ -600,15 +613,6 @@ exp.init = function() {
 
     // Move "People who looked at also looked at ..." to the right of the page
     $('#rr_placement_0').insertAfter('#right_box');
-
-    // Only show 3 products in the "People who also looked at ..." box
-    exp.func.waitFor(function(){
-        return $('#rr_placement_0 li').length > 0;
-    }, function(){
-        $('#rr_placement_0').find('li').hide();
-        $('#rr_placement_0').find('li').slice(0, 3).show();
-    });
-
 };
 
 // Run the experiment
