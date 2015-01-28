@@ -856,10 +856,14 @@ exp.init = function() {
         $('#results > tbody').addClass('listing-page listing-page-1');
         exp.processPage($('#results > .listing-page-1'), 1);
 
-        // Updated wording for "displaying x of y products"
         var displaying = $('#facetResults .searchResults');
-        displaying.html('Displaying <strong id="displaying">24</strong> of '
-            + displaying.children('b').text()
+
+        // Updated wording for "displaying x of y products"
+        var displaying_max = parseInt(displaying.children('b').text(), 10),
+            displaying_min = displaying_max >= 24 ? 24 : displaying_max;
+
+        displaying.html('Displaying <strong id="displaying">'+ displaying_min +'</strong> of '
+            + displaying_max
             + ' products.');
 
         // No need for pagination
