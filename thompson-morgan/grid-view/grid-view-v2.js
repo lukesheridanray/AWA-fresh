@@ -500,9 +500,9 @@ exp.buildProductHTML = function (product) {
 
     productHTML += '</ul> \
         <button class="basket button" data-action="' + product.formAction
-        + '">Add to basket</button> \
-        <span class="despatch"><span>Despatch:</span> ' + product.despatch + '</span> \
-        <a href="' + product.url + '" class="more-info">Need more info? &gt;&gt;</a> \
+        + '">Add to basket</button>' +
+        (product.despatch ? '<span class="despatch"><span>Despatch:</span> ' + product.despatch + '</span>' : '')
+        + '<a href="' + product.url + '" class="more-info">Need more info? &gt;&gt;</a> \
         </div>';
 
     return productHTML;
@@ -691,12 +691,12 @@ exp.processPage = function (resultsDom, pagenum) {
                 name:     optDom.find('.size').text().trim(),
                 promo:    optDom.find('.promo').length ? optDom.find('.promo').text().split('&')[0].trim() : '',
                 oldprice: optDom.find('.price strike').text(),
-                price:    optDom.find('.price').contents()[2] ? $.trim(optDom.find('.price').contents()[2].textContent) : '',
+                price:    optDom.find('.price').contents().last().text().trim(),
                 skuCodes: optDom.find('input[name="skuCodes"]').val()
             });
 
             product.formAction = optDom.find('form').attr('action');
-            product.despatch   = optDom.find('.despatch').contents()[1] ? $.trim(optDom.find('.despatch').contents()[1].textContent) : '';
+            product.despatch   = optDom.find('.despatch').contents().eq(1).text().trim();
         });
 
         // Replace HTML

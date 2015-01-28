@@ -392,9 +392,9 @@ exp.buildProductHTML = function (product) {
     }
 
     productHTML += '</ul> \
-        <button class="basket button">Add to basket</button> \
-        <span class="despatch"><span>Despatch:</span> ' + product.despatch + '</span> \
-        <a href="' + product.url + '" class="more-info">Need more info? &gt;&gt;</a> \
+        <button class="basket button">Add to basket</button>' +
+        (product.despatch ? '<span class="despatch"><span>Despatch:</span> ' + product.despatch + '</span>' : '')
+        + '<a href="' + product.url + '" class="more-info">Need more info? &gt;&gt;</a> \
         </div>';
 
     return productHTML;
@@ -578,12 +578,12 @@ exp.processPage = function (resultsDom, pagenum) {
                 promo:    optDom.find('.promo').length ? optDom.find('.promo').text().split('&')[0].trim() : '',
                 action:   optDom.find('form').attr('action'),
                 oldprice: optDom.find('.price strike').text(),
-                price:    optDom.find('.price').contents()[2] ? $.trim(optDom.find('.price').contents()[2].textContent) : '',
+                price:    optDom.find('.price').contents().last().text().trim(),
                 skuCodes: optDom.find('input[name="skuCodes"]'),
                 catCode:  optDom.find('input[name="categoryCode"]')
             });
 
-            product.despatch = optDom.find('.despatch').contents()[1] ? $.trim(optDom.find('.despatch').contents()[1].textContent) : '';
+            product.despatch = optDom.find('.despatch').contents().eq(1).text().trim();
         });
 
         // Replace HTML
