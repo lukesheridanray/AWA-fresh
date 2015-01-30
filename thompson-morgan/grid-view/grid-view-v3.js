@@ -34,7 +34,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Grid View - v0.1');
+exp.log('Grid View - v0.2');
 
 /*
 // Condition
@@ -115,6 +115,9 @@ exp.css = '.resultSet + .resultSet {\
     display: block;\
     font-weight: bold;\
 }\
+.buying-option-listing-outofstock {\
+    line-height: 40px; \
+}\
 \
 .buying-option-name {\
     width: 130px; \
@@ -132,6 +135,16 @@ exp.css = '.resultSet + .resultSet {\
 .buying-option-price {\
     float: right;\
     clear: right;\
+}\
+.buying-option-outofstock {\
+    float: right; \
+    clear: right; \
+}\
+.buying-option-outofstock img {\
+    width: 100px; \
+}\
+.awa-clearfix {\
+    clear: both; \
 }\
 .product-features-listing {\
     margin-bottom: 10px;    \
@@ -480,18 +493,33 @@ exp.buildProductHTML = function (product) {
 
     productHTML += '</dl> \
         <span class="qty-heading">QTY</span>\
-        <ul class="buying-options-listing">'
+        <ul class="buying-options-listing">';
 
     for (i = 0; i < buying_options_len; i += 1) {
         option = product.buying_options[i];
-        productHTML += '<li class="buying-option-listing"> \
-                        <span class="buying-option-name">' + option.name + '</span> \
-                        <span class="buying-option-price">' + option.price + '</span> \
-                        <strike class="buying-option-oldprice">' + option.oldprice + '</strike> \
-                        <span class="buying-option-qty"><input type="text" class="qty" \
-                            size="1" value="0" data-sku="' + option.skuCodes + '" /></span> \
-                        <div class="promo">&nbsp;' + option.promo + '</div>\
-                    </li>';
+        if (option.in_stock) {
+            productHTML += '<li class="buying-option-listing"> \
+                            <span class="buying-option-name">' + option.name + '</span> \
+                            <span class="buying-option-price">' + option.price + '</span> \
+                            <strike class="buying-option-oldprice">' + option.oldprice + '</strike> \
+                            <span class="buying-option-qty"><input type="text" class="qty" \
+                                size="1" value="0" data-sku="' + option.skuCodes + '" /></span> \
+                            <div class="promo">' + option.promo + '</div>\
+                        </li>';
+        }
+        else {
+            productHTML += '<li class="buying-option-listing buying-option-listing-outofstock"> \
+                            <span class="buying-option-name">' + option.name + '</span> \
+                            </a> \
+                            <span class="buying-option-outofstock"> \
+                                <a href="http://www.thompson-morgan.com/dispatcher?addToEmailList='+ option.skuCodes +'"> \
+                                    <img src="http://media.thompson-morgan.com/medias/sys_tandm/8796117925918.gif"/> \
+                                </a> \
+                            </span> \
+                            <a class="colorbox" href="#quickview-' + product.id + '" data-product="' + product.id + '">\
+                            <div class="awa-clearfix"></div> \
+                        </li>';
+        }
     }
 
     productHTML += '</ul> \
@@ -692,8 +720,9 @@ exp.processPage = function (resultsDom, pagenum) {
                 name:     optDom.find('.size').text().trim(),
                 promo:    optDom.find('.promo').length ? optDom.find('.promo').text().split('&')[0].trim() : '',
                 oldprice: optDom.find('.price strike').text(),
-                price:    optDom.find('.price').contents()..text().trim(),
-                skuCodes: optDom.find('input[name="skuCodes"]').val()
+                price:    optDom.find('.price').contents().text().trim(),
+                skuCodes: optDom.find('input[name="skuCodes"]').val() || optDom.find('.basket.emailMe.prodPageBask a').attr('href').match(/addToEmailList=(.+)/)[1],
+                in_stock: optDom.find('img[alt="Out of stock"]').length === 0
             });
 
             product.formAction = optDom.find('form').attr('action');
