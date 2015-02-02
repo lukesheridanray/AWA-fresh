@@ -31,7 +31,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('TTS Group Product Page Experiment - 0.11');
+exp.log('TTS Group Product Page Experiment - 0.12');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -431,6 +431,9 @@ exp.init = function() {
     if (title_and_code_width >= parent_width) {
         $product_code_span.addClass('AWA_product_code_newline');
     }
+    else {
+        $product_code_span.removeClass('AWA_product_code_newline');
+    }
 
     // Move prices to new ow
     var $product_price_row = $('<div>', { 'class': 'AWA_product_price_row' });
@@ -546,6 +549,25 @@ exp.init = function() {
 
             $('#product_price').text(variantsAvailable[selectedProductId].price_ex_vat);
             $('#product_price_inc_vat').text(variantsAvailable[selectedProductId].price_inc_vat);
+
+            // Show product code, if there is one available.
+            if (variantsAvailable[selectedProductId].code) {
+                $product_code_span.text("Product Code: " + variantsAvailable[selectedProductId].code);
+            }
+            else {
+                $product_code_span.text("");
+            }
+
+            // If the title and product code are too wide to fit on a single line, make the product code sit on a new line.
+            var parent_width = $('h1#product_title').parent().width(),
+                title_and_code_width = $('h1#product_title').width() + $product_code_span.width();
+            if (title_and_code_width >= parent_width) {
+                $product_code_span.addClass('AWA_product_code_newline');
+            }
+            else {
+                $product_code_span.removeClass('AWA_product_code_newline');
+            }
+
         });
         $variantDropdown.trigger('change');
     }
