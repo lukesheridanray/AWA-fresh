@@ -914,3 +914,10 @@ return exp;
 // Close the IIFE, passing in jQuery and any other global variables as required
 // if jQuery is not already used on the site use optimizely.$ instead
 })(jQuery);
+
+// If a user accesses the page via their browser's 'back' button, reload the page - otherwise event handlers will be all whack.
+window.onpageshow = function(event) {
+    if (event.persisted) {
+        window.location.reload()
+    }
+};
