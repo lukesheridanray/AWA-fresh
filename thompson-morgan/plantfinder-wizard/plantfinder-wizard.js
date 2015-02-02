@@ -1,10 +1,3 @@
-/*
-
-need to preselect options or set default
-
-soil type radios?
-
-*/
 //
 // CGIT Optimizely Boilerplate - version 0.1.4
 //
@@ -315,23 +308,23 @@ exp.vars = {
                 <div class="pad_b_20 exp-pf-checkbox__wrapper exp-pf-checkbox__wrapper__colour"> \
                     <h2 class="pad_b_10">Flower Colour <em class="exp-optional">(optional)</em></h2> \
                     <input id="gps_floc_nopref" name="gps_floc_nopref" type="checkbox"> \
-                    <img id="gps_floc" title="Apricot" class="fcp1 " value="flowercolour:apricot" src="http://search.thompson-morgan.com/includes/images/fcp_apricot.png" /> \
-                    <img id="gps_floc" title="Brown" class="fcp1 " value="flowercolour:brown" src="http://search.thompson-morgan.com/includes/images/fcp_brown.png" /> \
-                    <img id="gps_floc" title="Grey" class="fcp1 " value="flowercolour:grey" src="http://search.thompson-morgan.com/includes/images/fcp_grey.png" /> \
-                    <img id="gps_floc" title="Mixed" class="fcp1 " value="flowercolour:mixed" src="http://search.thompson-morgan.com/includes/images/fcp_mixed.png" /> \
-                    <img id="gps_floc" title="Red" class="fcp1 " value="flowercolour:red" src="http://search.thompson-morgan.com/includes/images/fcp_red.png" /> \
-                    <img id="gps_floc" title="Pink" class="fcp1 " value="flowercolour:pink" src="http://search.thompson-morgan.com/includes/images/fcp_pink.png" /> \
-                    <img id="gps_floc" title="Orange" class="fcp1 " value="flowercolour:orange" src="http://search.thompson-morgan.com/includes/images/fcp_orange.png" /> \
-                    <img id="gps_floc" title="Yellow" class="fcp1 " value="flowercolour:yellow" src="http://search.thompson-morgan.com/includes/images/fcp_yellow.png" /> \
-                    <img id="gps_floc" title="Green" class="fcp1 " value="flowercolour:green" src="http://search.thompson-morgan.com/includes/images/fcp_green.png" /> \
-                    <img id="gps_floc" title="Blue" class="fcp1 " value="flowercolour:blue" src="http://search.thompson-morgan.com/includes/images/fcp_blue.png" /> \
-                    <img id="gps_floc" title="Purple" class="fcp1 " value="flowercolour:purple" src="http://search.thompson-morgan.com/includes/images/fcp_purple.png" /> \
-                    <img id="gps_floc" title="Mauve" class="fcp1 " value="flowercolour:mauve" src="http://search.thompson-morgan.com/includes/images/fcp_mauve.png" /> \
-                    <img id="gps_floc" title="Lilac" class="fcp1 " value="flowercolour:lilac" src="http://search.thompson-morgan.com/includes/images/fcp_lilac.png" /> \
-                    <img id="gps_floc" title="Silver" class="fcp1 " value="flowercolour:silver" src="http://search.thompson-morgan.com/includes/images/fcp_silver.png" /> \
-                    <img id="gps_floc" title="Black" class="fcp1 " value="flowercolour:black" src="http://search.thompson-morgan.com/includes/images/fcp_black.png" /> \
-                    <img id="gps_floc" title="Cream" class="fcp1 " value="flowercolour:cream" src="http://search.thompson-morgan.com/includes/images/fcp_cream.png" /> \
-                    <img id="gps_floc" title="White" class="fcp1 " value="flowercolour:white" src="http://search.thompson-morgan.com/includes/images/fcp_white.png" /> \
+                    <span title="Apricot" class="apricot fcp1 " value="flowercolour:apricot"></span> \
+                    <span title="Brown" class="brown fcp1 " value="flowercolour:brown"></span> \
+                    <span title="Grey" class="grey fcp1 " value="flowercolour:grey"></span> \
+                    <span title="Mixed" class="mixed fcp1 " value="flowercolour:mixed"></span> \
+                    <span title="Red" class="red fcp1 " value="flowercolour:red"></span> \
+                    <span title="Pink" class="pink fcp1 " value="flowercolour:pink"></span> \
+                    <span title="Orange" class="orange fcp1 " value="flowercolour:orange"></span> \
+                    <span title="Yellow" class="yellow fcp1 " value="flowercolour:yellow"></span> \
+                    <span title="Green" class="green fcp1 " value="flowercolour:green"></span> \
+                    <span title="Blue" class="blue fcp1 " value="flowercolour:blue"></span> \
+                    <span title="Purple" class="purple fcp1 " value="flowercolour:purple"></span> \
+                    <span title="Mauve" class="mauve fcp1 " value="flowercolour:mauve"></span> \
+                    <span title="Lilac" class="lilac fcp1 " value="flowercolour:lilac"></span> \
+                    <span title="Silver" class="silver fcp1 " value="flowercolour:silver"></span> \
+                    <span title="Black" class="black fcp1 " value="flowercolour:black"></span> \
+                    <span title="Cream" class="cream fcp1 " value="flowercolour:cream"></span> \
+                    <span title="White" class="white fcp1 " value="flowercolour:white"></span> \
                 </div> \
                 <div class="exp-pf-checkbox__wrapper__middle exp-pf-checkbox__wrapper__middle__colour"> \
                     <span>OR</span> \
@@ -339,18 +332,18 @@ exp.vars = {
                 <div class="pad_b_20 exp-pf-checkbox__wrapper exp-pf-checkbox__wrapper__colour"> \
                     <h2 class="pad_b_10">Foliage Colour <em class="exp-optional">(optional)</em></h2> \
                     <input id="gps_folc_nopref" name="gps_folc_nopref" type="checkbox"> \
-                    <img id="gps_folc" title="Brown" class="fcp2 " value="foliagecolour:brown" src="http://search.thompson-morgan.com/includes/images/fcp_brown.png"> \
-                    <img id="gps_folc" title="Variegated" class="fcp2 " value="foliagecolour:variegated" src="http://search.thompson-morgan.com/includes/images/fcp_variegated.png"> \
-                    <img id="gps_folc" title="Mixed" class="fcp2 " value="foliagecolour:mixed" src="http://search.thompson-morgan.com/includes/images/fcp_mixed.png"> \
-                    <img id="gps_folc" title="Red" class="fcp2 " value="foliagecolour:red" src="http://search.thompson-morgan.com/includes/images/fcp_red.png"> \
-                    <img id="gps_folc" title="Pink" class="fcp2 " value="foliagecolour:pink" src="http://search.thompson-morgan.com/includes/images/fcp_pink.png"> \
-                    <img id="gps_folc" title="Orange" class="fcp2 " value="foliagecolour:orange" src="http://search.thompson-morgan.com/includes/images/fcp_orange.png"> \
-                    <img id="gps_folc" title="Yellow" class="fcp2 " value="foliagecolour:yellow" src="http://search.thompson-morgan.com/includes/images/fcp_yellow.png"> \
-                    <img id="gps_folc" title="Green" class="fcp2 " value="foliagecolour:green" src="http://search.thompson-morgan.com/includes/images/fcp_green.png"> \
-                    <img id="gps_folc" title="Blue" class="fcp2 " value="foliagecolour:blue" src="http://search.thompson-morgan.com/includes/images/fcp_blue.png"> \
-                    <img id="gps_folc" title="Purple" class="fcp2 " value="foliagecolour:purple" src="http://search.thompson-morgan.com/includes/images/fcp_purple.png"> \
-                    <img id="gps_folc" title="Silver" class="fcp2 " value="foliagecolour:silver" src="http://search.thompson-morgan.com/includes/images/fcp_silver.png"> \
-                    <img id="gps_folc" title="Black" class="fcp2 " value="foliagecolour:black" src="http://search.thompson-morgan.com/includes/images/fcp_black.png"> \
+                    <span title="Brown" class="brown fcp2 " value="foliagecolour:brown"></span> \
+                    <span title="Variegated" class="variegated fcp2 " value="foliagecolour:variegated"></span> \
+                    <span title="Mixed" class="mixed fcp2 " value="foliagecolour:mixed"></span> \
+                    <span title="Red" class="red fcp2 " value="foliagecolour:red"></span> \
+                    <span title="Pink" class="pink fcp2 " value="foliagecolour:pink"></span> \
+                    <span title="Orange" class="orange fcp2 " value="foliagecolour:orange"></span> \
+                    <span title="Yellow" class="yellow fcp2 " value="foliagecolour:yellow"></span> \
+                    <span title="Green" class="green fcp2 " value="foliagecolour:green"></span> \
+                    <span title="Blue" class="blue fcp2 " value="foliagecolour:blue"></span> \
+                    <span title="Purple" class="purple fcp2 " value="foliagecolour:purple"></span> \
+                    <span title="Silver" class="silver fcp2 " value="foliagecolour:silver"></span> \
+                    <span title="Black" class="black fcp2 " value="foliagecolour:black"></span> \
                 </div> \
             </div> \
             <div class="exp-pf-range"> \
@@ -370,12 +363,15 @@ exp.vars = {
         </fieldset> \
     </div> \
 </div> \
-<a href="#" class="exp-pf-button">Find Plants</a>'
+<a href="#" class="exp-pf-button">Find Plants</a><span class="exp-pf-search-lookahead">&nbsp;</span>'
 };
 
 // Styles
 
-exp.siteCSS = '';
+exp.siteCSS = ' \
+#sli_plant_finder { \
+    height: 900px !important; \
+}';
 
 exp.frameCSS = ' \
 .wrapper { \
@@ -445,15 +441,39 @@ exp.frameCSS = ' \
 } \
 .exp-pf-button { \
     background-image: url("data:image/gif;base64,R0lGODlhEwAYANUAACdOE9DYy2qFXDFWHv///6S0m1BvP+fs5ZOmia28pbnFsoidfe/y7eHm3oCXdGF+Uz9hLc3WyPj5+CtRGJ+xlrPBrDpdJ46jhPH08OPo4FZ0Rs7ezoSaeezv6nKLZJmrj2SAVrXDrr7KuC9UG0JkMZGlh+bq41h2STJXH9bezpStjAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAHAP8ALAAAAAATABgAAAaeQE/CYQEYj8hkgXGonJLQ45LAiBCjyg6BIGkUThOssaDdEjoBzkBMNm8lJoUB23ZvMRFOMWt3NyoPYVJlfXcBCyiDhXYZCWAAdYtmGAEXFgmEkmYdBZiadpwFB5+GHyQUJqQZCgJrqJqUFxBHr4smIiBJtXaUC3tIu28NCQ8jUcEMAQizWLVdISCCzVpVsmJHHwwMChrXSCAJJb/eAEEAOw=="); \
-    background-position: 0 0; \
     background-repeat: no-repeat; \
     background-color: #274E13; \
+    background-position: 15px 7px; \
+    color: #fff; \
+    font-weight: bold; \
+    margin: 20px auto 10px auto !important; \
+    width: 95px; \
+    padding: 10px 10px 10px 50px; \
+    text-decoration: none; \
+    border-radius: 4px; \
+    display: none; \
+} \
+.exp-pf-button.js-show { \
+    display: block !important; \
+} \
+.exp-pf-search-lookahead { \
+    text-align: center; \
+    display: block; \
+    font-size: 0.7em; \
+    margin: 0 0 5px 0; \
+    display: none; \
+} \
+.exp-pf-search-lookahead.js-show { \
+    display: block !important; \
 } \
 .gps .exp-pf-radio__wrapper { \
     width: 100% !important; \
     font-size: 12px; \
     overflow: auto; \
     padding: 10px 0 0 0; \
+} \
+.exp-pf-radio { \
+    padding-top: 10px; \
 } \
 .exp-pf-radio__wrapper span { \
     width: 16%; \
@@ -471,15 +491,18 @@ exp.frameCSS = ' \
     padding: 10px 0 0 0; \
 } \
 .gps .exp-pf-checkbox__wrapper__middle { \
-    width: 185px !important; \
+    /*width: 185px !important;*/ \
+    height: 240px; \
     float: left; \
     position: relative; \
-    border-left: 1px solid #000; \
+    border-left: 1px solid #CDCECC; \
     left: 92px; \
+    top: 20px; \
 } \
 .gps .exp-pf-checkbox__wrapper__middle span { \
     position: relative; \
     left: -12px; \
+    top: 50%; \
     font-weight: bold; \
     font-size: 16px; \
 } \
@@ -504,10 +527,19 @@ exp.frameCSS = ' \
 .exp-pf-range { \
     clear: both; \
     overflow: auto; \
+    padding: 20px 0 0 0; \
 } \
-.exp-pf-range__wrapper { \
-    width: 50%; \
+.sli_custom_slider { \
+    width: 300px !important; \
+    margin-right: 10px !important; \
+} \
+.gps .pad_b_20.exp-pf-range__wrapper { \
+    width: 50% !important; \
     float: left; \
+} \
+.exp-pf-range__wrapper h2 { \
+    clear: both !important; \
+    display: block !important; \
 } \
 .gps .pad_b_20.exp-pf-checkbox__wrapper__colour input { \
     display: none; \
@@ -520,20 +552,81 @@ exp.frameCSS = ' \
     width: 45% !important; \
 } \
 .gps .exp-pf-checkbox__wrapper__middle__colour { \
-    width: 93px !important; \
+   /* width: 93px !important; */ \
     left: 46px !important; \
+    height: 310px; \
 } \
+.gps .fcp1, .gps .fcp2 { \
+    border: 2px solid #ccc; \
+    width: 55px; \
+    height: 55px; \
+    margin: 10px 9px 0 10px; \
+    padding: 0 !important; \
+    position: relative; \
+} \
+.gps .fcp1.selected, .gps .fcp2.selected { \
+    border: 2px solid #fff; \
+} \
+.gps .fcp1.selected:before, .gps .fcp2.selected:before { \
+    content: ""; \
+    position: absolute; \
+    top: 18px; \
+    left: 16px; \
+    display: block; \
+    width: 24px; \
+    height: 19px; \
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAATBAMAAAB4ntAIAAAAA3NCSVQICAjb4U/gAAAAFVBMVEX///////////////////////////9nSIHRAAAAB3RSTlMAETNmzO7/EGgPJAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwMi8wMi8xNUo6+wwAAAAYdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3Jrc0+zH04AAABgSURBVAiZTc7BDYAwCAXQH13AOIGX3nvy3oMLkOgCbf/+I2gtLXAB8iAAjAhxlliebE0gowGZHbA6oABrGnAAZ9kMyGRAll0BLV8K/wQV+q7CIHH3FDqJ+3FCowkf3QovAbwkmQrJtmwAAAAASUVORK5CYII="); \
+} \
+.fcp1.apricot,.fcp2.apricot { background-color: #FFC15C; } \
+.fcp1.brown,.fcp2.brown{ background-color: #7B472F; } \
+.fcp1.grey,.fcp2.grey{ background-color: #ccc; } \
+.fcp1.mixed,.fcp2.mixed{ background-image: url("data:image/jpg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAICAgICAgICAgICAgICAwQDAgIDBAUEBAQEBAUGBQUFBQUFBgYHBwgHBwYJCQoKCQkMDAwMDAwMDAwMDAwMDAz/2wBDAQMDAwUEBQkGBgkNCwkLDQ8ODg4ODw8MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCAA3ADcDAREAAhEBAxEB/8QAGwAAAgMBAQEAAAAAAAAAAAAABgcEBQgJAgP/xAAoEAABAwQCAQMEAwAAAAAAAAABAAIDBAUREgYhMQciURMUFZEjYXH/xAAbAQACAwEBAQAAAAAAAAAAAAAFBgQHCAMJAv/EACURAAEEAgICAgMBAQAAAAAAAAABAgMEBRESIQYTBzEUIkEjUf/aAAwDAQACEQMRAD8AyfSwxhnS+JWGpKke0LBjIuihFhNB6tU5HuZsRZ15S/e6QasVQTkQqRrH1Aal5Z1GixQa1gwqWGEMa1cnzifPSRXbCOlo4SO1BksEJ8CIWMluiLQcdKJ7wfYiRDNtLXgMxlaPsVFRBYxlgsWVOfBS7agVCwKHBxI3Jz8JWvM6HCmxqEi3REzbhKNj9QrPpWjBoIXuIJCDSz6F6eNocW+hll166QmS5oBWdIE0lucI24blR0ui9beYRpnyAY7W8ZsY1zSpaGXRoQUcrsjKU8hiR3x+eRFTsKKfEjesZ+EgZTHuailk4nLNl12F1htkszwGxuKq3Ju9aqMtmyiN+x02Xi00gaTE7H+JIuXkQU7mTRP6M23cXeA3+I/pLc98XZ8iX1Tx1zImew/pQ2X9qBbN9DmxRWp72j2r1L/H2hmCLyJsf2oXUHFamYjWMoVZp7CDPO4IPtw0+M+mNdXzxbRkR5GxSZmacTI15BKp8wMgX9HGy+CejNhfTRbPjNRjtv8Aax/8j5Nakq8PosDH/K65Butjaj9LoaLqOJpAVITeSK9ewg7yVZP6Sxw0QdfSAUF2Y5HNcvyKy72ARRs9mF2rXdqR5L/I54WfiNOIw5zAvYz3sa083ch5daVelGtxzikc8rGsi9vzhAr+SZGgJr5a5ck1tR1inpLDb3BrWCXT4VL+U5lz9ohYdD/Bm3r2VfDeU1UN2c76h028ZWb/ADColpF2PPjWc4SdKa+s97ZXU8byWk4Cztk8asT1L1oX/cxF2X+1M8DbVLz4XoFWTqUV8o6SWOPGuVJqOkYpI/JOblgo/uA0HpuV66yZVUT7MEzYX2OHTbHU1spw5oGwHlKeSyTnBetjGVm9IDt7ub6lsjiTjHSrjKycjhZlciApxqoLa9wJ8uVb5eHminfA23e7RpnjHIDTlsT3HVVRl8Rz7L7weUVumqMf831kP8pRXE9/Q+xXCjvF7e1rC2QrvBiW/wDCT+VsxBZLoyKL2tXoDLZVTMrq6BP+cLm64PaB3JlU4Or7IlXXtfDjVK13sH3KO2kC1VDIakPASxah2hDxlP1y7GpR3cMDHhp6SpZoopatHpEUMKfkpcxoLSlybFpscKttdHxuHIG6N2YVHTHogTZZU//Z"); } \
+.fcp1.red,.fcp2.red { background-color: #f00; } \
+.fcp1.pink,.fcp2.pink{ background-color: #FF94CB; } \
+.fcp1.orange,.fcp2.orange{ background-color: #FE7F0E; } \
+.fcp1.yellow,.fcp2.yellow{ background-color: #FFFF2F; } \
+.fcp1.green,.fcp2.green{ background-color: #009900; } \
+.fcp1.blue,.fcp2.blue{ background-color: #0066ff; } \
+.fcp1.purple,.fcp2.purple{ background-color: #9933CC; } \
+.fcp1.mauve,.fcp2.mauve { background-color: #CFAAD5; } \
+.fcp1.lilac,.fcp2.lilac{ background-color: #BDB6E0; } \
+.fcp1.silver,.fcp2.silver{ background-color: #ccc; } \
+.fcp1.black,.fcp2.black{ background-color: #000; } \
+.fcp1.cream,.fcp2.cream{ background-color: #FCFAE3; } \
+.fcp1.white,.fcp2.white{ background-color: #fff; } \
+.fcp1.variegated,.fcp2.variegated{ background-image: url("data:image/gif;base64,R0lGODlhNwA3AJEAAFiBJf///8DQrQAAACH5BAAHAP8ALAAAAAA3ADcAAAKfVI6py+0OzJu0LhCt3gxnDmreF5bQKJlqMmLpqrYuvMozXdo3zuk7b/H9gBPhkNgwHpEK5ZJ5cD6Z0imxauVhs7Qtt+YlUcPiK7msPaO76jW4/WK33bn5N2i/U/KeeJ1PJwKolzRIeGF4yJKoGMXY+NgHEim5QVmJdxnYpHnXifnwCVooulk6ynlKp4rqyLr2iho7Ogtai3lbmSu521cAADs="); } \
 /* */';
 
 // Functions
 // Object containing functions, some helpful functions are included
 exp.func = {};
 
+exp.func.searchLookAhead = function() {
+    var $resultHolder = $('.exp-pf-search-lookahead');
+    var searchURL = exp.func.doSearch('return_url');
+    $resultHolder.html('. . .');
+    $.ajax({
+        url: searchURL,
+        type: 'GET',
+        success: function(resp) {
+            var $resp = $(resp);
+            var $resultsDiv = $resp.find('#sli_bct div:eq(0)');
+            if( $resultsDiv.length === 1 ) {
+                $resultHolder.html( $resultsDiv.html().match(/(of )([0-9]+)( S)/)[2] + ' plants match your criteria');
+            } else {
+                $resultHolder.html( 'No plants match your criteria');
+            }
+        }
+    });
+};
+
 // open accordion
 exp.func.accordionOpen = function() {
     var _this = $(this);
     _this.hide(50);
     _this.next('.exp-pf-accordion__content').show(50);
+    $('.exp-pf-button').addClass('js-show');
+    $('.exp-pf-search-lookahead').addClass('js-show');
 };
 
 // function to set the options as last searched
@@ -548,9 +641,8 @@ exp.func.setLastSearch = function() {
         $('.exp-pf-accordion input[value="'+val+'"]').prop('checked',true);
     }
     function checkColours(elem) {
-        elem.addClass('selected');
-        console.log(elem);
-        exp.func.selectColour( elem );
+        //elem.addClass('selected');
+        exp.func.selectColour( false, elem );
     }
     // Get radio vals
     $('table input:radio:checked').each( function(){
@@ -573,7 +665,7 @@ exp.func.setLastSearch = function() {
         checkCheckboxes($("select#gps_if").attr('name'), 'idealfor:'+$("select#gps_if").val());
     }
     // get checkbox vals
-/*    $('table input[name=gps_gi]').each(function(){
+    $('table input[name=gps_gi]').each(function(){
         var $this = $(this);
         var val = $this.val();
         var name = $this.attr('name');
@@ -581,7 +673,7 @@ exp.func.setLastSearch = function() {
             checkCheckboxes(name, val);
         }
     });
-*/
+
     // get ideal for checkboxes
     if( idealForSearch !== null ) {
         $.each(idealForSearch, function(index, val) {
@@ -617,24 +709,26 @@ exp.func.updateRangePositions = function() {
     if( sowingmonthrange !== undefined ) {
         var s_pos = sowingmonthrange.match(/([0-9]+)/g);
         sowingmonth.update({ selection:[s_pos[0], s_pos[1]] });
+        updatesowingmonthLabel();
     }
     if( floweringmonthrange !== undefined ) {
         var f_pos = floweringmonthrange.match(/([0-9]+)/g);
         floweringmonth.update({ selection:[f_pos[0], f_pos[1]] });
+        updatefloweringmonthLabel();
     }
 };
 
 // function to do the search
 // adapted from original page
-exp.func.doSearch = function(){
-
+exp.func.doSearch = function(type){
+    type = type || false;
     var options = new Array();
     var reg = new RegExp(/subcat:(.*?)\s/i);
     var subcat = reg.exec(current_af);
     
     if(subcat){
         options.push("subcat:"+subcat[1]);
-    } 
+    }
 
 /*
     if($("#gps_ac").val()){options.push("acidity:"+$("#gps_ac").val())}
@@ -718,28 +812,30 @@ exp.func.doSearch = function(){
 
 //    if(heightrange && heightrange != "height:[0cm,900cm]"){options.push(heightrange);}
 //    if(spreadrange){options.push(spreadrange);}
-    if(exp.vars.sowingmonthrange){options.push(exp.vars.sowingmonthrange);}
+    if(sowingmonthrange){options.push(sowingmonthrange);}
 //    if(harvestperiodrange){options.push(harvestperiodrange);}
-    if(exp.vars.floweringmonthrange){options.push(exp.vars.floweringmonthrange);}
+    if(floweringmonthrange){options.push(floweringmonthrange);}
 
-    var new_url = "http://search.thompson-morgan.com/search?w=*&ts=plantfinder&af=tab:products";
+    var new_url = "http://"+window.location.hostname+"/search?w=*&ts=plantfinder&af=tab:products";
     
     for(var i=options.length-1; i>=0; i--) {
         var value = options[i];
         new_url = new_url + "%20" +value;
     }
-    console.log(new_url);
-    window.parent.location.href = new_url;
-    
-    return false;
+    if( type === 'return_url' ) {
+        return new_url;
+    } else {
+        window.parent.location.href = new_url;
+        return false;
+    }
 
 };
 
-exp.func.selectColour = function( elem ) {
+exp.func.selectColour = function( ev, elem ) {
     var _this = elem || $(this);
-    var areg = new RegExp(/fcp_([^\.]+)/i);
-    var filename = _this.attr('src').match(areg);
-    var file_name = filename[1];
+//    var areg = new RegExp(/fcp_([^\.]+)/i);
+//    var filename = _this.attr('src').match(areg);
+//    var file_name = filename[1];
     _this.toggleClass('selected');
     if (_this.hasClass('fcp2')) {
         $('#gps_folc_nopref').removeAttr('checked');
@@ -747,11 +843,11 @@ exp.func.selectColour = function( elem ) {
     if (_this.hasClass('fcp1')) {
         $('#gps_floc_nopref').removeAttr('checked');
     }
-    if (file_name.toLowerCase().indexOf('selected') >= 0) {
-        _this.attr('src', 'http://thompson-morgan.resultspage.com/includes/images/fcp_' + file_name.replace('selected_', '') + '.png');
-    } else {
-        _this.attr('src', 'http://thompson-morgan.resultspage.com/includes/images/fcp_selected_' + file_name + '.png');
-    }
+//    if (file_name.toLowerCase().indexOf('selected') >= 0) {
+//        _this.attr('src', 'http://thompson-morgan.resultspage.com/includes/images/fcp_' + file_name.replace('selected_', '') + '.png');
+//    } else {
+//        _this.attr('src', 'http://thompson-morgan.resultspage.com/includes/images/fcp_selected_' + file_name + '.png');
+//    }
 };
 
 // open up the more info dialog
@@ -791,7 +887,7 @@ exp.func.moreInfoPopUp = function() {
 };
 
 exp.func.initSliders = function(){
-    var updatefloweringmonthLabel = function() {    
+    window.updatefloweringmonthLabel = function() {    
     document.getElementById('slider-floweringmonth-low').innerHTML = "" + months[floweringmonth.format(floweringmonth.selection()[0])];
     document.getElementById('slider-floweringmonth-high').innerHTML = "" + months[floweringmonth.format(floweringmonth.selection()[1])];
 if((1 != floweringmonth.selection()[0]) || (12 != floweringmonth.selection()[1]) ){
@@ -838,7 +934,7 @@ window.floweringmonth = new SLI.Slider('slider-floweringmonth', {
 });
 updatefloweringmonthLabel();
 
-var updatesowingmonthLabel = function() {   
+window.updatesowingmonthLabel = function() {   
     document.getElementById('slider-sowingmonth-low').innerHTML = "" + months[sowingmonth.format(sowingmonth.selection()[0])];
     document.getElementById('slider-sowingmonth-high').innerHTML = "" + months[sowingmonth.format(sowingmonth.selection()[1])];
 if((1 != sowingmonth.selection()[0]) || (12 != sowingmonth.selection()[1]) ){
@@ -864,10 +960,10 @@ window.sowingmonth = new SLI.Slider('slider-sowingmonth', {
             document.getElementById('slider-sowingmonth-high').innerHTML = "" + months[sowingmonth.format(sowingmonth.selection()[1])];
       }
       , change: function(data) {
-            var rangeIsEmpty = (data.counts[0] === 0);            
+            var rangeIsEmpty = (data.counts[0] === 0);
             var rangeIsDifferent = (data.selection[0] !== 1 || data.selection[1] !== 12);
             var backToOriginalPositions = (data.selection[0] === 1) && (data.selection[1] === 12);
-            if (rangeIsDifferent && !rangeIsEmpty) {
+            if (!rangeIsEmpty) {
                 !!jQuery.scrollTo && jQuery.scrollTo(0,800);
                 if (backToOriginalPositions) {
                 //do nothing
@@ -884,6 +980,13 @@ window.sowingmonth = new SLI.Slider('slider-sowingmonth', {
 });
 updatesowingmonthLabel();
 
+};
+
+exp.func.iframeHeight = function() {
+    var height = '900px';
+    var $frame = $('#sli_plant_finder');
+    $frame.parent('div').css({'height':'auto'});
+    $frame.css({'height':height});
 };
 
 // This function waits till a condition returns true
@@ -928,6 +1031,25 @@ exp.init = function() {
         // append styles to head
         $('head').append('<style type="text/css">'+this.siteCSS+'</style>');
 
+        // check for error message and customize
+        if( $('.sli_plantfinder_noresults').length === 1 ) {
+            $('.sli_plantfinder_noresults').addClass('exp-modal-error').html(
+                '<p>Sorry, this time we\'re not able to offer you any plants which \
+                 exactly match all your requirements. Please try again, choosing \
+                 different options.</p> \
+                 <p>For the best results, use fewer filters.</p> \
+                 <a href="#" class="exp-modal-error__button js-close-modal">Select another option</a> \
+                 <a href="#" class="exp-modal-error__cross js-close-modal">x</a>'
+            );
+            $('body').append('<div class="exp-modal-error__bg" />');
+        }
+
+        //adjust iframe height
+        exp.func.iframeHeight();
+
+        // scroll to search area
+        $(window).scrollTop(200);
+
     } else if ( this.vars.page === 'frame' ) {
 
         // append styles to head
@@ -960,6 +1082,14 @@ exp.init = function() {
 
         // attach handlers to colour options
         $('.fcp1,.fcp2').bind('click', exp.func.selectColour );
+
+        // attach listener for search look ahead function
+        $('.exp-pf-accordion__content').bind( 'mouseup', function(){
+            setTimeout(exp.func.searchLookAhead, 500);
+        });
+
+        // do an initial search ahead
+        exp.func.searchLookAhead();
 
     }
 
