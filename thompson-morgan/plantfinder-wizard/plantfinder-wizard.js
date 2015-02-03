@@ -371,7 +371,56 @@ exp.vars = {
 exp.siteCSS = ' \
 #sli_plant_finder { \
     height: 900px !important; \
-}';
+} \
+.exp-modal-error__bg { \
+    position: absolute; \
+    top: 0; \
+    left: 0; \
+    width: 100%; \
+    z-index: 50; \
+    background: rgba(50,50,50,0.5); \
+} \
+.exp-modal-error { \
+    z-index: 99; \
+    width: 40%; \
+    position: absolute; \
+    top: 300px; \
+    left: 30%; \
+    background: #fff; \
+    border-radius: 8px; \
+    padding: 15px 0; \
+} \
+.exp-modal-error p { \
+    padding: 10px 80px 0 40px; \
+} \
+.exp-modal-error__button { \
+    display: block; \
+    width: 160px; \
+    text-align: center; \
+    margin: 15px auto 0 auto; \
+    background: #ddd; \
+    border-radius: 8px; \
+    padding: 5px 0; \
+    border: 1px solid #ccc; \
+} \
+.exp-modal-error__button:hover { \
+    background: #eee; \
+} \
+.exp-modal-error__cross { \
+    position: absolute; \
+    top: 5px; \
+    right: 5px; \
+    background: #bbb; \
+    width: 19px; \
+    height: 19px; \
+    line-height: 16px; \
+    border-radius: 19px; \
+    text-align: center; \
+    font-weight: bold; \
+    color: #fff !important; \
+    font-size: 16px; \
+} \
+';
 
 exp.frameCSS = ' \
 .wrapper { \
@@ -627,6 +676,9 @@ exp.func.accordionOpen = function() {
     _this.next('.exp-pf-accordion__content').show(50);
     $('.exp-pf-button').addClass('js-show');
     $('.exp-pf-search-lookahead').addClass('js-show');
+
+    //adjust iframe height
+    exp.func.iframeHeight( parent.$('#sli_plant_finder'), $(document).height() );
 };
 
 // function to set the options as last searched
@@ -982,44 +1034,14 @@ updatesowingmonthLabel();
 
 };
 
-exp.func.iframeHeight = function() {
-    var height = '900px';
-    var $frame = $('#sli_plant_finder');
-    $frame.parent('div').css({'height':'auto'});
-    $frame.css({'height':height});
+exp.func.iframeHeight = function( $elem, height ) {
+    $elem.parent('div').css({'height':'auto'});
+    $elem.css({'height':height + 'px'});
 };
 
-// This function waits till a condition returns true
-exp.func.waitFor = function(condition, callback, timeout, keepAlive) {
-    timeout = timeout || 20000;
-    keepAlive = keepAlive || false;
-    var intervalTime = 50,
-        maxAttempts = timeout / intervalTime,
-        attempts = 0,
-        interval = setInterval(function() {
-            if (condition()) {
-                if (!keepAlive) {
-                    clearInterval(interval);
-                }
-                callback();
-            } else if (attempts > maxAttempts) {
-                clearInterval(interval);
-            }
-            attempts ++;
-        }, intervalTime);
-};
-
-// This function allows you to always round a number 'up', 'down', or normally, returns a string
-exp.func.roundNum = function(number, decimals, direction) {
-    decimals = decimals || 0;
-    var factor = Math.pow(10,decimals);
-    var base;
-    if( direction === 'up') {
-        base = Math.ceil(number*factor);
-    } else if( direction === 'down') {
-        base = Math.floor(number*factor);
-    }
-    return direction ? (base/factor).toFixed(decimals) : number.toFixed(decimals);
+exp.func.closeModal = function() {
+    $('.exp-modal-error,.exp-modal-error__bg').hide(100);
+    return false;
 };
 
 // Init function
@@ -1033,22 +1055,25 @@ exp.init = function() {
 
         // check for error message and customize
         if( $('.sli_plantfinder_noresults').length === 1 ) {
-            $('.sli_plantfinder_noresults').addClass('exp-modal-error').html(
-                '<p>Sorry, this time we\'re not able to offer you any plants which \
+
+            // scroll to search area
+            $(window).scrollTop(200);
+            $('.sli_plantfinder_noresults').remove();
+            $('body').append('<div class="exp-modal-error"> \
+                <p>Sorry, this time we\'re not able to offer you any plants which \
                  exactly match all your requirements. Please try again, choosing \
                  different options.</p> \
                  <p>For the best results, use fewer filters.</p> \
                  <a href="#" class="exp-modal-error__button js-close-modal">Select another option</a> \
-                 <a href="#" class="exp-modal-error__cross js-close-modal">x</a>'
+                 <a href="#" class="exp-modal-error__cross js-close-modal">x</a> \
+                 </div>'
             );
-            $('body').append('<div class="exp-modal-error__bg" />');
+            $('body').append('<div class="exp-modal-error__bg js-close-modal" style="height:'+$(document).height()+'px" />');
+            $('.js-close-modal').bind('click', exp.func.closeModal );
         }
 
         //adjust iframe height
-        exp.func.iframeHeight();
-
-        // scroll to search area
-        $(window).scrollTop(200);
+        exp.func.iframeHeight( $('#sli_plant_finder'), 432 );
 
     } else if ( this.vars.page === 'frame' ) {
 
