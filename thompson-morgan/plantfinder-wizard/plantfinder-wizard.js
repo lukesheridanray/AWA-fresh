@@ -23,7 +23,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Plantfinder wizard - 0.1');
+exp.log('Plantfinder wizard - 0.20');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -370,7 +370,18 @@ exp.vars = {
 
 exp.siteCSS = ' \
 #sli_plant_finder { \
-    height: 900px !important; \
+    height: 2000px; \
+    padding: 0 !important; \
+} \
+#sli_plant_finder__wrapper { \
+    height: 310px; \
+    overflow: hidden; \
+    clear: both; \
+    border: 1px solid #BCC366; \
+    width: 976px; \
+    position: relative; \
+    left: 12px; \
+    visibility: hidden; \
 } \
 .exp-modal-error__bg { \
     position: absolute; \
@@ -419,15 +430,20 @@ exp.siteCSS = ' \
     font-weight: bold; \
     color: #fff !important; \
     font-size: 16px; \
-} \
-';
+} ';
 
 exp.frameCSS = ' \
+body { \
+    background: #DBEBD4; \
+} \
 .wrapper { \
     background: #DBEBD4; \
 } \
 .gps h1 { \
     color: #000; \
+} \
+.gps { \
+    border: 0; \
 } \
 .gps .exp-pf-intro { \
     font-weight: bold; \
@@ -672,13 +688,18 @@ exp.func.searchLookAhead = function() {
 // open accordion
 exp.func.accordionOpen = function() {
     var _this = $(this);
-    _this.hide(50);
-    _this.next('.exp-pf-accordion__content').show(50);
+    _this.hide(0);
+    _this.next('.exp-pf-accordion__content').show(0);
     $('.exp-pf-button').addClass('js-show');
     $('.exp-pf-search-lookahead').addClass('js-show');
 
-    //adjust iframe height
-    exp.func.iframeHeight( parent.$('#sli_plant_finder'), $(document).height() );
+    //adjust iframe height, we have to wait a moment or the dom isnt ready after opening the accordion
+    setTimeout( 
+        function(){
+            exp.func.iframeHeight( parent.$('#sli_plant_finder__wrapper'), $('body').height() + 50 );
+        },
+        300
+    );
 };
 
 // function to set the options as last searched
@@ -1044,6 +1065,7 @@ exp.func.closeModal = function() {
     return false;
 };
 
+
 // Init function
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
 exp.init = function() {
@@ -1052,6 +1074,9 @@ exp.init = function() {
 
         // append styles to head
         $('head').append('<style type="text/css">'+this.siteCSS+'</style>');
+
+        // wrap iframe in a div
+        $('#sli_plant_finder').wrap('<div id="sli_plant_finder__wrapper" />');
 
         // check for error message and customize
         if( $('.sli_plantfinder_noresults').length === 1 ) {
@@ -1071,9 +1096,6 @@ exp.init = function() {
             $('body').append('<div class="exp-modal-error__bg js-close-modal" style="height:'+$(document).height()+'px" />');
             $('.js-close-modal').bind('click', exp.func.closeModal );
         }
-
-        //adjust iframe height
-        exp.func.iframeHeight( $('#sli_plant_finder'), 432 );
 
     } else if ( this.vars.page === 'frame' ) {
 
@@ -1098,9 +1120,6 @@ exp.init = function() {
         // attach handlers to more info icons
         $('.more_info').bind('click', exp.func.moreInfoPopUp );
 
-        // init custom checkboxes
-        Custom.init();
-
         // init range sliders
         exp.func.initSliders();
         exp.func.updateRangePositions();
@@ -1115,6 +1134,12 @@ exp.init = function() {
 
         // do an initial search ahead
         exp.func.searchLookAhead();
+
+        // init custom checkboxes
+        //Custom.init();
+
+        // unhide our iframe
+        parent.$('#sli_plant_finder__wrapper').css({'visibility': 'visible'});
 
     }
 
