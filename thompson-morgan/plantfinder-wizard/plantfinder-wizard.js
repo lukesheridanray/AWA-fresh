@@ -23,7 +23,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Plantfinder wizard - 0.20');
+exp.log('Plantfinder wizard - 0.29');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -258,7 +258,7 @@ exp.vars = {
                 </div> \
             </div> \
             <div class="exp-pf-radio"> \
-                <h2 class="pad_b_10">Longevity  <a class="more_info" name="Longevity " href="#">&nbsp;</a></h2> \
+                <h2 class="pad_b_10">Longevity  <a class="more_info" name="Longevity" href="#">&nbsp;</a></h2> \
                 <div class="pad_b_20 exp-pf-radio__wrapper"> \
                     <span> \
                         <input type="radio" checked="checked" name="gps_lo" value="" id="gps_lo_1" /> \
@@ -363,7 +363,9 @@ exp.vars = {
         </fieldset> \
     </div> \
 </div> \
-<a href="#" class="exp-pf-button">Find Plants</a><span class="exp-pf-search-lookahead">&nbsp;</span>'
+<a href="#" class="exp-pf-button">Find Plants</a> \
+<a href="#" class="exp-pf-clear-all">Clear all</a> \
+<span class="exp-pf-search-lookahead">&nbsp;</span>'
 };
 
 // Styles
@@ -528,7 +530,16 @@ body { \
     margin: 0 0 5px 0; \
     display: none; \
 } \
-.exp-pf-search-lookahead.js-show { \
+.exp-pf-clear-all { \
+    text-align: center; \
+    display: block; \
+    font-size: 0.8em; \
+    margin: 0 0 10px 0; \
+    color: #274E13; \
+    display: none; \
+} \
+.exp-pf-search-lookahead.js-show, \
+.exp-pf-clear-all.js-show { \
     display: block !important; \
 } \
 .gps .exp-pf-radio__wrapper { \
@@ -666,7 +677,23 @@ body { \
 // Object containing functions, some helpful functions are included
 exp.func = {};
 
-exp.func.searchLookAhead = function() {
+exp.func.clearAll = function() {
+    $('#gps_po_1,#gps_st_1,#gps_sm_1,#gps_pt_1,#gps_ha_1,#gps_lo_1').trigger('click');
+    sowingmonth.update({ selection:[0, 12] });
+    floweringmonth.update({ selection:[0, 12] });
+    $('.fcp1.selected,.fcp2.selected').trigger('click');
+    $('.exp-pf-checkbox__wrapper span.checkbox').each(function(){
+        $this = $(this);
+        if($this.attr('style') === 'background-position: 0px -50px;') {
+            $this.trigger('mousedown').trigger('mouseup');
+        }
+    });
+    exp.func.searchLookAhead();
+    return false;
+};
+
+exp.func.searchLookAhead = function(noModal) {
+    noModal = noModal || false;
     var $resultHolder = $('.exp-pf-search-lookahead');
     var searchURL = exp.func.doSearch('return_url');
     $resultHolder.html('. . .');
@@ -680,6 +707,9 @@ exp.func.searchLookAhead = function() {
                 $resultHolder.html( $resultsDiv.html().match(/(of )([0-9]+)( S)/)[2] + ' plants match your criteria');
             } else {
                 $resultHolder.html( 'No plants match your criteria');
+                if( !noModal ) {
+                    exp.func.noResultsModal( 'frame', parent.$(window), parent.$('body'), parent.$(document) );
+                }
             }
         }
     });
@@ -692,6 +722,7 @@ exp.func.accordionOpen = function() {
     _this.next('.exp-pf-accordion__content').show(0);
     $('.exp-pf-button').addClass('js-show');
     $('.exp-pf-search-lookahead').addClass('js-show');
+    $('.exp-pf-clear-all').addClass('js-show');
 
     //adjust iframe height, we have to wait a moment or the dom isnt ready after opening the accordion
     setTimeout( 
@@ -925,7 +956,9 @@ exp.func.selectColour = function( ev, elem ) {
 
 // open up the more info dialog
 exp.func.moreInfoPopUp = function() {
-    var name = $(this).attr("name");
+    var $this = $(this);
+    var name = $this.attr("name");
+    var pos = $this.position().top;
     var info = "Information Not Available";
     switch (name) {
         case "Hardiness":
@@ -956,6 +989,12 @@ exp.func.moreInfoPopUp = function() {
     $("#info-content-title").html(name);
     $("#info-content-text").html(info);
     $("#info-box").show("slow");
+    // reset makeFloat params
+    $('#info-box').makeFloat({
+        x: 250,
+        y: (pos - 100),
+        speed: 'fast'
+    });
     return false;
 };
 
@@ -1061,8 +1100,47 @@ exp.func.iframeHeight = function( $elem, height ) {
 };
 
 exp.func.closeModal = function() {
-    $('.exp-modal-error,.exp-modal-error__bg').hide(100);
+    parent.$('.exp-modal-error,.exp-modal-error__bg').hide(100);
     return false;
+};
+
+window.awaScrollTop = function() {
+    $(window).scrollTop(200);
+};
+
+window.awaGetScrollTop = function() {
+    return ($(window).scrollTop() + 200).toString() + 'px';
+};
+
+exp.func.noResultsModal = function(page,$window,$body,$document) {
+    // scroll to search area
+    var modalPos;
+    if( page === 'site' ) {
+        modalPos = '300px';
+        $(window).scrollTop(200);
+    } else {
+        modalPos = parent.awaGetScrollTop();
+        //parent.awaScrollTop();
+    }
+    if( page === 'site' ) {
+        $('.sli_plantfinder_noresults').remove();
+    }
+    $body.append('<div class="exp-modal-error" style="top:'+modalPos+' !important"> \
+        <p>Sorry, this time we\'re not able to offer you any plants which \
+         exactly match all your requirements. Please try again, choosing \
+         different options.</p> \
+         <p>For the best results, use fewer filters.</p> \
+         <a href="#" class="exp-modal-error__button js-close-modal">Select another option</a> \
+         <a href="#" class="exp-modal-error__cross js-close-modal">x</a> \
+         </div>'
+    );
+    $body.append('<div class="exp-modal-error__bg js-close-modal" style="height:'+$document.height()+'px" />');
+    
+    if( page === 'site' ) {
+        $('.js-close-modal').bind('click', exp.func.closeModal );
+    } else {
+        parent.$('.js-close-modal').bind('click', exp.func.closeModal );
+    }
 };
 
 
@@ -1080,21 +1158,7 @@ exp.init = function() {
 
         // check for error message and customize
         if( $('.sli_plantfinder_noresults').length === 1 ) {
-
-            // scroll to search area
-            $(window).scrollTop(200);
-            $('.sli_plantfinder_noresults').remove();
-            $('body').append('<div class="exp-modal-error"> \
-                <p>Sorry, this time we\'re not able to offer you any plants which \
-                 exactly match all your requirements. Please try again, choosing \
-                 different options.</p> \
-                 <p>For the best results, use fewer filters.</p> \
-                 <a href="#" class="exp-modal-error__button js-close-modal">Select another option</a> \
-                 <a href="#" class="exp-modal-error__cross js-close-modal">x</a> \
-                 </div>'
-            );
-            $('body').append('<div class="exp-modal-error__bg js-close-modal" style="height:'+$(document).height()+'px" />');
-            $('.js-close-modal').bind('click', exp.func.closeModal );
+            exp.func.noResultsModal( 'site', $(window), $('body'), $(document) );
         }
 
     } else if ( this.vars.page === 'frame' ) {
@@ -1132,14 +1196,24 @@ exp.init = function() {
             setTimeout(exp.func.searchLookAhead, 500);
         });
 
+        // attach listener for clear all option
+        $('.exp-pf-clear-all').bind('click',exp.func.clearAll);
+
         // do an initial search ahead
-        exp.func.searchLookAhead();
+        exp.func.searchLookAhead( true );
 
         // init custom checkboxes
         //Custom.init();
 
         // unhide our iframe
         parent.$('#sli_plant_finder__wrapper').css({'visibility': 'visible'});
+
+        // reset makeFloat params
+        $('#info-box').makeFloat({
+            x: 250,
+            y: 250,
+            speed: 'fast'
+        });
 
     }
 
