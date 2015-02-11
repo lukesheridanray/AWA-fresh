@@ -22,11 +22,11 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Example experiment - dev 0.1');
+exp.log('Add to basket modal - 0.1');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
-exp.condition = $('.unique-selector');
+exp.condition = $('.btnaddtobasket,#product-info');
 
 // Check for a condition and return false if it has not been met
 if(exp.condition && !exp.condition.length) {
@@ -37,17 +37,21 @@ if(exp.condition && !exp.condition.length) {
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
-    'myCustomTagLine': 'This split test is the best!',
-    'productDesc': $('.description').length ? $('.description').text() : 'default description',
-    'productSku': $('.sku-code span'),
-    'productSavings': $('.product-price').text() - $('.rrp-price').text()
+    global: {
+        basketURL: $('.minibasket-btn').attr('onclick').replace("location.href='","").replace("';","")
+    },
+    desktop: {
+        checkoutButton: '<button class="btn btn-primary pull-right upper hidden-phone-potrait hidden-tablet-potrait awa-checkout-button-desktop" data-action="awaVisitCheckout">Checkout</button>'
+    },
+    mobile: {
+
+    }
 };
 
 // Styles
 // String containing the CSS for the experiment
 exp.css = ' \
-    #someSelector { color: #f00; } \
-    #header .tag-line { color: #f00; } ';
+#div-add-button .row { color: #c00; text-align: right; } ';
 
 // Functions
 // Object containing functions, some helpful functions are included
@@ -73,17 +77,86 @@ exp.func.waitFor = function(condition, callback, timeout, keepAlive) {
         }, intervalTime);
 };
 
-// This function allows you to always round a number 'up', 'down', or normally, returns a string
-exp.func.roundNum = function(number, decimals, direction) {
-    decimals = decimals || 0;
-    var factor = Math.pow(10,decimals);
-    var base;
-    if( direction === 'up') {
-        base = Math.ceil(number*factor);
-    } else if( direction === 'down') {
-        base = Math.floor(number*factor);
+exp.func.awaVisitCheckout = function(e) {
+    e.preventDefault();
+    var url;
+    if( exp.vars.global.basketURL.indexOf('http') !== -1 ) {
+        url = exp.vars.global.basketURL;
+    } else {
+        url = 'http://www.okadirect.com/en-GB/page/my-cart/';
     }
-    return direction ? (base/factor).toFixed(decimals) : number.toFixed(decimals);
+    window.location = url;
+};
+
+exp.func.quickViewAdd = function() {
+  e.preventDefault();
+  var e = $(this).prev("input").val();
+  var t = "#" + $(this).attr("id");
+  var n = $(this).attr("rel").replace("?vid=", "");
+  if (n == "") {
+    n = e
+  }
+  var r = "#qty_" + e;
+  if (t.indexOf("direct") != -1) {
+    r = "#qty_direct_" + e
+  }
+  var i = $(r).val();
+  if (i.indexOf("m") != -1) {
+    i = i.replace("m", "")
+  }
+  var s = "#qty_added_" + e;
+  $.ajax({
+    url: "/ajaxcallhandlers.aspx",
+    data: {
+      inp: "AddToBag",
+      entryid: n,
+      qty: i
+    },
+    success: function(n, r) {
+      if (n.indexOf("basket-nav") != -1) {
+        $("#mini-basket-control").html(n);
+        $("#quick-buy-" + e).modal("hide");
+        $("#quick-buy-" + e + "-False").modal("hide");
+        exp.func.addToBasketModal();
+        $(s).show();
+      } else {
+        $(t).parent().before('<div class="row">' + n + "</div>")
+      }
+    },
+    error: function() {
+      $(t).parent().before('<div class="row">Error adding item to basket!<br />Please try again later.</div>')
+    }
+  });
+};
+
+exp.func.productAdd = function(e) {
+  e.preventDefault();
+  var n = $('input.variant-id').val().toLowerCase();
+  var i = $('.qty-txt_js').val();
+  $.ajax({
+    url: "/ajaxcallhandlers.aspx",
+    data: {
+      inp: "AddToBag",
+      entryid: n,
+      qty: i
+    },
+    success: function(n, r) {
+        if (n.indexOf("basket-nav") != -1) {
+            $("#mini-basket-control").html(n);
+            exp.func.addToBasketModal();
+        } else {
+            $('#div-add-button .btn').parent().before('<div class="row">' + n + "</div>")
+        }
+    },
+    error: function() {
+      $('#div-add-button .btn').parent().before('<div class="row">Error adding item to basket!<br />Please try again later.</div>')
+    }
+  });
+};
+
+exp.func.addToBasketModal = function() {
+    console.log('custom basket');
+    //ShowOverlayContentBasket("#basket-modal", "list");
 };
 
 // Init function
@@ -93,35 +166,13 @@ exp.init = function() {
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
 
-    // Some example DOM manipulation...
+    // Add DOM elements
+    $('.navbar.bliss').append( exp.vars.desktop.checkoutButton );
 
-    $('.header').append(this.vars.productDesc);
-
-    if(this.vars.productSku) {
-        $('#tagLine').html(this.vars.productSku);
-    }
-
-    $('.pricing').append(
-        'Your savings are: £' + this.func.roundNum(this.vars.productSavings, 2, 'down')
-    );
-
-    this.func.waitFor(
-        function condition() {
-            return $.isFunction(openModal);
-        },
-        function callback() {
-            openModal('modal content');
-        }
-    );
-
-    this.func.waitFor(
-        function condition() {
-            return $('.reviews-widget').length;
-        },
-        function callback() {
-            $('.reviews-widget').append('Appending some content to the widget');
-        }
-    );
+    // Attach event listeners
+    $('[data-action="awaVisitCheckout"]').on('click', exp.func.awaVisitCheckout );
+    $('.btnaddtobasket').die().on('click', exp.func.quickViewAdd );
+    $('#div-add-button .btn').on('click', exp.func.productAdd );
 
 };
 
