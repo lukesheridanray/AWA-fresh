@@ -21,7 +21,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Bettys vertical checkout - 0.20');
+exp.log('Bettys vertical checkout - 0.21');
 
 
 // Variables
@@ -50,7 +50,8 @@ exp.vars = {
                           <input class="radiobutton" name="" id="billingOptionDiff" value="1" type="checkbox"> \
                           <label for="billingOptionDiff">Deliver to a different address</label></span></div> \
                           <div class="validation-advice" id="expShipOptionValidation">You must specify a shipping address.</div>',
-    'step2ShipAddress': ( $('#shipping-address-select').length ) ? $('#shipping_address .form-alt') : $('#shipping_address_list'),
+//    'step2ShipAddress': ( $('#shipping-address-select').length ) ? $('#shipping_address .form-alt') : $('#shipping_address_list'),
+    'step2ShipAddress': $('#shipping_address'),
     'step3DelMethod': $('.onestepcheckout-shipping-method'),
     'step3GiftMessages': $('.onestepcheckout-giftmessages'),
     'step3Comments': $('.onestepcheckout-comments'),
@@ -426,6 +427,15 @@ div.onestepcheckout-summary { \
         top: 0 !important; \
         right: 0 !important; \
     } \
+} \
+.shipping-address-title { \
+    display: none; \
+} \
+label[for="shipping-address-select"] { \
+    margin-top: 10px; \
+} \
+#shipping_address_list .control { \
+    margin-top: 15px; \
 }';
 
 
