@@ -329,6 +329,72 @@ exp.css = '.resultSet + .resultSet {\
 }\
 .hidden {\
   display: none; \
+} \
+.awa-quickview-left, \
+.awa-quickview-right { \
+    width: 49%; \
+    box-sizing: border-box; \
+    display: inline-block; \
+    vertical-align: top; \
+} \
+.awa-quickview-left #product-media #productDetailsImage, \
+.awa-quickview-left #product-media { \
+    width: 400px; \
+    float: none; \
+    margin: 1em auto; \
+} \
+.awa-quickview-left #product-media #productDetailsImage img { \
+    width: 400px; \
+    height: 400px; \
+} \
+.awa-quickview-productdetails #productCont { \
+    float: none; \
+    width: 100%; \
+} \
+.awa-quickview-productdetails #productCont .productInfoLeft li.despatch { \
+    text-align: left; \
+} \
+.awa-quickview-productdetails #additional-links, \
+.awa-quickview-productdetails .product-additional-info, \
+.awa-quickview-productdetails #prodFeatures { \
+    display: none; \
+} \
+#prodSizeList { \
+    margin: 0 0 2.5em 0; \
+    padding: 20px 0; \
+} \
+#prodSizeList dt { \
+    display: block; \
+    clear: left; \
+    float: left; \
+    width: 117px; \
+    color: #00572D; \
+    font-weight: bold; \
+} \
+#prodSizeList dd { \
+    display: block; \
+    float: left; \
+    width: 251px; \
+} \
+#addToBasket input.button.addToBasket { \
+    background-color: #345e2e; \
+    background-image: none !important; \
+    text-indent: 0; \
+    color: white; \
+    font-size: 1.1em; \
+    height: 30px !important; \
+    line-height: 30px !important; \
+    padding: 0 !important; \
+    font-weight: bold; \
+} \
+.button.addToBasket:hover { \
+    opacity: .9; \
+} \
+.stockInfo li.size { \
+    width: 280px !important; \
+} \
+.stockInfo li.price { \
+    width: 50px !important; \
 }';
 
 // Functions
@@ -562,11 +628,83 @@ exp.addDetails = function (product) {
             dom.find('.product-features-listing').remove();
         }
 
-        $('#quickview-' + product.id).html(product.dom.find('h1').html());
+        // Quick view modal, styled similarly to product page.
+        var quick_view_model_dom = $('<div class="awa-quickview"> \
+                <div class="awa-quickview-left"></div> \
+                <div class="awa-quickview-right"> \
+                    <div class="awa-quickview-productdetails"></div> \
+                    <div class="awa-quickview-need-more-info"><a href="' + product.url + '">Need more info? &gt;&gt;</a> </div> \
+                </div> \
+            </div>');
+        quick_view_model_dom.find('.awa-quickview-left').append(product.dom.find('#product-media'));
+
+
+        var $product_info = product.dom.find('#productCont').clone();
+        $product_info.find('p:not(.prodDesc)').hide();
+        quick_view_model_dom.find('.awa-quickview-productdetails').append($product_info);
+
+        // Get plant siezs
+        var plant_size = {},
+            height_and_spread = $product_info.text().match(/(?:H|h)eight\s*(?:and|&amp;|&)\s*(?:s|S)pread:\s*((?:(?:U|u)p to )?[0-9.]+(?:cm)?\s*\(.*?\))/m);
+        if (height_and_spread === null) {
+            plant_size.Spread = $product_info.text().match(/(?:S|s)pread:\s*((?:(?:U|u)p to )?[0-9.]+(?:cm)?\s*\(.*?\))/m);
+            plant_size.Height = $product_info.text().match(/(?:H|h)eight:\s*((?:(?:U|u)p to )?[0-9.]+(?:cm)?\s*\(.*?\))/m);
+        }
+        else {
+            plant_size.Spread = plant_size.Height = height_and_spread;
+        }
+        plant_size.Bulbs  = $product_info.text().match(/(?:B|b)ulb (S|s)ize:\s*((?:(?:U|u)p to )?[0-9.]+(?:cm)?\s*\(.*?\))/m);
+        plant_size.Diameter = $product_info.text().match(/(?:D|d)iameter:\s*((?:(?:U|u)p to )?[0-9.]+(?:cm)?\s*\(.*?\))/m);
+        // Dimensions: 22cm x 14cm x 31.5cm
+        plant_size.Dimensions = $product_info.text().match(/(?:D|d)imensions:\s*((?:(?:(?:U|u)p to )?[0-9.]+(?:cm)?\s*(?:\(.*?\))?\s?x?\s?){2,3})/m);
+
+        for (i in plant_size) {
+            if (plant_size.hasOwnProperty(i)) {
+                if (plant_size[i] instanceof Array && plant_size[i].length > 1) {
+                    plant_size[i] = plant_size[i][1];
+                }
+            }
+        }
+
+        // Move up product features and display size beneath description
+        $product_info.find('#prodFeatures').after('<div id="prodSizeList"></div>'); // prepare container for sizes
+
+        // Size
+        //
+        anySize = false;
+        for (i in plant_size) {
+            if (plant_size.hasOwnProperty(i) && plant_size[i] !== null) {
+                $product_info.find("#prodSizeList").append('<dl class="clearFloat"><dt>'
+                    + i.replace(/_/g," ") + ':</dt>' + '<dd>' + plant_size[i] + '</dd></dl>');
+                anySize = true;
+            }
+        }
+
+        // If there are no sizes, we don't need a size list
+        if (!anySize) {
+            $product_info.find("#prodSizeList").remove();
+        }
+
+
+        // Rejig prices
+        $product_info.find(".stockInfo .quantity label").html('&nbsp;');
+        $product_info.find(".stockInfo").each(function () {
+            $(this).find(".basket").append('<span class="promo">'
+                + $(this).find(".promo").detach().text() + '</span>');
+
+            if ( ! $(this).find('.price strike').text()) {
+                $(this).find('.price strike').remove();
+            }
+        });
+
+
+        //  product.dom.find('h1').html()
+        $('#quickview-' + product.id).html("").append(quick_view_model_dom);
 
         // Add ready
         dom.removeClass('loading');
         dom.addClass('loaded');
+        // TODO: on-click pause behaviory stuff?
     };
 };
 
@@ -732,6 +870,11 @@ exp.processPage = function (resultsDom, pagenum) {
         // Replace HTML
         prodDom.html(exp.buildProductHTML(product));
 
+        // (re)attach event handlers
+        if ($.fn.colorbox) {
+            $("a.colorbox").colorbox({inline: true, width: '90%', height: 600});
+        }
+
         product_callbacks.push(exp.fetchDetails(product));
 
         // Render incomplete product
@@ -877,7 +1020,7 @@ exp.init = function() {
     $.getScript('https://cdnjs.cloudflare.com/ajax/libs/jquery.colorbox/1.4.33/jquery.colorbox-min.js', function() {
         colorbox_loaded = true;
 
-        $("a.colorbox").colorbox({inline: true});
+        $("a.colorbox").colorbox({inline: true, width: '90%', height: 600});
     });
 
     $(document).ready(function () {
@@ -987,9 +1130,8 @@ exp.init = function() {
             }
         });
 
-        $(':not(.results) a').click(function (e) {
+        $(':not(.results) a:not(.colorbox)').click(function (e) {
             var href = $(this).attr('href');
-
             if (!href || href === '#') {
                 return false;
             }
