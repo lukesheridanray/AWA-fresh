@@ -612,7 +612,8 @@ exp.addDetails = function (product) {
         var i,
             bullets_len = product.bullets.length,
             productDom,
-            dom = $("#product-" + product.id);
+            dom = $("#product-" + product.id),
+            anySize;
 
         productDom = '';
 
@@ -680,6 +681,7 @@ exp.addDetails = function (product) {
             }
         }
 
+
         // If there are no sizes, we don't need a size list
         if (!anySize) {
             $product_info.find("#prodSizeList").remove();
@@ -697,14 +699,13 @@ exp.addDetails = function (product) {
             }
         });
 
-
         //  product.dom.find('h1').html()
         $('#quickview-' + product.id).html("").append(quick_view_model_dom);
 
         // Add ready
         dom.removeClass('loading');
         dom.addClass('loaded');
-        // TODO: on-click pause behaviory stuff?
+
     };
 };
 
@@ -872,7 +873,12 @@ exp.processPage = function (resultsDom, pagenum) {
 
         // (re)attach event handlers
         if ($.fn.colorbox) {
-            $("a.colorbox").colorbox({inline: true, width: '90%', height: 600});
+            $("a.colorbox").colorbox({
+                inline: true,
+                width: '90%',
+                height: 600,
+                onComplete: exp.func.colorboxCallback
+            });
         }
 
         product_callbacks.push(exp.fetchDetails(product));
@@ -1002,6 +1008,73 @@ exp.blur = function (resultSet) {
     }
 };
 
+exp.clickHandlerGeneral = function (e) {
+    console.log('click handler');
+            var href = $(this).attr('href');
+            if (!href || href === '#') {
+                return false;
+            }
+
+            e.preventDefault();
+
+            if (2 === e.which || e.metaKey || e.ctrlKey) {
+                // Ctrl/Cmd - click
+                // pause queue
+                exp.pauseQueue(); // Ensure no more queued elements are processed
+                window.open(href); // Popup blocker kicks in if we delay it
+            }
+            else {
+                // Normal click
+                exp.resumeQueue(); // Ensure this one will get processed
+                async_queue.listing = [function(callback) { // Clear queue, do this
+                    setTimeout(function() {
+                        window.location.assign(href);
+                    }, 250);
+                }];
+            }
+};
+
+exp.clickHandlerProduct = function (e) {
+            var href = $(this).attr('href'),
+                page = $(this).parents('.listing-page').data('page')
+                product_id = $(this).attr('data-product');
+
+            e.preventDefault();
+
+            if (2 === e.which || e.metaKey || e.ctrlKey) {
+                // Ctrl/Cmd - click
+                // pause queue
+                exp.pauseQueue(); // Ensure no more queued elements are processed
+                window.open(href); // Popup blocker kicks in if we delay it
+            }
+            else {
+                // Normal click
+                exp.cookies.setCookie('last_page', page);
+                exp.cookies.setCookie('last_product', product_id);
+                async_queue.listing = [function(callback) { // Clear queue, do this
+                    setTimeout(function() {
+                        window.location.assign(href);
+                    }, 250);
+                }];
+                exp.resumeQueue(); // Process
+            }
+};
+
+
+
+exp.func.colorboxCallback = function() {
+    var action = $('#colorbox form:eq(0)').attr('action');
+    var id = $('#cboxLoadedContent > div').attr('id').replace('quickview-','');
+    var product = $('#product-'+id);
+    $('#colorbox .addToBasket, #colorbox a').click( function(e){
+        e.preventDefault();
+        exp.log('i handled this');
+    });
+/*    $('#colorbox .addToBasket').on('mouseover', { product: product, action: action }, function(e) {
+        exp.addToBasket(data.product, data.action);
+    }); */
+};
+
 // Init function
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
 exp.init = function() {
@@ -1020,7 +1093,12 @@ exp.init = function() {
     $.getScript('https://cdnjs.cloudflare.com/ajax/libs/jquery.colorbox/1.4.33/jquery.colorbox-min.js', function() {
         colorbox_loaded = true;
 
-        $("a.colorbox").colorbox({inline: true, width: '90%', height: 600});
+        $("a.colorbox").colorbox({
+            inline: true,
+            width: '90%',
+            height: 600,
+            onComplete: exp.func.colorboxCallback
+        });
     });
 
     $(document).ready(function () {
@@ -1104,56 +1182,9 @@ exp.init = function() {
         }
 
         // Open product
-        $('#results').delegate('.product > a:not(.colorbox)', 'click', function (e) {
-            var href = $(this).attr('href'),
-                page = $(this).parents('.listing-page').data('page')
-                product_id = $(this).attr('data-product');
+        $('#results').delegate('.product > a:not(.colorbox)', 'click', exp.clickHandlerProduct );
 
-            e.preventDefault();
-
-            if (2 === e.which || e.metaKey || e.ctrlKey) {
-                // Ctrl/Cmd - click
-                // pause queue
-                exp.pauseQueue(); // Ensure no more queued elements are processed
-                window.open(href); // Popup blocker kicks in if we delay it
-            }
-            else {
-                // Normal click
-                exp.cookies.setCookie('last_page', page);
-                exp.cookies.setCookie('last_product', product_id);
-                async_queue.listing = [function(callback) { // Clear queue, do this
-                    setTimeout(function() {
-                        window.location.assign(href);
-                    }, 250);
-                }];
-                exp.resumeQueue(); // Process
-            }
-        });
-
-        $(':not(.results) a:not(.colorbox)').click(function (e) {
-            var href = $(this).attr('href');
-            if (!href || href === '#') {
-                return false;
-            }
-
-            e.preventDefault();
-
-            if (2 === e.which || e.metaKey || e.ctrlKey) {
-                // Ctrl/Cmd - click
-                // pause queue
-                exp.pauseQueue(); // Ensure no more queued elements are processed
-                window.open(href); // Popup blocker kicks in if we delay it
-            }
-            else {
-                // Normal click
-                exp.resumeQueue(); // Ensure this one will get processed
-                async_queue.listing = [function(callback) { // Clear queue, do this
-                    setTimeout(function() {
-                        window.location.assign(href);
-                    }, 250);
-                }];
-            }
-        });
+        $(':not(.results) a:not(.colorbox)').click( exp.clickHandlerGeneral );
 
         // Right click, stop queue
         $('#results').delegate('.product > a', 'contextmenu', function (e) {
