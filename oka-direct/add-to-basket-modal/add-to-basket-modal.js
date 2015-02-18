@@ -22,7 +22,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Add to basket modal - 0.1');
+exp.log('Add to basket modal - 0.2');
 
 
 // Condition
@@ -69,7 +69,7 @@ exp.css = ' \
     width: 144px; \
     height: 24px; \
     position: absolute; \
-    top: 27px; \
+    top: 110px; \
     right: 0; \
     z-index: 20; \
 } \
@@ -182,7 +182,7 @@ exp.css = ' \
   } \
   .awa-checkout-button-desktop { \
     padding: 0 !important; \
-    display: inline !important; \
+    display: inline; \
     background-image: none !important; \
     background-color: transparent !important; \
     color: #666 !important; \
@@ -190,7 +190,7 @@ exp.css = ' \
     border-right: 0 !important; \
     width: auto !important; \
     height: auto !important; \
-    top: -93px !important; \
+    top: -10px !important; \
   } \
   .awa-checkout-button-desktop:hover { \
       text-decoration: underline !important; \
@@ -209,12 +209,20 @@ exp.css = ' \
 } \
 @media screen and (max-width: 767px) { \
     .awa-checkout-button-desktop { \
-      top: -16px !important; \
+      top: 32px !important; \
       font-size: 11px; \
-      right: 8px; \
+      right: 7px; \
+      font-weight: 600; \
+      color: #12a6a4 !important; \
     } \
     .awa-checkout-button-desktop:after { \
         content:""; \
+    } \
+    #header-search { \
+      top: 9px; \
+    } \
+    #header-search span.triangle { \
+        right: 79px; \
     } \
     .header { \
         height: 76px !important; \
@@ -363,6 +371,10 @@ exp.func.closeAddToBasketModal = function() {
   */
 };
 
+exp.func.toggleCheckoutLink = function() {
+    $('.awa-checkout-button-desktop').toggle();
+};
+
 // Init function
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
 exp.init = function() {
@@ -372,12 +384,14 @@ exp.init = function() {
 
     // Add DOM elements
 
-    $('.navbar.bliss').append( exp.vars.desktop.checkoutButton + exp.vars.desktop.miniBasket );
+    $('.navbar.bliss').append( exp.vars.desktop.miniBasket );
+    $('#header-search').before( exp.vars.desktop.checkoutButton );
 
 
     // Attach event listeners
 
     $('[data-action="awaVisitCheckout"]').on('click', exp.func.awaVisitCheckout );
+    $('.header a.navigation').on('click', exp.func.toggleCheckoutLink );
 
     if( exp.vars.global.page === 'product' ) {
         $('.btnaddtobasket').die().on('click', exp.func.quickViewAdd );
