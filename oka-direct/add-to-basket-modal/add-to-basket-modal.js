@@ -22,7 +22,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Add to basket modal - 0.2');
+exp.log('Add to basket modal - 0.5');
 
 
 // Condition
@@ -77,9 +77,9 @@ exp.css = ' \
     border-right: 5px solid #15bcba; \
     background-position: right 2px !important; \
 } \
-#product-details .awa-checkout-button-desktop { \
+/* #product-details .awa-checkout-button-desktop { \
     top: 26px; \
-} \
+} */ \
 .header #basket-nav { \
     z-index: 21; \
 } \
@@ -221,11 +221,17 @@ exp.css = ' \
     #header-search { \
       top: 9px; \
     } \
+    .header .icons li a { \
+      margin-right: 8px !important; \
+    } \
+    .header .icons li a.basket { \
+      margin-right: 11px !important; \
+    } \
     #header-search span.triangle { \
-        right: 79px; \
+        right: 71px; \
     } \
     .header { \
-        height: 76px !important; \
+        height: 125px !important; \
     } \
     .header .icons .basket { \
         background: url("https://resources1.okadirect.com/assets/img/icons/basket.png") 0 0 no-repeat transparent !important; \
@@ -235,7 +241,7 @@ exp.css = ' \
 @media screen and (max-width: 345px) { \
     .awa-checkout-button-desktop { \
       top: 50px; \
-      display: none ; \
+      /* display: none; */ \
     } \
 } \
 /**/';
@@ -317,9 +323,17 @@ exp.func.quickViewAdd = function(ev) {
 };
 
 exp.func.productAdd = function(e) {
+  var n, i;
   e.preventDefault();
-  var n = $('input.variant-id').val().toLowerCase();
-  var i = $('.qty-txt_js').val();
+  if( $('input.variant-id').length ) {
+    n = $('input.variant-id').val().toLowerCase();
+  } else {
+    n = $('[itemprop="identifier"]').text().toLowerCase();
+  }
+  if( $('#colour-container-swatches .radio').length > 1 ) {
+    n = $('#colour-container-swatches .radio.active input').attr('name').replace('colour_','').replace('value=','');
+  }
+  i = $('.qty-txt_js').val();
   $.ajax({
     url: "/ajaxcallhandlers.aspx",
     data: {
@@ -395,7 +409,9 @@ exp.init = function() {
 
     if( exp.vars.global.page === 'product' ) {
         $('.btnaddtobasket').die().on('click', exp.func.quickViewAdd );
-        $('#product-info #controls .btn').on('click', exp.func.productAdd );
+        if( $('.extras input').length === 0 ) {
+          $('#product-info #controls .btn').on('click', exp.func.productAdd );
+        }
         $('.awa-mini-basket__close').on('click', exp.func.closeAddToBasketModal );
     }
 
