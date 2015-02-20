@@ -8,17 +8,19 @@
 // jshint jquery: true
 //
 // Fixing IE - http://stackoverflow.com/questions/2308134/trim-in-javascript-not-working-in-ie
+/*
 if (typeof String.prototype.trim !== 'function') {
   String.prototype.trim = function() {
     return this.replace(/^\s+|\s+$/g, '');
   };
 }
+*/
 
 // Image experiment merged
 (function ($) {
 
   if ($(".t011").length) {
-    console.log('Large image tweak already applied, skipping...');
+//    console.log('Large image tweak already applied, skipping...');
     return;
   }
 
@@ -151,7 +153,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Thompson & Morgan - Product Page v1 - 1.0');
+// console.log('Thompson & Morgan - Product Page v1 - 1.1');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -159,7 +161,7 @@ exp.condition = false;
 
 // Check for a condition and return false if it has not been met
 if(exp.condition && !exp.condition.length) {
-    console.log('Experiment failed a condition');
+//    console.log('Experiment failed a condition');
     return false;
 }
 
@@ -356,8 +358,7 @@ exp.vars = {
 
 // Styles
 // String containing the CSS for the experiment
-exp.css = ' \
-';
+exp.css = '';
 
 // Functions
 // Object containing functions, some helpful functions are included
@@ -419,7 +420,7 @@ exp.init = function() {
         height_and_spread;
 
     if ($('.stockInfo:eq(0)').hasClass('stockInfo-first')) {
-      console.log('Product page v1 experiment already run, exiting...');
+//      console.log('Product page v1 experiment already run, exiting...');
       return;
     }
 
@@ -434,8 +435,8 @@ exp.init = function() {
     // Rejig prices
     $(".stockInfo .quantity label").html('&nbsp;');
     $(".stockInfo").each(function () {
-        $(this).find(".basket").append('<span class="promo">'
-            + $(this).find(".promo").detach().text() + '</span>');
+        $(this).find(".basket").append('<span class="promo">' +
+            $(this).find(".promo").detach().text() + '</span>');
 
         if ( ! $(this).find('.price strike').text()) {
             $(this).find('.price strike').remove();
@@ -472,11 +473,11 @@ exp.init = function() {
 
     $('#productCont .prodDesc').before($('#prodFeatures').detach());
     if (hardiness) {
-        $('#prodFeatures').append('<dl class="clearFloat"><dt>Hardiness:</dt>'
-                + '<dd>' + hardiness
-                + '<img src="http://search.thompson-morgan.com/includes/images/info.png" class="info-icon hasTooltip" alt="" title="More info" />'
-                + '<div class="hidden tooltip">' + exp.vars.hardinessModal + '</div>'
-                + '</dd></dl>');
+        $('#prodFeatures').append('<dl class="clearFloat"><dt>Hardiness:</dt>' +
+                '<dd>' + hardiness +
+                '<img src="http://search.thompson-morgan.com/includes/images/info.png" class="info-icon hasTooltip" alt="" title="More info" />' +
+                '<div class="hidden tooltip">' + exp.vars.hardinessModal + '</div>' +
+                '</dd></dl>');
     }
 
     // Size
@@ -484,8 +485,8 @@ exp.init = function() {
     anySize = false;
     for (i in plant_size) {
         if (plant_size.hasOwnProperty(i) && plant_size[i] !== null) {
-            $("#prodSizeList").append('<dl class="clearFloat"><dt>'
-                + i.replace(/_/g," ") + ':</dt>' + '<dd>' + plant_size[i] + '</dd></dl>');
+            $("#prodSizeList").append('<dl class="clearFloat"><dt>' +
+                i.replace(/_/g," ") + ':</dt>' + '<dd>' + plant_size[i] + '</dd></dl>');
             anySize = true;
         }
     }
@@ -501,8 +502,8 @@ exp.init = function() {
         make_review_link = function (data) {
             var no_reviews = $(data).find("ol.reviews li.border-bottom-grey").length;
 
-            $('img[src*="/reviews/"] + b').html('(<a href="#tab-3" id="review-links">' + no_reviews
-                + ' review' + (no_reviews == 1 ? '' : 's') + '</a>)');
+            $('img[src*="/reviews/"] + b').html('(<a href="#tab-3" id="review-links">' + no_reviews +
+                ' review' + (no_reviews == 1 ? '' : 's') + '</a>)');
 
             $('#review-links').click(function() {
                 showTab(4);
@@ -513,7 +514,7 @@ exp.init = function() {
 
         if (read_reviews.length) {
             setTimeout(function() {
-                    $.get(read_reviews.attr('href').trim(), make_review_link);
+                    $.get($.trim( read_reviews.attr('href') ), make_review_link);
                 },
                 100);
         }
@@ -527,12 +528,12 @@ exp.init = function() {
 
     // Why not sooner modal
     $("#productCont .despatch.prodPageDes").each(function () {
-        var month = $(this).text().split(' ').splice(-2,1).join('').trim();
+        var month = $.trim( $(this).text().split(' ').splice(-2,1).join('') );
         var date = new Date();
         if (month && exp.vars.month.indexOf(month) != -1 && month != exp.vars.month[ date.getMonth() ]) {
-            $(this).append('<a href="#" class="hasTooltip'
-                    + ' modal-link not-sooner-link">why not sooner?</a>'
-                    + '<div class="hidden tooltip">' + exp.vars.notsoonerModal + '</div>');
+            $(this).append('<a href="#" class="hasTooltip' +
+                    ' modal-link not-sooner-link">why not sooner?</a>' +
+                    '<div class="hidden tooltip">' + exp.vars.notsoonerModal + '</div>');
         }
 
     });
@@ -551,8 +552,8 @@ exp.init = function() {
           }
       }
 
-      if (window.location.href.indexOf('large-plant') !== -1
-        || $(".productClass").text().indexOf('Large Plant') !== -1)
+      if (window.location.href.indexOf('large-plant') !== -1 ||
+        $(".productClass").text().indexOf('Large Plant') !== -1)
       {
           plant_type = exp.vars.plant_types.large;
       }
@@ -575,8 +576,8 @@ exp.init = function() {
                   }
               }
 
-              if (window.location.href.indexOf('large-plant') !== -1
-                || $(".productClass").text().indexOf('Large Plant') !== -1)
+              if (window.location.href.indexOf('large-plant') !== -1 ||
+                  $(".productClass").text().indexOf('Large Plant') !== -1)
               {
                   plant_type = exp.vars.plant_types.large;
               }
@@ -594,10 +595,10 @@ exp.init = function() {
 
               if (exp.vars.packagingModal !== 'Loading...') {
                 // Set up packaging modal, if applicable
-                $(this).append('<a href="#" class="hasTooltip'
-                    + ' modal-link packaging-info-link">what\'s this?</a>'
-                    + '<div class="hidden tooltip more-vertical-space pkg-modal">'
-                    + exp.vars.packagingModal + '</div>');
+                $(this).append('<a href="#" class="hasTooltip' +
+                    ' modal-link packaging-info-link">what\'s this?</a>' +
+                    '<div class="hidden tooltip more-vertical-space pkg-modal">' +
+                    exp.vars.packagingModal + '</div>');
               }
             });
 
@@ -614,19 +615,19 @@ exp.init = function() {
     // How packed and picked, plants only
     if ( ! window.location.href.match(/\/garden-supplies\//) && ! window.location.href.match(/-seeds\//)) {
 
-        $('.stockInfo:eq(0)').before('<div class="how-box">'
-            + '<span class="hasTooltip how-packed how-link">How plants are packed</span>'
-            + '<div class="hidden tooltip"><h3>Unique packaging to protect your plants</h3>'
-            + '<div class="image-box"><img alt="How plants are packed" src="'
-            + (plant_type == 'Plug' || plant_type == 'Mini-plug' || plant_type == 'Jumbo' || plant_type == 'Postiplugs&reg;'
-                ? exp.vars.packPlugImg : exp.vars.packPlantImg) + '" /><span class="caption">Packed for protection</span></div>' // Image
-            + exp.vars.packedModal + '</div>'
-            + '<span class="hasTooltip how-picked how-link">How plants are picked</span>'
-            + '<div class="hidden tooltip"><h3>Every plant is TRIPLE-INSPECTED for quality</h3>'
-            + '<div class="image-box"><img alt="How plants are packed" src="'
-            + exp.vars.pickPlantImg + '" /><span class="caption">Every plant is triple-inspected</span></div>' // Image
-            + exp.vars.pickedModal + '</div>'
-            + '</div>');
+        $('.stockInfo:eq(0)').before('<div class="how-box">' +
+            '<span class="hasTooltip how-packed how-link">How plants are packed</span>' +
+            '<div class="hidden tooltip"><h3>Unique packaging to protect your plants</h3>' +
+            '<div class="image-box"><img alt="How plants are packed" src="' +
+            (plant_type == 'Plug' || plant_type == 'Mini-plug' || plant_type == 'Jumbo' || plant_type == 'Postiplugs&reg;' ?
+                exp.vars.packPlugImg : exp.vars.packPlantImg) + '" /><span class="caption">Packed for protection</span></div>' + // Image
+            exp.vars.packedModal + '</div>' +
+            '<span class="hasTooltip how-picked how-link">How plants are picked</span>' +
+            '<div class="hidden tooltip"><h3>Every plant is TRIPLE-INSPECTED for quality</h3>' +
+            '<div class="image-box"><img alt="How plants are packed" src="' +
+            exp.vars.pickPlantImg + '" /><span class="caption">Every plant is triple-inspected</span></div>' + // Image
+            exp.vars.pickedModal + '</div>' +
+            '</div>');
     }
 
     // Initialise tooltips (gets hoisted)
@@ -658,7 +659,7 @@ exp.init = function() {
                 //}
             });
         });
-    };
+    }
 
     // Update delivery blurb
     if (window.location.href.match(/\/garden-supplies\//)) {
@@ -675,8 +676,7 @@ exp.init = function() {
     }
 
     for (i = 0; i < 5; i++) {
-
-        if ($("#tab-" + i).length &&  $("#tab-" + i).text().trim() == 'Delivery') {
+        if ($("#tab-" + i).length &&  $.trim( $("#tab-" + i).text() ) == 'Delivery') {
             $("#tabbed-panel-" + i).html(delivery_blurb);
         }
 
