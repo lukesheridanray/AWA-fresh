@@ -168,6 +168,7 @@ if(exp.condition && !exp.condition.length) {
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
+    isGiftItem: (window.location.href.indexOf('gift') !== -1) ? true : false,
     packedModal:    ' \
         <p>Your plants are guaranteed to arrive in perfect condition, thanks to \
         <strong>specially designed containers which prevent dehydration and protect</strong> from \
@@ -613,7 +614,7 @@ exp.init = function() {
     });
 
     // How packed and picked, plants only
-    if ( ! window.location.href.match(/\/garden-supplies\//) && ! window.location.href.match(/-seeds\//)) {
+    if ( ! window.location.href.match(/\/garden-supplies\//) && ! window.location.href.match(/-seeds\//) && !exp.vars.isGiftItem) {
 
         $('.stockInfo:eq(0)').before('<div class="how-box">' +
             '<span class="hasTooltip how-packed how-link">How plants are packed</span>' +
@@ -669,6 +670,14 @@ exp.init = function() {
     else if (window.location.href.match(/-seeds\//)) {
         // Seed
         delivery_blurb = exp.vars.deliverySeeds + exp.vars.deliveryTable;
+    }
+    else if ( exp.vars.isGiftItem ) {
+        delivery_blurb = '<strong>Last order date: Order before 2pm on 12th March for guaranteed delivery in time for Mother\'s Day.</strong><br />' +
+                         'All your Mother\'s Day gifts will be delivered for <strong>FREE</strong>. ' +
+                         'We regret we cannot deliver on Mother\'s Day itself. All gifts are sent by post. ' +
+                         'If several items have been ordered, whether to different or same addresses, these will ' +
+                         'be despatched separately and therefore may not arrive on the same day. Should you add non Mother\'s Day gift ' +
+                         'items to your basket you may incur other additional P&P charges. Please see our Terms and Conditions for details.';
     }
     else {
         // Plant, bulb, plugs, whatever...

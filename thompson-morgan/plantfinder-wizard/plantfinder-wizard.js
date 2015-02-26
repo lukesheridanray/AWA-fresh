@@ -29,7 +29,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Plantfinder wizard - 0.37');
+exp.log('Plantfinder wizard - 0.41');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -136,35 +136,35 @@ exp.vars = {
                     <h2 class="pad_b_10">Grow In <em class="exp-optional">(optional)</em></h2> \
                     <div class="exp-cb-column"> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_gi" value="growin:borders" class="styled" />Borders</div> \
+                            <input type="checkbox" name="gps_gi" value="growin:borders" id="gps_gi_0"/><label for="gps_gi_0">Borders</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_gi" value="growin:containers" class="styled"  />Containers</div> \
+                            <input type="checkbox" name="gps_gi" value="growin:containers" id="gps_gi_1" /><label for="gps_gi_1">Containers</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_gi" value="growin:baskets" class="styled"  />Baskets</div> \
+                            <input type="checkbox" name="gps_gi" value="growin:baskets" id="gps_gi_2" /><label for="gps_gi_2">Baskets</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_gi" value="growin:beds" class="styled"  />Beds</div> \
+                            <input type="checkbox" name="gps_gi" value="growin:beds" id="gps_gi_3" /><label for="gps_gi_3">Beds</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_gi" value="growin:raisedbed" class="styled"  />Raised Bed</div> \
+                            <input type="checkbox" name="gps_gi" value="growin:raisedbed" id="gps_gi_4" /><label for="gps_gi_4">Raised Bed</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_gi" value="growin:windowboxes" class="styled"  />Window Boxes</div> \
+                            <input type="checkbox" name="gps_gi" value="growin:windowboxes" id="gps_gi_5" /><label for="gps_gi_5">Window Boxes</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_gi" value="growin:vegetableplot" class="styled"  />Vegetable Plot</div> \
+                            <input type="checkbox" name="gps_gi" value="growin:vegetableplot" id="gps_gi_6" /><label for="gps_gi_6">Vegetable Plot</label></div> \
                     </div> \
                     <div class="exp-cb-column"> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_gi" value="growin:indoorplant" class="styled"  />Indoor Plant</div> \
+                            <input type="checkbox" name="gps_gi" value="growin:indoorplant" id="gps_gi_7" /><label for="gps_gi_7">Indoor Plant</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_gi" value="growin:patiobag" class="styled"  />Patio Bag</div> \
+                            <input type="checkbox" name="gps_gi" value="growin:patiobag" id="gps_gi_8" /><label for="gps_gi_8">Patio Bag</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_gi" value="growin:flowerpouches" class="styled"  />Flower Pouches</div> \
+                            <input type="checkbox" name="gps_gi" value="growin:flowerpouches" id="gps_gi_9" /><label for="gps_gi_9">Flower Pouches</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_gi" value="growin:wallsfences" class="styled"  />Walls & Fences</div> \
+                            <input type="checkbox" name="gps_gi" value="growin:wallsfences" id="gps_gi_10" /><label for="gps_gi_10">Walls & Fences</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_gi" value="growin:patioclimber" class="styled"  />Patio Climber</div> \
+                            <input type="checkbox" name="gps_gi" value="growin:patioclimber" id="gps_gi_11" /><label for="gps_gi_11">Patio Climber</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_gi" value="growin:potatobags" class="styled"  />Potato Bags</div> \
+                            <input type="checkbox" name="gps_gi" value="growin:potatobags" id="gps_gi_12" /><label for="gps_gi_12">Potato Bags</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_gi" value="growin:ponds" class="styled"  />Ponds</div> \
+                            <input type="checkbox" name="gps_gi" value="growin:ponds" id="gps_gi_13" /><label for="gps_gi_13">Ponds</label></div> \
                     </div> \
                 </div> \
                 <div class="exp-pf-checkbox__wrapper__middle"> \
@@ -174,43 +174,43 @@ exp.vars = {
                     <h2 class="pad_b_10">Ideal For <em class="exp-optional">(optional)</em></h2> \
                     <div class="exp-cb-column"> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_if" value="idealfor:alpinerockery" class="styled" />Alpine &amp; Rockery</div> \
+                            <input type="checkbox" name="gps_if" value="idealfor:alpinerockery" id="gps_if_0" /><label for="gps_if_0">Alpine &amp; Rockery</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_if" value="idealfor:coastalgarden" class="styled" />Coastal Garden</div> \
+                            <input type="checkbox" name="gps_if" value="idealfor:coastalgarden" id="gps_if_1" /><label for="gps_if_1">Coastal Garden</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_if" value="idealfor:conservatory" class="styled" />Conservatory</div> \
+                            <input type="checkbox" name="gps_if" value="idealfor:conservatory" id="gps_if_2" /><label for="gps_if_2">Conservatory</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_if" value="idealfor:cottagegardens" class="styled" />Cottage Gardens</div> \
+                            <input type="checkbox" name="gps_if" value="idealfor:cottagegardens" id="gps_if_3" /><label for="gps_if_3">Cottage Gardens</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_if" value="idealfor:cutflowergarden" class="styled" />Cut Flower Garden</div> \
+                            <input type="checkbox" name="gps_if" value="idealfor:cutflowergarden" id="gps_if_4" /><label for="gps_if_4">Cut Flower Garden</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_if" value="idealfor:exoticgarden" class="styled" />Exotic Garden</div> \
+                            <input type="checkbox" name="gps_if" value="idealfor:exoticgarden" id="gps_if_5" /><label for="gps_if_5">Exotic Garden</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_if" value="idealfor:greenhouse" class="styled" />Greenhouse</div> \
+                            <input type="checkbox" name="gps_if" value="idealfor:greenhouse" id="gps_if_6" /><label for="gps_if_6">Greenhouse</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_if" value="idealfor:groundcover" class="styled" />Ground Cover</div> \
+                            <input type="checkbox" name="gps_if" value="idealfor:groundcover" id="gps_if_7" /><label for="gps_if_7">Ground Cover</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_if" value="idealfor:hedges" class="styled" />Hedges</div> \
+                            <input type="checkbox" name="gps_if" value="idealfor:hedges" id="gps_if_8" /><label for="gps_if_8">Hedges</label></div> \
                     </div> \
                     <div class="exp-cb-column"> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_if" value="idealfor:kitchengarden" class="styled" />Kitchen Garden</div> \
+                            <input type="checkbox" name="gps_if" value="idealfor:kitchengarden" id="gps_if_9" /><label for="gps_if_9">Kitchen Garden</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_if" value="idealfor:lowmaintenancegarden" class="styled" />Low Maintenance Garden</div> \
+                            <input type="checkbox" name="gps_if" value="idealfor:lowmaintenancegarden" id="gps_if_10" /><label for="gps_if_10">Low Maintenance Garden</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_if" value="idealfor:patio" class="styled" />Patio</div> \
+                            <input type="checkbox" name="gps_if" value="idealfor:patio" id="gps_if_11" /><label for="gps_if_11">Patio</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_if" value="idealfor:scentedgardens" class="styled" />Scented Gardens</div> \
+                            <input type="checkbox" name="gps_if" value="idealfor:scentedgardens" id="gps_if_12" /><label for="gps_if_12">Scented Gardens</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_if" value="idealfor:specimenplant" class="styled" />Specimen Plant</div> \
+                            <input type="checkbox" name="gps_if" value="idealfor:specimenplant" id="gps_if_13" /><label for="gps_if_13">Specimen Plant</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_if" value="idealfor:wallsandfences" class="styled" />Walls And Fences</div> \
+                            <input type="checkbox" name="gps_if" value="idealfor:wallsandfences" id="gps_if_14" /><label for="gps_if_14">Walls And Fences</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_if" value="idealfor:watergarden" class="styled" />Water Garden</div> \
+                            <input type="checkbox" name="gps_if" value="idealfor:watergarden" id="gps_if_15" /><label for="gps_if_15">Water Garden</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_if" value="idealfor:wildlifegardens" class="styled" />Wildlife Gardens</div> \
+                            <input type="checkbox" name="gps_if" value="idealfor:wildlifegardens" id="gps_if_16" /><label for="gps_if_16">Wildlife Gardens</label></div> \
                         <div class="cb"> \
-                            <input type="checkbox" name="gps_if" value="idealfor:woodlandgarden" class="styled" />Woodland Garden</div> \
+                            <input type="checkbox" name="gps_if" value="idealfor:woodlandgarden" id="gps_if_17" /><label for="gps_if_17">Woodland Garden</label></div> \
                     </div> \
                 </div> \
             </div> \
@@ -576,6 +576,9 @@ body { \
     position: relative; \
     padding: 10px 0 0 0; \
 } \
+.gps .pad_b_20.exp-pf-checkbox__wrapper input { \
+    margin: 2px 4px 0 0; \
+} \
 .gps .exp-pf-checkbox__wrapper__middle { \
     /*width: 185px !important;*/ \
     height: 240px; \
@@ -689,16 +692,22 @@ body { \
 exp.func = {};
 
 exp.func.clearAll = function() {
-    $('#gps_po_1,#gps_st_1,#gps_sm_1,#gps_pt_1,#gps_ha_1,#gps_lo_1').trigger('click');
+    $('#gps_po_1,#gps_st_0,#gps_sm_1,#gps_pt_1,#gps_ha_1,#gps_lo_1').trigger('click');
     sowingmonth.update({ selection:[0, 12] });
+    updatesowingmonthLabel();
+    window.sowingmonthrange = '';
     floweringmonth.update({ selection:[0, 12] });
+    updatefloweringmonthLabel();
+    window.floweringmonthrange = '';
     $('.fcp1.selected,.fcp2.selected').trigger('click');
-    $('.exp-pf-checkbox__wrapper span.checkbox').each(function(){
+    $('.exp-pf-checkbox__wrapper input:checked').trigger('click');
+/*    $('.exp-pf-checkbox__wrapper span.checkbox').each(function(){
         $this = $(this);
         if($this.attr('style') === 'background-position: 0px -50px;') {
             $this.trigger('mousedown').trigger('mouseup');
         }
     });
+*/
     exp.func.searchLookAhead();
     return false;
 };
@@ -708,6 +717,7 @@ exp.func.searchLookAhead = function(noModal) {
     var $resultHolder = $('.exp-pf-search-lookahead');
     var searchURL = exp.func.doSearch('return_url');
     $resultHolder.html('. . .');
+    exp.log(searchURL);
     $.ajax({
         url: searchURL,
         type: 'GET',
@@ -1046,18 +1056,16 @@ window.floweringmonth = new SLI.Slider('slider-floweringmonth', {
             var backToOriginalPositions = (data.selection[0] === 1) && (data.selection[1] === 12);
             if (rangeIsDifferent && !rangeIsEmpty) {
                 !!jQuery.scrollTo && jQuery.scrollTo(0,800);
-                if (backToOriginalPositions) {
-                //do nothing
-                     window.floweringmonthrange = '';
-                } else {
-    
-                     window.floweringmonthrange =  'floweringmonth:[' + data.selection[0] + ',' + data.selection[1] + ']';
-              }
+                window.floweringmonthrange =  'floweringmonth:[' + data.selection[0] + ',' + data.selection[1] + ']';
+
+            } else if (backToOriginalPositions) {
+                window.floweringmonthrange = '';
             }
             if (rangeIsEmpty) {
                 this.update({ selection:[1, 12] });
                 updatefloweringmonthLabel();
             }
+            exp.func.searchLookAhead();
       }
 });
 updatefloweringmonthLabel();
@@ -1092,19 +1100,17 @@ window.sowingmonth = new SLI.Slider('slider-sowingmonth', {
             var rangeIsEmpty = (data.counts[0] === 0);
             var rangeIsDifferent = (data.selection[0] !== 1 || data.selection[1] !== 12);
             var backToOriginalPositions = (data.selection[0] === 1) && (data.selection[1] === 12);
-            if (!rangeIsEmpty) {
+            if (!rangeIsEmpty && rangeIsDifferent) {
                 !!jQuery.scrollTo && jQuery.scrollTo(0,800);
-                if (backToOriginalPositions) {
-                //do nothing
-                    window.sowingmonthrange = '';
-                } else {
-                     window.sowingmonthrange =  'sowingmonth:[' + data.selection[0] + ',' + data.selection[1] + ']';
-              }
+                window.sowingmonthrange =  'sowingmonth:[' + data.selection[0] + ',' + data.selection[1] + ']';
+            } else if (backToOriginalPositions) {
+                window.sowingmonthrange = '';
             }
             if (rangeIsEmpty) {
                 this.update({ selection:[1, 12] });
                 updatesowingmonthLabel();
             }
+            exp.func.searchLookAhead();
       }
 });
 updatesowingmonthLabel();
@@ -1209,8 +1215,7 @@ exp.init = function() {
 
     } else if ( this.vars.page === 'frame' ) {
 
-        if( $('.exp-pf-accordion__title').length !==0 ) {
-            exp.log('experiment already run');
+        if( $('.exp-pf-accordion__title').length !== 0 ) {
             return false;
         }
 
@@ -1262,7 +1267,7 @@ exp.init = function() {
         exp.func.searchLookAhead( true );
 
         // init custom checkboxes
-        Custom.init();
+        //Custom.init();
 
         // unhide our iframe
         parent.$('#sli_plant_finder__wrapper').css({'visibility': 'visible'});
