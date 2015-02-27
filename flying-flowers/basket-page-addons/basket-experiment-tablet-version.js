@@ -30,7 +30,7 @@ var FlyingFlowersBasketPage = {
 .checkout-button-top { margin-top: 10px; } \
 .single-addon { font-size: 12px; } \
 .single-addon .addonImg { float: left; margin-top: 10px; margin-bottom: 20px; margin-right: 10px; } \
-.dialogue .addon { width: 168px !important; } \
+.dialogue .addon { width: 138px !important; } \
 .dialogue-content { width: 921px !important; position: relative; overflow:hidden; } \
 .dialogue .addonImg { border: 1px solid #EE2C71; padding: 10px 30px; margin: 0 10px; } \
 .modal-nothanks-button a { width: 100px; height: 33px; line-height: 33px; text-align: center; display: block; color: #EE2C71; border: 1px solid #EE2C71 !important; font-size: 12px; text-decoration: none; margin-top: 15px; } \
@@ -283,8 +283,8 @@ customUpgradeOption();
                    
                    var addon_imgs = $('.dialogue .addonImg img');
                    if(addon_imgs.length > 4) {
-                       $('.dialogue .addon').css({'width':'165px'});
-                       $('.dialogue .addonImg, .dialogue .addonImg img').css({'width':'165px','height':'110px'});
+                       $('.dialogue .addon').css({'width':'135px'});
+                       $('.dialogue .addonImg, .dialogue .addonImg img').css({'width':'135px','height':'110px'});
                    }
                    addon_imgs.each(function(){
                        var _this = $(this),
@@ -336,9 +336,9 @@ window.setTimeout(function(){
 
 };
 
-console.log('v4 - tablet');
-
 // Run the experiment
 FlyingFlowersBasketPage.run();
 
 $("#basketContainer > a:eq(0) > img:eq(0)").css({"margin-top":"17px"});
+
+console.log('v5 - tablet');
