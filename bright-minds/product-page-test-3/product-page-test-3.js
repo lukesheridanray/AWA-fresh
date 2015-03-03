@@ -123,14 +123,16 @@ exp.css = '\
 // String containing the mobile CSS for the experiment
 exp.cssMobile = ' \
 .has-extra-images #product #imagewrapper #prod_img { margin-left: 65px; } \
+#product #imagewrapper { margin-bottom: 20px; } \
 #product #summary { position: relative; text-align: right; } \
 #product #summary .cost { text-align: right; } \
 #product #summary .message { position: absolute; bottom: 5px; right: 280px; } \
+#product #deliveryprompt { margin-bottom: 20px; } \
 #product #summary #details { text-align: right; } \
 #product #summary #details dt { float: none; } \
 #product #summary #cmform #details dt.model { position: absolute; left: 0; top: 0; } \
 #product #summary #cmform #details dd#prodModel { position: absolute; left: 40px; top: 0; } \
-#product #summary #addtobasket { background: transparent; border: 0; padding: 0; } \
+#product #summary #addtobasket { background: transparent; border: 0; margin: 10px 0; padding: 0; } \
 #product #summary #qtybox { position: absolute; bottom: 12px; right: 200px; } \
 #product #summary #qtybox label { display: inline; } \
 #product #summary #addtobasket #action_button { padding: 0.25em 0.5em; width: auto; } \
