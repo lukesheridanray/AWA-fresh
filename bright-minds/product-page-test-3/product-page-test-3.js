@@ -61,7 +61,7 @@ exp.css = '\
 .exp-inner:after { clear: both; content: ""; display: block; } \
 .exp-column { float: left; width: 460px; } \
 .exp-column + .exp-column { float: right; } \
-.exp-box { border: 3px solid #f0f1f2; padding: 15px; position: relative; } \
+.exp-box { padding: 15px; position: relative; } \
 .exp-box + .exp-box { margin-top: 20px; } \
 .exp-box > h2 { border-bottom: 3px solid #f0f1f2; padding-bottom: 0.5em; text-align: center; } \
 .exp-box-returns > h2 { padding-right: 240px; text-align: right; } \
@@ -86,6 +86,7 @@ exp.css = '\
 #product #summary .message { position: absolute; left: 0; bottom: -22px; width: 100px; height: 100px; text-align: center; display: block; } \
 #product #summary .message .exp-message-inner { display: block; position: relative; top: 50%; transform: translateY(-50%); transform: -ms-translateY(-50%); -webkit-transform: translateY(-50%); } \
 #product #summary #reviews_link { text-decoration: underline; } \
+#product #summary #deliveryprompt { float: right; } \
 #product #eimgHoverscontainer { padding-top: 0; } \
 .has-extra-images #product #imagewrapper, \
 #product #imagewrapper { float: none; width: 400px; min-height: 320px; } \
