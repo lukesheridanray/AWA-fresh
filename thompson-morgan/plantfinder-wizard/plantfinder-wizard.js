@@ -1,42 +1,28 @@
 var AWA_PF = (window.location.toString().indexOf('plantfinder') !== -1) ? true : false;
-  
-//
-// CGIT Optimizely Boilerplate - version 0.1.4
-//
 
 // JSHint flags
 // jshint multistr: true
 // jshint jquery: true
 // jshint laxcomma: true
 
-// Wrap the experiment code in an IIFE, this creates a local scope and allows us to
-// pass in jQuery to use as $. Other globals could be passed in if required.
 var exp = (function($) {
   
   if( !AWA_PF ) {
     return false;
   }
 
-// Initialise the experiment object
 var exp = {};
 
-// Wrapper for console.log, to prevent the exp breaking on browsers which don't
-// (always) have 'console' set (e.g. IE9)
 exp.log = function (str) {
     if (typeof window.console !== 'undefined') {
         console.log(str);
     }
 };
 
-// Log the experiment, useful when multiple experiments are running
-exp.log('Plantfinder wizard - 0.41');
-
-// Variables
-// Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
     page: $('.VIEW-PORTAL').length ? 'site' : 'frame',
-//    floweringmonthrange: '',
-//    sowingmonthrange: '',
+    floweringQuery: decodeURIComponent(window.location.search).match(/(floweringmonth:\[)(.+)(\])/),
+    sowingQuery: decodeURIComponent(window.location.search).match(/(sowingmonth:\[)(.+)(\])/),
     view: ' \
 <h1 class="pad_b_10">Find your perfect plant</h1> \
 <p class="exp-pf-intro">Add one or more filters below to find your perfect plant<p> \
@@ -687,8 +673,18 @@ body { \
 .fcp1.variegated,.fcp2.variegated{ background-image: url("data:image/gif;base64,R0lGODlhNwA3AJEAAFiBJf///8DQrQAAACH5BAAHAP8ALAAAAAA3ADcAAAKfVI6py+0OzJu0LhCt3gxnDmreF5bQKJlqMmLpqrYuvMozXdo3zuk7b/H9gBPhkNgwHpEK5ZJ5cD6Z0imxauVhs7Qtt+YlUcPiK7msPaO76jW4/WK33bn5N2i/U/KeeJ1PJwKolzRIeGF4yJKoGMXY+NgHEim5QVmJdxnYpHnXifnwCVooulk6ynlKp4rqyLr2iho7Ogtai3lbmSu521cAADs="); } \
 /* */';
 
-// Functions
-// Object containing functions, some helpful functions are included
+// Log the experiment, useful when multiple experiments are running
+exp.log('Plantfinder wizard - '+exp.vars.page+' - 0.45');
+
+if( exp.vars.page === 'site' ) {
+    (function(){
+        var fileref = document.createElement('script');
+        fileref.setAttribute('type','text/javascript');
+        fileref.setAttribute('src', 'http://search.thompson-morgan.com//sli-range-slider-2.0.3.custom.js');
+        document.getElementsByTagName('head')[0].appendChild(fileref);
+    })();
+}
+
 exp.func = {};
 
 exp.func.clearAll = function() {
@@ -701,13 +697,6 @@ exp.func.clearAll = function() {
     window.floweringmonthrange = '';
     $('.fcp1.selected,.fcp2.selected').trigger('click');
     $('.exp-pf-checkbox__wrapper input:checked').trigger('click');
-/*    $('.exp-pf-checkbox__wrapper span.checkbox').each(function(){
-        $this = $(this);
-        if($this.attr('style') === 'background-position: 0px -50px;') {
-            $this.trigger('mousedown').trigger('mouseup');
-        }
-    });
-*/
     exp.func.searchLookAhead();
     return false;
 };
@@ -717,7 +706,6 @@ exp.func.searchLookAhead = function(noModal) {
     var $resultHolder = $('.exp-pf-search-lookahead');
     var searchURL = exp.func.doSearch('return_url');
     $resultHolder.html('. . .');
-    exp.log(searchURL);
     $.ajax({
         url: searchURL,
         type: 'GET',
@@ -768,7 +756,6 @@ exp.func.setLastSearch = function() {
         $('.exp-pf-accordion input[value="'+val+'"]').prop('checked',true);
     }
     function checkColours(elem) {
-        //elem.addClass('selected');
         exp.func.selectColour( false, elem );
     }
     // Get radio vals
@@ -836,13 +823,22 @@ exp.func.setLastSearch = function() {
 
 // update the range sliders positions
 exp.func.updateRangePositions = function() {
-    if( sowingmonthrange !== undefined ) {
-        var s_pos = sowingmonthrange.match(/([0-9]+)/g);
+    var s_pos, f_pos;
+    if( sowingmonthrange || exp.vars.sowingQuery !== null ) {
+    if( sowingmonthrange ) {
+        s_pos = sowingmonthrange.match(/([0-9]+)/g);
+    } else {
+        s_pos = exp.vars.sowingQuery[0].match(/([0-9]+)/g);
+    }
         sowingmonth.update({ selection:[s_pos[0], s_pos[1]] });
         updatesowingmonthLabel();
     }
-    if( floweringmonthrange !== undefined ) {
-        var f_pos = floweringmonthrange.match(/([0-9]+)/g);
+    if( floweringmonthrange || exp.vars.floweringQuery !== null ) {   
+    if( floweringmonthrange ) {
+        f_pos = floweringmonthrange.match(/([0-9]+)/g);
+    } else {
+        f_pos = exp.vars.floweringQuery[0].match(/([0-9]+)/g);
+    }
         floweringmonth.update({ selection:[f_pos[0], f_pos[1]] });
         updatefloweringmonthLabel();
     }
@@ -859,13 +855,6 @@ exp.func.doSearch = function(type){
     if(subcat){
         options.push("subcat:"+subcat[1]);
     }
-
-/*
-    if($("#gps_ac").val()){options.push("acidity:"+$("#gps_ac").val())}
-    if($("#gps_br").val()){options.push("brand:"+$("#gps_br").val())}
-    if($("#gps_of").val()){options.push("otherfeatures:"+$("#gps_of").val())}
-    if($("#gps_aw").val()){options.push("awards:"+$("#gps_aw").val())}
-*/
 
     // Radio buttons
     
@@ -940,10 +929,7 @@ exp.func.doSearch = function(type){
 
     // Ranges
 
-//    if(heightrange && heightrange != "height:[0cm,900cm]"){options.push(heightrange);}
-//    if(spreadrange){options.push(spreadrange);}
     if(sowingmonthrange){options.push(sowingmonthrange);}
-//    if(harvestperiodrange){options.push(harvestperiodrange);}
     if(floweringmonthrange){options.push(floweringmonthrange);}
 
     var new_url = "http://"+window.location.hostname+"/search?w=*&ts=plantfinder&af=tab:products";
@@ -958,14 +944,10 @@ exp.func.doSearch = function(type){
         window.parent.location.href = new_url;
         return false;
     }
-
 };
 
 exp.func.selectColour = function( ev, elem ) {
     var _this = elem || $(this);
-//    var areg = new RegExp(/fcp_([^\.]+)/i);
-//    var filename = _this.attr('src').match(areg);
-//    var file_name = filename[1];
     _this.toggleClass('selected');
     if (_this.hasClass('fcp2')) {
         $('#gps_folc_nopref').removeAttr('checked');
@@ -973,11 +955,6 @@ exp.func.selectColour = function( ev, elem ) {
     if (_this.hasClass('fcp1')) {
         $('#gps_floc_nopref').removeAttr('checked');
     }
-//    if (file_name.toLowerCase().indexOf('selected') >= 0) {
-//        _this.attr('src', 'http://thompson-morgan.resultspage.com/includes/images/fcp_' + file_name.replace('selected_', '') + '.png');
-//    } else {
-//        _this.attr('src', 'http://thompson-morgan.resultspage.com/includes/images/fcp_selected_' + file_name + '.png');
-//    }
 };
 
 // open up the more info dialog
@@ -1193,8 +1170,6 @@ exp.func.waitFor = function(condition, callback, timeout, keepAlive) {
 };
 
 
-// Init function
-// Called to run the actual experiment, DOM manipulation, event listeners, etc
 exp.init = function() {
 
     if( this.vars.page === 'site' ) {
@@ -1283,28 +1258,14 @@ exp.init = function() {
 
 };
 
-// Run the experiment
 exp.init();
 
-// Return the experiment object so we can access it later if required
 return exp;
 
-// Close the IIFE, passing in jQuery and any other global variables as required
-// if jQuery is not already used on the site use optimizely.$ instead
 })(jQuery);
 
 // Advanced search global banner
 
-//
-// CGIT Optimizely Boilerplate - version 0.1.4
-//
-
-// JSHint flags
-// jshint multistr: true
-// jshint jquery: true
-
-// Wrap the experiment code in an IIFE, this creates a local scope and allows us to
-// pass in jQuery to use as $. Other globals could be passed in if required.
 var exppf = (function($) {
   
   if( AWA_PF ) {
