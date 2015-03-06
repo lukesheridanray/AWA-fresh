@@ -1,15 +1,12 @@
 var AWA_PF = (window.location.toString().indexOf('plantfinder') !== -1) ? true : false;
 
-// JSHint flags
 // jshint multistr: true
 // jshint jquery: true
 // jshint laxcomma: true
 
 var exp = (function($) {
-  
-  if( !AWA_PF ) {
-    return false;
-  }
+
+if( !AWA_PF ) { return false;}
 
 var exp = {};
 
@@ -26,10 +23,11 @@ exp.vars = {
     view: ' \
 <h1 class="pad_b_10">Find your perfect plant</h1> \
 <p class="exp-pf-intro">Add one or more filters below to find your perfect plant<p> \
+<p class="exp-pf-subintro">Or try the <a href="http://search.thompson-morgan.com/genus/">A - Z alphabetical plant index</a>.</p> \
 <div class="exp-pf-accordion exp-pf-accordion__garden"> \
     <div class="exp-pf-accordion__title"> \
         <strong>Add garden characteristics</strong> \
-        <em>Position or place in the garden, sun exposure, soil characteristics</em> \
+        <em>Position or sun exposure, Soil Type, Soil Moisture, Garden Type</em> \
     </div> \
     <div class="exp-pf-accordion__content"> \
         <fieldset class="exp-pf__fieldset"> \
@@ -205,8 +203,8 @@ exp.vars = {
 </div> \
 <div class="exp-pf-accordion exp-pf-accordion__plant"> \
     <div class="exp-pf-accordion__title"> \
-        <strong>Add plant preferences</strong> \
-        <em>Hardiness, longevity, flower colour, flowering month and more</em> \
+        <strong>Add plant / seed preferences</strong> \
+        <em>Plant Type, Hardiness, Longevity, Colour, Flowering Months, Seed Sowing Month</em> \
     </div> \
     <div class="exp-pf-accordion__content"> \
         <fieldset class="exp-pf__fieldset"> \
@@ -280,24 +278,6 @@ exp.vars = {
                         <input type="radio" name="gps_lo" value="longevity:perennial" id="gps_lo_6" /> \
                         <label for="gps_lo_6">Perennial</label> \
                     </span> \
-            <!-- \
-                    <span> \
-                        <input type="radio" name="gps_lo" value="longevity:rhizome" id="gps_lo_7" /> \
-                        <label for="gps_lo_7">Rhizome</label> \
-                    </span> \
-                    <span> \
-                        <input type="radio" name="gps_lo" value="longevity:shrub" id="gps_lo_8" /> \
-                        <label for="gps_lo_8">Shrub</label> \
-                    </span> \
-                    <span> \
-                        <input type="radio" name="gps_lo" value="longevity:tree" id="gps_lo_9" /> \
-                        <label for="gps_lo_9">Tree</label> \
-                    </span> \
-                    <span> \
-                        <input type="radio" name="gps_lo" value="longevity:tuber" id="gps_lo_9" /> \
-                        <label for="gps_lo_9">Tuber</label> \
-                    </span> \
-            --> \
                 </div> \
             </div> \
             <div class="exp-pf-checkbox"> \
@@ -342,18 +322,18 @@ exp.vars = {
                     <span title="Black" class="black fcp2 " value="foliagecolour:black"></span> \
                 </div> \
             </div> \
-            <div class="exp-pf-range"> \
-                <div class="pad_b_20 exp-pf-range__wrapper"> \
+            <div class="exp-pf-slider"> \
+                <div class="pad_b_20 exp-pf-slider__wrapper"> \
                     <h2 class="pad_b_10">Flowering Period <em class="exp-optional">(optional)</em></h2> \
-                    <div id="slider-floweringmonth-low" class="sli_slider_low"></div> \
-                    <div id="slider-floweringmonth" class="sli_custom_slider"></div> \
-                    <div id="slider-floweringmonth-high" class="sli_slider_high"></div> \
+                    <div id="slider-flowering-low" class="awa-slider-label">Jan</div> \
+                    <div id="slider-flowering"><div class="awa-slider"></div></div> \
+                    <div id="slider-flowering-high" class="awa-slider-label">Dec</div> \
                 </div> \
-                <div class="pad_b_20 exp-pf-range__wrapper"> \
+                <div class="pad_b_20 exp-pf-slider__wrapper"> \
                     <h2 class="pad_b_10">Sowing Period <em class="exp-optional">(optional)</em></h2> \
-                    <div id="slider-sowingmonth-low" class="sli_slider_low"></div> \
-                    <div id="slider-sowingmonth" class="sli_custom_slider"></div> \
-                    <div id="slider-sowingmonth-high" class="sli_slider_high"></div> \
+                    <div id="slider-sowing-low" class="awa-slider-label">Jan</div> \
+                    <div id="slider-sowing"><div class="awa-slider"></div></div> \
+                    <div id="slider-sowing-high" class="awa-slider-label">Dec</div> \
                 </div> \
             </div> \
         </fieldset> \
@@ -431,6 +411,19 @@ exp.siteCSS = ' \
 } ';
 
 exp.frameCSS = ' \
+/*! noUiSlider - 7.0.10 - 2014-12-27 14:50:47 */ \
+.noUi-target,.noUi-target *{-webkit-touch-callout:none;-webkit-user-select:none;-ms-touch-action:none;-ms-user-select:none;-moz-user-select:none;-moz-box-sizing:border-box;box-sizing:border-box}.noUi-target{position:relative;direction:ltr}.noUi-base{width:100%;height:100%;position:relative}.noUi-origin{position:absolute;right:0;top:0;left:0;bottom:0}.noUi-handle{position:relative;z-index:1}.noUi-stacking .noUi-handle{z-index:10}.noUi-state-tap .noUi-origin{-webkit-transition:left .3s,top .3s;transition:left .3s,top .3s}.noUi-state-drag *{cursor:inherit!important}.noUi-base{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}.noUi-horizontal{height:18px}.noUi-horizontal .noUi-handle{width:34px;height:28px;left:-17px;top:-6px}.noUi-vertical{width:18px}.noUi-vertical .noUi-handle{width:28px;height:34px;left:-6px;top:-17px}.noUi-background{background:#FAFAFA;box-shadow:inset 0 1px 1px #f0f0f0}.noUi-connect{background:#3FB8AF;box-shadow:inset 0 0 3px rgba(51,51,51,.45);-webkit-transition:background 450ms;transition:background 450ms}.noUi-origin{border-radius:2px}.noUi-target{border-radius:4px;border:1px solid #D3D3D3;box-shadow:inset 0 1px 1px #F0F0F0,0 3px 6px -5px #BBB}.noUi-target.noUi-connect{box-shadow:inset 0 0 3px rgba(51,51,51,.45),0 3px 6px -5px #BBB}.noUi-dragable{cursor:w-resize}.noUi-vertical .noUi-dragable{cursor:n-resize}.noUi-handle{border:1px solid #D9D9D9;border-radius:3px;background:#FFF;cursor:default;box-shadow:inset 0 0 1px #FFF,inset 0 1px 7px #EBEBEB,0 3px 6px -3px #BBB}.noUi-active{box-shadow:inset 0 0 1px #FFF,inset 0 1px 7px #DDD,0 3px 6px -3px #BBB}.noUi-handle:after,.noUi-handle:before{content:"";display:block;position:absolute;height:14px;width:1px;background:#E8E7E6;left:14px;top:6px}.noUi-handle:after{left:17px}.noUi-vertical .noUi-handle:after,.noUi-vertical .noUi-handle:before{width:14px;height:1px;left:6px;top:14px}.noUi-vertical .noUi-handle:after{top:17px}[disabled] .noUi-connect,[disabled].noUi-connect{background:#B8B8B8}[disabled] .noUi-handle{cursor:not-allowed} \
+.noUi-handle { \
+    border: 1px solid #274E13; \
+    background: #274E13; \
+    box-shadow: none; \
+} \
+.noUi-base, .noUi-background { \
+    background: #ddd; \
+} \
+.noUi-connect { \
+    background: #aaa; \
+} \
 body { \
     background: #DBEBD4; \
 } \
@@ -448,6 +441,15 @@ body { \
     text-align: center; \
     font-size: 16px; \
     padding: 20px 0; \
+} \
+.gps .exp-pf-subintro { \
+    text-align: center; \
+    font-size: 12px; \
+    position: relative; \
+    top: -15px; \
+} \
+.gps .exp-pf-subintro a { \
+    color: #274E13; \
 } \
 .exp-pf-accordion__title { \
     position: relative; \
@@ -611,11 +613,37 @@ body { \
 .gps .pad_b_20.exp-pf-range__wrapper { \
     width: 50% !important; \
     float: left; \
-    display: none; \
 } \
 .exp-pf-range__wrapper h2 { \
     clear: both !important; \
     display: block !important; \
+} \
+.exp-pf-slider { \
+    clear: both; \
+    overflow: auto; \
+    padding: 20px 0 0 0; \
+} \
+.gps .pad_b_20.exp-pf-slider__wrapper { \
+    width: 50% !important; \
+    float: left; \
+} \
+.gps .pad_b_20.exp-pf-slider__wrapper h2 { \
+    clear: both !important; \
+    display: block !important; \
+    margin: 0 0 10px 0; \
+} \
+#slider-flowering-low, #slider-sowing-low { \
+    float: left; \
+    width: 50px; \
+} \
+#slider-flowering-high, #slider-sowing-high { \
+    float: left; \
+    width: 50px; \
+    text-align: right; \
+} \
+.gps .pad_b_20.exp-pf-slider__wrapper .awa-slider { \
+    float: left; \
+    width: 320px; \
 } \
 .gps .pad_b_20.exp-pf-checkbox__wrapper__colour input { \
     display: none; \
@@ -653,6 +681,10 @@ body { \
     height: 19px; \
     background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAATBAMAAAB4ntAIAAAAA3NCSVQICAjb4U/gAAAAFVBMVEX///////////////////////////9nSIHRAAAAB3RSTlMAETNmzO7/EGgPJAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwMi8wMi8xNUo6+wwAAAAYdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3Jrc0+zH04AAABgSURBVAiZTc7BDYAwCAXQH13AOIGX3nvy3oMLkOgCbf/+I2gtLXAB8iAAjAhxlliebE0gowGZHbA6oABrGnAAZ9kMyGRAll0BLV8K/wQV+q7CIHH3FDqJ+3FCowkf3QovAbwkmQrJtmwAAAAASUVORK5CYII="); \
 } \
+.gps .fcp1.selected.cream:before, .gps .fcp2.selected.cream:before, \
+.gps .fcp1.selected.white:before, .gps .fcp2.selected.white:before { \
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAATBAMAAAB4ntAIAAAAA3NCSVQICAjb4U/gAAAAFVBMVEX///8zMzMzMzMzMzMzMzMzMzMzMzOZaqduAAAAB3RSTlMAETNmzO7/EGgPJAAAAAlwSFlzAAAK8AAACvABQqw0mAAAABh0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzT7MfTgAAABZ0RVh0Q3JlYXRpb24gVGltZQAwMi8wMi8xNUo6+wwAAABgSURBVAiZTc7BDYAwCAXQH13AOIGX3nvy3oMLkOgCbf/+I2gtLXAB8iAAjAhxlliebE0gowGZHbA6oABrGnAAZ9kMyGRAll0BLV8K/wQV+q7CIHH3FDqJ+3FCowkf3QovAbwkmQrJtmwAAAAASUVORK5CYII="); \
+} \
 .fcp1.apricot,.fcp2.apricot { background-color: #FFC15C; } \
 .fcp1.brown,.fcp2.brown{ background-color: #7B472F; } \
 .fcp1.grey,.fcp2.grey{ background-color: #ccc; } \
@@ -674,27 +706,16 @@ body { \
 /* */';
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Plantfinder wizard - '+exp.vars.page+' - 0.45');
-
-if( exp.vars.page === 'site' ) {
-    (function(){
-        var fileref = document.createElement('script');
-        fileref.setAttribute('type','text/javascript');
-        fileref.setAttribute('src', 'http://search.thompson-morgan.com//sli-range-slider-2.0.3.custom.js');
-        document.getElementsByTagName('head')[0].appendChild(fileref);
-    })();
-}
+exp.log('Plantfinder wizard - '+exp.vars.page+' - 0.48');
 
 exp.func = {};
 
 exp.func.clearAll = function() {
     $('#gps_po_1,#gps_st_0,#gps_sm_1,#gps_pt_1,#gps_ha_1,#gps_lo_1').trigger('click');
-    sowingmonth.update({ selection:[0, 12] });
-    updatesowingmonthLabel();
-    window.sowingmonthrange = '';
-    floweringmonth.update({ selection:[0, 12] });
-    updatefloweringmonthLabel();
-    window.floweringmonthrange = '';
+    $('#slider-sowing .awa-slider').val([ 1, 12 ]);
+    exp.func.setSliderLabels( $('#slider-sowing .awa-slider') );
+    $('#slider-flowering .awa-slider').val([ 1, 12 ]);
+    exp.func.setSliderLabels( $('#slider-flowering .awa-slider') );
     $('.fcp1.selected,.fcp2.selected').trigger('click');
     $('.exp-pf-checkbox__wrapper input:checked').trigger('click');
     exp.func.searchLookAhead();
@@ -712,8 +733,13 @@ exp.func.searchLookAhead = function(noModal) {
         success: function(resp) {
             var $resp = $(resp);
             var $resultsDiv = $resp.find('#sli_bct div:eq(0)');
+            var numPlants;
             if( $resultsDiv.length === 1 ) {
-                $resultHolder.html( $resultsDiv.html().match(/(of )([0-9]+)( S)/)[2] + ' plants match your criteria');
+                numPlants = $resultsDiv.html().match(/(of )([0-9]+)( S)/)[2];
+                $resultHolder.html( numPlants + ' plants match your criteria');
+                if( parseInt(numPlants) < 10 && !noModal ) {
+                    exp.func.noResultsModal( 'frame', parent.$(window), parent.$('body'), parent.$(document), numPlants );
+                }
             } else {
                 $resultHolder.html( 'No plants match your criteria');
                 if( !noModal ) {
@@ -732,7 +758,6 @@ exp.func.accordionOpen = function() {
     $('.exp-pf-button').addClass('js-show');
     $('.exp-pf-search-lookahead').addClass('js-show');
     $('.exp-pf-clear-all').addClass('js-show');
-
     //adjust iframe height, we have to wait a moment or the dom isnt ready after opening the accordion
     setTimeout( 
         function(){
@@ -821,78 +846,87 @@ exp.func.setLastSearch = function() {
  
 };
 
-// update the range sliders positions
-exp.func.updateRangePositions = function() {
+// set slider labels and global vars
+exp.func.setSliderLabels = function( $this ) {
+    var type = $this.parent().attr('id').replace('slider-', '');
+    var lowVal = $this.val()[0].replace('.00','');
+    var highVal = $this.val()[1].replace('.00','');
+    var lowLabel = $('#slider-'+type+'-low');
+    var highLabel = $('#slider-'+type+'-high');
+    var monthArray = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
+    
+    lowLabel.text( monthArray[ parseInt(lowVal) - 1] );
+    highLabel.text( monthArray[ parseInt(highVal) - 1] );
+    
+    if(lowVal == 1 && highVal == 12) {
+        window[type+'monthrange'] = '';
+    } else {
+        window[type+'monthrange'] = type+'month:['+lowVal+','+highVal+']';
+    }
+};
+
+
+// set slider positions
+exp.func.updateSliderPositions = function() {
     var s_pos, f_pos;
     if( sowingmonthrange || exp.vars.sowingQuery !== null ) {
-    if( sowingmonthrange ) {
-        s_pos = sowingmonthrange.match(/([0-9]+)/g);
-    } else {
-        s_pos = exp.vars.sowingQuery[0].match(/([0-9]+)/g);
-    }
-        sowingmonth.update({ selection:[s_pos[0], s_pos[1]] });
-        updatesowingmonthLabel();
+        if( sowingmonthrange ) {
+            s_pos = sowingmonthrange.match(/([0-9]+)/g);
+        } else {
+            s_pos = exp.vars.sowingQuery[0].match(/([0-9]+)/g);
+        }
+        $('#slider-sowing .awa-slider').val([ s_pos[0], s_pos[1] ]);
+        exp.func.setSliderLabels( $('#slider-sowing .awa-slider') );
     }
     if( floweringmonthrange || exp.vars.floweringQuery !== null ) {   
-    if( floweringmonthrange ) {
-        f_pos = floweringmonthrange.match(/([0-9]+)/g);
-    } else {
-        f_pos = exp.vars.floweringQuery[0].match(/([0-9]+)/g);
-    }
-        floweringmonth.update({ selection:[f_pos[0], f_pos[1]] });
-        updatefloweringmonthLabel();
+        if( floweringmonthrange ) {
+            f_pos = floweringmonthrange.match(/([0-9]+)/g);
+        } else {
+            f_pos = exp.vars.floweringQuery[0].match(/([0-9]+)/g);
+        }
+        $('#slider-flowering .awa-slider').val([ f_pos[0], f_pos[1] ]);
+        exp.func.setSliderLabels( $('#slider-flowering .awa-slider') );
     }
 };
 
 // function to do the search
-// adapted from original page
 exp.func.doSearch = function(type){
     type = type || false;
     var options = [];
     var reg = new RegExp(/subcat:(.*?)\s/i);
     var subcat = reg.exec(current_af);
-    
     if(subcat){
         options.push("subcat:"+subcat[1]);
     }
-
     // Radio buttons
-    
     //hardiness
     if($('input:radio[name=gps_ha]:checked').val()){
         options.push($('input:radio[name=gps_ha]:checked').val());
     }
-
     //longevity
     if($('input:radio[name=gps_lo]:checked').val()){
         options.push($('input:radio[name=gps_lo]:checked').val());
     }
-
     //position
     if($('input:radio[name=gps_po]:checked').val()){
         options.push($('input:radio[name=gps_po]:checked').val());
-    }  
-
+    }
     //soil moisture
     if($('input:radio[name=gps_sm]:checked').val()){
         options.push($('input:radio[name=gps_sm]:checked').val());
-    }  
-
+    }
     //plant type
     if($('input:radio[name=gps_pt]:checked').val()){
         options.push($('input:radio[name=gps_pt]:checked').val());
     }
-
     //soil type 
     if($('input:radio[name=gps_st]:checked').val()){
         options.push($('input:radio[name=gps_st]:checked').val());
     }
-
     //scented flower
     if($("#gps_sf").attr('checked')){
         options.push("scentedflower:yes");
     }
-
     //evergreen
     if($("#gps_eg").attr('checked')){
         options.push("evergreen:yes");
@@ -900,21 +934,18 @@ exp.func.doSearch = function(type){
 
     // Checkboxes
 
-
     //ideal for
     $('input[name=gps_if]').each(function(){
         if($(this).attr('checked')){
             options.push($(this).attr('value'));
         }
     });
-
     //grow in
     $('input[name=gps_gi]').each(function(){
         if($(this).attr('checked')){
             options.push($(this).attr('value'));
         }
     });
-    
     //foliage & flower colour
     $(".fcp1").each(function(elem) {
         if($(this).hasClass("selected")){
@@ -928,12 +959,10 @@ exp.func.doSearch = function(type){
     });
 
     // Ranges
-
     if(sowingmonthrange){options.push(sowingmonthrange);}
     if(floweringmonthrange){options.push(floweringmonthrange);}
 
     var new_url = "http://"+window.location.hostname+"/search?w=*&ts=plantfinder&af=tab:products";
-    
     for(var i=options.length-1; i>=0; i--) {
         var value = options[i];
         new_url = new_url + "%20" +value;
@@ -1001,99 +1030,6 @@ exp.func.moreInfoPopUp = function() {
     return false;
 };
 
-exp.func.initSliders = function(){
-    window.updatefloweringmonthLabel = function() {    
-    document.getElementById('slider-floweringmonth-low').innerHTML = "" + months[floweringmonth.format(floweringmonth.selection()[0])];
-    document.getElementById('slider-floweringmonth-high').innerHTML = "" + months[floweringmonth.format(floweringmonth.selection()[1])];
-if((1 != floweringmonth.selection()[0]) || (12 != floweringmonth.selection()[1]) ){
-        floweringmonthrange =  'floweringmonth:[' + floweringmonth.format(floweringmonth.selection()[0]) + ',' + floweringmonth.format(floweringmonth.selection()[1]) + ']';
-    }
-};
-window.floweringmonth = new SLI.Slider('slider-floweringmonth', {
-        topic           :'floweringmonth'
-      , topicName       :'FloweringMonth'
-      , field           :'floweringmonth'
-      , increment       :1
-      , label           :''
-      , divisor         :1
-      , rangeStarts     :1
-      , rangeEnds       :12
-      , selection       :[1, 12]
-      , positions       :[ 1,2,3,4,5,6,7,8,9,10,11,12 ]
-      , counts          :[ 49,115,216,391,644,1588,1927,1744,1253,557,58,29 ]
-      , boundaryCounts  :[ 115,216,391,644,1588,1927,1744,1253,557,58,29,0 ]
-      , decimals: 0
-      , move: function(index, value, data) {
-            document.getElementById('slider-floweringmonth-low').innerHTML = "" + months[floweringmonth.format(floweringmonth.selection()[0])];
-            document.getElementById('slider-floweringmonth-high').innerHTML = "" + months[floweringmonth.format(floweringmonth.selection()[1])];
-      }
-      , change: function(data) {
-            var rangeIsEmpty = (data.counts[0] === 0);            
-            var rangeIsDifferent = (data.selection[0] !== 1 || data.selection[1] !== 12);
-            var backToOriginalPositions = (data.selection[0] === 1) && (data.selection[1] === 12);
-            if (rangeIsDifferent && !rangeIsEmpty) {
-                !!jQuery.scrollTo && jQuery.scrollTo(0,800);
-                window.floweringmonthrange =  'floweringmonth:[' + data.selection[0] + ',' + data.selection[1] + ']';
-
-            } else if (backToOriginalPositions) {
-                window.floweringmonthrange = '';
-            }
-            if (rangeIsEmpty) {
-                this.update({ selection:[1, 12] });
-                updatefloweringmonthLabel();
-            }
-            exp.func.searchLookAhead();
-      }
-});
-updatefloweringmonthLabel();
-
-window.updatesowingmonthLabel = function() {   
-    document.getElementById('slider-sowingmonth-low').innerHTML = "" + months[sowingmonth.format(sowingmonth.selection()[0])];
-    document.getElementById('slider-sowingmonth-high').innerHTML = "" + months[sowingmonth.format(sowingmonth.selection()[1])];
-if((1 != sowingmonth.selection()[0]) || (12 != sowingmonth.selection()[1]) ){
-        sowingmonthrange =  'sowingmonth:[' + sowingmonth.format(sowingmonth.selection()[0]) + ',' + sowingmonth.format(sowingmonth.selection()[1]) + ']';
-    }
-};
-
-window.sowingmonth = new SLI.Slider('slider-sowingmonth', {
-        topic           :'sowingmonth'
-      , topicName       :'SowingMonth'
-      , field           :'sowingmonth'
-      , increment       :1
-      , label           :''
-      , divisor         :1
-      , rangeStarts     :1
-      , rangeEnds       :12
-      , selection       :[1, 12]
-      , positions       :[ 1,2,3,4,5,6,7,8,9,10,11,12 ]
-      , counts          :[ 166,717,1358,1411,975,656,419,265,267,203,64,73 ]
-      , boundaryCounts  :[ 717,1358,1411,975,656,419,265,267,203,64,73,0 ]
-      , decimals: 0
-      , move: function(index, value, data) {
-            document.getElementById('slider-sowingmonth-low').innerHTML = "" + months[sowingmonth.format(sowingmonth.selection()[0])];
-            document.getElementById('slider-sowingmonth-high').innerHTML = "" + months[sowingmonth.format(sowingmonth.selection()[1])];
-      }
-      , change: function(data) {
-            var rangeIsEmpty = (data.counts[0] === 0);
-            var rangeIsDifferent = (data.selection[0] !== 1 || data.selection[1] !== 12);
-            var backToOriginalPositions = (data.selection[0] === 1) && (data.selection[1] === 12);
-            if (!rangeIsEmpty && rangeIsDifferent) {
-                !!jQuery.scrollTo && jQuery.scrollTo(0,800);
-                window.sowingmonthrange =  'sowingmonth:[' + data.selection[0] + ',' + data.selection[1] + ']';
-            } else if (backToOriginalPositions) {
-                window.sowingmonthrange = '';
-            }
-            if (rangeIsEmpty) {
-                this.update({ selection:[1, 12] });
-                updatesowingmonthLabel();
-            }
-            exp.func.searchLookAhead();
-      }
-});
-updatesowingmonthLabel();
-
-};
-
 exp.func.iframeHeight = function( $elem, height ) {
     $elem.parent('div').css({'height':'auto'});
     $elem.css({'height':height + 'px'});
@@ -1112,7 +1048,8 @@ window.awaGetScrollTop = function() {
     return ($(window).scrollTop() + 200).toString() + 'px';
 };
 
-exp.func.noResultsModal = function(page,$window,$body,$document) {
+exp.func.noResultsModal = function(page,$window,$body,$document,numPlants) {
+    numPlants = numPlants || 99;
     // scroll to search area
     var modalPos;
     if( page === 'site' ) {
@@ -1126,20 +1063,29 @@ exp.func.noResultsModal = function(page,$window,$body,$document) {
             return false;
         }
         modalPos = parent.awaGetScrollTop();
-        //parent.awaScrollTop();
     }
     if( page === 'site' ) {
         $('.sli_plantfinder_noresults').remove();
     }
-    $body.append('<div class="exp-modal-error" style="top:'+modalPos+' !important"> \
-        <p>Sorry, this time we\'re not able to offer you any plants which \
-         exactly match all your requirements. Please try again, choosing \
-         different options.</p> \
-         <p>For the best results, use fewer filters.</p> \
-         <a href="#" class="exp-modal-error__button js-close-modal">Select another option</a> \
-         <a href="#" class="exp-modal-error__cross js-close-modal">x</a> \
-         </div>'
-    );
+    if(numPlants < 10) {
+        $body.append('<div class="exp-modal-error" style="top:'+modalPos+' !important"> \
+             <p>Based on your current selection, we have found '+numPlants+' plants that match your criteria.</p> \
+             <p>To see more results, please choose fewer filters or use different options.</p> \
+             <a href="#" class="exp-modal-error__button js-close-modal">Continue</a> \
+             <a href="#" class="exp-modal-error__cross js-close-modal">x</a> \
+             </div>'
+        );
+    } else {
+        $body.append('<div class="exp-modal-error" style="top:'+modalPos+' !important"> \
+            <p>Sorry, this time we\'re not able to offer you any plants which \
+             exactly match all your requirements. Please try again, choosing \
+             different options.</p> \
+             <p>For the best results, use fewer filters.</p> \
+             <a href="#" class="exp-modal-error__button js-close-modal">Select another option</a> \
+             <a href="#" class="exp-modal-error__cross js-close-modal">x</a> \
+             </div>'
+        );
+    }
     $body.append('<div class="exp-modal-error__bg js-close-modal" style="height:'+$document.height()+'px" />');
     
     if( page === 'site' ) {
@@ -1215,15 +1161,32 @@ exp.init = function() {
         // attach handlers to more info icons
         $('.more_info').bind('click', exp.func.moreInfoPopUp );
 
-        // init range sliders
         exp.func.waitFor(
             function() {
-                return (typeof SLI === 'object');
+                return (typeof $.fn.noUiSlider === 'function');
             },
             function() {
-                $('.exp-pf-range__wrapper').css({'display': 'block'});
-                exp.func.initSliders();
-                exp.func.updateRangePositions();
+            // init sliders
+            $('.awa-slider').noUiSlider({
+                start: [1, 12],
+                step: 1,
+                margin: 1,
+                connect: true,
+                range: {
+                    'min': [ 1 ],
+                    'max': [ 12 ]
+                }
+            });
+            $('.awa-slider').on({
+                slide: function() {
+                    exp.func.setSliderLabels($(this));
+                },
+                change: function() {
+                    exp.func.setSliderLabels($(this));
+                    exp.func.searchLookAhead();
+                }
+            });
+            exp.func.updateSliderPositions();
             }
         );
 
@@ -1241,9 +1204,6 @@ exp.init = function() {
         // do an initial search ahead
         exp.func.searchLookAhead( true );
 
-        // init custom checkboxes
-        //Custom.init();
-
         // unhide our iframe
         parent.$('#sli_plant_finder__wrapper').css({'visibility': 'visible'});
 
@@ -1255,39 +1215,14 @@ exp.init = function() {
         });
 
     }
-
 };
 
-exp.init();
-
-return exp;
-
-})(jQuery);
+exp.init(); return exp; })(jQuery);
 
 // Advanced search global banner
-
 var exppf = (function($) {
-  
-  if( AWA_PF ) {
-    return false;
-  }
-
-// Initialise the experiment object
+if( AWA_PF ) { return false; }
 var exp = {};
-
-// Wrapper for console.log, to prevent the exp breaking on browsers which don't
-// (always) have 'console' set (e.g. IE9)
-exp.log = function (str) {
-    if (typeof window.console !== 'undefined') {
-        console.log(str);
-    }
-};
-
-// Log the experiment, useful when multiple experiments are running
-exp.log('Thompson & Morgan - Advanced search links - 0.2');
-
-// Variables
-// Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
     alreadyRunChecks: {
         variation1: $('.exp-advanced-search'),
@@ -1312,9 +1247,6 @@ exp.vars = {
                </div>'
     }
 };
-
-// Styles
-// String containing the CSS for the experiment
 exp.css = ' \
 #siteSearch { \
     text-align: left !important; \
@@ -1373,46 +1305,23 @@ exp.css = ' \
     border-right: 5px solid #fff; \
     background: url("//dd6zx4ibq538k.cloudfront.net/static/images/2841/c86d95977b0b4a7326724699ecf910e4_9_14.png") right no-repeat #fff !important; \
 }';
-
-// Init function
-// Called to run the actual experiment, DOM manipulation, event listeners, etc
 exp.init = function() {
-
-    // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
-
     if( this.vars.variation === 1 && !this.vars.alreadyRunChecks.variation1.length ) {
-
         if( this.vars.browseEntire.element.length ) {
-
             this.vars.browseEntire.element
             .html( this.vars.browseEntire.title )
             .attr('href', this.vars.browseEntire.url );
-
             this.vars.advancedSearch.element.append(
                 '<a href="'+this.vars.advancedSearch.url+'" class="exp-advanced-search">'+
                 this.vars.advancedSearch.title+
                 '</a>'
             );
-
         }
-
     } else if( this.vars.variation === 2 && !this.vars.alreadyRunChecks.variation2.length )  {
-
         if( this.vars.banner.element.length ) {
             this.vars.banner.element.after( this.vars.banner.html );
         }
-
     }
-
 };
-
-// Run the experiment
-exp.init();
-
-// Return the experiment object so we can access it later if required
-return exp;
-
-// Close the IIFE, passing in jQuery and any other global variables as required
-// if jQuery is not already used on the site use optimizely.$ instead
-})(jQuery);
+exp.init(); return exp; })(jQuery);

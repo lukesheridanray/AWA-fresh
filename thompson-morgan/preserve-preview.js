@@ -23,7 +23,7 @@ function(cb) {
     var waitForjQuery = function(time) {
         time = time || 50;
         var $ = window.jQuery;
-        if($ && $("#product-media").length && $(".product-alternative-images a").length) {
+        if($) {
             cb();
         } else {
             setTimeout(function () {
