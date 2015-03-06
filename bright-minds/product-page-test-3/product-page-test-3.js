@@ -61,7 +61,7 @@ exp.css = '\
 .exp-inner:after { clear: both; content: ""; display: block; } \
 .exp-column { float: left; width: 460px; } \
 .exp-column + .exp-column { float: right; } \
-.exp-box { border: 3px solid #f0f1f2; padding: 15px; position: relative; } \
+.exp-box { padding: 15px; position: relative; } \
 .exp-box + .exp-box { margin-top: 20px; } \
 .exp-box > h2 { border-bottom: 3px solid #f0f1f2; padding-bottom: 0.5em; text-align: center; } \
 .exp-box-returns > h2 { padding-right: 240px; text-align: right; } \
@@ -86,6 +86,7 @@ exp.css = '\
 #product #summary .message { position: absolute; left: 0; bottom: -22px; width: 100px; height: 100px; text-align: center; display: block; } \
 #product #summary .message .exp-message-inner { display: block; position: relative; top: 50%; transform: translateY(-50%); transform: -ms-translateY(-50%); -webkit-transform: translateY(-50%); } \
 #product #summary #reviews_link { text-decoration: underline; } \
+#product #summary #deliveryprompt { float: right; } \
 #product #eimgHoverscontainer { padding-top: 0; } \
 .has-extra-images #product #imagewrapper, \
 #product #imagewrapper { float: none; width: 400px; min-height: 320px; } \
@@ -122,14 +123,16 @@ exp.css = '\
 // String containing the mobile CSS for the experiment
 exp.cssMobile = ' \
 .has-extra-images #product #imagewrapper #prod_img { margin-left: 65px; } \
+#product #imagewrapper { margin-bottom: 20px; } \
 #product #summary { position: relative; text-align: right; } \
 #product #summary .cost { text-align: right; } \
 #product #summary .message { position: absolute; bottom: 5px; right: 280px; } \
+#product #deliveryprompt { margin-bottom: 20px; } \
 #product #summary #details { text-align: right; } \
 #product #summary #details dt { float: none; } \
 #product #summary #cmform #details dt.model { position: absolute; left: 0; top: 0; } \
 #product #summary #cmform #details dd#prodModel { position: absolute; left: 40px; top: 0; } \
-#product #summary #addtobasket { background: transparent; border: 0; padding: 0; } \
+#product #summary #addtobasket { background: transparent; border: 0; margin: 10px 0; padding: 0; } \
 #product #summary #qtybox { position: absolute; bottom: 12px; right: 200px; } \
 #product #summary #qtybox label { display: inline; } \
 #product #summary #addtobasket #action_button { padding: 0.25em 0.5em; width: auto; } \
