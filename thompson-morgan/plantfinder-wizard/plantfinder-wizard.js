@@ -20,6 +20,8 @@ exp.vars = {
     page: $('.VIEW-PORTAL').length ? 'site' : 'frame',
     floweringQuery: decodeURIComponent(window.location.search).match(/(floweringmonth:\[)(.+)(\])/),
     sowingQuery: decodeURIComponent(window.location.search).match(/(sowingmonth:\[)(.+)(\])/),
+    modalNoResultsGiven: false,
+    modalWarningGiven: false,
     view: ' \
 <h1 class="pad_b_10">Find your perfect plant</h1> \
 <p class="exp-pf-intro">Add one or more filters below to find your perfect plant<p> \
@@ -706,7 +708,7 @@ body { \
 /* */';
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Plantfinder wizard - '+exp.vars.page+' - 0.48');
+exp.log('Plantfinder wizard - '+exp.vars.page+' - 0.49');
 
 exp.func = {};
 
@@ -737,13 +739,18 @@ exp.func.searchLookAhead = function(noModal) {
             if( $resultsDiv.length === 1 ) {
                 numPlants = $resultsDiv.html().match(/(of )([0-9]+)( S)/)[2];
                 $resultHolder.html( numPlants + ' plants match your criteria');
-                if( parseInt(numPlants) < 10 && !noModal ) {
+                exp.vars.modalNoResultsGiven = false;
+                if( parseInt(numPlants) < 10 && !noModal && exp.vars.modalWarningGiven === false ) {
                     exp.func.noResultsModal( 'frame', parent.$(window), parent.$('body'), parent.$(document), numPlants );
+                    exp.vars.modalWarningGiven = true;
+                } else if( parseInt(numPlants) > 9 ) {
+                    exp.vars.modalWarningGiven = false;
                 }
             } else {
                 $resultHolder.html( 'No plants match your criteria');
-                if( !noModal ) {
+                if( !noModal && exp.vars.modalNoResultsGiven === false ) {
                     exp.func.noResultsModal( 'frame', parent.$(window), parent.$('body'), parent.$(document) );
+                    exp.vars.modalNoResultsGiven = true;
                 }
             }
         }
@@ -1036,7 +1043,7 @@ exp.func.iframeHeight = function( $elem, height ) {
 };
 
 exp.func.closeModal = function() {
-    parent.$('.exp-modal-error,.exp-modal-error__bg').hide(100);
+    parent.$('.exp-modal-error,.exp-modal-error__bg').hide(100).remove();
     return false;
 };
 
