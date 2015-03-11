@@ -708,7 +708,7 @@ body { \
 /* */';
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Plantfinder wizard - '+exp.vars.page+' - 0.49');
+exp.log('Plantfinder wizard - '+exp.vars.page+' - 0.50');
 
 exp.func = {};
 
@@ -1127,19 +1127,27 @@ exp.init = function() {
 
     if( this.vars.page === 'site' ) {
 
-        // append styles to head
-        $('head').append('<style type="text/css">'+this.siteCSS+'</style>');
+        exp.func.waitFor(
+            function() {
+                return ( $('#sli_plant_finder').contents().find('body').length === 1 );
+            },
+            function() {
 
-        // wrap iframe in a div
-        if( $('#sli_plant_finder__wrapper').length === 0 ) {
-            $('#sli_plant_finder').parent('div').css({'height':'auto'});
-            $('#sli_plant_finder').wrap('<div id="sli_plant_finder__wrapper" />');
-        }
+                // append styles to head
+                $('head').append('<style type="text/css">'+exp.siteCSS+'</style>');
 
-        // check for error message and customize
-        if( $('.sli_plantfinder_noresults').length === 1 ) {
-            exp.func.noResultsModal( 'site', $(window), $('body'), $(document) );
-        }
+                // wrap iframe in a div
+                if( $('#sli_plant_finder__wrapper').length === 0 ) {
+                    $('#sli_plant_finder').parent('div').css({'height':'auto'});
+                    $('#sli_plant_finder').wrap('<div id="sli_plant_finder__wrapper" />');
+                }
+
+                // check for error message and customize
+                if( $('.sli_plantfinder_noresults').length === 1 ) {
+                    exp.func.noResultsModal( 'site', $(window), $('body'), $(document) );
+                }
+            }
+        );
 
     } else if ( this.vars.page === 'frame' ) {
 
@@ -1147,8 +1155,14 @@ exp.init = function() {
             return false;
         }
 
+    exp.func.waitFor(
+    function() {
+        return ( $('.sli-range-slider-selection').length !== 0 && $('#grow_in span.checkbox').length !== 0 );
+    },
+    function() {
+
         // append styles to head
-        $('head').append('<style type="text/css">'+this.frameCSS+'</style>');
+        $('head').append('<style type="text/css">'+exp.frameCSS+'</style>');
 
         // replace form with our custom form
         $('.wrapper').append( exp.vars.view );
@@ -1220,6 +1234,7 @@ exp.init = function() {
             y: 250,
             speed: 'fast'
         });
+    });
 
     }
 };
