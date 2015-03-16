@@ -1,5 +1,5 @@
 //
-// Thompson & Morgan - Product page v1
+// Thompson & Morgan - Product page v2
 // Based on CGIT Optimizely Boilerplate - version 0.1.3
 //
 
@@ -9,7 +9,7 @@
 
 // Check we are on a product page
 if( jQuery('#product-portlet').length === 0 ) {
-  return false;
+//  return false;
 }
 
 // Image experiment merged
@@ -164,6 +164,7 @@ if(exp.condition && !exp.condition.length) {
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
+    variation: 2,
     isGiftItem: (window.location.href.indexOf('gift') !== -1) ? true : false,
     arriveTab:    ' \
         <p>Your plants are guaranteed to arrive in perfect condition, thanks to \
@@ -509,6 +510,7 @@ exp.init = function() {
     $('.stockInfo:eq(0)').addClass('stockInfo-first');
 
     // Why not sooner modal
+  if( exp.vars.variation !== 2 ) {
     $("#productCont .despatch.prodPageDes").each(function () {
         var month = $.trim( $(this).text().split(' ').splice(-2,1).join('') );
         var date = new Date();
@@ -517,8 +519,8 @@ exp.init = function() {
                     ' modal-link not-sooner-link">why not sooner?</a>' +
                     '<div class="hidden tooltip">' + exp.vars.notsoonerModal + '</div>');
         }
-
     });
+  }
 
     // Packaging modal
     // Preload packaging modal based on the type of the current plant
