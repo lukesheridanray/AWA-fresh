@@ -96,7 +96,7 @@ exp.init = function() {
     // Product page, listing page
     if (url.indexOf('orderConfirmation') === -1 && $('.despatch').length) {
         $('.despatch').each(function () {
-            if ($(this).contents().last()[0].textContent.trim() == 'Within 1 days') {
+            if ($(this).contents().last()[0].textContent.trim() == 'Within 1 days' || $(this).contents().last()[0].textContent.trim() == 'Within 3 days') {
                 $(this).contents().last()[0].textContent = by;
             }
         });
@@ -105,7 +105,7 @@ exp.init = function() {
     // Order confirmation page
     if (url.indexOf('orderConfirmation') !== -1) {
         $('.despatch div').each(function () {
-            if ($(this).text().trim() === 'Within 1 days') {
+            if ($(this).text().trim() === 'Within 1 days' || $(this).text().trim() === 'Within 3 days') {
                 $(this).text(by);
             }
         });
