@@ -9,7 +9,7 @@
 
 // Check we are on a product page
 if( jQuery('#product-portlet').length === 0 ) {
-//  return false;
+  return false;
 }
 
 // Image experiment merged
