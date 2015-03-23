@@ -37,9 +37,9 @@ var voga55vs85_router = (function($) {
     // Variables
     // Object containing variables, generally these would be strings or jQuery objects
     exp.vars = {
-        'main_experiment_id'    : 'TODO', // TODO
-        'control_variation_id'  : 'TODO', // TODO
-        'augmented_variation_id': 'TODO', // TODO
+        'main_experiment_id'    : '2662950360', // TODO
+        'control_variation_id'  : '2648631004', // TODO
+        'augmented_variation_id': '2683440197', // TODO
     };
 
     exp.func = {};
