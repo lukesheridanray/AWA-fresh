@@ -655,9 +655,6 @@ var voga55vs85_augmented = (function($) {
             case "/de/": // Germany
                 return 'de';
 
-            case "/se/": // Sweden
-                return "se";
-
             case "/no/": // Norway
                 return "no";
 
@@ -677,10 +674,10 @@ var voga55vs85_augmented = (function($) {
                 return "it";
 
             case "/uk/": // United Kingdom
-                return "gb";
+                return "uk";
 
             case "/en/": // Sweden (english strings)
-                return "se";
+                return "en";
 
             default:     // Denmark (english strings)
                 return "dk";
@@ -723,7 +720,7 @@ var voga55vs85_augmented = (function($) {
         exp.log("On geosite: " + geo_site + ". Today is: " + today);
 
         // GB, DK, and en are all the same copy. All are saved as 'en' in the templates group.
-        if (banner_geo_site == 'gb' || banner_geo_site == 'dk') {
+        if (banner_geo_site == 'uk' || banner_geo_site == 'dk') {
             banner_geo_site = 'en';
         }
 
