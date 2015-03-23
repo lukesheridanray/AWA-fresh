@@ -708,6 +708,12 @@ var voga55vs85_augmented = (function($) {
         });
     };
 
+    /* Checks if we are on the about page */
+    exp.func.isAboutPage = function(){
+        return $('.cms-about-our-company, .cms-ueber-uns, .cms-mieux-nous-connaitre, \
+            .cms-over-het-bedrijf, .cms-o-voga,.cms-sobre-nosotros, .cms-voga-azienda').length > 0;
+    };
+
     // Init function
     // Called to run the actual experiment, DOM manipulation, event listeners, etc
     exp.init = function() {
@@ -778,7 +784,12 @@ var voga55vs85_augmented = (function($) {
             $yellow_banner.countdown({
                 timestamp: tstamp,
                 callback: function (days, hours, minutes, seconds) {
-                    daysElement.html(days);
+                    if (daysElement.length > 0) {
+                        daysElement.html(days);
+                    }
+                    else {
+                        hours += days * 24;
+                    }
                     hoursElement.html(hours);
                     minutesElement.html(minutes);
                     secondsElement.html(seconds);
@@ -832,9 +843,18 @@ var voga55vs85_augmented = (function($) {
         }
 
         // Are we on the about-us page?
-        else if (false) { // TODO
+        else if (exp.func.isAboutPage()) {
             exp.log("On the about-us page, updating %-off value");
-            // Show % off for this geo-site today.
+
+            $('.col-main table td span,h4.aboutbanners-info-big,.landingbanners-about p').each(function(){
+                var $this = $(this);
+
+                if ($this.text().indexOf('90%') !== -1) {
+                    $this.text(
+                        $this.text().replace('90%', today_data.templates[banner_geo_site].pct_off + '%')
+                    );
+                }
+            });
         }
     };
 
