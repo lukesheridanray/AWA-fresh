@@ -188,43 +188,43 @@ var voga55vs85_augmented = (function($) {
                 'ROW4': { // Row in spreadsheet
                     'en': { // GB, SE, DK
                         'pct_off': 75,
-                        'yellow_banner_template': 'ROW4 en 75 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW4 en 75 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Save up to 75% off the high street.&nbsp;</strong>-&nbsp;Ends in {days} days {hours} hours {minutes} minutes {seconds} seconds</span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Save up to xx% off the high street price on this product. &nbsp;</strong>-&nbsp;Ends in {days} days {hours} hours {minutes} minutes {seconds} seconds</span></p>',
                     },
                     'nl': {
                         'pct_off': 75,
-                        'yellow_banner_template': 'ROW4 nl 75 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW4 nl 75 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;">Bespaar tot 75% in vergelijking met de prijs van het origineel.&nbsp;-&nbsp;Nog {hours} Uur:{minutes} Min: {seconds} Sec</span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"> <strong>Bespaar tot xx% op de prijs van het origineel</strong>&nbsp;-&nbsp;Nog {hours} Uur:{minutes} Min: {seconds} Sec</span></p>',
                     },
                     'de': {
                         'pct_off': 75,
-                        'yellow_banner_template': 'ROW4 de 75 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW4 de 75 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Sparen Sie bis zu 75% gegenüber dem Original Preis. Endet heute in {hours} Stunden {minutes} Minuten</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Sparen Sie bis zu xx% gegenüber dem Original Preis. Endet heute in {hours} Stunden {minutes} Minuten</strong></span></p>',
                     },
                     'fr': {
                         'pct_off': 75,
-                        'yellow_banner_template': 'ROW4 fr 75 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW4 fr 75 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: \'book antiqua\', palatino; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Économisez jusqu\'à 75% sur les produits des commerces traditionnels.</strong>Termine dans {days} jours, {hours}h:{minutes}m:{seconds}s</span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'book antiqua\', palatino; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Économisez jusqu\'à xx% par rapport aux magasins traditionnels sur ce produit..</strong>Termine dans {days} jours, {hours}h:{minutes}m:{seconds}s</span></p>',
                     },
                     'no': {
                         'pct_off': 80,
-                        'yellow_banner_template': 'ROW4 no 80 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW4 no 80 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-size: medium;"><span style="font-family: arial, helvetica, sans-serif; color: #000000; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Spar opptil 80% av butikkpris.</strong>&nbsp;-&nbsp;ender om {hours}t :{minutes}m :{seconds}s</span></span></p>',
+                        'product_banner_template': '<p><span style="font-size: medium;"><span style="font-family: arial, helvetica, sans-serif; color: #000000; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Spar opptil xx% av butikkpris på dette produktet.</strong>&nbsp;-&nbsp;ender om {hours}t :{minutes}m :{seconds}s</span></span></p>',
                     },
                     'es': {
                         'pct_off': 80,
-                        'yellow_banner_template': 'ROW4 es 80 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW4 es 80 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: small; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Ahorre hasta 80% de descuento del precio en tienda, finaliza en {days} d&iacute;as, {hours}h:{minutes}m:{seconds}s!</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: small; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Ahorre hasta xx% de descuento del precio en tienda de este producto, finaliza en {days} d&iacute;as, {hours}h:{minutes}m:{seconds}s!</strong></span></p>',
                     },
                     'it': {
                         'pct_off': 80,
-                        'yellow_banner_template': 'ROW4 it 80 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW4 it 80 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Risparmia fino al 80% sul prezzo di mercato. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Fino al -xx% rispetto al prezzo di mercato su questo prodotto. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
                     },
                     'pl': {
                         'pct_off': 75,
-                        'yellow_banner_template': 'ROW4 pl 75 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW4 pl 75 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Zaoszczędź 80% w stosunku do ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Zaoszczędź aż do xx% na tym produkcie w stosunku do ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
                     }
                 },
 
@@ -238,43 +238,43 @@ var voga55vs85_augmented = (function($) {
                 'ROW5': { // Row in spreadsheet
                     'en': { // GB, SE, DK
                         'pct_off': 75,
-                        'yellow_banner_template': 'ROW5 en 75 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW5 en 75 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Save up to 75% against the original price.&nbsp;</strong>-&nbsp;Ends in {days} days {hours} hours {minutes} minutes {seconds} seconds</span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Save up to xx% against the original price on this product.&nbsp;</strong>-&nbsp;Ends in {days} days {hours} hours {minutes} minutes {seconds} seconds</span></p>',
                     },
                     'nl': {
                         'pct_off': 75,
-                        'yellow_banner_template': 'ROW5 nl 75 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW5 nl 75 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;">Bespaar tot 75% in vergelijking met de originele prijs.&nbsp;-&nbsp;Nog {hours} Uur:{minutes} Min: {seconds} Sec</span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"> <strong>Bespaar tot xx% op de originele prijs van dit product.</strong>&nbsp;-&nbsp;Nog {hours} Uur:{minutes} Min: {seconds} Sec</span></p>',
                     },
                     'de': {
                         'pct_off': 75,
-                        'yellow_banner_template': 'ROW5 de 75 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW5 de 75 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Sparen Sie bis zu 75% gegenüber dem Original Preis - Endet heute in {hours} Stunden {minutes} Minuten</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Erhalten Sie dieses Produkt bis zu xx% günstiger als das Original - Endet heute in {hours} Stunden {minutes} Minuten</strong></span></p>',
                     },
                     'fr': {
                         'pct_off': 75,
-                        'yellow_banner_template': 'ROW5 fr 75 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW5 fr 75 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: \'book antiqua\', palatino; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Économisez jusqu\'à 75% sur les prix originaux.</strong>Termine dans {days} jours, {hours}h:{minutes}m:{seconds}s</span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'book antiqua\', palatino; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Économisez jusqu\'à xx% par rapport au prix original de ce produit. </strong>Termine dans {days} jours, {hours}h:{minutes}m:{seconds}s</span></p>',
                     },
                     'no': {
                         'pct_off': 80,
-                        'yellow_banner_template': 'ROW5 no 80 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW5 no 80 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-size: medium;"><span style="font-family: arial, helvetica, sans-serif; color: #000000; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Spar opptil 80% mot originalprisen. </strong>&nbsp;-&nbsp;ender om {hours}t :{minutes}m :{seconds}s</span></span></p>',
+                        'product_banner_template': '<p><span style="font-size: medium;"><span style="font-family: arial, helvetica, sans-serif; color: #000000; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Spar opptil xx% mot originalpris på dette produktet.</strong>&nbsp;-&nbsp;ender om {hours}t :{minutes}m :{seconds}s</span></span></p>',
                     },
                     'es': {
                         'pct_off': 80,
-                        'yellow_banner_template': 'ROW5 es 80 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW5 es 80 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: small; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Ahorre hasta un 80% del precio original, finaliza en {days} d&iacute;as, {hours}h:{minutes}m:{seconds}s!</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: small; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Ahorre hasta un xx% del precio original de este producto, finaliza en {days} d&iacute;as, {hours}h:{minutes}m:{seconds}s!</strong></span></p>',
                     },
                     'it': {
                         'pct_off': 80,
-                        'yellow_banner_template': 'ROW5 it 80 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW5 it 80 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Risparmia fino al 80% rispetto al prezzo dell\'originale. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Risparmia oggi fino al xx% rispetto al prezzo di mercato su questo prodotto. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
                     },
                     'pl': {
                         'pct_off': 75,
-                        'yellow_banner_template': 'ROW5 pl 75 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW5 pl 75 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Zaoszczędź aż do 80% w stosunku do oryginalnej ceny - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Zaoszczędź aż do xx% w stosunku do ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
                     }
                 },
 
@@ -293,43 +293,43 @@ var voga55vs85_augmented = (function($) {
                 'ROW6': { // Row in spreadsheet
                     'en': { // GB, SE, DK
                         'pct_off': 75,
-                        'yellow_banner_template': 'ROW6 en 75 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW6 en 75 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Up to 75% off the original.&nbsp;</strong>-&nbsp;Ends in {days} days {hours} hours {minutes} minutes {seconds} seconds</span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Up to xx% off the original price on this product.&nbsp;</strong>-&nbsp;Ends in {days} days {hours} hours {minutes} minutes {seconds} seconds</span></p>',
                     },
                     'nl': {
                         'pct_off': 75,
-                        'yellow_banner_template': 'ROW6 nl 75 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW6 nl 75 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;">Tot 75% goedkoper dan het origineel.&nbsp;-&nbsp;Nog {hours} Uur:{minutes} Min: {seconds} Sec</span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;">Tot xx% goedkoper dan de originele prijs van dit product.&nbsp;-&nbsp;Nog {hours} Uur:{minutes} Min: {seconds} Sec</span></p>',
                     },
                     'de': {
                         'pct_off': 75,
-                        'yellow_banner_template': 'ROW6 de 75 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW6 de 75 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Bis zu 75% günstiger als das Original - Endet heute in {hours} Stunden {minutes} Minuten</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Bis zu xx% günstiger als das Original - Endet heute in {hours} Stunden {minutes} Minuten</strong></span></p>',
                     },
                     'fr': {
                         'pct_off': 75,
-                        'yellow_banner_template': 'ROW6 fr 75 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW6 fr 75 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: \'book antiqua\', palatino; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Jusqu\'à 75% moins cher que les originaux.</strong>Termine dans {days} jours, {hours}h:{minutes}m:{seconds}s</span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'book antiqua\', palatino; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Jusqu’à xx% de réduction sur ce produit par rapport à l’original de ce produit. </strong>Termine dans {days} jours, {hours}h:{minutes}m:{seconds}s</span></p>',
                     },
                     'no': {
                         'pct_off': 80,
-                        'yellow_banner_template': 'ROW6 no 80 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW6 no 80 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-size: medium;"><span style="font-family: arial, helvetica, sans-serif; color: #000000; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Opptil 80% av originalen.</strong>&nbsp;-&nbsp;ender om {hours}t :{minutes}m :{seconds}s</span></span></p>',
+                        'product_banner_template': '<p><span style="font-size: medium;"><span style="font-family: arial, helvetica, sans-serif; color: #000000; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Opptil xx% av originalprisen på dette produktet. </strong>&nbsp;-&nbsp;ender om {hours}t :{minutes}m :{seconds}s</span></span></p>',
                     },
                     'es': {
                         'pct_off': 80,
-                        'yellow_banner_template': 'ROW6 es 80 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW6 es 80 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: small; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Hasta 80% de descuento del diseño original, finaliza en {days} d&iacute;as, {hours}h:{minutes}m:{seconds}s!</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: small; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Hasta xx% del precio del original de este producto, finaliza en {days} d&iacute;as, {hours}h:{minutes}m:{seconds}s!</strong></span></p>',
                     },
                     'it': {
                         'pct_off': 80,
-                        'yellow_banner_template': 'ROW6 it 80 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW6 it 80 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Fino al 80% di risparmio sull\'originale. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Fino al xx% in meno rispetto al prezzo dell\'originale. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
                     },
                     'pl': {
                         'pct_off': 75,
-                        'yellow_banner_template': 'ROW6 pl 75 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW6 pl 75 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Aż do 80% zniżki od ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Aż do xx% zniżki na ten produkt w stosunku do ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
                     }
                 },
 
@@ -340,43 +340,43 @@ var voga55vs85_augmented = (function($) {
                 'ROW7': { // Row in spreadsheet
                     'en': { // GB, SE, DK
                         'pct_off': 80,
-                        'yellow_banner_template': 'ROW7 en 80 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW7 en 80 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Save up to 80% off the high street.&nbsp;</strong>-&nbsp;Ends in {days} days {hours} hours {minutes} minutes {seconds} seconds</span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Save up to xx% off the high street price on this product.&nbsp;</strong>-&nbsp;Ends in {days} days {hours} hours {minutes} minutes {seconds} seconds</span></p>',
                     },
                     'nl': {
                         'pct_off': 80,
-                        'yellow_banner_template': 'ROW7 nl 80 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW7 nl 80 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;">Bespaar tot 80% in vergelijking met de prijs van het origineel.&nbsp;-&nbsp;Nog {hours} Uur:{minutes} Min: {seconds} Sec</span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;">Bespaar tot xx% op de prijs van het origineel.&nbsp;-&nbsp;Nog {hours} Uur:{minutes} Min: {seconds} Sec</span></p>',
                     },
                     'de': {
                         'pct_off': 80,
-                        'yellow_banner_template': 'ROW7 de 80 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW7 de 80 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Sparen Sie bis zu 80% gegenüber dem Original Preis - Endet heute in {hours} Stunden {minutes} Minuten</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Sparen Sie bis zu xx% gegenüber dem Original Preis - Endet heute in {hours} Stunden {minutes} Minuten</strong></span></p>',
                     },
                     'fr': {
                         'pct_off': 80,
-                        'yellow_banner_template': 'ROW7 fr 80 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW7 fr 80 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: \'book antiqua\', palatino; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Économisez jusqu\'à 80% sur les produits des commerces traditionnels.</strong> Termine dans {days} jours, {hours}h:{minutes}m:{seconds}s</span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'book antiqua\', palatino; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Économisez jusqu\'à xx% par rapport aux magasins traditionnels sur ce produit. </strong>Termine dans {days} jours, {hours}h:{minutes}m:{seconds}s</span></p>',
                     },
                     'no': {
                         'pct_off': 85,
-                        'yellow_banner_template': 'ROW7 no 85 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW7 no 85 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-size: medium;"><span style="font-family: arial, helvetica, sans-serif; color: #000000; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Spar opptil 85% av butikkpris.</strong>&nbsp;-&nbsp;ender om {hours}t :{minutes}m :{seconds}s</span></span></p>',
+                        'product_banner_template': '<p><span style="font-size: medium;"><span style="font-family: arial, helvetica, sans-serif; color: #000000; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Spar opptil xx% av butikkpris på dette produktet.</strong>&nbsp;-&nbsp;ender om {hours}t :{minutes}m :{seconds}s</span></span></p>',
                     },
                     'es': {
                         'pct_off': 85,
-                        'yellow_banner_template': 'ROW7 es 85 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW7 es 85 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: small; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Ahorre hasta 85% de descuento del precio en tienda, finaliza en {days} d&iacute;as, {hours}h:{minutes}m:{seconds}s!</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: small; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Ahorre hasta xx% de descuento del precio en tienda de este producto, finaliza en {days} d&iacute;as, {hours}h:{minutes}m:{seconds}s!</strong></span></p>',
                     },
                     'it': {
                         'pct_off': 85,
-                        'yellow_banner_template': 'ROW7 it 85 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW7 it 85 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Risparmia fino al 85% sul prezzo di mercato. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Fino al -xx% rispetto al prezzo di mercato su questo prodotto. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
                     },
                     'pl': {
                         'pct_off': 80,
-                        'yellow_banner_template': 'ROW7 pl 80 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW7 pl 80 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Zaoszczędź 85% w stosunku do ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Zaoszczędź aż do xx% na tym produkcie w stosunku do ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
                     }
                 },
 
@@ -397,43 +397,43 @@ var voga55vs85_augmented = (function($) {
                 'ROW8': { // Row in spreadsheet
                     'en': { // GB, SE, DK
                         'pct_off': 80,
-                        'yellow_banner_template': 'ROW8 en 80 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW8 en 80 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Save up to 80% against the original price.&nbsp;</strong>-&nbsp;Ends in {days} days {hours} hours {minutes} minutes {seconds} seconds</span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Save up to xx% against the original price on this product.&nbsp;</strong>-&nbsp;Ends in {days} days {hours} hours {minutes} minutes {seconds} seconds</span></p>',
                     },
                     'nl': {
                         'pct_off': 80,
-                        'yellow_banner_template': 'ROW8 nl 80 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW8 nl 80 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;">Bespaar tot 80% in vergelijking met de originele prijs.</strong>&nbsp;-&nbsp;Nog {hours} Uur:{minutes} Min: {seconds} Sec</span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;">Bespaar tot xx% in vergelijking met de originele prijs.</strong>&nbsp;-&nbsp;Nog {hours} Uur:{minutes} Min: {seconds} Sec</span></p>',
                     },
                     'de': {
                         'pct_off': 80,
-                        'yellow_banner_template': 'ROW8 de 80 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW8 de 80 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Sparen Sie bis zu 80% gegenüber dem Original Preis - Endet heute in {hours} Stunden {minutes} Minuten</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Erhalten Sie dieses Produkt bis zu xx% günstiger als das Original - Endet heute in {hours} Stunden {minutes} Minuten</strong></span></p>',
                     },
                     'fr': {
                         'pct_off': 80,
-                        'yellow_banner_template': 'ROW8 fr 80 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW8 fr 80 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: \'book antiqua\', palatino; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Économisez jusqu\'à 80% sur les prix originaux.</strong>Termine dans {days} jours, {hours}h:{minutes}m:{seconds}s</span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'book antiqua\', palatino; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Économisez jusqu\'à xx% par rapport au prix original de ce produit. </strong>Termine dans {days} jours, {hours}h:{minutes}m:{seconds}s</span></p>',
                     },
                     'no': {
                         'pct_off': 85,
-                        'yellow_banner_template': 'ROW8 no 85 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW8 no 85 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-size: medium;"><span style="font-family: arial, helvetica, sans-serif; color: #000000; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Spar opptil 85% mot originalprisen.</strong>&nbsp;-&nbsp;ender om {hours}t :{minutes}m :{seconds}s</span></span></p>',
+                        'product_banner_template': '<p><span style="font-size: medium;"><span style="font-family: arial, helvetica, sans-serif; color: #000000; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Spar opptil xx% mot originalpris på dette produktet.</strong>&nbsp;-&nbsp;ender om {hours}t :{minutes}m :{seconds}s</span></span></p>',
                     },
                     'es': {
                         'pct_off': 85,
-                        'yellow_banner_template': 'ROW8 es 85 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW8 es 85 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: small; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Ahorre hasta un 85% del precio original, finaliza en {days} d&iacute;as, {hours}h:{minutes}m:{seconds}s!</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: small; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Ahorre hasta un xx% del precio original de este producto, finaliza en {days} d&iacute;as, {hours}h:{minutes}m:{seconds}s!</strong></span></p>',
                     },
                     'it': {
                         'pct_off': 85,
-                        'yellow_banner_template': 'ROW8 it 85 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW8 it 85 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Risparmia fino al 85% rispetto al prezzo dell\'originale. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Risparmia oggi fino al xx% rispetto al prezzo di mercato su questo prodotto. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
                     },
                     'pl': {
                         'pct_off': 80,
-                        'yellow_banner_template': 'ROW8 pl 80 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW8 pl 80 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Zaoszczędź aż do 85% w stosunku do oryginalnej ceny - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Zaoszczędź aż do xx% w stosunku do ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
                     }
                 },
 
@@ -449,46 +449,45 @@ var voga55vs85_augmented = (function($) {
                 'ROW9': { // Row in spreadsheet
                     'en': { // GB, SE, DK
                         'pct_off': 80,
-                        'yellow_banner_template': 'ROW9 en 80 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW9 en 80 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Up to 80% off the original.&nbsp;</strong>-&nbsp;Ends in {days} days {hours} hours {minutes} minutes {seconds} seconds</span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Up to xx% off the original price on this product. &nbsp;</strong>-&nbsp;Ends in {days} days {hours} hours {minutes} minutes {seconds} seconds</span></p>',
                     },
                     'nl': {
                         'pct_off': 80,
-                        'yellow_banner_template': 'ROW9 nl 80 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW9 nl 80 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;">Tot 80% goedkoper dan het origineel.&nbsp;-&nbsp;Nog {hours} Uur:{minutes} Min: {seconds} Sec</span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;">Tot xx% goedkoper dan de originele prijs van dit product. </strong>&nbsp;-&nbsp;Nog {hours} Uur:{minutes} Min: {seconds} Sec</span></p>',
                     },
                     'de': {
                         'pct_off': 80,
-                        'yellow_banner_template': 'ROW9 de 80 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW9 de 80 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Bis zu 80% günstiger als das Original - Endet heute in {hours} Stunden {minutes} Minuten</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Bis zu xx% günstiger als das Original - Endet heute in {hours} Stunden {minutes} Minuten</strong></span></p>',
                     },
                     'fr': {
                         'pct_off': 80,
-                        'yellow_banner_template': 'ROW9 fr 80 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW9 fr 80 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: \'book antiqua\', palatino; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Jusqu\'à 80% moins cher que les originaux.</strong>Termine dans {days} jours, {hours}h:{minutes}m:{seconds}s</span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'book antiqua\', palatino; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Jusqu’à xx% de réduction sur ce produit par rapport à l’original. </strong>Termine dans {days} jours, {hours}h:{minutes}m:{seconds}s</span></p>',
                     },
                     'no': {
                         'pct_off': 85,
-                        'yellow_banner_template': 'ROW9 no 85 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW9 no 85 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-size: medium;"><span style="font-family: arial, helvetica, sans-serif; color: #000000; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Opptil 85% av originalen.</strong>&nbsp;-&nbsp;ender om {hours}t :{minutes}m :{seconds}s</span></span></p>',
+                        'product_banner_template': '<p><span style="font-size: medium;"><span style="font-family: arial, helvetica, sans-serif; color: #000000; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Opptil xx%av originalprisen på dette produktet.</strong>&nbsp;-&nbsp;ender om {hours}t :{minutes}m :{seconds}s</span></span></p>',
                     },
                     'es': {
                         'pct_off': 85,
-                        'yellow_banner_template': 'ROW9 es 85 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW9 es 85 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: small; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Hasta 85% de descuento del diseño original, finaliza en {days} d&iacute;as, {hours}h:{minutes}m:{seconds}s!</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: small; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Hasta xx% del precio del original de este producto, finaliza en {days} d&iacute;as, {hours}h:{minutes}m:{seconds}s!</strong></span></p>',
                     },
                     'it': {
                         'pct_off': 85,
-                        'yellow_banner_template': 'ROW9 it 85 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW9 it 85 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Fino al 85% di risparmio sull\'originale. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Fino al xx% in meno rispetto al prezzo dell\'originale. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
                     },
                     'pl': {
                         'pct_off': 80,
-                        'yellow_banner_template': 'ROW9 pl 80 YELLOW BANNER {days}d {hours}h {minutes}m {seconds}s',
-                        'product_banner_template': 'ROW9 pl 80 PRODUCT BANNER {days}d {hours}h {minutes}m {seconds}s',
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Aż do 85% zniżki od ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Aż do xx% zniżki na ten produkt w stosunku do ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
                     }
                 },
-
             }
         }
     };
