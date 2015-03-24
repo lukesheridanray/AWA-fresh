@@ -181,7 +181,7 @@ var voga55vs85_augmented = (function($) {
     // Variables
     // Object containing variables, generally these would be strings or jQuery objects
     exp.vars = {
-        'home_page_promo_banner_url': 'http://www.voga.com/media/wysiwyg/abtest/_GEOSITE_mainbanner-_DATE_.jpg',
+        'home_page_promo_banner_url': 'http://media.voga.com/wysiwyg/abtest/_GEOSITE_mainbanner-_DATE_.jpg',
         'augmented_promo_data': {
 
             // Template groups
@@ -704,11 +704,37 @@ var voga55vs85_augmented = (function($) {
             // Remove grey crossed out price
             $this.find('p.old-price span.price').hide();
 
+            // original-price
+
             // Update roundel to note actual %-off
-            var old_price = parseFloat($this.find('p.old-price span.price').text().replace(/[^\d]/g, ''), 10),
-                current_price = parseFloat($this.find('p.special-price span.price').text().replace(/[^\d]/g, ''), 10),
+            var old_price;
+
+            if ($this.find('p.original-price span.price').length > 0) {
+                old_price = parseFloat($this.find('p.original-price span.price').first().text().replace(/[^\d]/g, ''), 10);
+            }
+            else {
+                old_price = parseFloat($this.find('p.old-price span.price').first().text().replace(/[^\d]/g, ''), 10);
+            }
+            var current_price = parseFloat($this.find('p.special-price span.price').first().text().replace(/[^\d]/g, ''), 10),
                 actual_pct_off = parseInt(100.0 - (current_price / old_price * 100.0), 10);
+
             $this.find('.amlabel-txt').text('-' + actual_pct_off + '%');
+
+            if (!$this.hasClass('awa-augmented')) {
+                // Swap "special" and "normal" price around
+                var $old_price_container = $this.find('p.old-price'),
+                    $old_price = $old_price_container.find('.price'),
+                    $new_price_container = $this.find('p.special-price'),
+                    $new_price = $new_price_container.find('.price');
+
+                $old_price_container.removeClass('old-price').addClass('special-price');
+                $old_price_container.append($new_price);
+
+                $new_price_container.removeClass('special-price').addClass('old-price');
+                $new_price_container.append($old_price);
+
+                $this.addClass('awa-augmented');
+            }
         });
     };
 
@@ -757,9 +783,19 @@ var voga55vs85_augmented = (function($) {
             // Are we on a product page, if so use the product-page specific logic for the yellow banner
             if ($('body.catalog-product-view').length > 0) {
                 // Calculate actual percent-off for this product
-                var old_price = parseFloat($('p.old-price span.price[id$="cloned"]').first().text().replace(/[^\d]/g, ''), 10),
-                    current_price = parseFloat($('p.special-price span.price[id$="cloned"]').first().text().replace(/[^\d]/g, ''), 10),
+
+                var old_price;
+
+                if ($('p.original-price span.price[id$="cloned"]').length > 0) {
+                    old_price = parseFloat($('p.original-price span.price[id$="cloned"]').first().text().replace(/[^\d]/g, ''), 10);
+                }
+                else {
+                    old_price = parseFloat($('p.old-price span.price[id$="cloned"]').first().text().replace(/[^\d]/g, ''), 10);
+                }
+                var current_price = parseFloat($('p.special-price span.price[id$="cloned"]').first().text().replace(/[^\d]/g, ''), 10),
                     actual_pct_off = parseInt(100.0 - (current_price / old_price * 100.0), 10);
+
+                $('.amlabel-txt:first').text('-' + actual_pct_off + '%');
 
                 // Update product page copy with actual pct
                 new_html = today_data.templates[banner_geo_site].product_banner_template.replace('xx%', actual_pct_off + '%');
@@ -812,6 +848,26 @@ var voga55vs85_augmented = (function($) {
                 .replace(/_GEOSITE_/g, geo_site)
                 .replace(/_DATE_/g, today.replace(/-/g, ''));
             $('#mycarousel img').first().attr('src', promo_image);
+
+            // Hide the "normal" price for products on the home page
+            $('.products-grid .item').each(function(){
+                var $this = $(this);
+
+                // Hide normal price
+                $this.find('p.old-price span.price').hide();
+
+                // Swap "special" and "normal" price around
+                var $old_price_container = $this.find('p.old-price'),
+                    $old_price = $old_price_container.find('.price'),
+                    $new_price_container = $this.find('p.special-price'),
+                    $new_price = $new_price_container.find('.price');
+
+                $old_price_container.removeClass('old-price').addClass('special-price');
+                $old_price_container.append($new_price);
+
+                $new_price_container.removeClass('special-price').addClass('old-price');
+                $new_price_container.append($old_price);
+            });
         }
 
         // Are we on a category page? If so, do things to the products listed.
