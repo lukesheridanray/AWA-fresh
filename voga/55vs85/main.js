@@ -226,7 +226,7 @@ var voga55vs85_augmented = (function($) {
                         'product_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Fino al -xx% rispetto al prezzo di mercato su questo prodotto. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
                     },
                     'pl': {
-                        'pct_off': 75,
+                        'pct_off': 80,
                         'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Zaoszczędź 80% w stosunku do ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
                         'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Zaoszczędź aż do xx% na tym produkcie w stosunku do ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
                     }
@@ -276,7 +276,7 @@ var voga55vs85_augmented = (function($) {
                         'product_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Risparmia oggi fino al xx% rispetto al prezzo di mercato su questo prodotto. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
                     },
                     'pl': {
-                        'pct_off': 75,
+                        'pct_off': 80,
                         'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Zaoszczędź aż do 80% w stosunku do oryginalnej ceny - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
                         'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Zaoszczędź aż do xx% w stosunku do ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
                     }
@@ -331,7 +331,7 @@ var voga55vs85_augmented = (function($) {
                         'product_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Fino al xx% in meno rispetto al prezzo dell\'originale. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
                     },
                     'pl': {
-                        'pct_off': 75,
+                        'pct_off': 80,
                         'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Aż do 80% zniżki od ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
                         'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Aż do xx% zniżki na ten produkt w stosunku do ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
                     }
@@ -378,7 +378,7 @@ var voga55vs85_augmented = (function($) {
                         'product_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Fino al -xx% rispetto al prezzo di mercato su questo prodotto. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
                     },
                     'pl': {
-                        'pct_off': 80,
+                        'pct_off': 85,
                         'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Zaoszczędź 85% w stosunku do ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
                         'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Zaoszczędź aż do xx% na tym produkcie w stosunku do ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
                     }
@@ -435,7 +435,7 @@ var voga55vs85_augmented = (function($) {
                         'product_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Risparmia oggi fino al xx% rispetto al prezzo di mercato su questo prodotto. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
                     },
                     'pl': {
-                        'pct_off': 80,
+                        'pct_off': 85,
                         'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Zaoszczędź aż do 85% w stosunku do oryginalnej ceny - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
                         'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Zaoszczędź aż do xx% w stosunku do ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
                     }
@@ -487,7 +487,7 @@ var voga55vs85_augmented = (function($) {
                         'product_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Fino al xx% in meno rispetto al prezzo dell\'originale. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
                     },
                     'pl': {
-                        'pct_off': 80,
+                        'pct_off': 85,
                         'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Aż do 85% zniżki od ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
                         'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Aż do xx% zniżki na ten produkt w stosunku do ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
                     }
