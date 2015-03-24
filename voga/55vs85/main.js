@@ -18,6 +18,10 @@
 *     Show %-off according to promo calendar (augmented %-off)                 *
 *******************************************************************************/
 
+// Manual Google Analytics integration
+_gaq.push(['_setCustomVar', 2, 'Optimizely 50/85','Variation',1]);
+_gaq.push(['_trackEvent','Optimizely 50/85','Variation','track','track','true']);
+
 
 /*
  * Date Format 1.2.3
