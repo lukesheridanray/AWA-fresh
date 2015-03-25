@@ -754,6 +754,9 @@ var voga55vs85_augmented = (function($) {
 
         exp.log("On geosite: " + geo_site + ". Today is: " + today);
 
+        // Tell Optimizely which geo-site this visitor is on, for filtering results
+        optimizely.push(['setDimensionValue', 'geosite', geo_site]);
+
         // GB, DK, and en are all the same copy. All are saved as 'en' in the templates group.
         if (banner_geo_site == 'uk' || banner_geo_site == 'dk') {
             banner_geo_site = 'en';
