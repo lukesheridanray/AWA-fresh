@@ -15,7 +15,7 @@ var exp = (function($) {
 var exp = {};
 
 // Log the experiment, useful when multiple experiments are running
-console.log('Basket page v5 -  0.1');
+console.log('Basket page v5 -  0.2');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
@@ -77,7 +77,7 @@ exp.css = ' \
 \
 #coupon-modal-content .use_code { margin-left:0 !important;position: relative;top:6px; } \
 #coupon-modal-content .basket_code_entry { width: 275px; } \
-#coupon-modal-content--hidden { display: none; } \
+#coupon-modal-content--hidden,.coupon-modal-content--hidden { display: none; } \
 \
 .basket_table { margin-bottom: 30px !important; } \
 .basket_table td { padding-top: 30px !important; } \

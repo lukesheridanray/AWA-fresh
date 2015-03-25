@@ -685,7 +685,13 @@ REMOVE
     }
 
   // New tab
-  if ( ! window.location.href.match(/\/garden-supplies\//) && ! window.location.href.match(/-seeds\//) && !exp.vars.isGiftItem) {
+
+  if (!window.location.href.match(/\/garden-supplies\//) &&
+      !window.location.href.match(/-seeds\//) &&
+      !exp.vars.isGiftItem &&
+      $('#tab-3').length !== 0 &&
+      $('#tabbed-panel-3').length !== 0
+    ) {
     $('#tab-3').after(
       '<a class="" style="background-image: url(//media.thompson-morgan.com/medias/sys_tandm/8796116025374.gif);" id="tab-5" onclick="showTab(5);"> \
        <h3><span class="priceColour">How Your Plants Arrive</span></h3> \
@@ -699,6 +705,7 @@ REMOVE
       '</div>');
     showTab(5);
   }
+
 };
 
 // Run the experiment

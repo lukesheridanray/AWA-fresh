@@ -1,0 +1,73 @@
+    $.get('/newsletter-sign-up.aspx', function(page_data){
+        var gg_viewstate          = /<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="(.+?)" \/>/.exec(page_data)[1],
+            gg_viewstategenerator = /<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="(.+?)" \/>/.exec(page_data)[1],
+            gg_eventvalidation    = /<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="(.+?)" \/>/.exec(page_data)[1];
+            
+        theForm.submitSignUp = function(){
+            theForm.action = '/newsletter-sign-up.aspx';
+            theForm.__VIEWSTATE.value          = gg_viewstate;
+            theForm.__VIEWSTATEGENERATOR.value = gg_viewstategenerator;
+            theForm.__EVENTVALIDATION.value    = gg_eventvalidation;
+            theForm.__EVENTTARGET.value        = 'ctl00$cphInnerMaster$imgbtnNewsCatSubmit';
+            theForm.__EVENTARGUMENT.value      = '';
+            theForm.submit();
+        };
+    });
+
+    <input name="ctl00$cphMaster$txtSignUp" value="Your email address" id="ctl00_cphMaster_txtSignUp" onfocus="if(this.value == 'Your email address') { this.value = ''; }" onblur="if(this.value == '') { this.value = 'Your email address'; }" type="text">
+          <a id="ctl00_cphMaster_lnkbtnSignUp" class="sign-up-button" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$cphMaster$lnkbtnSignUp&quot;, &quot;&quot;, true, &quot;vgNewsLettersignUp&quot;, &quot;&quot;, false, true))">Sign up</a>
+          <span id="ctl00_cphMaster_rgEmail" style="color:Red;display:none;"></span>
+
+
+<table class="address_details_table" summary="Sign up for newsletter and catalogue" width="100%" border="0" cellpadding="0" cellspacing="4">
+                
+                
+                
+                    <tbody><tr>
+                    	<td width="15%"><label class="quick_label_large">Title:<span class="mandatory_field">*</span></label></td>
+                        <td width="30%">
+                       <select name="ctl00$cphInnerMaster$ddlTitle" id="ctl00_cphInnerMaster_ddlTitle">
+	<option selected="selected" value="Please select...">Please select...</option>
+	<option value="Mr">Mr</option>
+	<option value="Mrs">Mrs</option>
+	<option value="Ms">Ms</option>
+	<option value="Miss">Miss</option>
+	<option value="Doctor">Doctor</option>
+	<option value="Rev">Rev</option>
+	<option value="Other">Other</option>
+
+</select><span id="ctl00_cphInnerMaster_rfvddlTitle" style="color:Red;display:none;"></span><span id="ctl00_cphInnerMaster_rfvTitle" style="color:Red;display:none;"></span>
+                        </td>
+                        <td width="65%"></td>
+                    </tr>
+                    <tr>
+                        <td width="15%"><label class="quick_label_large">First Name:<span class="mandatory_field">*</span></label></td>
+                        <td width="20%"><input name="ctl00$cphInnerMaster$txtName" id="ctl00_cphInnerMaster_txtName" class="field300" onkeydown="if(event.which || event.keyCode){if ((event.which == 13) || (event.keyCode == 13)) {document.getElementById('ctl00_cphInnerMaster_imgbtnNewsCatSubmit').click();return false;}} else {return true}; " type="text"><span id="ctl00_cphInnerMaster_RequiredFieldValidator4" style="color:Red;display:none;"></span></td>
+                        <td width="65%"></td>
+                    </tr>
+                    <tr>
+                        <td width="15%"><label class="quick_label_large">Surname:<span class="mandatory_field">*</span></label></td>
+                        <td width="20%"><input name="ctl00$cphInnerMaster$txtSurname" id="ctl00_cphInnerMaster_txtSurname" class="field300" onkeydown="if(event.which || event.keyCode){if ((event.which == 13) || (event.keyCode == 13)) {document.getElementById('ctl00_cphInnerMaster_imgbtnNewsCatSubmit').click();return false;}} else {return true}; " type="text"><span id="ctl00_cphInnerMaster_RequiredFieldValidator5" style="color:Red;display:none;"></span></td>
+                        <td width="65%"></td>
+                    </tr>
+                    <tr>
+                        <td width="15%"><label class="quick_label_large">Email:<span id="ctl00_cphInnerMaster_spanEmail" class="mandatory_field">*</span></label></td>
+                        <td width="20%"><input name="ctl00$cphInnerMaster$txtEmail" value="jamie@castlegateit.co.uk" id="ctl00_cphInnerMaster_txtEmail" class="field300" onkeydown="if(event.which || event.keyCode){if ((event.which == 13) || (event.keyCode == 13)) {document.getElementById('ctl00_cphInnerMaster_imgbtnNewsCatSubmit').click();return false;}} else {return true}; " type="text"><span id="ctl00_cphInnerMaster_rfvEmailAddress" style="color:Red;display:none;"></span><span id="ctl00_cphInnerMaster_rgEmail" style="color:Red;display:none;"></span></td>
+                    </tr>
+                    <tr>
+                        <td width="15%"><label class="quick_label_large">Confirm Email:<span class="mandatory_field">*</span></label></td>
+                        <td width="20%"><input name="ctl00$cphInnerMaster$txtOtherEmail" value="jamie@castlegateit.co.uk" id="ctl00_cphInnerMaster_txtOtherEmail" class="field300" onkeydown="if(event.which || event.keyCode){if ((event.which == 13) || (event.keyCode == 13)) {document.getElementById('ctl00_cphInnerMaster_imgbtnNewsCatSubmit').click();return false;}} else {return true}; " type="text"><span id="ctl00_cphInnerMaster_RequiredFieldValidator1" style="color:Red;display:none;"></span><span id="ctl00_cphInnerMaster_cmpEmail" style="color:Red;display:none;"></span><span id="ctl00_cphInnerMaster_RegularExpressionValidator1" style="color:Red;display:none;"></span> </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
+                        
+                    <tr>
+                    	<td colspan="3">
+                        	<div class="auto_div_full float_centre"><input name="ctl00$cphInnerMaster$imgbtnNewsCatSubmit" id="ctl00_cphInnerMaster_imgbtnNewsCatSubmit" title="Submit" src="/images/my_account/bt_submit.gif" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$cphInnerMaster$imgbtnNewsCatSubmit&quot;, &quot;&quot;, true, &quot;vgNewsLettersignUp&quot;, &quot;&quot;, false, false))" style="border-width:0px;" type="image"> 
+                                </div>  
+                                    
+                        </td>
+                    </tr>
+                </tbody></table>
