@@ -175,7 +175,7 @@ var voga55vs85_augmented = (function($) {
     };
 
     // Log the experiment, useful when multiple experiments are running
-    console.log('VOGA 55vs85: Augmented variation - 0.1');
+    console.log('VOGA 55vs85: Augmented variation - 0.2');
 
 
     // Variables
@@ -795,7 +795,18 @@ var voga55vs85_augmented = (function($) {
                 var current_price = parseFloat($('p.special-price span.price[id$="cloned"]').first().text().replace(/[^\d]/g, ''), 10),
                     actual_pct_off = parseInt(100.0 - (current_price / old_price * 100.0), 10);
 
+                // Also update the roundel with this percentage.
+                var original_roundel_text = $('.amlabel-txt:first').text().trim();
                 $('.amlabel-txt:first').text('-' + actual_pct_off + '%');
+
+                // Override Product.Config.prototype.showFullImageDiv - this updates the product page roundel without our input, so let's re-process the roundel after this is called.
+                Product.Config.prototype._awa_orginal__showFullImageDiv = Product.Config.prototype.showFullImageDiv;
+                Product.Config.prototype.showFullImageDiv = function(productId, parentId){
+                    this._awa_orginal__showFullImageDiv(productId, parentId);
+
+                    // Update the roundel again, the above function call will have fiddled with it.
+                    $('.amlabel-txt:first').text('-' + actual_pct_off + '%');
+                }
 
                 // Update product page copy with actual pct
                 new_html = today_data.templates[banner_geo_site].product_banner_template.replace('xx%', actual_pct_off + '%');
