@@ -57,12 +57,12 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Product listing - 0.11');
+exp.log('Product listing - 0.12');
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
-    'variation': 1,
+    'variation': 2,
     'productJSON': {},
     'productFeedURL': '//www.bakerross.co.uk/feeds/skus_json_v3.xml', // actually JSON
     'haveProductData': false,
@@ -552,6 +552,7 @@ if( exp.vars.variation === 1 ) {
                 url: exp.vars.productFeedURL,
                 dataType: 'text',
                 type: 'GET',
+                cache: false,
                 contentType: 'text/plain',
                 success: function( response ) {
                     exp.vars.productJSON = $.parseJSON(
