@@ -18,6 +18,10 @@
 *     Show %-off according to promo calendar (augmented %-off)                 *
 *******************************************************************************/
 
+// Manual Google Analytics integration
+_gaq.push(['_setCustomVar', 2, 'Optimizely 50/85','Variation',1]);
+_gaq.push(['_trackEvent','Optimizely 50/85','Variation','track','track','true']);
+
 
 /*
  * Date Format 1.2.3
@@ -171,819 +175,488 @@ var voga55vs85_augmented = (function($) {
     };
 
     // Log the experiment, useful when multiple experiments are running
-    console.log('VOGA 55vs85: Augmented variation - 0.1');
+    console.log('VOGA 55vs85: Augmented variation - 0.2');
 
 
     // Variables
     // Object containing variables, generally these would be strings or jQuery objects
     exp.vars = {
-        'home_page_promo_banner_url': 'http://www.voga.com/media/wysiwyg/abtest/_GEOSITE_mainbanner-_DATE_.jpg',
+        'home_page_promo_banner_url': 'http://media.voga.com/wysiwyg/abtest/_GEOSITE_mainbanner-_DATE_.jpg',
         'augmented_promo_data': {
 
-            // Great Britain
-            'UK1': { // Weekdays
-                'pct_off': 75,
-                'yellow_banner_template': 'Save up to 75% off the high street. Ends in <span id="days">xx</span>d <span id="hours">xx</span>h <span id="minutes">xx</span>m <span id="seconds">xx</span>s',
-                'yellow_banner_template_product': 'Save up to xx% off the high street price on this product. Ends in <span id="days">xx</span>d <span id="hours">xx</span>h <span id="minutes">xx</span>m <span id="seconds">xx</span>s',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'UK2': { // Weekdays
-                'pct_off': 75,
-                'yellow_banner_template': 'Save up to 75% against the original price. Valid for <span id="hours">xx</span> hours',
-                'yellow_banner_template_product': 'Save up to xx% against the original price on this product. Valid for <span id="hours">xx</span> hours',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'UK3': { // Weekdays
-                'pct_off': 75,
-                'yellow_banner_template': 'Up to 75% off the original. Valid for <span id="hours">xx</span> hours',
-                'yellow_banner_template_product': 'Up to xx% off the original price on this product. Valid for <span id="hours">xx</span> hours',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'UK4': { // Weekends
-                'pct_off': 80,
-                'yellow_banner_template': 'Save up to 80% off the high street. Ends in <span id="days">xx</span>d <span id="hours">xx</span>h <span id="minutes">xx</span>m <span id="seconds">xx</span>s',
-                'yellow_banner_template_product': 'Save up to xx% off the high street price on this product. Ends in <span id="days">xx</span>d <span id="hours">xx</span>h <span id="minutes">xx</span>m <span id="seconds">xx</span>s',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'UK5': { // Weekends
-                'pct_off': 80,
-                'yellow_banner_template': 'Save up to 80% against the original price. Valid for <span id="hours">xx</span> hours',
-                'yellow_banner_template_product': 'Save up to xx% against the original price on this product. Valid for <span id="hours">xx</span> hours',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'UK6': { // Weekends
-                'pct_off': 80,
-                'yellow_banner_template': 'Up to 80% off the original. Valid for <span id="hours">xx</span> hours',
-                'yellow_banner_template_product': 'Up to xx% off the original price on this product. Valid for <span id="hours">xx</span> hours',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
+            // Template groups
+            'templates': {
+                // 21.04
+                // 22.04
+                // 23.04
+                'ROW4': { // Row in spreadsheet
+                    'en': { // GB, SE, DK
+                        'pct_off': 75,
+                        'yellow_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Save up to 75% off the high street.&nbsp;</strong>-&nbsp;Ends in {days} days {hours} hours {minutes} minutes {seconds} seconds</span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Save up to xx% off the high street price on this product. &nbsp;</strong>-&nbsp;Ends in {days} days {hours} hours {minutes} minutes {seconds} seconds</span></p>',
+                    },
+                    'nl': {
+                        'pct_off': 75,
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;">Bespaar tot 75% in vergelijking met de prijs van het origineel.&nbsp;-&nbsp;Nog {hours} Uur:{minutes} Min: {seconds} Sec</span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"> <strong>Bespaar tot xx% op de prijs van het origineel</strong>&nbsp;-&nbsp;Nog {hours} Uur:{minutes} Min: {seconds} Sec</span></p>',
+                    },
+                    'de': {
+                        'pct_off': 75,
+                        'yellow_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Sparen Sie bis zu 75% gegenüber dem Original Preis. Endet heute in {hours} Stunden {minutes} Minuten</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Sparen Sie bis zu xx% gegenüber dem Original Preis. Endet heute in {hours} Stunden {minutes} Minuten</strong></span></p>',
+                    },
+                    'fr': {
+                        'pct_off': 75,
+                        'yellow_banner_template': '<p><span style="font-family: \'book antiqua\', palatino; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Économisez jusqu\'à 75% sur les produits des commerces traditionnels.</strong>Termine dans {days} jours, {hours}h:{minutes}m:{seconds}s</span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'book antiqua\', palatino; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Économisez jusqu\'à xx% par rapport aux magasins traditionnels sur ce produit..</strong>Termine dans {days} jours, {hours}h:{minutes}m:{seconds}s</span></p>',
+                    },
+                    'no': {
+                        'pct_off': 80,
+                        'yellow_banner_template': '<p><span style="font-size: medium;"><span style="font-family: arial, helvetica, sans-serif; color: #000000; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Spar opptil 80% av butikkpris.</strong>&nbsp;-&nbsp;ender om {hours}t :{minutes}m :{seconds}s</span></span></p>',
+                        'product_banner_template': '<p><span style="font-size: medium;"><span style="font-family: arial, helvetica, sans-serif; color: #000000; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Spar opptil xx% av butikkpris på dette produktet.</strong>&nbsp;-&nbsp;ender om {hours}t :{minutes}m :{seconds}s</span></span></p>',
+                    },
+                    'es': {
+                        'pct_off': 80,
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: small; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Ahorre hasta 80% de descuento del precio en tienda, finaliza en {days} d&iacute;as, {hours}h:{minutes}m:{seconds}s!</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: small; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Ahorre hasta xx% de descuento del precio en tienda de este producto, finaliza en {days} d&iacute;as, {hours}h:{minutes}m:{seconds}s!</strong></span></p>',
+                    },
+                    'it': {
+                        'pct_off': 80,
+                        'yellow_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Risparmia fino al 80% sul prezzo di mercato. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Fino al -xx% rispetto al prezzo di mercato su questo prodotto. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
+                    },
+                    'pl': {
+                        'pct_off': 80,
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Zaoszczędź 80% w stosunku do ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Zaoszczędź aż do xx% na tym produkcie w stosunku do ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
+                    }
+                },
 
-            // Denmark
-            'DK1': { // Weekdays
-                'pct_off': 75,
-                'yellow_banner_template': 'Save up to 75% off the high street. Ends in <span id="days">xx</span>d <span id="hours">xx</span>h <span id="minutes">xx</span>m <span id="seconds">xx</span>s',
-                'yellow_banner_template_product': 'Save up to xx% off the high street price on this product. Ends in <span id="days">xx</span>d <span id="hours">xx</span>h <span id="minutes">xx</span>m <span id="seconds">xx</span>s',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'DK2': { // Weekdays
-                'pct_off': 75,
-                'yellow_banner_template': 'Save up to 75% against the original price. Valid for <span id="hours">xx</span> hours',
-                'yellow_banner_template_product': 'Save up to xx% against the original price on this product. Valid for <span id="hours">xx</span> hours',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'DK3': { // Weekdays
-                'pct_off': 75,
-                'yellow_banner_template': 'Up to 75% off the original. Valid for <span id="hours">xx</span> hours',
-                'yellow_banner_template_product': 'Up to xx% off the original price on this product. Valid for <span id="hours">xx</span> hours',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'DK4': { // Weekends
-                'pct_off': 80,
-                'yellow_banner_template': 'Save up to 80% off the high street. Ends in <span id="days">xx</span>d <span id="hours">xx</span>h <span id="minutes">xx</span>m <span id="seconds">xx</span>s',
-                'yellow_banner_template_product': 'Save up to xx% off the high street price on this product. Ends in <span id="days">xx</span>d <span id="hours">xx</span>h <span id="minutes">xx</span>m <span id="seconds">xx</span>s',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'DK5': { // Weekends
-                'pct_off': 80,
-                'yellow_banner_template': 'Save up to 80% against the original price. Valid for <span id="hours">xx</span> hours',
-                'yellow_banner_template_product': 'Save up to xx% against the original price on this product. Valid for <span id="hours">xx</span> hours',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'DK6': { // Weekends
-                'pct_off': 80,
-                'yellow_banner_template': 'Up to 80% off the original. Valid for <span id="hours">xx</span> hours',
-                'yellow_banner_template_product': 'Up to xx% off the original price on this product. Valid for <span id="hours">xx</span> hours',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
+                // 07.04
+                // 08.04
+                // 09.04
+                //
+                // 14.04
+                // 15.04
+                // 16.04
+                'ROW5': { // Row in spreadsheet
+                    'en': { // GB, SE, DK
+                        'pct_off': 75,
+                        'yellow_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Save up to 75% against the original price.&nbsp;</strong>-&nbsp;Ends in {days} days {hours} hours {minutes} minutes {seconds} seconds</span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Save up to xx% against the original price on this product.&nbsp;</strong>-&nbsp;Ends in {days} days {hours} hours {minutes} minutes {seconds} seconds</span></p>',
+                    },
+                    'nl': {
+                        'pct_off': 75,
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;">Bespaar tot 75% in vergelijking met de originele prijs.&nbsp;-&nbsp;Nog {hours} Uur:{minutes} Min: {seconds} Sec</span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"> <strong>Bespaar tot xx% op de originele prijs van dit product.</strong>&nbsp;-&nbsp;Nog {hours} Uur:{minutes} Min: {seconds} Sec</span></p>',
+                    },
+                    'de': {
+                        'pct_off': 75,
+                        'yellow_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Sparen Sie bis zu 75% gegenüber dem Original Preis - Endet heute in {hours} Stunden {minutes} Minuten</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Erhalten Sie dieses Produkt bis zu xx% günstiger als das Original - Endet heute in {hours} Stunden {minutes} Minuten</strong></span></p>',
+                    },
+                    'fr': {
+                        'pct_off': 75,
+                        'yellow_banner_template': '<p><span style="font-family: \'book antiqua\', palatino; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Économisez jusqu\'à 75% sur les prix originaux.</strong>Termine dans {days} jours, {hours}h:{minutes}m:{seconds}s</span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'book antiqua\', palatino; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Économisez jusqu\'à xx% par rapport au prix original de ce produit. </strong>Termine dans {days} jours, {hours}h:{minutes}m:{seconds}s</span></p>',
+                    },
+                    'no': {
+                        'pct_off': 80,
+                        'yellow_banner_template': '<p><span style="font-size: medium;"><span style="font-family: arial, helvetica, sans-serif; color: #000000; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Spar opptil 80% mot originalprisen. </strong>&nbsp;-&nbsp;ender om {hours}t :{minutes}m :{seconds}s</span></span></p>',
+                        'product_banner_template': '<p><span style="font-size: medium;"><span style="font-family: arial, helvetica, sans-serif; color: #000000; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Spar opptil xx% mot originalpris på dette produktet.</strong>&nbsp;-&nbsp;ender om {hours}t :{minutes}m :{seconds}s</span></span></p>',
+                    },
+                    'es': {
+                        'pct_off': 80,
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: small; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Ahorre hasta un 80% del precio original, finaliza en {days} d&iacute;as, {hours}h:{minutes}m:{seconds}s!</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: small; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Ahorre hasta un xx% del precio original de este producto, finaliza en {days} d&iacute;as, {hours}h:{minutes}m:{seconds}s!</strong></span></p>',
+                    },
+                    'it': {
+                        'pct_off': 80,
+                        'yellow_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Risparmia fino al 80% rispetto al prezzo dell\'originale. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Risparmia oggi fino al xx% rispetto al prezzo di mercato su questo prodotto. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
+                    },
+                    'pl': {
+                        'pct_off': 80,
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Zaoszczędź aż do 80% w stosunku do oryginalnej ceny - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Zaoszczędź aż do xx% w stosunku do ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
+                    }
+                },
 
-            // Sweden
-            'EN1': { // Weekdays
-                'pct_off': 75,
-                'yellow_banner_template': 'Save up to 75% off the high street. Ends in <span id="days">xx</span>d <span id="hours">xx</span>h <span id="minutes">xx</span>m <span id="seconds">xx</span>s',
-                'yellow_banner_template_product': 'Save up to xx% off the high street price on this product. Ends in <span id="days">xx</span>d <span id="hours">xx</span>h <span id="minutes">xx</span>m <span id="seconds">xx</span>s',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'EN2': { // Weekdays
-                'pct_off': 75,
-                'yellow_banner_template': 'Save up to 75% against the original price. Valid for <span id="hours">xx</span> hours',
-                'yellow_banner_template_product': 'Save up to xx% against the original price on this product. Valid for <span id="hours">xx</span> hours',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'EN3': { // Weekdays
-                'pct_off': 75,
-                'yellow_banner_template': 'Up to 75% off the original. Valid for <span id="hours">xx</span> hours',
-                'yellow_banner_template_product': 'Up to xx% off the original price on this product. Valid for <span id="hours">xx</span> hours',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'EN4': { // Weekends
-                'pct_off': 80,
-                'yellow_banner_template': 'Save up to 80% off the high street. Ends in <span id="days">xx</span>d <span id="hours">xx</span>h <span id="minutes">xx</span>m <span id="seconds">xx</span>s',
-                'yellow_banner_template_product': 'Save up to xx% off the high street price on this product. Ends in <span id="days">xx</span>d <span id="hours">xx</span>h <span id="minutes">xx</span>m <span id="seconds">xx</span>s',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'EN5': { // Weekends
-                'pct_off': 80,
-                'yellow_banner_template': 'Save up to 80% against the original price. Valid for <span id="hours">xx</span> hours',
-                'yellow_banner_template_product': 'Save up to xx% against the original price on this product. Valid for <span id="hours">xx</span> hours',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'EN6': { // Weekends
-                'pct_off': 80,
-                'yellow_banner_template': 'Up to 80% off the original. Valid for <span id="hours">xx</span> hours',
-                'yellow_banner_template_product': 'Up to xx% off the original price on this product. Valid for <span id="hours">xx</span> hours',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
+                // 23.03
+                // 24.03
+                // 25.03
+                // 26.03
+                //
+                // 31.03
+                // 01.04
+                // 02.04
+                //
+                // 28.04
+                // 29.04
+                // 30.04
+                'ROW6': { // Row in spreadsheet
+                    'en': { // GB, SE, DK
+                        'pct_off': 75,
+                        'yellow_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Up to 75% off the original.&nbsp;</strong>-&nbsp;Ends in {days} days {hours} hours {minutes} minutes {seconds} seconds</span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Up to xx% off the original price on this product.&nbsp;</strong>-&nbsp;Ends in {days} days {hours} hours {minutes} minutes {seconds} seconds</span></p>',
+                    },
+                    'nl': {
+                        'pct_off': 75,
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;">Tot 75% goedkoper dan het origineel.&nbsp;-&nbsp;Nog {hours} Uur:{minutes} Min: {seconds} Sec</span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;">Tot xx% goedkoper dan de originele prijs van dit product.&nbsp;-&nbsp;Nog {hours} Uur:{minutes} Min: {seconds} Sec</span></p>',
+                    },
+                    'de': {
+                        'pct_off': 75,
+                        'yellow_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Bis zu 75% günstiger als das Original - Endet heute in {hours} Stunden {minutes} Minuten</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Bis zu xx% günstiger als das Original - Endet heute in {hours} Stunden {minutes} Minuten</strong></span></p>',
+                    },
+                    'fr': {
+                        'pct_off': 75,
+                        'yellow_banner_template': '<p><span style="font-family: \'book antiqua\', palatino; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Jusqu\'à 75% moins cher que les originaux.</strong>Termine dans {days} jours, {hours}h:{minutes}m:{seconds}s</span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'book antiqua\', palatino; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Jusqu’à xx% de réduction sur ce produit par rapport à l’original de ce produit. </strong>Termine dans {days} jours, {hours}h:{minutes}m:{seconds}s</span></p>',
+                    },
+                    'no': {
+                        'pct_off': 80,
+                        'yellow_banner_template': '<p><span style="font-size: medium;"><span style="font-family: arial, helvetica, sans-serif; color: #000000; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Opptil 80% av originalen.</strong>&nbsp;-&nbsp;ender om {hours}t :{minutes}m :{seconds}s</span></span></p>',
+                        'product_banner_template': '<p><span style="font-size: medium;"><span style="font-family: arial, helvetica, sans-serif; color: #000000; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Opptil xx% av originalprisen på dette produktet. </strong>&nbsp;-&nbsp;ender om {hours}t :{minutes}m :{seconds}s</span></span></p>',
+                    },
+                    'es': {
+                        'pct_off': 80,
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: small; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Hasta 80% de descuento del diseño original, finaliza en {days} d&iacute;as, {hours}h:{minutes}m:{seconds}s!</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: small; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Hasta xx% del precio del original de este producto, finaliza en {days} d&iacute;as, {hours}h:{minutes}m:{seconds}s!</strong></span></p>',
+                    },
+                    'it': {
+                        'pct_off': 80,
+                        'yellow_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Fino al 80% di risparmio sull\'originale. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Fino al xx% in meno rispetto al prezzo dell\'originale. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
+                    },
+                    'pl': {
+                        'pct_off': 80,
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Aż do 80% zniżki od ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Aż do xx% zniżki na ten produkt w stosunku do ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
+                    }
+                },
 
-            // German
-            'DE1': { // Weekdays
-                'pct_off': 75,
-                'yellow_banner_template': 'Sparen Sie bis zu 75% gegenüber dem Original Preis. Endet in <span id="days">xx</span> Tagen <span id="hours">xx</span> Stunden',
-                'yellow_banner_template_product': 'Sparen Sie bis zu xx% gegenüber dem Original Preis. Endet in <span id="days">xx</span> Tagen <span id="hours">xx</span> Stunden',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'DE2': { // Weekdays
-                'pct_off': 75,
-                'yellow_banner_template': 'Sparen Sie bis zu 75% gegenüber dem Original Preis. Endet in <span id="days">xx</span> Tagen <span id="hours">xx</span> Stunden',
-                'yellow_banner_template_product': 'Erhalten Sie dieses Produkt bis zu xx% günstiger als das Original. Gültig für <span id="hours">xx</span> Stunden',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'DE3': { // Weekdays
-                'pct_off': 75,
-                'yellow_banner_template': 'Bis zu 75% günstiger als das Original. Gültig für <span id="hours">xx</span> Stunden',
-                'yellow_banner_template_product': 'Bis zu xx% günstiger als das Original. Gültig für <span id="hours">xx</span> Stunden',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'DE4': { // Weekends
-                'pct_off': 80,
-                'yellow_banner_template': 'Sparen Sie bis zu 80% gegenüber dem Original Preis. Endet in <span id="days">xx</span> Tagen <span id="hours">xx</span> Stunden',
-                'yellow_banner_template_product': 'Sparen Sie bis zu xx% gegenüber dem Original Preis. Endet in <span id="days">xx</span> Tagen <span id="hours">xx</span> Stunden',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'DE5': { // Weekends
-                'pct_off': 80,
-                'yellow_banner_template': 'Sparen Sie bis zu 80% gegenüber dem Original Preis. Endet in <span id="days">xx</span> Tagen <span id="hours">xx</span> Stunden',
-                'yellow_banner_template_product': 'Erhalten Sie dieses Produkt bis zu xx% günstiger als das Original. Gültig für <span id="hours">xx</span> Stunden',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'DE6': { // Weekends
-                'pct_off': 80,
-                'yellow_banner_template': 'Bis zu 80% günstiger als das Original. Gültig für <span id="hours">xx</span> Stunden',
-                'yellow_banner_template_product': 'Bis zu xx% günstiger als das Original. Gültig für <span id="hours">xx</span> Stunden',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
+                // 03.04
+                // 04.04
+                // 05.04
+                // 06.04
+                'ROW7': { // Row in spreadsheet
+                    'en': { // GB, SE, DK
+                        'pct_off': 80,
+                        'yellow_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Save up to 80% off the high street.&nbsp;</strong>-&nbsp;Ends in {days} days {hours} hours {minutes} minutes {seconds} seconds</span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Save up to xx% off the high street price on this product.&nbsp;</strong>-&nbsp;Ends in {days} days {hours} hours {minutes} minutes {seconds} seconds</span></p>',
+                    },
+                    'nl': {
+                        'pct_off': 80,
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;">Bespaar tot 80% in vergelijking met de prijs van het origineel.&nbsp;-&nbsp;Nog {hours} Uur:{minutes} Min: {seconds} Sec</span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;">Bespaar tot xx% op de prijs van het origineel.&nbsp;-&nbsp;Nog {hours} Uur:{minutes} Min: {seconds} Sec</span></p>',
+                    },
+                    'de': {
+                        'pct_off': 80,
+                        'yellow_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Sparen Sie bis zu 80% gegenüber dem Original Preis - Endet heute in {hours} Stunden {minutes} Minuten</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Sparen Sie bis zu xx% gegenüber dem Original Preis - Endet heute in {hours} Stunden {minutes} Minuten</strong></span></p>',
+                    },
+                    'fr': {
+                        'pct_off': 80,
+                        'yellow_banner_template': '<p><span style="font-family: \'book antiqua\', palatino; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Économisez jusqu\'à 80% sur les produits des commerces traditionnels.</strong> Termine dans {days} jours, {hours}h:{minutes}m:{seconds}s</span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'book antiqua\', palatino; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Économisez jusqu\'à xx% par rapport aux magasins traditionnels sur ce produit. </strong>Termine dans {days} jours, {hours}h:{minutes}m:{seconds}s</span></p>',
+                    },
+                    'no': {
+                        'pct_off': 85,
+                        'yellow_banner_template': '<p><span style="font-size: medium;"><span style="font-family: arial, helvetica, sans-serif; color: #000000; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Spar opptil 85% av butikkpris.</strong>&nbsp;-&nbsp;ender om {hours}t :{minutes}m :{seconds}s</span></span></p>',
+                        'product_banner_template': '<p><span style="font-size: medium;"><span style="font-family: arial, helvetica, sans-serif; color: #000000; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Spar opptil xx% av butikkpris på dette produktet.</strong>&nbsp;-&nbsp;ender om {hours}t :{minutes}m :{seconds}s</span></span></p>',
+                    },
+                    'es': {
+                        'pct_off': 85,
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: small; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Ahorre hasta 85% de descuento del precio en tienda, finaliza en {days} d&iacute;as, {hours}h:{minutes}m:{seconds}s!</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: small; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Ahorre hasta xx% de descuento del precio en tienda de este producto, finaliza en {days} d&iacute;as, {hours}h:{minutes}m:{seconds}s!</strong></span></p>',
+                    },
+                    'it': {
+                        'pct_off': 85,
+                        'yellow_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Risparmia fino al 85% sul prezzo di mercato. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Fino al -xx% rispetto al prezzo di mercato su questo prodotto. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
+                    },
+                    'pl': {
+                        'pct_off': 85,
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Zaoszczędź 85% w stosunku do ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Zaoszczędź aż do xx% na tym produkcie w stosunku do ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
+                    }
+                },
 
-            // France
-            'FR1': { // Weekdays
-                'pct_off': 75,
-                'yellow_banner_template': 'Économisez jusqu\'à 75% sur les produits des commerces traditionnels. Termine dans <span id="days">xx</span>j <span id="hours">xx</span>h <span id="seconds">xx</span>s',
-                'yellow_banner_template_product': 'Économisez jusqu\'à xx% par rapport aux magasins traditionnels sur ce produit  Termine dans <span id="days">xx</span>j <span id="hours">xx</span>h <span id="seconds">xx</span>s',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'FR2': { // Weekdays
-                'pct_off': 75,
-                'yellow_banner_template': 'Économisez jusqu\'à 75% sur les prix originaux. Valable <span id="hours">xx</span> heures',
-                'yellow_banner_template_product': 'Économisez jusqu\'à xx% par rapport au prix original de ce produit. Valable pendant <span id="hours">xx</span> heures.',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'FR3': { // Weekdays
-                'pct_off': 75,
-                'yellow_banner_template': 'Jusqu\'à 75% moins cher que les originaux. Valable pour <span id="hours">xx</span> heures',
-                'yellow_banner_template_product': 'Jusqu’à xx% de réduction sur ce produit par rapport à l’original. Valable pendant <span id="hours">xx</span> heures',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'FR4': { // Weekends
-                'pct_off': 80,
-                'yellow_banner_template': 'Économisez jusqu\'à 80% sur les produits des commerces traditionnels. Termine dans <span id="days">xx</span>j <span id="hours">xx</span>h <span id="seconds">xx</span>s',
-                'yellow_banner_template_product': 'Économisez jusqu\'à xx% par rapport aux magasins traditionnels sur ce produit  Termine dans <span id="days">xx</span>j <span id="hours">xx</span>h <span id="seconds">xx</span>s',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'FR5': { // Weekends
-                'pct_off': 80,
-                'yellow_banner_template': 'Économisez jusqu\'à 80% sur les prix originaux. Valable <span id="hours">xx</span> heures',
-                'yellow_banner_template_product': 'Économisez jusqu\'à xx% par rapport au prix original de ce produit. Valable pendant <span id="hours">xx</span> heures.',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'FR6': { // Weekends
-                'pct_off': 80,
-                'yellow_banner_template': 'Jusqu\'à 80% moins cher que les originaux. Valable pour <span id="hours">xx</span> heures',
-                'yellow_banner_template_product': 'Jusqu’à xx% de réduction sur ce produit par rapport à l’original. Valable pendant <span id="hours">xx</span> heures',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
+                // 27.03
+                // 28.03
+                // 29.03
+                // 30.03
+                //
+                // 24.04
+                // 25.04
+                // 26.04
+                // 27.04
+                //
+                // 01.05
+                // 02.05
+                // 03.05
+                // 04.05
+                'ROW8': { // Row in spreadsheet
+                    'en': { // GB, SE, DK
+                        'pct_off': 80,
+                        'yellow_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Save up to 80% against the original price.&nbsp;</strong>-&nbsp;Ends in {days} days {hours} hours {minutes} minutes {seconds} seconds</span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Save up to xx% against the original price on this product.&nbsp;</strong>-&nbsp;Ends in {days} days {hours} hours {minutes} minutes {seconds} seconds</span></p>',
+                    },
+                    'nl': {
+                        'pct_off': 80,
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;">Bespaar tot 80% in vergelijking met de originele prijs.</strong>&nbsp;-&nbsp;Nog {hours} Uur:{minutes} Min: {seconds} Sec</span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;">Bespaar tot xx% in vergelijking met de originele prijs.</strong>&nbsp;-&nbsp;Nog {hours} Uur:{minutes} Min: {seconds} Sec</span></p>',
+                    },
+                    'de': {
+                        'pct_off': 80,
+                        'yellow_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Sparen Sie bis zu 80% gegenüber dem Original Preis - Endet heute in {hours} Stunden {minutes} Minuten</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Erhalten Sie dieses Produkt bis zu xx% günstiger als das Original - Endet heute in {hours} Stunden {minutes} Minuten</strong></span></p>',
+                    },
+                    'fr': {
+                        'pct_off': 80,
+                        'yellow_banner_template': '<p><span style="font-family: \'book antiqua\', palatino; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Économisez jusqu\'à 80% sur les prix originaux.</strong>Termine dans {days} jours, {hours}h:{minutes}m:{seconds}s</span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'book antiqua\', palatino; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Économisez jusqu\'à xx% par rapport au prix original de ce produit. </strong>Termine dans {days} jours, {hours}h:{minutes}m:{seconds}s</span></p>',
+                    },
+                    'no': {
+                        'pct_off': 85,
+                        'yellow_banner_template': '<p><span style="font-size: medium;"><span style="font-family: arial, helvetica, sans-serif; color: #000000; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Spar opptil 85% mot originalprisen.</strong>&nbsp;-&nbsp;ender om {hours}t :{minutes}m :{seconds}s</span></span></p>',
+                        'product_banner_template': '<p><span style="font-size: medium;"><span style="font-family: arial, helvetica, sans-serif; color: #000000; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Spar opptil xx% mot originalpris på dette produktet.</strong>&nbsp;-&nbsp;ender om {hours}t :{minutes}m :{seconds}s</span></span></p>',
+                    },
+                    'es': {
+                        'pct_off': 85,
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: small; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Ahorre hasta un 85% del precio original, finaliza en {days} d&iacute;as, {hours}h:{minutes}m:{seconds}s!</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: small; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Ahorre hasta un xx% del precio original de este producto, finaliza en {days} d&iacute;as, {hours}h:{minutes}m:{seconds}s!</strong></span></p>',
+                    },
+                    'it': {
+                        'pct_off': 85,
+                        'yellow_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Risparmia fino al 85% rispetto al prezzo dell\'originale. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Risparmia oggi fino al xx% rispetto al prezzo di mercato su questo prodotto. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
+                    },
+                    'pl': {
+                        'pct_off': 85,
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Zaoszczędź aż do 85% w stosunku do oryginalnej ceny - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Zaoszczędź aż do xx% w stosunku do ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
+                    }
+                },
 
-            // Norway
-            'NO1': { // Weekdays
-                'pct_off': 80,
-                'yellow_banner_template': 'Spar opptil 80% av butikkpris. Ender om <span id="days">xx</span>d <span id="hours">xx</span>t <span id="seconds">xx</span>s',
-                'yellow_banner_template_product': 'Spar opptil xx% av butikkpris på dette produktet. Ender om <span id="days">xx</span>d <span id="hours">xx</span>t <span id="seconds">xx</span>s',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'NO2': { // Weekdays
-                'pct_off': 80,
-                'yellow_banner_template': 'Spar opptil 80% mot originalprisen. Gyldig i <span id="hours">xx</span> timer.',
-                'yellow_banner_template_product': 'Spar opptil xx% mot originalpris på dette produktet. Gyldig i <span id="hours">xx</span> timer.',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'NO3': { // Weekdays
-                'pct_off': 80,
-                'yellow_banner_template': 'Opptil 80% av originalen. Gyldig i <span id="hours">xx</span> timer.',
-                'yellow_banner_template_product': 'Opptil xx%av originalprisen på dette produktet. Gyldig i <span id="hours">xx</span> timer.',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'NO4': { // Weekends
-                'pct_off': 85,
-                'yellow_banner_template': 'Spar opptil 85% av butikkpris. Ender om <span id="days">xx</span>d <span id="hours">xx</span>t <span id="seconds">xx</span>s',
-                'yellow_banner_template_product': 'Spar opptil xx% av butikkpris på dette produktet. Ender om <span id="days">xx</span>d <span id="hours">xx</span>t <span id="seconds">xx</span>s',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'NO5': { // Weekends
-                'pct_off': 85,
-                'yellow_banner_template': 'Spar opptil 85% mot originalprisen. Gyldig i <span id="hours">xx</span> timer.',
-                'yellow_banner_template_product': 'Spar opptil xx% mot originalpris på dette produktet. Gyldig i <span id="hours">xx</span> timer.',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'NO6': { // Weekends
-                'pct_off': 85,
-                'yellow_banner_template': 'Opptil 85% av originalen. Gyldig i <span id="hours">xx</span> timer.',
-                'yellow_banner_template_product': 'Opptil xx%av originalprisen på dette produktet. Gyldig i <span id="hours">xx</span> timer.',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-
-            // Spain
-            'ES1': { // Weekdays
-                'pct_off': 80,
-                'yellow_banner_template': 'Ahorre hasta 80% de descuento del precio en tienda. Finaliza en <span id="days">xx</span>d <span id="hours">xx</span>h <span id="seconds">xx</span>s',
-                'yellow_banner_template_product': 'Ahorre hasta xx% de descuento del precio en tienda de este producto. Finaliza en <span id="days">xx</span>d <span id="hours">xx</span>h <span id="seconds">xx</span>s',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'ES2': { // Weekdays
-                'pct_off': 80,
-                'yellow_banner_template': 'Ahorre hasta un 80% del precio original. Oferta válida durante <span id="hours">xx</span> horas',
-                'yellow_banner_template_product': 'Ahorre hasta un xx% del precio original de este producto. Oferta válida durante <span id="hours">xx</span> horas',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'ES3': { // Weekdays
-                'pct_off': 80,
-                'yellow_banner_template': 'Hasta 80% de descuento del diseño original. Oferta válida durante <span id="hours">xx</span> horas',
-                'yellow_banner_template_product': 'Hasta xx% del precio del original de este producto. Oferta válida durante <span id="hours">xx</span> horas',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'ES4': { // Weekends
-                'pct_off': 85,
-                'yellow_banner_template': 'Ahorre hasta 85% de descuento del precio en tienda. Finaliza en <span id="days">xx</span>d <span id="hours">xx</span>h <span id="seconds">xx</span>s',
-                'yellow_banner_template_product': 'Ahorre hasta xx% de descuento del precio en tienda de este producto. Finaliza <span id="days">xx</span>d <span id="hours">xx</span>h <span id="seconds">xx</span>s',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'ES5': { // Weekends
-                'pct_off': 85, // TODO
-                'yellow_banner_template': 'Ahorre hasta un 85% del precio original. Oferta válida durante <span id="hours">xx</span> horas',
-                'yellow_banner_template_product': 'Ahorre hasta un xx% del precio original de este producto. Oferta válida durante <span id="hours">xx</span> horas',
-                'countdown_to': 1434672000 * 1000
-            },
-            'ES6': { // Weekends
-                'pct_off': 85,
-                'yellow_banner_template': 'Hasta 85% de descuento del diseño original. Oferta válida durante <span id="hours">xx</span> horas',
-                'yellow_banner_template_product': 'Hasta xx% del precio del original de este producto. Oferta válida durante <span id="hours">xx</span> horas',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-
-            // Italy
-            'IT1': { // Weekdays
-                'pct_off': 80,
-                'yellow_banner_template': 'Risparmia fino al 80% sul prezzo di mercato. Scade in <span id="days">xx</span>d <span id="hours">xx</span>h <span id="seconds">xx</span>s',
-                'yellow_banner_template_product': 'Fino al -xx% rispetto al prezzo di mercato su questo prodotto. Scade in <span id="days">xx</span>d <span id="hours">xx</span>h <span id="seconds">xx</span>s',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'IT2': { // Weekdays
-                'pct_off': 80,
-                'yellow_banner_template': 'Risparmia fino al 80% rispetto al prezzo dell\'originale. Scade in <span id="hours">xx</span>h',
-                'yellow_banner_template_product': 'Risparmia oggi fino al xx% rispetto al prezzo di mercato su questo prodotto. Scade in <span id="hours">xx</span>h <span id="seconds">xx</span>s',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'IT3': { // Weekdays
-                'pct_off': 80,
-                'yellow_banner_template': 'Fino al 80% di risparmio sull\'originale. Scade in <span id="hours">xx</span>h <span id="seconds">xx</span>s',
-                'yellow_banner_template_product': 'Fino al xx% in meno rispetto al prezzo dell\'originale. Solo oggi. Scade in <span id="hours">xx</span>h <span id="seconds">xx</span>s',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'IT4': { // Weekends
-                'pct_off': 85,
-                'yellow_banner_template': 'Risparmia fino al 85% sul prezzo di mercato. Scade in <span id="days">xx</span>d <span id="hours">xx</span>h <span id="seconds">xx</span>s',
-                'yellow_banner_template_product': 'Fino al -xx% rispetto al prezzo di mercato su questo prodotto. Scade in <span id="days">xx</span>d <span id="hours">xx</span>h <span id="seconds">xx</span>s',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'IT5': { // Weekends
-                'pct_off': 85,
-                'yellow_banner_template': 'Risparmia fino al 85% rispetto al prezzo dell\'originale. Scade in <span id="hours">xx</span>h',
-                'yellow_banner_template_product': 'Risparmia oggi fino al xx% rispetto al prezzo di mercato su questo prodotto. Scade in <span id="hours">xx</span>h <span id="seconds">xx</span>s',
-                'countdown_to': 1434672000 * 1000
-            },
-            'IT6': { // Weekends
-                'pct_off': 85,
-                'yellow_banner_template': 'Fino al 85% di risparmio sull\'originale. Scade in <span id="hours">xx</span>h <span id="seconds">xx</span>s',
-                'yellow_banner_template_product': 'Fino al xx% in meno rispetto al prezzo dell\'originale. Solo oggi. Scade in <span id="hours">xx</span>h <span id="seconds">xx</span>s',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-
-            // Polish
-            'PL1': { // Weekdays
-                'pct_off': 80,
-                'yellow_banner_template': 'Zaoszczędź 80% w stosunku do ceny oryginału. Promocja kończy się za <span id="days">xx</span> dni <span id="hours">xx</span> godziny',
-                'yellow_banner_template_product': 'Zaoszczędź aż do xx% na tym produkcie w stosunku do ceny oryginału. Promocja kończy się za <span id="days">xx</span> dni <span id="hours">xx</span> godziny',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'PL2': { // Weekdays
-                'pct_off': 80,
-                'yellow_banner_template': 'Zaoszczędź aż do 80% w stosunku do oryginalnej ceny. Promocja ważna przez <span id="hours">xx</span> godzin.',
-                'yellow_banner_template_product': 'Zaoszczędź aż do xx% w stosunku do ceny oryginału. Promocja ważna przez <span id="hours">xx</span> godzin.',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'PL3': { // Weekdays
-                'pct_off': 80,
-                'yellow_banner_template': 'Aż do 80% zniżki od ceny oryginału. Promocja ważna przez <span id="hours">xx</span> godzin.',
-                'yellow_banner_template_product': 'Aż do xx% zniżki na ten produkt w stosunku do ceny oryginału. Promocja ważna przez <span id="hours">xx</span> godzin.',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'PL4': { // Weekends
-                'pct_off': 85,
-                'yellow_banner_template': 'Zaoszczędź 85% w stosunku do ceny oryginału. Promocja kończy się za <span id="days">xx</span> dni <span id="hours">xx</span> godziny',
-                'yellow_banner_template_product': 'Zaoszczędź aż do xx% na tym produkcie w stosunku do ceny oryginału. Promocja kończy się za <span id="days">xx</span> dni <span id="hours">xx</span> godziny',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'PL5': { // Weekends
-                'pct_off': 85,
-                'yellow_banner_template': 'Zaoszczędź aż do 85% w stosunku do oryginalnej ceny. Promocja ważna przez <span id="hours">xx</span> godzin.',
-                'yellow_banner_template_product': 'Zaoszczędź aż do xx% w stosunku do ceny oryginału. Promocja ważna przez <span id="hours">xx</span> godzin.',
-                'countdown_to': 1434672000 * 1000
-            },
-            'PL6': { // Weekends
-                'pct_off': 85,
-                'yellow_banner_template': 'Aż do 85% zniżki od ceny oryginału. Promocja ważna przez <span id="hours">xx</span> godzin.',
-                'yellow_banner_template_product': 'Aż do xx% zniżki na ten produkt w stosunku do ceny oryginału. Promocja ważna przez <span id="hours">xx</span> godzin.',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-
-            // Netherlands TODO
-            'NL1': { // Weekdays
-                'pct_off': 75,
-                'yellow_banner_template': 'TODO <span id="days">xx</span>d <span id="hours">xx</span>h <span id="minutes">xx</span>m <span id="seconds">xx</span>s',
-                'yellow_banner_template_product': 'TODO <span id="days">xx</span>d <span id="hours">xx</span>h <span id="minutes">xx</span>m <span id="seconds">xx</span>s',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'NL2': { // Weekdays
-                'pct_off': 75,
-                'yellow_banner_template': 'TODO <span id="hours">xx</span> hours',
-                'yellow_banner_template_product': 'TODO <span id="hours">xx</span> hours',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'NL3': { // Weekdays
-                'pct_off': 75,
-                'yellow_banner_template': 'TODO <span id="hours">xx</span> hours',
-                'yellow_banner_template_product': 'TODO <span id="hours">xx</span> hours',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'NL4': { // Weekends
-                'pct_off': 80,
-                'yellow_banner_template': 'TODO <span id="days">xx</span>d <span id="hours">xx</span>h <span id="minutes">xx</span>m <span id="seconds">xx</span>s',
-                'yellow_banner_template_product': 'TODO <span id="days">xx</span>d <span id="hours">xx</span>h <span id="minutes">xx</span>m <span id="seconds">xx</span>s',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'NL5': { // Weekends
-                'pct_off': 80,
-                'yellow_banner_template': 'TODO <span id="hours">xx</span> hours',
-                'yellow_banner_template_product': 'TODO <span id="hours">xx</span> hours',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-            'NL6': { // Weekends
-                'pct_off': 80,
-                'yellow_banner_template': 'TODO <span id="hours">xx</span> hours',
-                'yellow_banner_template_product': 'TODO <span id="hours">xx</span> hours',
-                'countdown_to': 1434672000 * 1000 // TODO
-            },
-        },
-    };
-    exp.vars.augmented_promo_data_map = {
-        'dk': { // TODO
-            '2015-03-20': exp.vars.augmented_promo_data.DK1,
-            '2015-03-21': exp.vars.augmented_promo_data.DK1,
-            '2015-03-22': exp.vars.augmented_promo_data.DK1,
-            '2015-03-23': exp.vars.augmented_promo_data.DK1,
-            '2015-03-24': exp.vars.augmented_promo_data.DK1,
-            '2015-03-25': exp.vars.augmented_promo_data.DK1,
-            '2015-03-26': exp.vars.augmented_promo_data.DK1,
-            '2015-03-27': exp.vars.augmented_promo_data.DK1,
-            '2015-03-28': exp.vars.augmented_promo_data.DK1,
-            '2015-03-29': exp.vars.augmented_promo_data.DK1,
-            '2015-03-30': exp.vars.augmented_promo_data.DK1,
-            '2015-03-31': exp.vars.augmented_promo_data.DK1,
-            '2015-04-01': exp.vars.augmented_promo_data.DK1,
-            '2015-04-02': exp.vars.augmented_promo_data.DK1,
-            '2015-04-03': exp.vars.augmented_promo_data.DK1,
-            '2015-04-04': exp.vars.augmented_promo_data.DK1,
-            '2015-04-05': exp.vars.augmented_promo_data.DK1,
-            '2015-04-06': exp.vars.augmented_promo_data.DK1,
-            '2015-04-07': exp.vars.augmented_promo_data.DK1,
-            '2015-04-08': exp.vars.augmented_promo_data.DK1,
-            '2015-04-09': exp.vars.augmented_promo_data.DK1,
-            '2015-04-10': exp.vars.augmented_promo_data.DK1,
-            '2015-04-11': exp.vars.augmented_promo_data.DK1,
-            '2015-04-12': exp.vars.augmented_promo_data.DK1,
-            '2015-04-13': exp.vars.augmented_promo_data.DK1,
-            '2015-04-14': exp.vars.augmented_promo_data.DK1,
-            '2015-04-15': exp.vars.augmented_promo_data.DK1,
-            '2015-04-16': exp.vars.augmented_promo_data.DK1,
-            '2015-04-17': exp.vars.augmented_promo_data.DK1,
-            '2015-04-18': exp.vars.augmented_promo_data.DK1,
-            '2015-04-19': exp.vars.augmented_promo_data.DK1,
-            '2015-04-20': exp.vars.augmented_promo_data.DK1,
-            '2015-04-21': exp.vars.augmented_promo_data.DK1,
-            '2015-04-22': exp.vars.augmented_promo_data.DK1,
-            '2015-04-23': exp.vars.augmented_promo_data.DK1,
-            '2015-04-24': exp.vars.augmented_promo_data.DK1,
-            '2015-04-25': exp.vars.augmented_promo_data.DK1,
-            '2015-04-26': exp.vars.augmented_promo_data.DK1,
-            '2015-04-27': exp.vars.augmented_promo_data.DK1,
-        },
-        'fr': { // TODO
-            '2015-03-20': exp.vars.augmented_promo_data.FR1,
-            '2015-03-21': exp.vars.augmented_promo_data.FR1,
-            '2015-03-22': exp.vars.augmented_promo_data.FR1,
-            '2015-03-23': exp.vars.augmented_promo_data.FR1,
-            '2015-03-24': exp.vars.augmented_promo_data.FR1,
-            '2015-03-25': exp.vars.augmented_promo_data.FR1,
-            '2015-03-26': exp.vars.augmented_promo_data.FR1,
-            '2015-03-27': exp.vars.augmented_promo_data.FR1,
-            '2015-03-28': exp.vars.augmented_promo_data.FR1,
-            '2015-03-29': exp.vars.augmented_promo_data.FR1,
-            '2015-03-30': exp.vars.augmented_promo_data.FR1,
-            '2015-03-31': exp.vars.augmented_promo_data.FR1,
-            '2015-04-01': exp.vars.augmented_promo_data.FR1,
-            '2015-04-02': exp.vars.augmented_promo_data.FR1,
-            '2015-04-03': exp.vars.augmented_promo_data.FR1,
-            '2015-04-04': exp.vars.augmented_promo_data.FR1,
-            '2015-04-05': exp.vars.augmented_promo_data.FR1,
-            '2015-04-06': exp.vars.augmented_promo_data.FR1,
-            '2015-04-07': exp.vars.augmented_promo_data.FR1,
-            '2015-04-08': exp.vars.augmented_promo_data.FR1,
-            '2015-04-09': exp.vars.augmented_promo_data.FR1,
-            '2015-04-10': exp.vars.augmented_promo_data.FR1,
-            '2015-04-11': exp.vars.augmented_promo_data.FR1,
-            '2015-04-12': exp.vars.augmented_promo_data.FR1,
-            '2015-04-13': exp.vars.augmented_promo_data.FR1,
-            '2015-04-14': exp.vars.augmented_promo_data.FR1,
-            '2015-04-15': exp.vars.augmented_promo_data.FR1,
-            '2015-04-16': exp.vars.augmented_promo_data.FR1,
-            '2015-04-17': exp.vars.augmented_promo_data.FR1,
-            '2015-04-18': exp.vars.augmented_promo_data.FR1,
-            '2015-04-19': exp.vars.augmented_promo_data.FR1,
-            '2015-04-20': exp.vars.augmented_promo_data.FR1,
-            '2015-04-21': exp.vars.augmented_promo_data.FR1,
-            '2015-04-22': exp.vars.augmented_promo_data.FR1,
-            '2015-04-23': exp.vars.augmented_promo_data.FR1,
-            '2015-04-24': exp.vars.augmented_promo_data.FR1,
-            '2015-04-25': exp.vars.augmented_promo_data.FR1,
-            '2015-04-26': exp.vars.augmented_promo_data.FR1,
-            '2015-04-27': exp.vars.augmented_promo_data.FR1,
-        },
-        'no': { // TODO
-            '2015-03-20': exp.vars.augmented_promo_data.NO1,
-            '2015-03-21': exp.vars.augmented_promo_data.NO1,
-            '2015-03-22': exp.vars.augmented_promo_data.NO1,
-            '2015-03-23': exp.vars.augmented_promo_data.NO1,
-            '2015-03-24': exp.vars.augmented_promo_data.NO1,
-            '2015-03-25': exp.vars.augmented_promo_data.NO1,
-            '2015-03-26': exp.vars.augmented_promo_data.NO1,
-            '2015-03-27': exp.vars.augmented_promo_data.NO1,
-            '2015-03-28': exp.vars.augmented_promo_data.NO1,
-            '2015-03-29': exp.vars.augmented_promo_data.NO1,
-            '2015-03-30': exp.vars.augmented_promo_data.NO1,
-            '2015-03-31': exp.vars.augmented_promo_data.NO1,
-            '2015-04-01': exp.vars.augmented_promo_data.NO1,
-            '2015-04-02': exp.vars.augmented_promo_data.NO1,
-            '2015-04-03': exp.vars.augmented_promo_data.NO1,
-            '2015-04-04': exp.vars.augmented_promo_data.NO1,
-            '2015-04-05': exp.vars.augmented_promo_data.NO1,
-            '2015-04-06': exp.vars.augmented_promo_data.NO1,
-            '2015-04-07': exp.vars.augmented_promo_data.NO1,
-            '2015-04-08': exp.vars.augmented_promo_data.NO1,
-            '2015-04-09': exp.vars.augmented_promo_data.NO1,
-            '2015-04-10': exp.vars.augmented_promo_data.NO1,
-            '2015-04-11': exp.vars.augmented_promo_data.NO1,
-            '2015-04-12': exp.vars.augmented_promo_data.NO1,
-            '2015-04-13': exp.vars.augmented_promo_data.NO1,
-            '2015-04-14': exp.vars.augmented_promo_data.NO1,
-            '2015-04-15': exp.vars.augmented_promo_data.NO1,
-            '2015-04-16': exp.vars.augmented_promo_data.NO1,
-            '2015-04-17': exp.vars.augmented_promo_data.NO1,
-            '2015-04-18': exp.vars.augmented_promo_data.NO1,
-            '2015-04-19': exp.vars.augmented_promo_data.NO1,
-            '2015-04-20': exp.vars.augmented_promo_data.NO1,
-            '2015-04-21': exp.vars.augmented_promo_data.NO1,
-            '2015-04-22': exp.vars.augmented_promo_data.NO1,
-            '2015-04-23': exp.vars.augmented_promo_data.NO1,
-            '2015-04-24': exp.vars.augmented_promo_data.NO1,
-            '2015-04-25': exp.vars.augmented_promo_data.NO1,
-            '2015-04-26': exp.vars.augmented_promo_data.NO1,
-            '2015-04-27': exp.vars.augmented_promo_data.NO1,
-        },
-        'de': { // TODO
-            '2015-03-20': exp.vars.augmented_promo_data.DE1,
-            '2015-03-21': exp.vars.augmented_promo_data.DE1,
-            '2015-03-22': exp.vars.augmented_promo_data.DE1,
-            '2015-03-23': exp.vars.augmented_promo_data.DE1,
-            '2015-03-24': exp.vars.augmented_promo_data.DE1,
-            '2015-03-25': exp.vars.augmented_promo_data.DE1,
-            '2015-03-26': exp.vars.augmented_promo_data.DE1,
-            '2015-03-27': exp.vars.augmented_promo_data.DE1,
-            '2015-03-28': exp.vars.augmented_promo_data.DE1,
-            '2015-03-29': exp.vars.augmented_promo_data.DE1,
-            '2015-03-30': exp.vars.augmented_promo_data.DE1,
-            '2015-03-31': exp.vars.augmented_promo_data.DE1,
-            '2015-04-01': exp.vars.augmented_promo_data.DE1,
-            '2015-04-02': exp.vars.augmented_promo_data.DE1,
-            '2015-04-03': exp.vars.augmented_promo_data.DE1,
-            '2015-04-04': exp.vars.augmented_promo_data.DE1,
-            '2015-04-05': exp.vars.augmented_promo_data.DE1,
-            '2015-04-06': exp.vars.augmented_promo_data.DE1,
-            '2015-04-07': exp.vars.augmented_promo_data.DE1,
-            '2015-04-08': exp.vars.augmented_promo_data.DE1,
-            '2015-04-09': exp.vars.augmented_promo_data.DE1,
-            '2015-04-10': exp.vars.augmented_promo_data.DE1,
-            '2015-04-11': exp.vars.augmented_promo_data.DE1,
-            '2015-04-12': exp.vars.augmented_promo_data.DE1,
-            '2015-04-13': exp.vars.augmented_promo_data.DE1,
-            '2015-04-14': exp.vars.augmented_promo_data.DE1,
-            '2015-04-15': exp.vars.augmented_promo_data.DE1,
-            '2015-04-16': exp.vars.augmented_promo_data.DE1,
-            '2015-04-17': exp.vars.augmented_promo_data.DE1,
-            '2015-04-18': exp.vars.augmented_promo_data.DE1,
-            '2015-04-19': exp.vars.augmented_promo_data.DE1,
-            '2015-04-20': exp.vars.augmented_promo_data.DE1,
-            '2015-04-21': exp.vars.augmented_promo_data.DE1,
-            '2015-04-22': exp.vars.augmented_promo_data.DE1,
-            '2015-04-23': exp.vars.augmented_promo_data.DE1,
-            '2015-04-24': exp.vars.augmented_promo_data.DE1,
-            '2015-04-25': exp.vars.augmented_promo_data.DE1,
-            '2015-04-26': exp.vars.augmented_promo_data.DE1,
-            '2015-04-27': exp.vars.augmented_promo_data.DE1,
-        },
-        'se': { // TODO
-            '2015-03-20': exp.vars.augmented_promo_data.EN1,
-            '2015-03-21': exp.vars.augmented_promo_data.EN1,
-            '2015-03-22': exp.vars.augmented_promo_data.EN1,
-            '2015-03-23': exp.vars.augmented_promo_data.EN1,
-            '2015-03-24': exp.vars.augmented_promo_data.EN1,
-            '2015-03-25': exp.vars.augmented_promo_data.EN1,
-            '2015-03-26': exp.vars.augmented_promo_data.EN1,
-            '2015-03-27': exp.vars.augmented_promo_data.EN1,
-            '2015-03-28': exp.vars.augmented_promo_data.EN1,
-            '2015-03-29': exp.vars.augmented_promo_data.EN1,
-            '2015-03-30': exp.vars.augmented_promo_data.EN1,
-            '2015-03-31': exp.vars.augmented_promo_data.EN1,
-            '2015-04-01': exp.vars.augmented_promo_data.EN1,
-            '2015-04-02': exp.vars.augmented_promo_data.EN1,
-            '2015-04-03': exp.vars.augmented_promo_data.EN1,
-            '2015-04-04': exp.vars.augmented_promo_data.EN1,
-            '2015-04-05': exp.vars.augmented_promo_data.EN1,
-            '2015-04-06': exp.vars.augmented_promo_data.EN1,
-            '2015-04-07': exp.vars.augmented_promo_data.EN1,
-            '2015-04-08': exp.vars.augmented_promo_data.EN1,
-            '2015-04-09': exp.vars.augmented_promo_data.EN1,
-            '2015-04-10': exp.vars.augmented_promo_data.EN1,
-            '2015-04-11': exp.vars.augmented_promo_data.EN1,
-            '2015-04-12': exp.vars.augmented_promo_data.EN1,
-            '2015-04-13': exp.vars.augmented_promo_data.EN1,
-            '2015-04-14': exp.vars.augmented_promo_data.EN1,
-            '2015-04-15': exp.vars.augmented_promo_data.EN1,
-            '2015-04-16': exp.vars.augmented_promo_data.EN1,
-            '2015-04-17': exp.vars.augmented_promo_data.EN1,
-            '2015-04-18': exp.vars.augmented_promo_data.EN1,
-            '2015-04-19': exp.vars.augmented_promo_data.EN1,
-            '2015-04-20': exp.vars.augmented_promo_data.EN1,
-            '2015-04-21': exp.vars.augmented_promo_data.EN1,
-            '2015-04-22': exp.vars.augmented_promo_data.EN1,
-            '2015-04-23': exp.vars.augmented_promo_data.EN1,
-            '2015-04-24': exp.vars.augmented_promo_data.EN1,
-            '2015-04-25': exp.vars.augmented_promo_data.EN1,
-            '2015-04-26': exp.vars.augmented_promo_data.EN1,
-            '2015-04-27': exp.vars.augmented_promo_data.EN1,
-        },
-        'pl': { // TODO
-            '2015-03-20': exp.vars.augmented_promo_data.PL1,
-            '2015-03-21': exp.vars.augmented_promo_data.PL1,
-            '2015-03-22': exp.vars.augmented_promo_data.PL1,
-            '2015-03-23': exp.vars.augmented_promo_data.PL1,
-            '2015-03-24': exp.vars.augmented_promo_data.PL1,
-            '2015-03-25': exp.vars.augmented_promo_data.PL1,
-            '2015-03-26': exp.vars.augmented_promo_data.PL1,
-            '2015-03-27': exp.vars.augmented_promo_data.PL1,
-            '2015-03-28': exp.vars.augmented_promo_data.PL1,
-            '2015-03-29': exp.vars.augmented_promo_data.PL1,
-            '2015-03-30': exp.vars.augmented_promo_data.PL1,
-            '2015-03-31': exp.vars.augmented_promo_data.PL1,
-            '2015-04-01': exp.vars.augmented_promo_data.PL1,
-            '2015-04-02': exp.vars.augmented_promo_data.PL1,
-            '2015-04-03': exp.vars.augmented_promo_data.PL1,
-            '2015-04-04': exp.vars.augmented_promo_data.PL1,
-            '2015-04-05': exp.vars.augmented_promo_data.PL1,
-            '2015-04-06': exp.vars.augmented_promo_data.PL1,
-            '2015-04-07': exp.vars.augmented_promo_data.PL1,
-            '2015-04-08': exp.vars.augmented_promo_data.PL1,
-            '2015-04-09': exp.vars.augmented_promo_data.PL1,
-            '2015-04-10': exp.vars.augmented_promo_data.PL1,
-            '2015-04-11': exp.vars.augmented_promo_data.PL1,
-            '2015-04-12': exp.vars.augmented_promo_data.PL1,
-            '2015-04-13': exp.vars.augmented_promo_data.PL1,
-            '2015-04-14': exp.vars.augmented_promo_data.PL1,
-            '2015-04-15': exp.vars.augmented_promo_data.PL1,
-            '2015-04-16': exp.vars.augmented_promo_data.PL1,
-            '2015-04-17': exp.vars.augmented_promo_data.PL1,
-            '2015-04-18': exp.vars.augmented_promo_data.PL1,
-            '2015-04-19': exp.vars.augmented_promo_data.PL1,
-            '2015-04-20': exp.vars.augmented_promo_data.PL1,
-            '2015-04-21': exp.vars.augmented_promo_data.PL1,
-            '2015-04-22': exp.vars.augmented_promo_data.PL1,
-            '2015-04-23': exp.vars.augmented_promo_data.PL1,
-            '2015-04-24': exp.vars.augmented_promo_data.PL1,
-            '2015-04-25': exp.vars.augmented_promo_data.PL1,
-            '2015-04-26': exp.vars.augmented_promo_data.PL1,
-            '2015-04-27': exp.vars.augmented_promo_data.PL1,
-        },
-        'it': { // TODO
-            '2015-03-20': exp.vars.augmented_promo_data.IT1,
-            '2015-03-21': exp.vars.augmented_promo_data.IT1,
-            '2015-03-22': exp.vars.augmented_promo_data.IT1,
-            '2015-03-23': exp.vars.augmented_promo_data.IT1,
-            '2015-03-24': exp.vars.augmented_promo_data.IT1,
-            '2015-03-25': exp.vars.augmented_promo_data.IT1,
-            '2015-03-26': exp.vars.augmented_promo_data.IT1,
-            '2015-03-27': exp.vars.augmented_promo_data.IT1,
-            '2015-03-28': exp.vars.augmented_promo_data.IT1,
-            '2015-03-29': exp.vars.augmented_promo_data.IT1,
-            '2015-03-30': exp.vars.augmented_promo_data.IT1,
-            '2015-03-31': exp.vars.augmented_promo_data.IT1,
-            '2015-04-01': exp.vars.augmented_promo_data.IT1,
-            '2015-04-02': exp.vars.augmented_promo_data.IT1,
-            '2015-04-03': exp.vars.augmented_promo_data.IT1,
-            '2015-04-04': exp.vars.augmented_promo_data.IT1,
-            '2015-04-05': exp.vars.augmented_promo_data.IT1,
-            '2015-04-06': exp.vars.augmented_promo_data.IT1,
-            '2015-04-07': exp.vars.augmented_promo_data.IT1,
-            '2015-04-08': exp.vars.augmented_promo_data.IT1,
-            '2015-04-09': exp.vars.augmented_promo_data.IT1,
-            '2015-04-10': exp.vars.augmented_promo_data.IT1,
-            '2015-04-11': exp.vars.augmented_promo_data.IT1,
-            '2015-04-12': exp.vars.augmented_promo_data.IT1,
-            '2015-04-13': exp.vars.augmented_promo_data.IT1,
-            '2015-04-14': exp.vars.augmented_promo_data.IT1,
-            '2015-04-15': exp.vars.augmented_promo_data.IT1,
-            '2015-04-16': exp.vars.augmented_promo_data.IT1,
-            '2015-04-17': exp.vars.augmented_promo_data.IT1,
-            '2015-04-18': exp.vars.augmented_promo_data.IT1,
-            '2015-04-19': exp.vars.augmented_promo_data.IT1,
-            '2015-04-20': exp.vars.augmented_promo_data.IT1,
-            '2015-04-21': exp.vars.augmented_promo_data.IT1,
-            '2015-04-22': exp.vars.augmented_promo_data.IT1,
-            '2015-04-23': exp.vars.augmented_promo_data.IT1,
-            '2015-04-24': exp.vars.augmented_promo_data.IT1,
-            '2015-04-25': exp.vars.augmented_promo_data.IT1,
-            '2015-04-26': exp.vars.augmented_promo_data.IT1,
-            '2015-04-27': exp.vars.augmented_promo_data.IT1,
-        },
-        'es': { // TODO
-            '2015-03-20': exp.vars.augmented_promo_data.ES1,
-            '2015-03-21': exp.vars.augmented_promo_data.ES1,
-            '2015-03-22': exp.vars.augmented_promo_data.ES1,
-            '2015-03-23': exp.vars.augmented_promo_data.ES1,
-            '2015-03-24': exp.vars.augmented_promo_data.ES1,
-            '2015-03-25': exp.vars.augmented_promo_data.ES1,
-            '2015-03-26': exp.vars.augmented_promo_data.ES1,
-            '2015-03-27': exp.vars.augmented_promo_data.ES1,
-            '2015-03-28': exp.vars.augmented_promo_data.ES1,
-            '2015-03-29': exp.vars.augmented_promo_data.ES1,
-            '2015-03-30': exp.vars.augmented_promo_data.ES1,
-            '2015-03-31': exp.vars.augmented_promo_data.ES1,
-            '2015-04-01': exp.vars.augmented_promo_data.ES1,
-            '2015-04-02': exp.vars.augmented_promo_data.ES1,
-            '2015-04-03': exp.vars.augmented_promo_data.ES1,
-            '2015-04-04': exp.vars.augmented_promo_data.ES1,
-            '2015-04-05': exp.vars.augmented_promo_data.ES1,
-            '2015-04-06': exp.vars.augmented_promo_data.ES1,
-            '2015-04-07': exp.vars.augmented_promo_data.ES1,
-            '2015-04-08': exp.vars.augmented_promo_data.ES1,
-            '2015-04-09': exp.vars.augmented_promo_data.ES1,
-            '2015-04-10': exp.vars.augmented_promo_data.ES1,
-            '2015-04-11': exp.vars.augmented_promo_data.ES1,
-            '2015-04-12': exp.vars.augmented_promo_data.ES1,
-            '2015-04-13': exp.vars.augmented_promo_data.ES1,
-            '2015-04-14': exp.vars.augmented_promo_data.ES1,
-            '2015-04-15': exp.vars.augmented_promo_data.ES1,
-            '2015-04-16': exp.vars.augmented_promo_data.ES1,
-            '2015-04-17': exp.vars.augmented_promo_data.ES1,
-            '2015-04-18': exp.vars.augmented_promo_data.ES1,
-            '2015-04-19': exp.vars.augmented_promo_data.ES1,
-            '2015-04-20': exp.vars.augmented_promo_data.ES1,
-            '2015-04-21': exp.vars.augmented_promo_data.ES1,
-            '2015-04-22': exp.vars.augmented_promo_data.ES1,
-            '2015-04-23': exp.vars.augmented_promo_data.ES1,
-            '2015-04-24': exp.vars.augmented_promo_data.ES1,
-            '2015-04-25': exp.vars.augmented_promo_data.ES1,
-            '2015-04-26': exp.vars.augmented_promo_data.ES1,
-            '2015-04-27': exp.vars.augmented_promo_data.ES1,
-        },
-        'gb': { // TODO
-            '2015-03-20': exp.vars.augmented_promo_data.UK1,
-            '2015-03-21': exp.vars.augmented_promo_data.UK1,
-            '2015-03-22': exp.vars.augmented_promo_data.UK1,
-            '2015-03-23': exp.vars.augmented_promo_data.UK1,
-            '2015-03-24': exp.vars.augmented_promo_data.UK1,
-            '2015-03-25': exp.vars.augmented_promo_data.UK1,
-            '2015-03-26': exp.vars.augmented_promo_data.UK1,
-            '2015-03-27': exp.vars.augmented_promo_data.UK1,
-            '2015-03-28': exp.vars.augmented_promo_data.UK1,
-            '2015-03-29': exp.vars.augmented_promo_data.UK1,
-            '2015-03-30': exp.vars.augmented_promo_data.UK1,
-            '2015-03-31': exp.vars.augmented_promo_data.UK1,
-            '2015-04-01': exp.vars.augmented_promo_data.UK1,
-            '2015-04-02': exp.vars.augmented_promo_data.UK1,
-            '2015-04-03': exp.vars.augmented_promo_data.UK1,
-            '2015-04-04': exp.vars.augmented_promo_data.UK1,
-            '2015-04-05': exp.vars.augmented_promo_data.UK1,
-            '2015-04-06': exp.vars.augmented_promo_data.UK1,
-            '2015-04-07': exp.vars.augmented_promo_data.UK1,
-            '2015-04-08': exp.vars.augmented_promo_data.UK1,
-            '2015-04-09': exp.vars.augmented_promo_data.UK1,
-            '2015-04-10': exp.vars.augmented_promo_data.UK1,
-            '2015-04-11': exp.vars.augmented_promo_data.UK1,
-            '2015-04-12': exp.vars.augmented_promo_data.UK1,
-            '2015-04-13': exp.vars.augmented_promo_data.UK1,
-            '2015-04-14': exp.vars.augmented_promo_data.UK1,
-            '2015-04-15': exp.vars.augmented_promo_data.UK1,
-            '2015-04-16': exp.vars.augmented_promo_data.UK1,
-            '2015-04-17': exp.vars.augmented_promo_data.UK1,
-            '2015-04-18': exp.vars.augmented_promo_data.UK1,
-            '2015-04-19': exp.vars.augmented_promo_data.UK1,
-            '2015-04-20': exp.vars.augmented_promo_data.UK1,
-            '2015-04-21': exp.vars.augmented_promo_data.UK1,
-            '2015-04-22': exp.vars.augmented_promo_data.UK1,
-            '2015-04-23': exp.vars.augmented_promo_data.UK1,
-            '2015-04-24': exp.vars.augmented_promo_data.UK1,
-            '2015-04-25': exp.vars.augmented_promo_data.UK1,
-            '2015-04-26': exp.vars.augmented_promo_data.UK1,
-            '2015-04-27': exp.vars.augmented_promo_data.UK1,
-        },
-        'nl': { // TODO
-            '2015-03-20': exp.vars.augmented_promo_data.NL1,
-            '2015-03-21': exp.vars.augmented_promo_data.NL1,
-            '2015-03-22': exp.vars.augmented_promo_data.NL1,
-            '2015-03-23': exp.vars.augmented_promo_data.NL1,
-            '2015-03-24': exp.vars.augmented_promo_data.NL1,
-            '2015-03-25': exp.vars.augmented_promo_data.NL1,
-            '2015-03-26': exp.vars.augmented_promo_data.NL1,
-            '2015-03-27': exp.vars.augmented_promo_data.NL1,
-            '2015-03-28': exp.vars.augmented_promo_data.NL1,
-            '2015-03-29': exp.vars.augmented_promo_data.NL1,
-            '2015-03-30': exp.vars.augmented_promo_data.NL1,
-            '2015-03-31': exp.vars.augmented_promo_data.NL1,
-            '2015-04-01': exp.vars.augmented_promo_data.NL1,
-            '2015-04-02': exp.vars.augmented_promo_data.NL1,
-            '2015-04-03': exp.vars.augmented_promo_data.NL1,
-            '2015-04-04': exp.vars.augmented_promo_data.NL1,
-            '2015-04-05': exp.vars.augmented_promo_data.NL1,
-            '2015-04-06': exp.vars.augmented_promo_data.NL1,
-            '2015-04-07': exp.vars.augmented_promo_data.NL1,
-            '2015-04-08': exp.vars.augmented_promo_data.NL1,
-            '2015-04-09': exp.vars.augmented_promo_data.NL1,
-            '2015-04-10': exp.vars.augmented_promo_data.NL1,
-            '2015-04-11': exp.vars.augmented_promo_data.NL1,
-            '2015-04-12': exp.vars.augmented_promo_data.NL1,
-            '2015-04-13': exp.vars.augmented_promo_data.NL1,
-            '2015-04-14': exp.vars.augmented_promo_data.NL1,
-            '2015-04-15': exp.vars.augmented_promo_data.NL1,
-            '2015-04-16': exp.vars.augmented_promo_data.NL1,
-            '2015-04-17': exp.vars.augmented_promo_data.NL1,
-            '2015-04-18': exp.vars.augmented_promo_data.NL1,
-            '2015-04-19': exp.vars.augmented_promo_data.NL1,
-            '2015-04-20': exp.vars.augmented_promo_data.NL1,
-            '2015-04-21': exp.vars.augmented_promo_data.NL1,
-            '2015-04-22': exp.vars.augmented_promo_data.NL1,
-            '2015-04-23': exp.vars.augmented_promo_data.NL1,
-            '2015-04-24': exp.vars.augmented_promo_data.NL1,
-            '2015-04-25': exp.vars.augmented_promo_data.NL1,
-            '2015-04-26': exp.vars.augmented_promo_data.NL1,
-            '2015-04-27': exp.vars.augmented_promo_data.NL1,
+                // 10.04
+                // 11.04
+                // 12.04
+                // 13.04
+                //
+                // 17.04
+                // 18.04
+                // 19.04
+                // 20.04
+                'ROW9': { // Row in spreadsheet
+                    'en': { // GB, SE, DK
+                        'pct_off': 80,
+                        'yellow_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Up to 80% off the original.&nbsp;</strong>-&nbsp;Ends in {days} days {hours} hours {minutes} minutes {seconds} seconds</span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Up to xx% off the original price on this product. &nbsp;</strong>-&nbsp;Ends in {days} days {hours} hours {minutes} minutes {seconds} seconds</span></p>',
+                    },
+                    'nl': {
+                        'pct_off': 80,
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;">Tot 80% goedkoper dan het origineel.&nbsp;-&nbsp;Nog {hours} Uur:{minutes} Min: {seconds} Sec</span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;">Tot xx% goedkoper dan de originele prijs van dit product. </strong>&nbsp;-&nbsp;Nog {hours} Uur:{minutes} Min: {seconds} Sec</span></p>',
+                    },
+                    'de': {
+                        'pct_off': 80,
+                        'yellow_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Bis zu 80% günstiger als das Original - Endet heute in {hours} Stunden {minutes} Minuten</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'Kameron\', serif; color: #000000; line-height: 34px; text-align: center; font-size: large; background-color: #feffc4;"><strong>Bis zu xx% günstiger als das Original - Endet heute in {hours} Stunden {minutes} Minuten</strong></span></p>',
+                    },
+                    'fr': {
+                        'pct_off': 80,
+                        'yellow_banner_template': '<p><span style="font-family: \'book antiqua\', palatino; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Jusqu\'à 80% moins cher que les originaux.</strong>Termine dans {days} jours, {hours}h:{minutes}m:{seconds}s</span></p>',
+                        'product_banner_template': '<p><span style="font-family: \'book antiqua\', palatino; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Jusqu’à xx% de réduction sur ce produit par rapport à l’original. </strong>Termine dans {days} jours, {hours}h:{minutes}m:{seconds}s</span></p>',
+                    },
+                    'no': {
+                        'pct_off': 85,
+                        'yellow_banner_template': '<p><span style="font-size: medium;"><span style="font-family: arial, helvetica, sans-serif; color: #000000; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Opptil 85% av originalen.</strong>&nbsp;-&nbsp;ender om {hours}t :{minutes}m :{seconds}s</span></span></p>',
+                        'product_banner_template': '<p><span style="font-size: medium;"><span style="font-family: arial, helvetica, sans-serif; color: #000000; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Opptil xx%av originalprisen på dette produktet.</strong>&nbsp;-&nbsp;ender om {hours}t :{minutes}m :{seconds}s</span></span></p>',
+                    },
+                    'es': {
+                        'pct_off': 85,
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: small; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Hasta 85% de descuento del diseño original, finaliza en {days} d&iacute;as, {hours}h:{minutes}m:{seconds}s!</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: small; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Hasta xx% del precio del original de este producto, finaliza en {days} d&iacute;as, {hours}h:{minutes}m:{seconds}s!</strong></span></p>',
+                    },
+                    'it': {
+                        'pct_off': 85,
+                        'yellow_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Fino al 85% di risparmio sull\'originale. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
+                        'product_banner_template': '<p><span style="font-size: small;"><strong style="color: #000000; font-family: arial, helvetica, sans-serif; line-height: 34px; text-align: center; background-color: #feffc4;">Fino al xx% in meno rispetto al prezzo dell\'originale. Scade in {hours}h:{minutes}m:{seconds}s</strong></span></p>',
+                    },
+                    'pl': {
+                        'pct_off': 85,
+                        'yellow_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Aż do 85% zniżki od ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
+                        'product_banner_template': '<p><span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"><strong>Aż do xx% zniżki na ten produkt w stosunku do ceny oryginału - Promocja kończy się za&nbsp;{days}d:{hours}h:{minutes}m:{seconds}s</span></p>',
+                    }
+                },
+            }
         }
     };
 
+    // Some templates are shared across multiple time periods.  Here we map the templates
+    // to each time period, and set the relevant countdown_to date.
+    exp.vars.augmented_promo_data.time_periods = [
+        // Row 4
+        {
+            'dates': [
+                '2015-04-21',
+                '2015-04-22',
+                '2015-04-23',
+            ],
+            'templates': exp.vars.augmented_promo_data.templates.ROW4,
+            'countdown_to': (new Date(Date.UTC(2015, 03, 24, 0, 0, 0))).getTime() // Unix timestamp
+                                                                                     // Note: Months are zero-indexed in JS
+        },
+
+        // Row 5
+        {
+            'dates': [
+                '2015-04-07',
+                '2015-04-08',
+                '2015-04-09',
+            ],
+            'templates': exp.vars.augmented_promo_data.templates.ROW5,
+            'countdown_to': (new Date(Date.UTC(2015, 03, 10, 0, 0, 0))).getTime() // Unix timestamp
+                                                                                     // Note: Months are zero-indexed in JS
+        },
+        {
+            'dates': [
+                '2015-04-14',
+                '2015-04-15',
+                '2015-04-16',
+            ],
+            'templates': exp.vars.augmented_promo_data.templates.ROW5,
+            'countdown_to': (new Date(Date.UTC(2015, 03, 17, 0, 0, 0))).getTime() // Unix timestamp
+                                                                                     // Note: Months are zero-indexed in JS
+        },
+
+        // Row 6
+        {
+            'dates': [
+                '2015-03-23',
+                '2015-03-24',
+                '2015-03-25',
+                '2015-03-26',
+            ],
+            'templates': exp.vars.augmented_promo_data.templates.ROW6,
+            'countdown_to': (new Date(Date.UTC(2015, 02, 27, 0, 0, 0))).getTime() // Unix timestamp
+                                                                                     // Note: Months are zero-indexed in JS
+        },
+        {
+            'dates': [
+                '2015-03-31',
+                '2015-04-01',
+                '2015-04-02',
+            ],
+            'templates': exp.vars.augmented_promo_data.templates.ROW6,
+            'countdown_to': (new Date(Date.UTC(2015, 03, 03, 0, 0, 0))).getTime() // Unix timestamp
+                                                                                     // Note: Months are zero-indexed in JS
+        },
+        {
+            'dates': [
+                '2015-04-28',
+                '2015-04-29',
+                '2015-04-30',
+            ],
+            'templates': exp.vars.augmented_promo_data.templates.ROW6,
+            'countdown_to': (new Date(Date.UTC(2015, 04, 01, 0, 0, 0))).getTime() // Unix timestamp
+                                                                                     // Note: Months are zero-indexed in JS
+        },
+
+        // Row 7
+        {
+            'dates': [
+                '2015-04-03',
+                '2015-04-04',
+                '2015-04-05',
+                '2015-04-06',
+            ],
+            'templates': exp.vars.augmented_promo_data.templates.ROW7,
+            'countdown_to': (new Date(Date.UTC(2015, 03, 07, 0, 0, 0))).getTime() // Unix timestamp
+                                                                                     // Note: Months are zero-indexed in JS
+        },
+
+        // Row 8
+        {
+            'dates': [
+                '2015-03-27',
+                '2015-03-28',
+                '2015-03-29',
+                '2015-03-30',
+            ],
+            'templates': exp.vars.augmented_promo_data.templates.ROW8,
+            'countdown_to': (new Date(Date.UTC(2015, 02, 31, 0, 0, 0))).getTime() // Unix timestamp
+                                                                                     // Note: Months are zero-indexed in JS
+        },
+        {
+            'dates': [
+                '2015-04-24',
+                '2015-04-25',
+                '2015-04-26',
+                '2015-04-27',
+            ],
+            'templates': exp.vars.augmented_promo_data.templates.ROW8,
+            'countdown_to': (new Date(Date.UTC(2015, 03, 28, 0, 0, 0))).getTime() // Unix timestamp
+                                                                                     // Note: Months are zero-indexed in JS
+        },
+        {
+            'dates': [
+                '2015-05-01',
+                '2015-05-02',
+                '2015-05-03',
+                '2015-05-04',
+            ],
+            'templates': exp.vars.augmented_promo_data.templates.ROW8,
+            'countdown_to': (new Date(Date.UTC(2015, 04, 05, 0, 0, 0))).getTime() // Unix timestamp
+                                                                                     // Note: Months are zero-indexed in JS
+        },
+
+        // Row 9
+        {
+            'dates': [
+                '2015-04-10',
+                '2015-04-11',
+                '2015-04-12',
+                '2015-04-13',
+            ],
+            'templates': exp.vars.augmented_promo_data.templates.ROW9,
+            'countdown_to': (new Date(Date.UTC(2015, 03, 14, 0, 0, 0))).getTime() // Unix timestamp
+                                                                                     // Note: Months are zero-indexed in JS
+        },
+        {
+            'dates': [
+                '2015-04-17',
+                '2015-04-18',
+                '2015-04-19',
+                '2015-04-20',
+            ],
+            'templates': exp.vars.augmented_promo_data.templates.ROW9,
+            'countdown_to': (new Date(Date.UTC(2015, 03, 21, 0, 0, 0))).getTime() // Unix timestamp
+                                                                                     // Note: Months are zero-indexed in JS
+        },
+    ];
+
     exp.func = {};
+
+    // Get the relevant time period for the given day
+    exp.func.getTimePeriodData = function(day) {
+        for (var i = 0; i < exp.vars.augmented_promo_data.time_periods.length; i++) {
+            if (exp.vars.augmented_promo_data.time_periods[i].dates.indexOf(day) !== -1) {
+                return exp.vars.augmented_promo_data.time_periods[i];
+            }
+        }
+
+        return false;
+    };
 
     /* Checks and returns the country code for the geo site we are on. */
     exp.func.getGeoSite = function(){
         switch (window.location.pathname.substr(0,4)) {
             case "/de/": // Germany
                 return 'de';
-
-            case "/se/": // Sweden
-                return "se";
 
             case "/no/": // Norway
                 return "no";
@@ -1004,10 +677,10 @@ var voga55vs85_augmented = (function($) {
                 return "it";
 
             case "/uk/": // United Kingdom
-                return "gb";
+                return "uk";
 
             case "/en/": // Sweden (english strings)
-                return "se";
+                return "en";
 
             default:     // Denmark (english strings)
                 return "dk";
@@ -1031,12 +704,44 @@ var voga55vs85_augmented = (function($) {
             // Remove grey crossed out price
             $this.find('p.old-price span.price').hide();
 
+            // original-price
+
             // Update roundel to note actual %-off
-            var old_price = parseFloat($this.find('p.old-price span.price').text().replace(/[^\d]/g, ''), 10),
-                current_price = parseFloat($this.find('p.special-price span.price').text().replace(/[^\d]/g, ''), 10),
+            var old_price;
+
+            if ($this.find('p.original-price span.price').length > 0) {
+                old_price = parseFloat($this.find('p.original-price span.price').first().text().replace(/[^\d]/g, ''), 10);
+            }
+            else {
+                old_price = parseFloat($this.find('p.old-price span.price').first().text().replace(/[^\d]/g, ''), 10);
+            }
+            var current_price = parseFloat($this.find('p.special-price span.price').first().text().replace(/[^\d]/g, ''), 10),
                 actual_pct_off = parseInt(100.0 - (current_price / old_price * 100.0), 10);
+
             $this.find('.amlabel-txt').text('-' + actual_pct_off + '%');
+
+            if (!$this.hasClass('awa-augmented')) {
+                // Swap "special" and "normal" price around
+                var $old_price_container = $this.find('p.old-price'),
+                    $old_price = $old_price_container.find('.price'),
+                    $new_price_container = $this.find('p.special-price'),
+                    $new_price = $new_price_container.find('.price');
+
+                $old_price_container.removeClass('old-price').addClass('special-price');
+                $old_price_container.append($new_price);
+
+                $new_price_container.removeClass('special-price').addClass('old-price');
+                $new_price_container.append($old_price);
+
+                $this.addClass('awa-augmented');
+            }
         });
+    };
+
+    /* Checks if we are on the about page */
+    exp.func.isAboutPage = function(){
+        return $('.cms-about-our-company, .cms-ueber-uns, .cms-mieux-nous-connaitre, \
+            .cms-over-het-bedrijf, .cms-o-voga,.cms-sobre-nosotros, .cms-voga-azienda').length > 0;
     };
 
     // Init function
@@ -1044,15 +749,25 @@ var voga55vs85_augmented = (function($) {
     exp.init = function() {
         var geo_site = exp.func.getGeoSite(),
             today = exp.func.getTodayDate(),
-            today_data = exp.vars.augmented_promo_data_map[geo_site][today];
+            today_data = exp.func.getTimePeriodData(today),
+            banner_geo_site = geo_site;
 
         exp.log("On geosite: " + geo_site + ". Today is: " + today);
+
+        // Tell Optimizely which geo-site this visitor is on, for filtering results
+        optimizely.push(['setDimensionValue', 'geosite', geo_site]);
+
+        // GB, DK, and en are all the same copy. All are saved as 'en' in the templates group.
+        if (banner_geo_site == 'uk' || banner_geo_site == 'dk') {
+            banner_geo_site = 'en';
+        }
 
         // Is there a yellow banner? If so update it's copy
         // Are we NOT on the checkout pages?
         if (window.location.href.indexOf("/checkout/") === -1) {
             exp.log("Updating yellow banner");
-            var $yellow_banner;
+            var $yellow_banner,
+                new_html;
 
             // Is there a yellow banner? If so use it
             // If not, make our own yellow banner
@@ -1062,10 +777,6 @@ var voga55vs85_augmented = (function($) {
             else {
                 $yellow_banner = $('<div class="discount_wrap"> \
                     <div class="zblock zblock-discount-countdown"> \
-                        <p> \
-                            <span style="font-family: arial, helvetica, sans-serif; color: #000000; font-size: medium; line-height: 34px; text-align: center; background-color: #feffc4;"> \
-                            </span> \
-                        </p> \
                     </div> \
                     <a class="close" href="#"></a> \
                 </div>');
@@ -1074,53 +785,70 @@ var voga55vs85_augmented = (function($) {
 
             // Are we on a product page, if so use the product-page specific logic for the yellow banner
             if ($('body.catalog-product-view').length > 0) {
-
                 // Calculate actual percent-off for this product
-                var old_price = parseFloat($('p.old-price span.price[id$="cloned"]').first().text().replace(/[^\d]/g, ''), 10),
-                    current_price = parseFloat($('p.special-price span.price[id$="cloned"]').first().text().replace(/[^\d]/g, ''), 10),
+
+                var old_price;
+
+                if ($('p.original-price span.price[id$="cloned"]').length > 0) {
+                    old_price = parseFloat($('p.original-price span.price[id$="cloned"]').first().text().replace(/[^\d]/g, ''), 10);
+                }
+                else {
+                    old_price = parseFloat($('p.old-price span.price[id$="cloned"]').first().text().replace(/[^\d]/g, ''), 10);
+                }
+                var current_price = parseFloat($('p.special-price span.price[id$="cloned"]').first().text().replace(/[^\d]/g, ''), 10),
                     actual_pct_off = parseInt(100.0 - (current_price / old_price * 100.0), 10);
 
-                // Update with today's copy for this geo-site
-                $yellow_banner.find('.zblock > p > span').html(today_data.yellow_banner_template_product.replace('xx%', actual_pct_off + '%'));
+                // Also update the roundel with this percentage.
+                var original_roundel_text = $.trim($('.amlabel-txt:first').text());
+                $('.amlabel-txt:first').text('-' + actual_pct_off + '%');
 
-                // (re)set the timer
-                var daysElement = $yellow_banner.find('#days'),
-                    hoursElement = $yellow_banner.find('#hours'),
-                    minutesElement = $yellow_banner.find('#minutes'),
-                    secondsElement = $yellow_banner.find('#seconds'),
-                    tstamp = today_data.countdown_to;
+                // Override Product.Config.prototype.showFullImageDiv - this updates the product page roundel without our input, so let's re-process the roundel after this is called.
+                Product.Config.prototype._awa_orginal__showFullImageDiv = Product.Config.prototype.showFullImageDiv;
+                Product.Config.prototype.showFullImageDiv = function(productId, parentId){
+                    this._awa_orginal__showFullImageDiv(productId, parentId);
 
-                $yellow_banner.countdown({
-                    timestamp: tstamp,
-                    callback: function (days, hours, minutes, seconds) {
-                        daysElement.html(days);
-                        hoursElement.html(hours);
-                        minutesElement.html(minutes);
-                        secondsElement.html(seconds);
-                    }
-                });
+                    // Update the roundel again, the above function call will have fiddled with it.
+                    $('.amlabel-txt:first').text('-' + actual_pct_off + '%');
+                }
+
+                // Update product page copy with actual pct
+                new_html = today_data.templates[banner_geo_site].product_banner_template.replace('xx%', actual_pct_off + '%');
             }
             else {
-                // Update with today's copy for this geo-site
-                $yellow_banner.find('.zblock > p > span').html(today_data.yellow_banner_template);
-
-                // (re)set the timer
-                var daysElement = $yellow_banner.find('#days'),
-                    hoursElement = $yellow_banner.find('#hours'),
-                    minutesElement = $yellow_banner.find('#minutes'),
-                    secondsElement = $yellow_banner.find('#seconds'),
-                    tstamp = today_data.countdown_to;
-
-                $yellow_banner.countdown({
-                    timestamp: tstamp,
-                    callback: function (days, hours, minutes, seconds) {
-                        daysElement.html(days);
-                        hoursElement.html(hours);
-                        minutesElement.html(minutes);
-                        secondsElement.html(seconds);
-                    }
-                });
+                // Use standard yellow banner template, nothing fancy required.
+                new_html = today_data.templates[banner_geo_site].yellow_banner_template;
             }
+
+            // Swap out placeholders for time with actual content
+            new_html = new_html.replace('{days}', '<span id="days"></span>');
+            new_html = new_html.replace('{hours}', '<span id="hours"></span>');
+            new_html = new_html.replace('{minutes}', '<span id="minutes"></span>');
+            new_html = new_html.replace('{seconds}', '<span id="seconds"></span>');
+
+            // Update banner copy
+            $yellow_banner.find('.zblock').html(new_html);
+
+            // (re)set the timer
+            var daysElement = $yellow_banner.find('#days'),
+                hoursElement = $yellow_banner.find('#hours'),
+                minutesElement = $yellow_banner.find('#minutes'),
+                secondsElement = $yellow_banner.find('#seconds'),
+                tstamp = today_data.countdown_to;
+
+            $yellow_banner.countdown({
+                timestamp: tstamp,
+                callback: function (days, hours, minutes, seconds) {
+                    if (daysElement.length > 0) {
+                        daysElement.html(days);
+                    }
+                    else {
+                        hours += days * 24;
+                    }
+                    hoursElement.html(hours);
+                    minutesElement.html(minutes);
+                    secondsElement.html(seconds);
+                }
+            });
         }
         else {
             exp.log("NOT updating yellow banner (on a checkout page)");
@@ -1134,6 +862,26 @@ var voga55vs85_augmented = (function($) {
                 .replace(/_GEOSITE_/g, geo_site)
                 .replace(/_DATE_/g, today.replace(/-/g, ''));
             $('#mycarousel img').first().attr('src', promo_image);
+
+            // Hide the "normal" price for products on the home page
+            $('.products-grid .item').each(function(){
+                var $this = $(this);
+
+                // Hide normal price
+                $this.find('p.old-price span.price').hide();
+
+                // Swap "special" and "normal" price around
+                var $old_price_container = $this.find('p.old-price'),
+                    $old_price = $old_price_container.find('.price'),
+                    $new_price_container = $this.find('p.special-price'),
+                    $new_price = $new_price_container.find('.price');
+
+                $old_price_container.removeClass('old-price').addClass('special-price');
+                $old_price_container.append($new_price);
+
+                $new_price_container.removeClass('special-price').addClass('old-price');
+                $new_price_container.append($old_price);
+            });
         }
 
         // Are we on a category page? If so, do things to the products listed.
@@ -1169,9 +917,18 @@ var voga55vs85_augmented = (function($) {
         }
 
         // Are we on the about-us page?
-        else if (false) { // TODO
+        else if (exp.func.isAboutPage()) {
             exp.log("On the about-us page, updating %-off value");
-            // Show % off for this geo-site today.
+
+            $('.col-main table td span,h4.aboutbanners-info-big,.landingbanners-about p').each(function(){
+                var $this = $(this);
+
+                if ($this.text().indexOf('90%') !== -1) {
+                    $this.text(
+                        $this.text().replace('90%', today_data.templates[banner_geo_site].pct_off + '%')
+                    );
+                }
+            });
         }
     };
 
