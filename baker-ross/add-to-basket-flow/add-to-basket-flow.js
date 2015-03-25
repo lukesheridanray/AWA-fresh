@@ -1,3 +1,4 @@
+/*
 (function(){ 
     var hostname = window.location.hostname; 
     var parts = hostname.split("."); 
@@ -13,7 +14,7 @@
     }
     document.cookie = "optly_"+publicSuffix.split(".")[0]+"_test=true; domain=."+publicSuffix+"; path=/; expires="+expireDate.toGMTString()+";";
 })();
-
+*/
 //
 // CGIT Optimizely Boilerplate - version 0.1.4
 //
@@ -40,11 +41,11 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Add to basket flow - 0.7');
+exp.log('Add to basket flow - 0.9');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
-exp.condition = $('.catalog-product-view');
+exp.condition = $('.catalog-product-view .page');
 
 // Check for a condition and return false if it has not been met
 if(exp.condition && !exp.condition.length) {
@@ -55,6 +56,7 @@ if(exp.condition && !exp.condition.length) {
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
+    addMethod: $('.grouped-alt-style').length ? 'group' : 'multi',
     dummyIframe: $('<iframe src="" class="awa-dummy" style="display: none;"></iframe'),
     loading: $('<div class="awa-loading" style="position: fixed; top: 45%; left: 45%; z-index: -1; width: 10%; height: 90px; margin: 0 auto; background-color: rgb(255,255,255); background-color: rgba(255,255,255,0.8); background-position: center; background-repeat: no-repeat; \
                 background-image: url(\'data:image/gif;base64,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\');"></div>')
@@ -128,8 +130,9 @@ exp.func.addToBasket = function(e, $this, type) {
     $this = $this || $(this);
     type = type || 'product';
     var id = $('.nosto_product .product_id').text();
+    var totalQuantity = 0;
     var superGroupElem;
-    var superGroupQuery;
+    var superGroupQuery = '';
     var relatedElems;
     var relatedQuery = '';
 
@@ -140,26 +143,47 @@ exp.func.addToBasket = function(e, $this, type) {
         return false;
     }
 
-    exp.vars.loading.css({'z-index': '9999'}).addClass('awa-loading--active');
-
-    if( type === 'product' ) {
+    if( type === 'multi' ) {
 
         superGroupElem = $this.parents('.add-to-cart').find('.qty');
         superGroupQuery = superGroupElem.attr('name') + '=' + superGroupElem.attr('value') + '&';
+        totalQuantity = parseInt(superGroupElem.attr('value'));
 
-    } else if( 'boughttogether' ) {
+    } else if( type === 'group' ) {
+
+        superGroupElem = $this.parents('.add-to-box').find('.qty');
+        superGroupElem.each(function(){
+            var $that = $(this);
+            superGroupQuery += $that.attr('name') + '=' + $that.attr('value') + '&';
+            totalQuantity += parseInt($that.attr('value'));
+        });
+
+    } else if( type === 'boughttogether' ) {
 
         superGroupElem = $('.related-checkbox:eq(0)');
         superGroupQuery = 'super_group[' + superGroupElem.attr('value') + ']=1&';
         relatedElems = $('.related-checkbox:checked').filter(function() {
             return ($(this).attr('value') !== superGroupElem.attr('value'));
         });
+        exp.log(relatedElems);
         relatedElems.each(function(){
+        exp.log($(this).attr('value'));
             relatedQuery += $(this).attr('value') + '%2C';
         });
-        relatedQuery = relatedQuery.slice(0,-3);
+        if(relatedQuery !== '') {
+            relatedQuery = relatedQuery.slice(0,-3);
+        }
+        exp.log(relatedQuery);
+        totalQuantity = 1;
 
     }
+
+    if( totalQuantity === 0 ) {
+        exp.func.addToBasketError('You must add a quantity to purchase.');
+        return false;
+    }
+
+    exp.vars.loading.css({'z-index': '9999'}).addClass('awa-loading--active');
 
     var url = 'http://www.bakerross.co.uk/quickorder/index/success/uenc/aHR0cDovL3d3dy5iYWtlcnJvc3MuY28udWsvcmVkLXdoaXRlLWFuZC1ibHVlLWFjcnlsaWMtcGFpbnQ,/product/'+id+'/form_key/ag4a8S1SFOnX4HMf/?product='+id+'&related_product='+relatedQuery+'&'+superGroupQuery+'isAjax=1';
     exp.vars.dummyIframe.attr('src', url);
@@ -222,10 +246,11 @@ exp.init = function() {
 
     // Event Listeners
     $('.btn-cart')
+        .attr('onclick','')
         .off()
         .on('click', function(e) {
             var $this = $(this);
-            exp.func.addToBasket(e, $this, 'product');
+            exp.func.addToBasket(e, $this, exp.vars.addMethod);
         });
 
     window.bt_addToCart_pixel = function() {};
