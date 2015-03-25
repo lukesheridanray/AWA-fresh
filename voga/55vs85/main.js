@@ -796,7 +796,7 @@ var voga55vs85_augmented = (function($) {
                     actual_pct_off = parseInt(100.0 - (current_price / old_price * 100.0), 10);
 
                 // Also update the roundel with this percentage.
-                var original_roundel_text = $('.amlabel-txt:first').text().trim();
+                var original_roundel_text = $.trim($('.amlabel-txt:first').text());
                 $('.amlabel-txt:first').text('-' + actual_pct_off + '%');
 
                 // Override Product.Config.prototype.showFullImageDiv - this updates the product page roundel without our input, so let's re-process the roundel after this is called.
