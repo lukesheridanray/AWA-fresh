@@ -62,7 +62,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Happy Puzzle Company: Guest Checkout v0.1');
+exp.log('Happy Puzzle Company: Guest Checkout v0.2');
 
 // Condition
 // If we cannot rely on URL's to target the experiment, we can use a unique CSS selector
@@ -81,7 +81,7 @@ exp.vars = {
 
 // Styles
 // String containing the CSS for the experiment
-exp.css = '.optexp-box-container { margin: 17px 0; overflow: hidden; }'
+exp.css = '.optexp-box-container { margin: 17px 0; overflow: hidden; display: none; }'
 + '.optexp-box { border: 1px solid #ccc; float: left; font-size: 14px; margin-right: 17px; padding: 20px; text-align: center; width: 260px; height: 70px; }'
 + '.optexp-box-3 { margin-right: 0; }'
 + '.optexp-box h3 { font-size: 16px; letter-spacing: 0.025em; text-transform: uppercase; }'
@@ -154,9 +154,9 @@ exp.init = function() {
     if (page === '/order-register.aspx' && $('.optexp-box-container').length === 0 ) {
 
        var boxes = $('<div class="optexp-box-container">'
-                   + '<div class="optexp-box optexp-box-1"><h3>Secure Payment</h3><p>Your details are safe and fully protected.</p></div>'
-                   + '<div class="optexp-box optexp-box-2"><h3>Free Delivery</h3><p>When you spend &pound;40 or more (UK mainland)</p></div>'
-                   + '<div class="optexp-box optexp-box-3"><h3>Money Back Guarantee</h3><p>If you&rsquo;re not completely satisfied, we&lsquo;ll give you your money back.</p></div>'
+                   //+ '<div class="optexp-box optexp-box-1"><h3>Secure Payment</h3><p>Your details are safe and fully protected.</p></div>'
+                   //+ '<div class="optexp-box optexp-box-2"><h3>Free Delivery</h3><p>When you spend &pound;40 or more (UK mainland)</p></div>'
+                   //+ '<div class="optexp-box optexp-box-3"><h3>Money Back Guarantee</h3><p>If you&rsquo;re not completely satisfied, we&lsquo;ll give you your money back.</p></div>'
                    + '</div>');
 
        $('.position_1 .basket_signin_table_container tr').slice(6, 9).hide();
@@ -167,11 +167,16 @@ exp.init = function() {
        $('#divButton2').show();
        $('.main_action_detail_container').after(boxes);
 
+       $('#ctl00_cphMasterOrder_chkThirdPartyOptOut').filter(function(){
+         return $(this).prop('checked') !== true;
+       }).trigger('click');
+       $('#ctl00_cphMasterOrder_chkThirdPartyOptOut').parents('li').hide();
+
     }
 
     // Success page
     if ( page.indexOf('/success.aspx') === 0 && $('.optexp-success-message').length === 0 ) {
-
+/*
         var ref = $('#ctl00_cphMasterOrder_lblOrderNumber').html();
         var message = $('<div class="optexp-success-message">'
                       + '<p>HOORAY! Your order is placed &ndash; thank you.</p>'
@@ -181,7 +186,7 @@ exp.init = function() {
 
         $('.internal_middle_column tr').slice(1, 6).remove();
         $('.internal_middle_column tr:eq(1) td').append(message);
-
+*/
     }
 
 };
