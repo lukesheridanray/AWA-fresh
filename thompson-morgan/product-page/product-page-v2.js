@@ -9,7 +9,7 @@
 
 // Check we are on a product page
 if( jQuery('#product-portlet').length === 0 ) {
-  return false;
+  //return false;
 }
 
 // Image experiment merged
@@ -430,10 +430,10 @@ exp.init = function() {
     hardiness = $(".facetValueClass dd").text().split(/\s/m)[0];
 
     // Get dimensions
-    height_and_spread = $("#productCont").text().match(/(?:H|h)eight\s*(?:and|&amp;|&)\s*(?:s|S)pread:\s*((?:(?:U|u)p to )?[0-9.]+(?:(\s*)cm)?\s*\(.*?\))/m);
+    height_and_spread = $("#productCont").text().match(/(?:H|h)eight\s*(?:and|&amp;|&)\s*(?:s|S)pread:\s*((?:(?:U|u)p to )?[0-9.]+(?:(\s*)(?:cm|m))?\s*\(.*?\))/m);
     if (height_and_spread === null) {
-        plant_size.Spread = $("#productCont").text().match(/(?:S|s)pread:\s*((?:(?:U|u)p to )?[0-9.]+(?:(\s*)cm)?\s*\(.*?\))/m);
-        plant_size.Height = $("#productCont").text().match(/(?:H|h)eight:\s*((?:(?:U|u)p to )?[0-9.]+(?:(\s*)cm)?\s*\(.*?\))/m);
+        plant_size.Spread = $("#productCont").text().match(/(?:S|s)pread:\s*((?:(?:U|u)p to )?[0-9.]+(?:(\s*)(?:cm|m))?\s*\(.*?\))/m);
+        plant_size.Height = $("#productCont").text().match(/(?:H|h)eight:\s*((?:(?:U|u)p to )?[0-9.]+(?:(\s*)(?:cm|m))?\s*\(.*?\))/m);
     }
     else {
         plant_size.Spread = plant_size.Height = height_and_spread;
