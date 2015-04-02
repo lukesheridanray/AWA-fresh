@@ -22,7 +22,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('OKA Direct: Product page experiment: 0.01');
+exp.log('OKA Direct: Product page experiment: 0.4');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -42,7 +42,7 @@ exp.vars = {
         'stock_text': $('#stock'),
         'wishlist_link': $('#ctl00_MainContentArea_ctl00_ctrlBuyModuleSKUOKANew_UpdatePanel1 .pull-left:first'),
         'about_accordian_headings': $('.about .bliss'), /* Iterate through these to find the delivery one, then get the next 'div' and move them to the top */
-        'product_body_rows': $('#product-images > .span8 > .row'), /* Iterate through these to find the 'Recently viewed' row, and move it to be the first row */
+        'product_body_rows_selector': '#product-images > .span8 > .row', /* Iterate through these to find the 'Recently viewed' row, and move it to be the first row */
     },
 
     'text': {
@@ -253,7 +253,7 @@ exp.func.onProductCTAAddToCartClick =  function(e){
         exp.func.productAdd(entity_id, function(data, response) {
             $this.prop('disabled', false).html(exp.vars.text.add_to_cart_button_html);
             if (response == 'success') {
-                $("#mini-basket-control").html(data);
+                $("#mini-basket-control > div").html(data);
                 ShowOverlayContentBasket("#basket-modal", "shop");
                 $this.prop('disabled', 'disabled').html('Added to cart');
             }
@@ -352,45 +352,48 @@ exp.init = function() {
         $delivery_heading.after($delivery_body);
     }
 
-    // Get recommended / recently viewed rows
-    var $recommended_row,
-        $recently_viewed_row;
+    // Recommended row loads over ajax, wait for it
+    exp.func.waitFor(function() { return $('#product-images .nosto_element h4').length > 0; }, function() {
 
-    if (!exp.vars.elements.product_body_rows) {
-        exp.log("Warning: Could not identify product body rows");
-    }
-    else {
-        exp.vars.elements.product_body_rows.each(function(){
-            var $row = $(this),
-                $heading = $row.find('h4');
+        // Get recommended / recently viewed rows
+        var $recommended_row,
+            $recently_viewed_row;
 
-            switch ($heading.text().trim()) {
-                case 'Recommended For You':
-                    $recommended_row = $row;
-                    break;
-                case 'Recently viewed':
-                    $recently_viewed_row = $row;
-                    break;
-            }
-        });
-    }
+        if (!$(exp.vars.elements.product_body_rows_selector)) {
+            exp.log("Warning: Could not identify product body rows");
+        }
+        else {
+            $(exp.vars.elements.product_body_rows_selector).each(function(){
+                var $row = $(this),
+                    $heading = $row.find('h4');
 
+                switch ($heading.text().trim()) {
+                    case 'Recommended For You':
+                        $recommended_row = $row;
+                        break;
+                    case 'Recently viewed':
+                        $recently_viewed_row = $row;
+                        break;
+                }
+            });
+        }
 
-    if (!$recommended_row) {
-        exp.log("Warning: Could not identify recommended row");
-    }
-    else if (!$recently_viewed_row) {
-        exp.log("Warning: Could not identify recently viewed row");
-    }
-    else {
-        // Move recently viewed row before rec'd row.
-        $recommended_row.before($recently_viewed_row);
+        if (!$recommended_row) {
+            exp.log("Warning: Could not identify recommended row");
+        }
+        else if (!$recently_viewed_row) {
+            exp.log("Warning: Could not identify recently viewed row");
+        }
+        else {
+            // Move recently viewed row before rec'd row.
+            $recommended_row.before($recently_viewed_row);
 
-        // Add CTAs to recently viewed and recommendations
-        $recommended_row.add($recently_viewed_row).find('.products li').each(function(){
-            exp.func.addProductCTA($(this));
-        });
-    }
+            // Add CTAs to recently viewed and recommendations
+            $recommended_row.add($recently_viewed_row).find('.products li').each(function(){
+                exp.func.addProductCTA($(this));
+            });
+        }
+    });
 };
 
 // Run the experiment
