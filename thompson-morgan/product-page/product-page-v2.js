@@ -9,7 +9,7 @@
 
 // Check we are on a product page
 if( jQuery('#product-portlet').length === 0 ) {
-  //return false;
+  return false;
 }
 
 // Image experiment merged
@@ -677,15 +677,16 @@ REMOVE
     }
 
     // Update surcharge
-    if (exp.vars.surchargeSkus.indexOf(universal_variable.product.sku_code) !== -1) {
-        // Delivery surcharge - remove that section as it is
+    if (universal_variable.product !== undefined && universal_variable.product.sku_code !== undefined) {
+      if (exp.vars.surchargeSkus.indexOf(universal_variable.product.sku_code) !== -1) {
+          // Delivery surcharge - remove that section as it is
 
-        $(".delivery-except-text").show();
-        $(".delivery-table > tbody").append(exp.vars.surchargeTable);
+          $(".delivery-except-text").show();
+          $(".delivery-table > tbody").append(exp.vars.surchargeTable);
+      }
     }
 
   // New tab
-
   if (!window.location.href.match(/\/garden-supplies\//) &&
       !window.location.href.match(/-seeds\//) &&
       !exp.vars.isGiftItem &&
