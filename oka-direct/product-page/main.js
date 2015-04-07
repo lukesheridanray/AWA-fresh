@@ -22,7 +22,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('OKA Direct: Product page experiment: 0.4');
+exp.log('OKA Direct: Product page experiment: 0.5');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -51,9 +51,10 @@ exp.vars = {
     },
 
     'text': {
-        'lt10_instock': 'Buy now! Less than 10 in stock.',
-        'info_button_html': 'Info <i class="icon-chevron-right pull-right muted"></i>',
-        'add_to_cart_button_html': 'Add to Cart <i class="icon-chevron-right icon-white pull-right"></i>',
+        'instock': 'Item is in stock.',
+        'lt10_instock': 'Buy now. Only {QTY} in stock.',
+        'info_button_html': 'Info',
+        'add_to_cart_button_html': 'Add to Basket',
         'click_and_collect_html': 'Free delivery to our UK shops. <a href="/customer-service/click-and-collect/" target="_blank">Click for details</a>',
         'delivery_only_heading_text': 'Delivery <i class="icon-chevron-right pull-right muted"></i><i class="icon-chevron-down pull-right"></i>',
         'returns_only_heading_text': 'Returns'
@@ -101,40 +102,61 @@ exp.vars = {
 
 // Styles
 // String containing the CSS for the experiment
-exp.css = '.awa-product-info-button { \
-    display: block; \
-    width: 44px; \
-    padding: 0.25em; \
-    border: 1px solid #aaa; \
-    font-family: Bliss2ExtraLight; \
+exp.css = '\
+.awa-product-info-button, \
+.awa-product-add-to-cart-button { \
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; \
     font-size: 14px; \
     font-weight: 400; \
-    text-transform: uppercase; \
-    float: left; \
-    margin-left: 30px; \
+    line-height: 20px; \
+    color: #fff; \
+    background: #666; \
+    text-shadow: none; \
+    border: 0; \
+    border-radius: 0; \
+    font-family: Bliss2ExtraLight; \
+    padding: 5px 10px; \
+    outline: none; \
+    display: inline-block; \
+    padding: 4px 12px; \
+    margin-bottom: 0; \
+    font-size: 12px; \
+    line-height: 20px; \
+    text-align: center; \
+    vertical-align: middle; \
+    cursor: pointer; \
 } \
-.awa-product-info-button i { \
-    margin-top: 0.20em; \
+.awa-product-info-button { \
+    color: #666; \
+    background: #fff; \
+    border: 1px solid #ccc; \
+    padding: 5px 20px 5px 7px; \
+    margin-left: 30px; \
+    background: url(data:image/gif;base64,R0lGODlhCgANALMLAMjIyPX19bS0tMfHx/7+/ri4uPPz87q6usrKyvr6+qqqqv///wAAAAAAAAAAAAAAACH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4wLWMwNjAgNjEuMTM0Nzc3LCAyMDEwLzAyLzEyLTE3OjMyOjAwICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IFdpbmRvd3MiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUY3RDY3RjhBNTgyMTFFMzg0NkRFMjVBQjU0MzQ1QTMiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUY3RDY3RjlBNTgyMTFFMzg0NkRFMjVBQjU0MzQ1QTMiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5RjdENjdGNkE1ODIxMUUzODQ2REUyNUFCNTQzNDVBMyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5RjdENjdGN0E1ODIxMUUzODQ2REUyNUFCNTQzNDVBMyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PgH//v38+/r5+Pf29fTz8vHw7+7t7Ovq6ejn5uXk4+Lh4N/e3dzb2tnY19bV1NPS0dDPzs3My8rJyMfGxcTDwsHAv769vLu6ubi3trW0s7KxsK+urayrqqmop6alpKOioaCfnp2cm5qZmJeWlZSTkpGQj46NjIuKiYiHhoWEg4KBgH9+fXx7enl4d3Z1dHNycXBvbm1sa2ppaGdmZWRjYmFgX15dXFtaWVhXVlVUU1JRUE9OTUxLSklIR0ZFRENCQUA/Pj08Ozo5ODc2NTQzMjEwLy4tLCsqKSgnJiUkIyIhIB8eHRwbGhkYFxYVFBMSERAPDg0MCwoJCAcGBQQDAgEAACH5BAEAAAsALAAAAAAKAA0AAAQucMlJJTqpLqQUrkDnZVMyiF95dqmUCCJCcV0RTLRSGIQl7j1JSMejmICaRJESAQA7) no-repeat 40px 8px; \
+    text-transform: uppercase; \
+} \
+.awa-product-info-button:hover { \
+    color: #fff; \
+    border: 1px solid #ccc; \
+    background: #ccc url(//resources1.okadirect.com/assets/img/icons/arrow.png) no-repeat 40px 5px; \
+    -webkit-transition: none; \
+    transition: none; \
 } \
 .awa-product-add-to-cart-button { \
-    display: block; \
-    width: 110; \
-    padding: 0.25em; \
-    border: 1px solid #aaa; \
-    font-family: Bliss2ExtraLight; \
-    font-size: 14px; \
-    font-weight: 400; \
-    text-transform: uppercase; \
-    float: right; \
     color: #fff; \
     background-color: #12a6a4; \
+    padding-right: 15px; \
+    text-transform: uppercase; \
+    background-image: url(//resources1.okadirect.com/assets/img/icons/arrow.png); \
+    background-position: right 5px; \
+    background-repeat: no-repeat; \
+    border-right: 8px solid #12a6a4!important; \
+    height: 32px; \
 } \
-.awa-product-add-to-cart-button i { \
-    margin-top: 0.20em; \
-} \
-.awa-product-add-to-cart-button:disabled { \
-    background-color: #666; \
-    border-color: #666; \
+.awa-product-add-to-cart-button:hover { \
+    border-right: 8px solid #15bcba!important; \
+    background-color: #15bcba; \
+    color: #fff; \
 } \
 .awa-product-review-container { \
     text-transform: none; \
@@ -213,7 +235,7 @@ exp.func.addProductCTA = function($product) {
             'html': exp.vars.text.info_button_html
         }),
         $add_to_cart_button = $('<button>', {
-            'class': 'awa-product-add-to-cart-button',
+            'class': 'awa-product-add-to-cart-button pull-right',
             'text': 'Loading...',
             'disabled': 'disabled'
         }),
@@ -254,7 +276,7 @@ exp.func.onProductCTAAddToCartClick =  function(e){
         product_title = $this.parents('li').find('a strong').text().trim();
 
     if (!entity_id) {
-        exp.log("No entity ID for this product, cannot add to cart.");
+        exp.log("No entity ID for this product, cannot add to basket.");
     }
     else {
         $this.prop('disabled', 'disabled').html('Loading...');
@@ -263,7 +285,7 @@ exp.func.onProductCTAAddToCartClick =  function(e){
             if (response == 'success') {
                 $("#mini-basket-control > div").html(data);
                 ShowOverlayContentBasket("#basket-modal", "shop");
-                $this.prop('disabled', 'disabled').html('Added to cart');
+                $this.prop('disabled', 'disabled').html('Added to basket');
             }
             else {
                 exp.log("Warning: Unable to add product to basket");
@@ -301,9 +323,18 @@ exp.init = function() {
         exp.log("Warning: Could not identify in-stock text.");
     }
     else {
-        exp.vars.elements.stock_text.text(
-            exp.vars.text.lt10_instock
-        );
+
+        if (exp.vars.elements.stock_text.text().trim().match(/ONLY [0-9]+? REMAINING/)) {
+            var stock_remaining = exp.vars.elements.stock_text.text().trim().match(/ONLY ([0-9]+?) REMAINING/)[1];
+            exp.vars.elements.stock_text.text(
+                exp.vars.text.lt10_instock.replace('{QTY}', stock_remaining)
+            );
+        }
+        else if (exp.vars.elements.stock_text.text().trim()) {
+            exp.vars.elements.stock_text.text(
+                exp.vars.text.instock
+            );
+        }
     }
 
     // Hide wishlist link
@@ -368,15 +399,17 @@ exp.init = function() {
             }
         });
 
-        // Modify click-and-collect text
-        $click_and_collect_row.find('small').html(exp.vars.text.click_and_collect_html);
+        if ($click_and_collect_row) {
+            // Modify click-and-collect text
+            $click_and_collect_row.find('small').html(exp.vars.text.click_and_collect_html);
+        }
 
         // Move header and body to top
         $about_body.nextAll('h4:first').before($delivery_heading);
         $delivery_heading.after($delivery_body);
 
         // Move free returns row to the top of delivery section
-        $click_and_collect_row.before($free_returns_row, $horizontal_liney_thing);
+        $delivery_body.find('table > tbody').prepend($free_returns_row, $horizontal_liney_thing);
 
         // We're moving delivery info underneath the product info, but are we
         // moving the whole lot or just an little bit?
