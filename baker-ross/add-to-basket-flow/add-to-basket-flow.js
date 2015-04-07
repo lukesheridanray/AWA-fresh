@@ -1,16 +1,16 @@
 /*
-(function(){ 
-    var hostname = window.location.hostname; 
-    var parts = hostname.split("."); 
-    var publicSuffix = hostname; 
-    var last = parts[parts.length - 1]; 
-    var expireDate = new Date(); expireDate.setDate(expireDate.getDate() + 7); 
-    var TOP_LEVEL_DOMAINS = ["com", "local", "net", "org", "xxx", "edu", "es", "gov", "biz", "info", "fr", "gr", "nl", "ca", "de", "kr", "it", "me", "ly", "tv", "mx", "cn", "jp", "il", "in", "iq"]; 
-    var SPECIAL_DOMAINS = ["jp", "uk", "au"]; 
-    if(parts.length > 2 && SPECIAL_DOMAINS.indexOf(last) != -1){ 
-        publicSuffix = parts[parts.length - 3] + "."+ parts[parts.length - 2] + "."+ last; 
+(function(){
+    var hostname = window.location.hostname;
+    var parts = hostname.split(".");
+    var publicSuffix = hostname;
+    var last = parts[parts.length - 1];
+    var expireDate = new Date(); expireDate.setDate(expireDate.getDate() + 7);
+    var TOP_LEVEL_DOMAINS = ["com", "local", "net", "org", "xxx", "edu", "es", "gov", "biz", "info", "fr", "gr", "nl", "ca", "de", "kr", "it", "me", "ly", "tv", "mx", "cn", "jp", "il", "in", "iq"];
+    var SPECIAL_DOMAINS = ["jp", "uk", "au"];
+    if(parts.length > 2 && SPECIAL_DOMAINS.indexOf(last) != -1){
+        publicSuffix = parts[parts.length - 3] + "."+ parts[parts.length - 2] + "."+ last;
     } else if(parts.length > 1 && TOP_LEVEL_DOMAINS.indexOf(last) != -1) {
-        publicSuffix = parts[parts.length - 2] + "."+ last; 
+        publicSuffix = parts[parts.length - 2] + "."+ last;
     }
     document.cookie = "optly_"+publicSuffix.split(".")[0]+"_test=true; domain=."+publicSuffix+"; path=/; expires="+expireDate.toGMTString()+";";
 })();
@@ -56,6 +56,7 @@ if(exp.condition && !exp.condition.length) {
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
+    dropDownTimeOut: undefined,
     addMethod: $('.grouped-alt-style').length ? 'group' : 'multi',
     dummyIframe: $('<iframe src="" class="awa-dummy" style="display: none;"></iframe'),
     loading: $('<div class="awa-loading" style="position: fixed; top: 45%; left: 45%; z-index: -1; width: 10%; height: 90px; margin: 0 auto; background-color: rgb(255,255,255); background-color: rgba(255,255,255,0.8); background-position: center; background-repeat: no-repeat; \
@@ -94,6 +95,10 @@ exp.func.addToBasketError = function(msg) {
 
 // Function to show the success dropdown
 exp.func.successDropdown = function() {
+    // Clear the dropdown timeout to prevent new dropdowns being removed early
+    clearTimeout(exp.vars.dropDownTimeOut);
+    $('.awa-cart-dropdown').remove();
+
     var cartContents = $('#topCartContent');
     var dropdown = '<div class="awa-cart-dropdown block-content" style="display: none;"> \
         <p class="awa-cart-dropdown__title" style="font-size: 1.9em; color: #111; position: relative; top: 35px; left: 10px;">Your basket contains</p>' +
@@ -103,7 +108,7 @@ exp.func.successDropdown = function() {
     cartContents.after( dropdown );
     $('html, body').animate({scrollTop:0}, '500');
     $('.awa-cart-dropdown').slideDown();
-    setTimeout(function(){
+    exp.vars.dropDownTimeOut = setTimeout(function(){
         $('.awa-cart-dropdown').slideUp().remove();
     },4000);
 };
