@@ -37,6 +37,11 @@ if(exp.condition && !exp.condition.length) {
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
+    'current_variation': 1,
+    'variation_changes': {
+        1: { 'reduced_delivery_information': false },
+        2: { 'reduced_delivery_information': true  }
+    },
     'elements': {
         'rating_stars_container': $('#product-info p .rating'),
         'stock_text': $('#stock'),
@@ -48,7 +53,10 @@ exp.vars = {
     'text': {
         'lt10_instock': 'Buy now! Less than 10 in stock.',
         'info_button_html': 'Info <i class="icon-chevron-right pull-right muted"></i>',
-        'add_to_cart_button_html': 'Add to Cart <i class="icon-chevron-right icon-white pull-right"></i>'
+        'add_to_cart_button_html': 'Add to Cart <i class="icon-chevron-right icon-white pull-right"></i>',
+        'click_and_collect_html': 'Free delivery to our UK shops. <a href="/customer-service/click-and-collect/" target="_blank">Click for details</a>',
+        'delivery_only_heading_text': 'Delivery <i class="icon-chevron-right pull-right muted"></i><i class="icon-chevron-down pull-right"></i>',
+        'returns_only_heading_text': 'Returns'
     },
 
     // Map pathnames to review text
@@ -324,6 +332,7 @@ exp.init = function() {
                     $delivery_heading = $heading;
                     $delivery_body = $heading.next('div');
                     break;
+
                 case 'About':
                     $about_heading = $heading;
                     $about_body = $heading.next('div');
@@ -339,17 +348,65 @@ exp.init = function() {
         exp.log("Warning: Could not identify about information");
     }
     else {
-        // Expand 'delivery' content
-        $delivery_heading.removeClass('toggle-link').off('click');
-        $delivery_body.removeClass('toggle-content');
-        $delivery_body.show();
+        var $click_and_collect_row,
+            $free_returns_row,
+            $horizontal_liney_thing;
 
-        // Remove chevron icons
-        $delivery_heading.find('i').remove();
+        // Find the click & collect and free-returns rows
+        $delivery_body.find('table > tbody > tr').each(function(){
+            var $row = $(this);
+
+            switch ($row.find('strong:first').text().trim()) {
+                case 'Click and Collect - Free':
+                    $click_and_collect_row = $row;
+                    break;
+
+                case 'Free Returns':
+                    $free_returns_row = $row;
+                    $horizontal_liney_thing = $row.prev();
+                    break;
+            }
+        });
+
+        // Modify click-and-collect text
+        $click_and_collect_row.find('small').html(exp.vars.text.click_and_collect_html);
 
         // Move header and body to top
         $about_body.nextAll('h4:first').before($delivery_heading);
         $delivery_heading.after($delivery_body);
+
+        // Move free returns row to the top of delivery section
+        $click_and_collect_row.before($free_returns_row, $horizontal_liney_thing);
+
+        // We're moving delivery info underneath the product info, but are we
+        // moving the whole lot or just an little bit?
+        if (exp.vars.variation_changes[exp.vars.current_variation].reduced_delivery_information) {
+            // Show the free returns info, keep the rest hidden under "Delivery & returns" dropdown
+
+            // Make a new table to hold the returns row
+            var $new_fancy_table_with_blackjack_and_classy_ladies = $(
+                '<h4 class="bliss upper">'+ exp.vars.text.returns_only_heading_text + '</h4>' +
+                '<div>' +
+                    '<table cellpadding="2" width="100%"><tbody>' +
+                '</div>');
+
+            // Add to page, after description
+            $new_fancy_table_with_blackjack_and_classy_ladies.find('tbody').append($free_returns_row, $horizontal_liney_thing);
+            $about_body.nextAll('h4:first').before($new_fancy_table_with_blackjack_and_classy_ladies);
+            $horizontal_liney_thing.hide();
+
+            // Change delivery heading to remove mention of returns
+            $delivery_heading.html(exp.vars.text.delivery_only_heading_text);
+        }
+        else {
+            // Expand 'delivery' content
+            $delivery_heading.removeClass('toggle-link').off('click');
+            $delivery_body.removeClass('toggle-content');
+            $delivery_body.show();
+
+            // Remove chevron icons
+            $delivery_heading.find('i').remove();
+        }
     }
 
     // Recommended row loads over ajax, wait for it
