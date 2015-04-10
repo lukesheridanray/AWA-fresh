@@ -22,7 +22,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('OKA Direct: Product page experiment: 0.5');
+exp.log('OKA Direct: Product page experiment: 0.6');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -228,6 +228,9 @@ exp.func.addProductCTA = function($product) {
     var product_href = $product.find('a').attr('href'),
         entity_id;
 
+    // Add height to the title/price row, so the CTA buttons are all on the same line
+    $product.find('section > .row:first').css('height', '120px');
+
     // Create CTA buttons
     var $info_button = $('<a>', {
             'href': product_href,
@@ -404,8 +407,12 @@ exp.init = function() {
             $click_and_collect_row.find('small').html(exp.vars.text.click_and_collect_html);
         }
 
-        // Move header and body to top
-        $about_body.nextAll('h4:first').before($delivery_heading);
+        // Move header and body to top, but catch if it tries to move the
+        // heading before itself - cause that just deletes it (thx jake weary)
+        var $toppest_heading = $about_body.nextAll('h4:first');
+        if ($toppest_heading[0] != $delivery_heading[0]) {
+            $about_body.nextAll('h4:first').before($delivery_heading);
+        }
         $delivery_heading.after($delivery_body);
 
         // Move free returns row to the top of delivery section
@@ -433,12 +440,7 @@ exp.init = function() {
         }
         else {
             // Expand 'delivery' content
-            $delivery_heading.removeClass('toggle-link').off('click');
-            $delivery_body.removeClass('toggle-content');
-            $delivery_body.show();
-
-            // Remove chevron icons
-            $delivery_heading.find('i').remove();
+            $delivery_heading.trigger('click');
         }
     }
 
