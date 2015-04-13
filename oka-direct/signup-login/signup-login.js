@@ -22,7 +22,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Example experiment - dev 0.1');
+exp.log('OKA Direct: Signup/login tweaks 0.2');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -39,8 +39,6 @@ if(exp.condition && !exp.condition.length) {
 exp.vars = {
     'pwLabelExisting': 'Do you have a password?',
     'pwLabelNew': 'Have you shopped with us before?',
-    'loginBtnOldVal' : 'Continue Securely',
-    'loginBtnNewVal' : 'Continue',
     'paymentImgUrl': 'https://resources1.okadirect.com/assets/en/new/site/cards.jpg'
 };
 
@@ -125,13 +123,6 @@ exp.init = function() {
     // Move the login button
     var loginBtn = $('.button-group-checkout');
     $('.form-horizontal .control-group').last().after(loginBtn);
-
-    // Change login button text
-    $('input[type=submit]').each(function(){
-        if ($(this).val() == exp.vars.loginBtnOldVal) {
-            $(this).val(exp.vars.loginBtnNewVal);
-        }
-    });
 
 };
 
