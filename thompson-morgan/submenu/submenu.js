@@ -42,7 +42,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Submenu experiment - 1.0');
+exp.log('Submenu experiment - 1.1');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -315,6 +315,24 @@ exp.init = function() {
     this.vars.$menu.parents('.toplevel')
         .addClass('awa-superDuperCat')
         .find('#sub2').append( this.vars.newRow );
+
+        // Monkey-patch jquery's "show" function to throw a 'show' event when it's called
+        $.each(['show', 'hide'], function (i, ev) {
+          var el = $.fn[ev];
+          $.fn[ev] = function () {
+            this.trigger(ev);
+            return el.apply(this, arguments);
+          };
+        });
+
+    // Hack around a bug where interacting with the nav items before the exp
+    // fully loaded caused all the sub-menus to have a height of ~500px. Can't
+    // figure out why this was happening.
+    // This just iterates through the submenus when they're shown and strips
+    // away the 'height' css attr.
+    $("ul#mainNav li").bind('show', function(){
+        $(this).css('height', '');
+    });
 };
 
 // Run the experiment
