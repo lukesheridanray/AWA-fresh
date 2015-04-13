@@ -22,7 +22,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('OKA Direct: Product page experiment: 0.6');
+exp.log('OKA Direct: Product page experiment: 0.7');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -52,7 +52,7 @@ exp.vars = {
 
     'text': {
         'instock': 'Item is in stock.',
-        'lt10_instock': 'Buy now. Only {QTY} in stock.',
+        'lt10_instock': 'BUY NOW. ONLY {QTY} IN STOCK.',
         'info_button_html': 'Info',
         'add_to_cart_button_html': 'Add to Basket',
         'click_and_collect_html': 'Free delivery to our UK shops. <a href="/customer-service/click-and-collect/" target="_blank">Click for details</a>',
