@@ -42,7 +42,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Submenu experiment - 1.1');
+exp.log('Submenu experiment - 1.2');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -316,23 +316,24 @@ exp.init = function() {
         .addClass('awa-superDuperCat')
         .find('#sub2').append( this.vars.newRow );
 
-        // Monkey-patch jquery's "show" function to throw a 'show' event when it's called
-        $.each(['show', 'hide'], function (i, ev) {
-          var el = $.fn[ev];
-          $.fn[ev] = function () {
-            this.trigger(ev);
-            return el.apply(this, arguments);
-          };
-        });
+    // Monkey-patch site's functions that mess with the submenu item heights
+    // because sub2 now has two rows of items; need special logic to handle sub2.
+    var original_functions = {
+        'setColumnHeight': setColumnHeight
+    };
 
-    // Hack around a bug where interacting with the nav items before the exp
-    // fully loaded caused all the sub-menus to have a height of ~500px. Can't
-    // figure out why this was happening.
-    // This just iterates through the submenus when they're shown and strips
-    // away the 'height' css attr.
-    $("ul#mainNav li").bind('show', function(){
-        $(this).css('height', '');
-    });
+    setColumnHeight = function setColumnHeight(subNumber){
+        if (subNumber == 2) {
+            $("#sub"+subNumber).find(".floatLeft").css("height", ''); // No height pls senor
+        }
+        else {
+            // Call original function
+            original_functions.setColumnHeight(subNumber);
+        }
+    };
+    // Re-do height and shadows for our 'flowers' column (sub number 2)
+    setColumnHeight(2);
+    setShadows(2);
 };
 
 // Run the experiment
