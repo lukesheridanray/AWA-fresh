@@ -320,8 +320,7 @@ exp.init = function() {
         exp.vars.elements.rating_stars_container.after($review_container, $read_all_reviews_link);
     }
 
-    // Replace stock text with urgent stock text TODO: Should this be on all the
-    // pages, or is there something to check if there are less than 10 instock
+    // Replace stock text with urgent stock text
     if (!exp.vars.elements.stock_text) {
         exp.log("Warning: Could not identify in-stock text.");
     }
@@ -333,7 +332,7 @@ exp.init = function() {
                 exp.vars.text.lt10_instock.replace('{QTY}', stock_remaining)
             );
         }
-        else if (exp.vars.elements.stock_text.text().trim()) {
+        else if (exp.vars.elements.stock_text.text().trim() == 'ITEM IS IN STOCK') {
             exp.vars.elements.stock_text.text(
                 exp.vars.text.instock
             );
