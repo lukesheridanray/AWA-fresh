@@ -64,7 +64,7 @@ exp.vars = {
 };
 
 exp.vars.newRow = ' \
-            <ul style="height: 175px;" class="floatLeft awa-catbox"> \
+            <ul style="height: 215px;" class="floatLeft awa-catbox"> \
                 <li class="main"> \
                     <div class="menuHeader2Class"> \
                         <a class="awa-no-hover subCategory">Grow In</a> \
@@ -89,7 +89,7 @@ exp.vars.newRow = ' \
                     <a href="' + exp.vars.plantFinderUrl + '">See more options...</a> \
                 </li> \
             </ul> \
-            <ul style="height: 175px;" class="floatLeft awa-catbox"> \
+            <ul style="height: 215px;" class="floatLeft awa-catbox"> \
                 <li class="main"> \
                     <div class="menuHeader2Class"> \
                         <a class="awa-no-hover subCategory">Ideal For</a> \
@@ -114,7 +114,7 @@ exp.vars.newRow = ' \
                     <a href="' + exp.vars.plantFinderUrl + '">See more options...</a> \
                 </li> \
             </ul> \
-            <ul style="height: 175px;" class="floatLeft awa-catbox"> \
+            <ul style="height: 215px;" class="floatLeft awa-catbox"> \
                 <li class="main"> \
                     <div class="menuHeader2Class"> \
                         <a class="awa-no-hover subCategory">Position</a> \
@@ -133,23 +133,26 @@ exp.vars.newRow = ' \
                     <a href="' + exp.vars.searchUrl + 'position:fullsun">Full Sun</a> \
                 </li> \
             </ul> \
-            <ul style="height: 175px;" class="floatLeft awa-catbox"> \
+            <ul style="height: 215px;" class="floatLeft awa-catbox"> \
                 <li class="main"> \
                     <div class="menuHeader2Class"> \
                         <a class="awa-no-hover subCategory">Flower Colour</a> \
                     </div> \
                 </li> \
                 <li class="normal awa-no-arrow"> \
-                    <a href="' + exp.vars.searchUrl + 'flowercolour:blue"><span class="awa-colour awa-blue"></span> Blue</a> \
+                    <a href="' + exp.vars.searchUrl + 'flowercolour:mixed"><span class="awa-colour awa-mixed"></span> Mixed</a> \
+                </li> \
+                <li class="normal awa-no-arrow"> \
+                    <a href="' + exp.vars.searchUrl + 'flowercolour:white"><span class="awa-colour awa-white"></span> White</a> \
+                </li> \
+                <li class="normal awa-no-arrow"> \
+                    <a href="' + exp.vars.searchUrl + 'flowercolour:pink"><span class="awa-colour awa-pink"></span> Pink</a> \
                 </li> \
                 <li class="normal awa-no-arrow"> \
                     <a href="' + exp.vars.searchUrl + 'flowercolour:yellow"><span class="awa-colour awa-yellow"></span> Yellow</a> \
                 </li> \
                 <li class="normal awa-no-arrow"> \
-                    <a href="' + exp.vars.searchUrl + 'flowercolour:red"><span class="awa-colour awa-red"></span> Red</a> \
-                </li> \
-                <li class="normal awa-no-arrow"> \
-                    <a href="' + exp.vars.searchUrl + 'flowercolour:white"><span class="awa-colour awa-white"></span> White</a> \
+                    <a href="' + exp.vars.searchUrl + 'flowercolour:purple"><span class="awa-colour awa-purple"></span> Purple</a> \
                 </li> \
                 <li class="normal awa-more-options"> \
                     <a href="' + exp.vars.plantFinderUrl + '">See more options...</a> \
@@ -260,7 +263,7 @@ ul#mainNav .sub ul li a.awa-no-hover:hover { \
     top: -1px; \
     vertical-align: middle; \
     display: inline-block; \
-    border: 1px solid #000; \
+    border: 1px solid #CCCCCC; \
     border-radius: 2px; \
     height: 18px; \
     width: 18px; \
@@ -271,10 +274,12 @@ ul#mainNav .sub ul li a.awa-no-hover:hover { \
     background-image: none !important; \
     opacity: .8; \
 } \
-.awa-red { background: #E42F2E; } \
-.awa-yellow { background: #ECD71C; } \
-.awa-blue { background: #1181C8; } \
+.awa-purple { background: #9933CC; } \
+.awa-mixed, .navigation-portlet a:hover span.awa-mixed { background: url(http://search.thompson-morgan.com/includes/images/fcp_mixed.png) -1px -1px !important; } \
+.awa-yellow { background: #FFFF2F; } \
+.awa-blue { background: #0066FF; } \
 .awa-white { background: #fff; } \
+.awa-pink { background: #FF94CB; } \
 .awa-catbox { \
     border-top: 1px solid #DBD3CB; \
     padding-top: 9px !important; \
@@ -324,7 +329,28 @@ exp.init = function() {
 
     setColumnHeight = function setColumnHeight(subNumber){
         if (subNumber == 2) {
-            $("#sub"+subNumber).find(".floatLeft").css("height", ''); // No height pls senor
+            //$("#sub"+subNumber).find(".floatLeft").css("height", ''); // No height pls senor
+
+            // Lets set some heights for the top row
+            var maxHeight = 0;
+            $("#sub2 > .floatLeft:lt(4)").each(function(){
+                if (parseInt($(this).css('height')) > maxHeight) {
+                    maxHeight = parseInt($(this).css('height'));
+                }
+            });
+            $("#sub2 > .floatLeft:lt(4)").css('height', maxHeight);
+
+           /* // Lets set some heights for the bottom row
+            var maxHeight = 0;
+            $("#sub2 > .floatLeft:gt(4)").each(function(){
+                console.log($(this));
+                if (parseInt($(this).css('height')) > maxHeight) {
+                    maxHeight = parseInt($(this).css('height'));
+                }
+            });
+            $("#sub2 > .floatLeft:gt(4)").css('height', maxHeight);
+            */
+
         }
         else {
             // Call original function
