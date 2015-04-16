@@ -689,6 +689,7 @@ REMOVE
   // New tab
   if (!window.location.href.match(/\/garden-supplies\//) &&
       !window.location.href.match(/-seeds\//) &&
+      !window.location.href.match(/\/potatoes\//) &&
       !exp.vars.isGiftItem &&
       $('#tab-3').length !== 0 &&
       $('#tabbed-panel-3').length !== 0
