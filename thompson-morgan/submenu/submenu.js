@@ -57,141 +57,141 @@ if(exp.condition && !exp.condition.length) {
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
-    $menu: $('.superCategory[href*="flowers"]'),
+    menu: $('.superCategory[href*="flowers"]'),
     searchUrl: 'http://search.thompson-morgan.com/search?w=*&ts=plantfinder&af=tab:products plant_type:flowers ',
     plantFinderUrl: 'http://search.thompson-morgan.com/gardenplantfinder',
-    newRow: ''
+    timeOut: ''
 };
 
 exp.vars.newRow = ' \
-            <ul style="height: 215px;" class="floatLeft awa-catbox"> \
-                <li class="main"> \
-                    <div class="menuHeader2Class"> \
-                        <a class="awa-no-hover subCategory">Grow In</a> \
-                    </div> \
-                </li> \
-                <li class="normal"> \
-                    <a href="' + exp.vars.searchUrl + 'growin:baskets">Baskets</a> \
-                </li> \
-                <li class="normal"> \
-                    <a href="' + exp.vars.searchUrl + 'growin:beds">Beds</a> \
-                </li> \
-                <li class="normal"> \
-                    <a href="' + exp.vars.searchUrl + 'growin:borders">Borders</a> \
-                </li> \
-                <li class="normal"> \
-                    <a href="' + exp.vars.searchUrl + 'growin:patioclimber">Patio Climbers</a> \
-                </li> \
-                <li class="normal"> \
-                    <a href="' + exp.vars.searchUrl + 'growin:wallsfences">Walls and Fences</a> \
-                </li> \
-                <li class="normal awa-more-options"> \
-                    <a href="' + exp.vars.plantFinderUrl + '">See more options...</a> \
-                </li> \
-            </ul> \
-            <ul style="height: 215px;" class="floatLeft awa-catbox"> \
-                <li class="main"> \
-                    <div class="menuHeader2Class"> \
-                        <a class="awa-no-hover subCategory">Ideal For</a> \
-                    </div> \
-                </li> \
-                <li class="normal"> \
-                    <a href="' + exp.vars.searchUrl + 'idealfor:cottagegardens">Cottage Garden</a> \
-                </li> \
-                <li class="normal"> \
-                    <a href="' + exp.vars.searchUrl + 'idealfor:groundcover">Groundcover</a> \
-                </li> \
-                <li class="normal"> \
-                    <a href="' + exp.vars.searchUrl + 'idealfor:lowmaintenancegarden">Low Maintenance Garden</a> \
-                </li> \
-                <li class="normal"> \
-                    <a href="' + exp.vars.searchUrl + 'idealfor:wildlifegardens">Wildlife Garden</a> \
-                </li> \
-                <li class="normal"> \
-                    <a href="' + exp.vars.searchUrl + 'otherfeatures:rhsperfectforpollinators">RHS Perfect for Pollinators</a> \
-                </li> \
-                <li class="normal awa-more-options"> \
-                    <a href="' + exp.vars.plantFinderUrl + '">See more options...</a> \
-                </li> \
-            </ul> \
-            <ul style="height: 215px;" class="floatLeft awa-catbox"> \
-                <li class="main"> \
-                    <div class="menuHeader2Class"> \
-                        <a class="awa-no-hover subCategory">Position</a> \
-                    </div> \
-                </li> \
-                <li class="normal"> \
-                    <a href="' + exp.vars.searchUrl + 'position:shade">Shade</a> \
-                </li> \
-                <li class="normal"> \
-                    <a href="' + exp.vars.searchUrl + 'position:dappledshade">Dappled Shade</a> \
-                </li> \
-                <li class="normal"> \
-                    <a href="' + exp.vars.searchUrl + 'position:sunorsemishade">Sun or Semi Shade</a> \
-                </li> \
-                <li class="normal"> \
-                    <a href="' + exp.vars.searchUrl + 'position:fullsun">Full Sun</a> \
-                </li> \
-            </ul> \
-            <ul style="height: 215px;" class="floatLeft awa-catbox"> \
-                <li class="main"> \
-                    <div class="menuHeader2Class"> \
-                        <a class="awa-no-hover subCategory">Flower Colour</a> \
-                    </div> \
-                </li> \
-                <li class="normal awa-no-arrow"> \
-                    <a href="' + exp.vars.searchUrl + 'flowercolour:mixed"><span class="awa-colour awa-mixed"></span> Mixed</a> \
-                </li> \
-                <li class="normal awa-no-arrow"> \
-                    <a href="' + exp.vars.searchUrl + 'flowercolour:white"><span class="awa-colour awa-white"></span> White</a> \
-                </li> \
-                <li class="normal awa-no-arrow"> \
-                    <a href="' + exp.vars.searchUrl + 'flowercolour:pink"><span class="awa-colour awa-pink"></span> Pink</a> \
-                </li> \
-                <li class="normal awa-no-arrow"> \
-                    <a href="' + exp.vars.searchUrl + 'flowercolour:yellow"><span class="awa-colour awa-yellow"></span> Yellow</a> \
-                </li> \
-                <li class="normal awa-no-arrow"> \
-                    <a href="' + exp.vars.searchUrl + 'flowercolour:purple"><span class="awa-colour awa-purple"></span> Purple</a> \
-                </li> \
-                <li class="normal awa-more-options"> \
-                    <a href="' + exp.vars.plantFinderUrl + '">See more options...</a> \
-                </li> \
-            </ul> \
-            <div class="clearFloat"> \
-            <div class="awa-az-wrap"> \
-            <div class="awa-az"> \
-                <div class="awa-az-row"> \
-                    <div class="awa-az-title"><strong>Find by Plant Name:</strong></div> \
-                    <a href="http://search.thompson-morgan.com/alpha/A"><em>A</em></a> \
-                    <a href="http://search.thompson-morgan.com/alpha/B"><em>B</em></a> \
-                    <a href="http://search.thompson-morgan.com/alpha/C"><em>C</em></a> \
-                    <a href="http://search.thompson-morgan.com/alpha/D"><em>D</em></a> \
-                    <a href="http://search.thompson-morgan.com/alpha/E"><em>E</em></a> \
-                    <a href="http://search.thompson-morgan.com/alpha/F"><em>F</em></a> \
-                    <a href="http://search.thompson-morgan.com/alpha/G"><em>G</em></a> \
-                    <a href="http://search.thompson-morgan.com/alpha/H"><em>H</em></a> \
-                    <a href="http://search.thompson-morgan.com/alpha/I"><em>I</em></a> \
-                    <a href="http://search.thompson-morgan.com/alpha/J"><em>J</em></a> \
-                    <a href="http://search.thompson-morgan.com/alpha/K"><em>K</em></a> \
-                    <a href="http://search.thompson-morgan.com/alpha/L"><em>L</em></a> \
-                    <a href="http://search.thompson-morgan.com/alpha/M"><em>M</em></a> \
-                    <a href="http://search.thompson-morgan.com/alpha/N"><em>N</em></a> \
-                    <a href="http://search.thompson-morgan.com/alpha/O"><em>O</em></a> \
-                    <a href="http://search.thompson-morgan.com/alpha/P"><em>P</em></a> \
-                    <a href="http://search.thompson-morgan.com/alpha/Q"><em>Q</em></a> \
-                    <a href="http://search.thompson-morgan.com/alpha/R"><em>R</em></a> \
-                    <a href="http://search.thompson-morgan.com/alpha/S"><em>S</em></a> \
-                    <a href="http://search.thompson-morgan.com/alpha/T"><em>T</em></a> \
-                    <a href="http://search.thompson-morgan.com/alpha/U"><em>U</em></a> \
-                    <a href="http://search.thompson-morgan.com/alpha/V"><em>V</em></a> \
-                    <a href="http://search.thompson-morgan.com/alpha/W"><em>W</em></a> \
-                    <a href="http://search.thompson-morgan.com/alpha/X"><em>X</em></a> \
-                    <a href="http://search.thompson-morgan.com/alpha/Y"><em>Y</em></a> \
-                    <a href="http://search.thompson-morgan.com/alpha/Z"><em>Z</em></a> \
-                </div> \
+    <ul style="height: 215px;" class="awa-catbox"> \
+        <li class="main"> \
+            <div class="menuHeader2Class"> \
+                <a class="awa-no-hover subCategory">Grow In</a> \
             </div> \
-            </div>';
+        </li> \
+        <li class="normal"> \
+            <a href="' + exp.vars.searchUrl + 'growin:baskets">Baskets</a> \
+        </li> \
+        <li class="normal"> \
+            <a href="' + exp.vars.searchUrl + 'growin:beds">Beds</a> \
+        </li> \
+        <li class="normal"> \
+            <a href="' + exp.vars.searchUrl + 'growin:borders">Borders</a> \
+        </li> \
+        <li class="normal"> \
+            <a href="' + exp.vars.searchUrl + 'growin:patioclimber">Patio Climbers</a> \
+        </li> \
+        <li class="normal"> \
+            <a href="' + exp.vars.searchUrl + 'growin:wallsfences">Walls and Fences</a> \
+        </li> \
+        <li class="normal awa-more-options"> \
+            <a href="' + exp.vars.plantFinderUrl + '">See more options...</a> \
+        </li> \
+    </ul> \
+    <ul style="height: 215px;" class="awa-catbox"> \
+        <li class="main"> \
+            <div class="menuHeader2Class"> \
+                <a class="awa-no-hover subCategory">Ideal For</a> \
+            </div> \
+        </li> \
+        <li class="normal"> \
+            <a href="' + exp.vars.searchUrl + 'idealfor:cottagegardens">Cottage Garden</a> \
+        </li> \
+        <li class="normal"> \
+            <a href="' + exp.vars.searchUrl + 'idealfor:groundcover">Groundcover</a> \
+        </li> \
+        <li class="normal"> \
+            <a href="' + exp.vars.searchUrl + 'idealfor:lowmaintenancegarden">Low Maintenance Garden</a> \
+        </li> \
+        <li class="normal"> \
+            <a href="' + exp.vars.searchUrl + 'idealfor:wildlifegardens">Wildlife Garden</a> \
+        </li> \
+        <li class="normal"> \
+            <a href="' + exp.vars.searchUrl + 'otherfeatures:rhsperfectforpollinators">RHS Perfect for Pollinators</a> \
+        </li> \
+        <li class="normal awa-more-options"> \
+            <a href="' + exp.vars.plantFinderUrl + '">See more options...</a> \
+        </li> \
+    </ul> \
+    <ul style="height: 215px;" class="awa-catbox"> \
+        <li class="main"> \
+            <div class="menuHeader2Class"> \
+                <a class="awa-no-hover subCategory">Position</a> \
+            </div> \
+        </li> \
+        <li class="normal"> \
+            <a href="' + exp.vars.searchUrl + 'position:shade">Shade</a> \
+        </li> \
+        <li class="normal"> \
+            <a href="' + exp.vars.searchUrl + 'position:dappledshade">Dappled Shade</a> \
+        </li> \
+        <li class="normal"> \
+            <a href="' + exp.vars.searchUrl + 'position:sunorsemishade">Sun or Semi Shade</a> \
+        </li> \
+        <li class="normal"> \
+            <a href="' + exp.vars.searchUrl + 'position:fullsun">Full Sun</a> \
+        </li> \
+    </ul> \
+    <ul style="height: 215px;" class="awa-catbox"> \
+        <li class="main"> \
+            <div class="menuHeader2Class"> \
+                <a class="awa-no-hover subCategory">Flower Colour</a> \
+            </div> \
+        </li> \
+        <li class="normal awa-no-arrow"> \
+            <a href="' + exp.vars.searchUrl + 'flowercolour:mixed"><span class="awa-colour awa-mixed"></span> Mixed</a> \
+        </li> \
+        <li class="normal awa-no-arrow"> \
+            <a href="' + exp.vars.searchUrl + 'flowercolour:white"><span class="awa-colour awa-white"></span> White</a> \
+        </li> \
+        <li class="normal awa-no-arrow"> \
+            <a href="' + exp.vars.searchUrl + 'flowercolour:pink"><span class="awa-colour awa-pink"></span> Pink</a> \
+        </li> \
+        <li class="normal awa-no-arrow"> \
+            <a href="' + exp.vars.searchUrl + 'flowercolour:yellow"><span class="awa-colour awa-yellow"></span> Yellow</a> \
+        </li> \
+        <li class="normal awa-no-arrow"> \
+            <a href="' + exp.vars.searchUrl + 'flowercolour:purple"><span class="awa-colour awa-purple"></span> Purple</a> \
+        </li> \
+        <li class="normal awa-more-options"> \
+            <a href="' + exp.vars.plantFinderUrl + '">See more options...</a> \
+        </li> \
+    </ul> \
+    <div class="clearFloat"> \
+    <div class="awa-az-wrap"> \
+    <div class="awa-az"> \
+        <div class="awa-az-row"> \
+            <div class="awa-az-title"><strong>Find by Plant Name:</strong></div> \
+            <a href="http://search.thompson-morgan.com/alpha/A"><em>A</em></a> \
+            <a href="http://search.thompson-morgan.com/alpha/B"><em>B</em></a> \
+            <a href="http://search.thompson-morgan.com/alpha/C"><em>C</em></a> \
+            <a href="http://search.thompson-morgan.com/alpha/D"><em>D</em></a> \
+            <a href="http://search.thompson-morgan.com/alpha/E"><em>E</em></a> \
+            <a href="http://search.thompson-morgan.com/alpha/F"><em>F</em></a> \
+            <a href="http://search.thompson-morgan.com/alpha/G"><em>G</em></a> \
+            <a href="http://search.thompson-morgan.com/alpha/H"><em>H</em></a> \
+            <a href="http://search.thompson-morgan.com/alpha/I"><em>I</em></a> \
+            <a href="http://search.thompson-morgan.com/alpha/J"><em>J</em></a> \
+            <a href="http://search.thompson-morgan.com/alpha/K"><em>K</em></a> \
+            <a href="http://search.thompson-morgan.com/alpha/L"><em>L</em></a> \
+            <a href="http://search.thompson-morgan.com/alpha/M"><em>M</em></a> \
+            <a href="http://search.thompson-morgan.com/alpha/N"><em>N</em></a> \
+            <a href="http://search.thompson-morgan.com/alpha/O"><em>O</em></a> \
+            <a href="http://search.thompson-morgan.com/alpha/P"><em>P</em></a> \
+            <a href="http://search.thompson-morgan.com/alpha/Q"><em>Q</em></a> \
+            <a href="http://search.thompson-morgan.com/alpha/R"><em>R</em></a> \
+            <a href="http://search.thompson-morgan.com/alpha/S"><em>S</em></a> \
+            <a href="http://search.thompson-morgan.com/alpha/T"><em>T</em></a> \
+            <a href="http://search.thompson-morgan.com/alpha/U"><em>U</em></a> \
+            <a href="http://search.thompson-morgan.com/alpha/V"><em>V</em></a> \
+            <a href="http://search.thompson-morgan.com/alpha/W"><em>W</em></a> \
+            <a href="http://search.thompson-morgan.com/alpha/X"><em>X</em></a> \
+            <a href="http://search.thompson-morgan.com/alpha/Y"><em>Y</em></a> \
+            <a href="http://search.thompson-morgan.com/alpha/Z"><em>Z</em></a> \
+        </div> \
+    </div> \
+</div>';
 
 // Styles
 // String containing the CSS for the experiment
@@ -317,53 +317,34 @@ exp.init = function() {
     // append styles to head
     $('head').append('<style type="text/css">'+this.css+'</style>');
 
-    this.vars.$menu.parents('.toplevel')
-        .addClass('awa-superDuperCat')
-        .find('#sub2').append( this.vars.newRow );
+    // Inject our new markup
+    exp.func.inject();
 
-    // Monkey-patch site's functions that mess with the submenu item heights
-    // because sub2 now has two rows of items; need special logic to handle sub2.
-    var original_functions = {
-        'setColumnHeight': setColumnHeight
-    };
-
-    setColumnHeight = function setColumnHeight(subNumber){
-        if (subNumber == 2) {
-            //$("#sub"+subNumber).find(".floatLeft").css("height", ''); // No height pls senor
-
-            // Lets set some heights for the top row
-            var maxHeight = 0;
-            $("#sub2 > .floatLeft:lt(4)").each(function(){
-                if (parseInt($(this).css('height')) > maxHeight) {
-                    maxHeight = parseInt($(this).css('height'));
-                }
-            });
-            $("#sub2 > .floatLeft:lt(4)").css('height', maxHeight);
-
-           /* // Lets set some heights for the bottom row
-            var maxHeight = 0;
-            $("#sub2 > .floatLeft:gt(4)").each(function(){
-                console.log($(this));
-                if (parseInt($(this).css('height')) > maxHeight) {
-                    maxHeight = parseInt($(this).css('height'));
-                }
-            });
-            $("#sub2 > .floatLeft:gt(4)").css('height', maxHeight);
-            */
-
-        }
-        else {
-            // Call original function
-            original_functions.setColumnHeight(subNumber);
-        }
-    };
-    // Re-do height and shadows for our 'flowers' column (sub number 2)
-    setColumnHeight(2);
-    setShadows(2);
+    // If the websites nav resize script has already run, there are no issues.
+    // If the script has yet to run, we can correct it when it does.
+    exp.func.waitFor(exp.func.isNotAutoHeight, exp.func.correctHeight);
 };
 
+exp.func.inject = function() {
+    // Inject our new nav
+    exp.vars.menu.parents('.toplevel').addClass('awa-superDuperCat').find('#sub2').append(exp.vars.newRow);
+}
+
+exp.func.isNotAutoHeight = function() {
+    if ($('#sub2 > .floatLeft').css('height') !== 'auto') {
+        return true;
+    }
+    return false;
+}
+
+exp.func.correctHeight = function() {
+    $('#sub2 > .floatLeft').css('height','auto');
+}
+
 // Run the experiment
-exp.init();
+$(document).ready(function(){
+    exp.init();
+});
 
 // Return the experiment object so we can access it later if required
 return exp;
