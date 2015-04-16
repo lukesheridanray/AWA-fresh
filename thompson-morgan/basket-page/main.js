@@ -37,6 +37,7 @@ if(exp.condition && !exp.condition.length) {
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
+    variation: 1,
     text: {
         savings_box_title: 'Your savings:',
         special_offers_title: 'You have qualified for special offers - see below',
@@ -46,7 +47,10 @@ exp.vars = {
         whats_this_label: 'what\'s this?'
     },
     html: {
-        super_important_urgency_message: '<p id="awa-super-important-urgency-message"><img src="//cdn.optimizely.com/img/174847139/a306d4dd37fa41fa9a015af30c859aa2.png" alt=""/> <strong>All items in stock:</strong> The items below have been reserved for you and will be held for 4 hours. Check out now to avoid disappointment.</p>',
+        super_important_urgency_message: [
+            '<p id="awa-super-important-urgency-message"><img src="//cdn.optimizely.com/img/174847139/a306d4dd37fa41fa9a015af30c859aa2.png" alt=""/> <strong>All items in stock:</strong> The items below have been reserved for you and will be held for 4 hours. Check out now to avoid disappointment.</p>',
+            '<p id="awa-super-important-urgency-message"><img src="//cdn.optimizely.com/img/174847139/a306d4dd37fa41fa9a015af30c859aa2.png" alt=""/> Offers may end soon. Check out now to avoid disappointment.</p>',
+        ],
         special_offers_subtitle: '<a href="">If you have an ORDER CODE, click here to see more offers <img src="//cdn.optimizely.com/img/174847139/22958340217743f187234b2ea6f2130e.png" alt=""/></a>',
 
         // TODO: Need modal table
@@ -144,8 +148,9 @@ exp.css = '#awa-savings-box { \
 } \
 .awa-pnp-whatsthis { \
     color: #626161 !important; \
-    font-size: 10px; \
+    font-size: 11px; \
     display: block; \
+    text-decoration: underline; \
 }';
 
 // Functions
@@ -218,15 +223,17 @@ exp.init = function() {
     // Construct savings list (loop through basket items looking for ".promo" contents)
     $('#removeTable tr').each(function(){
         var $this = $(this),
-            promo_text = $this.find('.promo').text().trim(),
-            product_title = $this.find('.details .price').text().trim(),
+            promo_text = $.trim($this.find('.promo').text()),
+            product_title = $.trim($this.find('.details .price').text()),
             savings_text = '';
 
         // Trim product title down, only keep contents prior to the newline char
-        product_title = $.trim(product_title.substring(0, product_title.indexOf('\n')));
+        if (product_title.indexOf('\n') !== -1) {
+            product_title = $.trim(product_title.substring(0, product_title.indexOf('\n')));
+        }
 
-        if (promo_text.indexOf('SAVE') === 0 && promo_text.match(/£[0-9]+?.[0-9]{2}/)) {
-            savings_text = product_title + ' - you have saved ' + promo_text.match(/£[0-9]+?.[0-9]{2}/);
+        if (promo_text.indexOf('SAVE') === 0 && promo_text.match(/(?:£[0-9]+?.[0-9]{2}|£[0-9]+?)/)) {
+            savings_text = product_title + ' - you have saved ' + promo_text.match(/(?:£[0-9]+?.[0-9]{2}|£[0-9]+?)/);
         }
 
         // Add to savings list
@@ -247,7 +254,7 @@ exp.init = function() {
     // 2. Line added for urgency: "All items in stock: The items below have been
     // reserved for you and will be held for 4 hours. Check out now to avoid
     // disappointment." We'll test a version with different wording here - point 10.
-    var $super_important_urgency_message = $(exp.vars.html.super_important_urgency_message);
+    var $super_important_urgency_message = $(exp.vars.html.super_important_urgency_message[exp.vars.variation-1]);
     $savings_box.after($super_important_urgency_message);
 
     // 3. Heading changes to "You have qualified for special offers - see below".
@@ -276,7 +283,7 @@ exp.init = function() {
         // Can't reliably pull out item name here, so let's just prefix with "Special offer:" instead
         // TODO: Inform Johann we can't get the item name here
         $this.find('.promotionMessage').text(
-            'SPECIAL OFFER: ' + $this.find('.promotionMessage').text().trim()
+            'SPECIAL OFFER: ' + $.trim($this.find('.promotionMessage').text())
         );
 
         // Note price difference below "Worth X" and ATB button
@@ -345,26 +352,30 @@ exp.init = function() {
 
     // 6. P&P changes to "Plant-friendly P&P"
     $pnp_label.text(exp.vars.text.plant_friendly_label).css({
+        'margin-top': '-10px',
         'margin-left': '-120px',
         'width': '120px'
     });
+    $pnp_label.next().css('margin-top', '-10px');
 
     // 7. "what's this?" link opens a modal. See copy tab for copy.
     // We'll run a variation without this - point 10.
-    var $whats_this_link = $('<a href="#" class="awa-pnp-whatsthis">' + exp.vars.text.whats_this_label + '</a>'),
-        $whats_this_modal = $(exp.vars.html.whats_this_modal);
+    if (exp.vars.variation == 1) {
+        var $whats_this_link = $('<a href="#" class="awa-pnp-whatsthis">' + exp.vars.text.whats_this_label + '</a>'),
+            $whats_this_modal = $(exp.vars.html.whats_this_modal);
 
-    $('body').append($whats_this_modal);
-    $pnp_label.append($whats_this_link);
+        $('body').append($whats_this_modal);
+        $pnp_label.append($whats_this_link);
 
-    $whats_this_link.click(function(e) {
-        e.preventDefault();
-        $whats_this_modal.fadeIn("fast");
-    });
+        $whats_this_link.click(function(e) {
+            e.preventDefault();
+            $whats_this_modal.fadeIn("fast");
+        });
 
-    $whats_this_modal.find('.close').click(function(){
-        $whats_this_modal.fadeOut("fast");
-    });
+        $whats_this_modal.find('.close').click(function(){
+            $whats_this_modal.fadeOut("fast");
+        });
+    }
 
     // 8. The two "click here" links in the voucher code box should open in a
     // new tab.
@@ -373,9 +384,13 @@ exp.init = function() {
     // 9. Please ensure that all buttons are text links to overcome a CDN-issue
     // they have where buttons sometimes disappear.
 
+    // TODO: Er, u wot?  Will ask Johann for clarification on this.
+
     // 10. Clone a second variation where the "what's this" link (7) is removed
     // and the urgency line (2) copy reads: "Offers may end soon. Check out now
     // to avoid disappointment."
+
+    // Done via exp.vars.variation and if statements :-)
 
 };
 
