@@ -42,11 +42,43 @@ exp.vars = {
         special_offers_title: 'You have qualified for special offers - see below',
         you_pay: 'You pay only',
         total_savings_label: 'Total Savings:',
-        plant_friendly_label: 'Plant-friendly P&P'
+        plant_friendly_label: 'Plant-friendly P&P',
+        whats_this_label: 'what\'s this?'
     },
     html: {
         super_important_urgency_message: '<p id="awa-super-important-urgency-message"><img src="//cdn.optimizely.com/img/174847139/a306d4dd37fa41fa9a015af30c859aa2.png" alt=""/> <strong>All items in stock:</strong> The items below have been reserved for you and will be held for 4 hours. Check out now to avoid disappointment.</p>',
-        special_offers_subtitle: '<a href="">If you have an ORDER CODE, click here to see more offers <img src="//cdn.optimizely.com/img/174847139/22958340217743f187234b2ea6f2130e.png" alt=""/></a>'
+        special_offers_subtitle: '<a href="">If you have an ORDER CODE, click here to see more offers <img src="//cdn.optimizely.com/img/174847139/22958340217743f187234b2ea6f2130e.png" alt=""/></a>',
+
+        // TODO: Need modal table
+        whats_this_modal: '<div class="awa-whats-this-modal"> \
+        <div class="popUpTop"><img src="http://media.thompson-morgan.com/static-images/tandm/addBasketSuccessDIV_top.png" alt=""></div> \
+        <div class="popUpMiddle"> \
+ \
+        <a class="close">X Close</a> \
+ \
+        <h2>Thompson & Morgan Delivery / P&P</h2> \
+ \
+        <div class="modalContent"> \
+ \
+        <p>Your plants are guaranteed to arrive in perfect condition, thanks to specially designed containers which prevent dehydration and protect from knocks and bruises.</p> \
+ \
+        <p>DELIVERY (p&p) is FREE on orders of £60 or more to most UK mainland destinations.</p> \
+ \
+        <p>There is a nominal charge for p&p on orders under £60  - see below. </p> \
+ \
+        <p>Plants are only despatched when they are ready for planting, so could arrive on different days. However, you will only be charged once for delivery. </p> \
+ \
+        <h3>UK MAINLAND DELIVERY CHARGES</h3> \
+        <p>(except postcodes below)</p> \
+ \
+        <p>TODO: Insert Table here</p> \
+ \
+        </div> \
+ \
+        </div> \
+        <div class="popUpTop"><img src="http://media.thompson-morgan.com/static-images/tandm/addBasketSuccessDIV_bottom.png" alt=""></div> \
+ \
+        </div>'
     }
 };
 
@@ -84,6 +116,36 @@ exp.css = '#awa-savings-box { \
 } \
 .awa-red { \
     color: #cf2a27 !important; \
+} \
+.awa-whats-this-modal { \
+    display: none; \
+    left: 0; \
+    margin-left: 30%; \
+    position: fixed; \
+    top: 5%; \
+    width: 500px; \
+    z-index: 100; \
+} \
+.awa-whats-this-modal .popUpMiddle { \
+    padding: 0px 22px; \
+    background: url("/static-images/tandm/addBasketSuccessDIV_middle.png") repeat-y scroll center center transparent; \
+} \
+.awa-whats-this-modal .modalContent { \
+    margin-top: 15px; \
+    text-align: left; \
+} \
+.awa-whats-this-modal a.close { \
+    display: block; \
+    text-align: right; \
+    font-size: 11px; \
+    color: #00572d !important; \
+    text-decoration: underline; \
+    cursor: pointer; \
+} \
+.awa-pnp-whatsthis { \
+    color: #626161 !important; \
+    font-size: 10px; \
+    display: block; \
 }';
 
 // Functions
@@ -140,6 +202,19 @@ exp.init = function() {
         ),
         $savings_box_contents = $('<ul id="awa-savings-box-contents"></ul>');
 
+    // Add any existing savings to savings list
+    $('.basket-items > h3').each(function(){
+        var $this = $(this);
+
+        // Hide h3, we don't like it!
+        $this.hide();
+
+        // Add to savings list
+        $savings_box_contents.append(
+            $('<li></li>').text($this.text())
+        );
+    });
+
     // Construct savings list (loop through basket items looking for ".promo" contents)
     $('#removeTable tr').each(function(){
         var $this = $(this),
@@ -154,8 +229,6 @@ exp.init = function() {
             savings_text = product_title + ' - you have saved ' + promo_text.match(/£[0-9]+?.[0-9]{2}/);
         }
 
-        // TODO: Any more promo detection? Get details from Johann
-
         // Add to savings list
         if (savings_text) {
             $savings_box_contents.append(
@@ -163,6 +236,10 @@ exp.init = function() {
             );
         }
     });
+
+
+    // TODO: Any more promo detection? Get details from Johann
+
 
     $savings_box.append($savings_box_title, $savings_box_contents);
     $('.heading-basket').append($savings_box);
@@ -261,23 +338,37 @@ exp.init = function() {
 
     // Add to DOM
     var $savings_dt = $('<dt class="awa-red">'+ exp.vars.text.total_savings_label +'</dt>'),
-        $savings_dd = $('<dd class="awa-red">£'+ total_savings.toFixed(2) +'</dd>');
+        $savings_dd = $('<dd class="awa-red">£'+ total_savings.toFixed(2) +'</dd>'),
+        $pnp_label = $('dt.delivery-option').next();
 
     $('dt.delivery-option').before($savings_dt, $savings_dd);
 
     // 6. P&P changes to "Plant-friendly P&P"
-    $('dt.delivery-option').next()
-        .text(exp.vars.text.plant_friendly_label)
-        .css({
-            'margin-left': '-120px',
-            'width': '120px'
-        });
+    $pnp_label.text(exp.vars.text.plant_friendly_label).css({
+        'margin-left': '-120px',
+        'width': '120px'
+    });
 
     // 7. "what's this?" link opens a modal. See copy tab for copy.
     // We'll run a variation without this - point 10.
+    var $whats_this_link = $('<a href="#" class="awa-pnp-whatsthis">' + exp.vars.text.whats_this_label + '</a>'),
+        $whats_this_modal = $(exp.vars.html.whats_this_modal);
+
+    $('body').append($whats_this_modal);
+    $pnp_label.append($whats_this_link);
+
+    $whats_this_link.click(function(e) {
+        e.preventDefault();
+        $whats_this_modal.fadeIn("fast");
+    });
+
+    $whats_this_modal.find('.close').click(function(){
+        $whats_this_modal.fadeOut("fast");
+    });
 
     // 8. The two "click here" links in the voucher code box should open in a
     // new tab.
+    $('#codesAndVouchersHints').find('li a').attr('target', '_blank');
 
     // 9. Please ensure that all buttons are text links to overcome a CDN-issue
     // they have where buttons sometimes disappear.
