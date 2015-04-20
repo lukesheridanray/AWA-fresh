@@ -40,20 +40,16 @@ exp.vars = {
     variation: 1,
     text: {
         savings_box_title: 'Your savings:',
-        special_offers_title: 'You have qualified for special offers - see below',
+        special_offers_title: 'You qualify for the special offers below',
         you_pay: 'You pay only',
         total_savings_label: 'Total Savings:',
         plant_friendly_label: 'Plant-friendly P&P',
         whats_this_label: 'what\'s this?'
     },
     html: {
-        super_important_urgency_message: [
-            '<p id="awa-super-important-urgency-message"><img src="//cdn.optimizely.com/img/174847139/a306d4dd37fa41fa9a015af30c859aa2.png" alt=""/> <strong>All items in stock:</strong> The items below have been reserved for you and will be held for 4 hours. Check out now to avoid disappointment.</p>',
-            '<p id="awa-super-important-urgency-message"><img src="//cdn.optimizely.com/img/174847139/a306d4dd37fa41fa9a015af30c859aa2.png" alt=""/> Offers may end soon. Check out now to avoid disappointment.</p>',
-        ],
-        special_offers_subtitle: '<a href="">If you have an ORDER CODE, click here to see more offers <img src="//cdn.optimizely.com/img/174847139/22958340217743f187234b2ea6f2130e.png" alt=""/></a>',
+        super_important_urgency_message: '<p id="awa-super-important-urgency-message"><img src="//cdn.optimizely.com/img/174847139/a306d4dd37fa41fa9a015af30c859aa2.png" alt=""/> Offers may end soon. Check out now to avoid disappointment.</p>',
+        special_offers_subtitle: '<a href="">Have an ORDER CODE?  Click here to see more offers <img src="//cdn.optimizely.com/img/174847139/22958340217743f187234b2ea6f2130e.png" alt=""/></a>',
 
-        // TODO: Need modal table
         whats_this_modal: '<div class="awa-whats-this-modal"> \
         <div class="popUpTop"><img src="http://media.thompson-morgan.com/static-images/tandm/addBasketSuccessDIV_top.png" alt=""></div> \
         <div class="popUpMiddle"> \
@@ -64,18 +60,65 @@ exp.vars = {
  \
         <div class="modalContent"> \
  \
-        <p>Your plants are guaranteed to arrive in perfect condition, thanks to specially designed containers which prevent dehydration and protect from knocks and bruises.</p> \
+        <p>Your <strong>plants are guaranteed to arrive in perfect condition</strong>, thanks to <strong>specially designed containers</strong> which prevent dehydration and protect from knocks and bruises.</p> \
  \
-        <p>DELIVERY (p&p) is FREE on orders of £60 or more to most UK mainland destinations.</p> \
- \
-        <p>There is a nominal charge for p&p on orders under £60  - see below. </p> \
- \
-        <p>Plants are only despatched when they are ready for planting, so could arrive on different days. However, you will only be charged once for delivery. </p> \
- \
-        <h3>UK MAINLAND DELIVERY CHARGES</h3> \
-        <p>(except postcodes below)</p> \
- \
-        <p>TODO: Insert Table here</p> \
+        <table> \
+        <thead> \
+            <tr> \
+                <th colspan="3"> \
+                    <h3>UK MAINLAND DELIVERY CHARGES</h3> \
+                    <p>(except postcodes below)</p> \
+                </th> \
+            </tr> \
+            <tr> \
+                <th>Product</th> \
+                <th>Orders &pound;60 or more</th> \
+                <th>Orders under &pound;60 (regardless of quantity)</th> \
+            </tr> \
+        </thead> \
+        <tbody> \
+            <tr> \
+                <td>Seeds</td> \
+                <td><strong>FREE</strong></td> \
+                <td>&pound;1.95</td> \
+            </tr> \
+            <tr> \
+                <td>All other products apart from seeds</td> \
+                <td><strong>FREE</strong></td> \
+                <td>&pound;4.95</td> \
+            </tr> \
+            <tr> \
+                <td>Combined seeds and other products</td> \
+                <td><strong>FREE</strong></td> \
+                <td>&pound;6.90</td> \
+            </tr> \
+        </tbody> \
+        <thead> \
+            <tr> \
+                <th colspan="3"> \
+                    <h3>UK DELIVERY CHARGES to postcodes</h3> \
+                    <p>BT, GY, HS, IM, JE, ZE, TR21, TR22, TR23, TR24, TR25, KW, IV, PA20-38, PA41-49, PA60-78, AB31-38, AB40-56, PH4-44, PH49-50</p> \
+                </th> \
+            </tr> \
+            <tr> \
+                <th>Product</th> \
+                <th>Orders &pound;60 or more</th> \
+                <th>Orders under &pound;60</th> \
+            </tr> \
+        </thead> \
+        <tbody> \
+            <tr> \
+                <td>Seeds</td> \
+                <td><strong>FREE</strong></td> \
+                <td>&pound;1.95</td> \
+            </tr> \
+            <tr> \
+                <td>Potatoes, fruit, bulbs, fertiliser and selected plants, vegetables and garden supplies</td> \
+                <td>&pound;9.99</td> \
+                <td>&pound;9.99</td> \
+            </tr> \
+        </tbody> \
+        </table> \
  \
         </div> \
  \
@@ -151,6 +194,70 @@ exp.css = '#awa-savings-box { \
     font-size: 11px; \
     display: block; \
     text-decoration: underline; \
+} \
+.modalContent table th, .modalContent table { \
+    margin-top: 1em; \
+} \
+.modalContent table th, .modalContent table thead th { \
+    font-weight: bold; \
+} \
+.modalContent table th, .modalContent table td { \
+    padding: 0.5em; \
+    border: 1px solid black; \
+    width: 33%; \
+    text-align: center; \
+} \
+.modalContent table th, .modalContent table tr td:first-of-type { \
+    text-align: left; \
+} \
+.modalContent table th, .modalContent table tbody { \
+    margin-bottom: 1em; \
+}';
+
+// CSS for button style overrides
+exp.css += '\
+.addToBasket, \
+.continueButton,\
+.checkoutButton, \
+.useOrderCode, \
+#showOrderCode, \
+#showVoucherCode { \
+    text-indent: 0; \
+    color: #fff !important; \
+    text-align: center; \
+    line-height: inherit; \
+} \
+\
+.addToBasket, \
+.continueButton, \
+.checkoutButton, \
+.useOrderCode { \
+    background: #B60718; \
+} \
+.addToBasket:hover, \
+.continueButton:hover, \
+.checkoutButton:hover, \
+.useOrderCode:hover { \
+    background: #00562C; \
+} \
+\
+#showOrderCode, \
+#showVoucherCode { \
+    background: #00562C; \
+} \
+#showOrderCode:hover, \
+#showVoucherCode:hover { \
+    background: #B60718; \
+} \
+\
+.checkoutButton { \
+    line-height: 38px; \
+    font-size: 1.5em; \
+} \
+\
+.useOrderCode { \
+    text-align: left; \
+    line-height: 14px; \
 }';
 
 // Functions
@@ -254,7 +361,7 @@ exp.init = function() {
     // 2. Line added for urgency: "All items in stock: The items below have been
     // reserved for you and will be held for 4 hours. Check out now to avoid
     // disappointment." We'll test a version with different wording here - point 10.
-    var $super_important_urgency_message = $(exp.vars.html.super_important_urgency_message[exp.vars.variation-1]);
+    var $super_important_urgency_message = $(exp.vars.html.super_important_urgency_message);
     $savings_box.after($super_important_urgency_message);
 
     // 3. Heading changes to "You have qualified for special offers - see below".
@@ -265,7 +372,8 @@ exp.init = function() {
         $offers_subtitle = $(exp.vars.html.special_offers_subtitle);
     $offers_title.text(exp.vars.text.special_offers_title);
 
-    $offers_subtitle.click(function() {
+    $offers_subtitle.click(function(e) {
+        e.preventDefault();
         $('.ordercode').fadeIn("fast");
 
     });
@@ -281,7 +389,6 @@ exp.init = function() {
 
         // Prepend "SPECIAL OFFER" to promo name
         // Can't reliably pull out item name here, so let's just prefix with "Special offer:" instead
-        // TODO: Inform Johann we can't get the item name here
         $this.find('.promotionMessage').text(
             'SPECIAL OFFER: ' + $.trim($this.find('.promotionMessage').text())
         );
@@ -346,7 +453,8 @@ exp.init = function() {
     // Add to DOM
     var $savings_dt = $('<dt class="awa-red">'+ exp.vars.text.total_savings_label +'</dt>'),
         $savings_dd = $('<dd class="awa-red">£'+ total_savings.toFixed(2) +'</dd>'),
-        $pnp_label = $('dt.delivery-option').next();
+        $pnp_label = $('dt.delivery-option').next(),
+        pnp_value = parseFloat($pnp_label.next('dd').text().match(/£([0-9]+?.[0-9]{2})/)[1]);
 
     $('dt.delivery-option').before($savings_dt, $savings_dd);
 
@@ -360,7 +468,7 @@ exp.init = function() {
 
     // 7. "what's this?" link opens a modal. See copy tab for copy.
     // We'll run a variation without this - point 10.
-    if (exp.vars.variation == 1) {
+    if (exp.vars.variation == 1 && pnp_value !== 0.0) {
         var $whats_this_link = $('<a href="#" class="awa-pnp-whatsthis">' + exp.vars.text.whats_this_label + '</a>'),
             $whats_this_modal = $(exp.vars.html.whats_this_modal);
 
@@ -382,9 +490,17 @@ exp.init = function() {
     $('#codesAndVouchersHints').find('li a').attr('target', '_blank');
 
     // 9. Please ensure that all buttons are text links to overcome a CDN-issue
-    // they have where buttons sometimes disappear.
+    // they have where buttons sometimes disappear (the styling is dropped).
+    $('.addToBasket'     ).css('background-image', 'none');
+    $('.continueButton'  ).css('background-image', 'none').text('Continue shopping');
+    $('.checkoutButton'  ).css('background-image', 'none').text('Checkout');
+    $('#showOrderCode'   ).css('background-image', 'none').text('Use order code');
+    $('.useOrderCode'    ).css('background-image', 'none');
+    $('#showVoucherCode' ).css('background-image', 'none').text('Use voucher');
 
-    // TODO: Er, u wot?  Will ask Johann for clarification on this.
+    // Can't easily fix up the buttons on vouchers modal - due to them being
+    // input[type=submit] and their "value" is being shown over any text we set.
+
 
     // 10. Clone a second variation where the "what's this" link (7) is removed
     // and the urgency line (2) copy reads: "Offers may end soon. Check out now
@@ -395,7 +511,9 @@ exp.init = function() {
 };
 
 // Run the experiment
-exp.init();
+$(document).ready(function(){
+    exp.init();
+});
 
 // Return the experiment object so we can access it later if required
 return exp;
