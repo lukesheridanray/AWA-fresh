@@ -8,7 +8,7 @@
 
 // Wrap the experiment code in an IIFE, this creates a local scope and allows us to
 // pass in jQuery to use as $. Other globals could be passed in if required.
-var exp = (function($) {
+var tm_basketpage = (function($) {
 
 // Initialise the experiment object
 var exp = {};
@@ -22,7 +22,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('T&M Basket page - dev 0.1');
+exp.log('T&M Basket page - dev 0.2');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -60,7 +60,7 @@ exp.vars = {
  \
         <div class="modalContent"> \
  \
-        <p>Your <strong>plants are guaranteed to arrive in perfect condition</strong>, thanks to <strong>specially designed containers</strong> which prevent dehydration and protect from knocks and bruises.</p> \
+        <p class="awa_plants_only">Your <strong>plants are guaranteed to arrive in perfect condition</strong>, thanks to <strong>specially designed containers</strong> which prevent dehydration and protect from knocks and bruises.</p> \
  \
         <table> \
         <thead> \
@@ -264,37 +264,19 @@ exp.css += '\
 // Object containing functions, some helpful functions are included
 exp.func = {};
 
-// This function waits till a condition returns true
-exp.func.waitFor = function(condition, callback, timeout, keepAlive) {
-    timeout = timeout || 20000;
-    keepAlive = keepAlive || false;
-    var intervalTime = 50,
-        maxAttempts = timeout / intervalTime,
-        attempts = 0,
-        interval = setInterval(function() {
-            if (condition()) {
-                if (!keepAlive) {
-                    clearInterval(interval);
-                }
-                callback();
-            } else if (attempts > maxAttempts) {
-                clearInterval(interval);
-            }
-            attempts ++;
-        }, intervalTime);
-};
+// Determine if the basket contains plants or not by iterating through each row
+// and checking
+exp.func.basketContainsPlants = function() {
+    var contains_plants = false;
 
-// This function allows you to always round a number 'up', 'down', or normally, returns a string
-exp.func.roundNum = function(number, decimals, direction) {
-    decimals = decimals || 0;
-    var factor = Math.pow(10,decimals);
-    var base;
-    if( direction === 'up') {
-        base = Math.ceil(number*factor);
-    } else if( direction === 'down') {
-        base = Math.floor(number*factor);
-    }
-    return direction ? (base/factor).toFixed(decimals) : number.toFixed(decimals);
+    $('.basket-items .details .price').each(function(){
+        var $this = $(this);
+        if ($this.text().toLowerCase().indexOf("plants") !== -1) {
+            contains_plants = true;
+        }
+    });
+
+    return contains_plants;
 };
 
 // Init function
@@ -459,18 +441,25 @@ exp.init = function() {
     $('dt.delivery-option').before($savings_dt, $savings_dd);
 
     // 6. P&P changes to "Plant-friendly P&P"
-    $pnp_label.text(exp.vars.text.plant_friendly_label).css({
-        'margin-top': '-10px',
-        'margin-left': '-120px',
-        'width': '120px'
-    });
-    $pnp_label.next().css('margin-top', '-10px');
+    if (exp.func.basketContainsPlants()){
+        $pnp_label.text(exp.vars.text.plant_friendly_label).css({
+            'margin-top': '-10px',
+            'margin-left': '-120px',
+            'width': '120px'
+        });
+        $pnp_label.next().css('margin-top', '-10px');
+    }
 
     // 7. "what's this?" link opens a modal. See copy tab for copy.
     // We'll run a variation without this - point 10.
     if (exp.vars.variation == 1 && pnp_value !== 0.0) {
         var $whats_this_link = $('<a href="#" class="awa-pnp-whatsthis">' + exp.vars.text.whats_this_label + '</a>'),
-            $whats_this_modal = $(exp.vars.html.whats_this_modal);
+            $whats_this_modal = $(exp.vars.html.whats_this_modal),
+            $plant_paragraph = $whats_this_modal.find('.awa_plants_only');
+
+        if (!exp.func.basketContainsPlants()) {
+            $plant_paragraph.remove();
+        }
 
         $('body').append($whats_this_modal);
         $pnp_label.append($whats_this_link);
