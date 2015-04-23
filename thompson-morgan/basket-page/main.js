@@ -266,17 +266,18 @@ exp.func = {};
 
 // Determine if the basket contains plants or not by iterating through each row
 // and checking
-exp.func.basketContainsPlants = function() {
-    var contains_plants = false;
+exp.func.shouldUseplantFriendlyWording = function() {
+    var plant_friendly_wording = false;
 
     $('.basket-items .details .price').each(function(){
         var $this = $(this);
-        if ($this.text().toLowerCase().indexOf("plants") !== -1) {
-            contains_plants = true;
+        if ($this.text().toLowerCase().indexOf("plant") !== -1 ||
+            $this.text().toLowerCase().indexOf("tree") !== -1) {
+            plant_friendly_wording = true;
         }
     });
 
-    return contains_plants;
+    return plant_friendly_wording;
 };
 
 // Init function
@@ -323,6 +324,14 @@ exp.init = function() {
 
         if (promo_text.indexOf('SAVE') === 0 && promo_text.match(/(?:£[0-9]+?.[0-9]{2}|£[0-9]+?)/)) {
             savings_text = product_title + ' - you have saved ' + promo_text.match(/(?:£[0-9]+?.[0-9]{2}|£[0-9]+?)/);
+        }
+        else if ($this.find('.price strike').length) {
+            // Price we're paying is different!
+            var was_price = parseFloat($.trim($this.find('.price strike').text()).replace('£', '')),
+                current_price = parseFloat($.trim($this.find('.price .basket-price').text()).replace('£', '')),
+                saving = (was_price - current_price).toFixed(2);
+
+            savings_text = product_title + ' - you have saved £' + saving;
         }
 
         // Add to savings list
@@ -441,7 +450,7 @@ exp.init = function() {
     $('dt.delivery-option').before($savings_dt, $savings_dd);
 
     // 6. P&P changes to "Plant-friendly P&P"
-    if (exp.func.basketContainsPlants()){
+    if (exp.func.shouldUseplantFriendlyWording()){
         $pnp_label.text(exp.vars.text.plant_friendly_label).css({
             'margin-top': '-10px',
             'margin-left': '-120px',
@@ -457,7 +466,7 @@ exp.init = function() {
             $whats_this_modal = $(exp.vars.html.whats_this_modal),
             $plant_paragraph = $whats_this_modal.find('.awa_plants_only');
 
-        if (!exp.func.basketContainsPlants()) {
+        if (!exp.func.shouldUseplantFriendlyWording()) {
             $plant_paragraph.remove();
         }
 
