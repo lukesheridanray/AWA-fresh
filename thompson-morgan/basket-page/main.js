@@ -22,7 +22,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('T&M Basket page - dev 0.2');
+exp.log('T&M Basket page - dev 0.3');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -47,7 +47,6 @@ exp.vars = {
         whats_this_label: 'what\'s this?'
     },
     html: {
-        super_important_urgency_message: '<p id="awa-super-important-urgency-message"><img src="//cdn.optimizely.com/img/174847139/a306d4dd37fa41fa9a015af30c859aa2.png" alt=""/> Offers may end soon. Check out now to avoid disappointment.</p>',
         special_offers_subtitle: '<a href="">Have an ORDER CODE?  Click here to see more offers <img src="//cdn.optimizely.com/img/174847139/22958340217743f187234b2ea6f2130e.png" alt=""/></a>',
 
         whats_this_modal: '<div class="awa-whats-this-modal"> \
@@ -272,7 +271,9 @@ exp.func.shouldUseplantFriendlyWording = function() {
     $('.basket-items .details .price').each(function(){
         var $this = $(this);
         if ($this.text().toLowerCase().indexOf("plant") !== -1 ||
-            $this.text().toLowerCase().indexOf("tree") !== -1) {
+            $this.text().toLowerCase().indexOf("tree") !== -1 ||
+            $this.text().toLowerCase().indexOf("bulb") !== -1 ||
+            $this.text().toLowerCase().indexOf("tuber") !== -1) {
             plant_friendly_wording = true;
         }
     });
@@ -352,8 +353,9 @@ exp.init = function() {
     // 2. Line added for urgency: "All items in stock: The items below have been
     // reserved for you and will be held for 4 hours. Check out now to avoid
     // disappointment." We'll test a version with different wording here - point 10.
-    var $super_important_urgency_message = $(exp.vars.html.super_important_urgency_message);
-    $savings_box.after($super_important_urgency_message);
+    // ------
+    // Requirement no longer necessary, email from Johann 2015-04-23 17:50:
+    // "You can remove the "Offers may end soon" line at the top altogether."
 
     // 3. Heading changes to "You have qualified for special offers - see below".
     // Next to this appears in smaller font: "If you have an ORDER CODE, click
