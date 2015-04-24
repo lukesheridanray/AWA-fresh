@@ -22,7 +22,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('T&M Basket page - dev 0.2');
+exp.log('T&M Basket page - dev 0.3');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -47,7 +47,6 @@ exp.vars = {
         whats_this_label: 'what\'s this?'
     },
     html: {
-        super_important_urgency_message: '<p id="awa-super-important-urgency-message"><img src="//cdn.optimizely.com/img/174847139/a306d4dd37fa41fa9a015af30c859aa2.png" alt=""/> Offers may end soon. Check out now to avoid disappointment.</p>',
         special_offers_subtitle: '<a href="">Have an ORDER CODE?  Click here to see more offers <img src="//cdn.optimizely.com/img/174847139/22958340217743f187234b2ea6f2130e.png" alt=""/></a>',
 
         whats_this_modal: '<div class="awa-whats-this-modal"> \
@@ -266,17 +265,20 @@ exp.func = {};
 
 // Determine if the basket contains plants or not by iterating through each row
 // and checking
-exp.func.basketContainsPlants = function() {
-    var contains_plants = false;
+exp.func.shouldUseplantFriendlyWording = function() {
+    var plant_friendly_wording = false;
 
     $('.basket-items .details .price').each(function(){
         var $this = $(this);
-        if ($this.text().toLowerCase().indexOf("plants") !== -1) {
-            contains_plants = true;
+        if ($this.text().toLowerCase().indexOf("plant") !== -1 ||
+            $this.text().toLowerCase().indexOf("tree") !== -1 ||
+            $this.text().toLowerCase().indexOf("bulb") !== -1 ||
+            $this.text().toLowerCase().indexOf("tuber") !== -1) {
+            plant_friendly_wording = true;
         }
     });
 
-    return contains_plants;
+    return plant_friendly_wording;
 };
 
 // Init function
@@ -324,6 +326,14 @@ exp.init = function() {
         if (promo_text.indexOf('SAVE') === 0 && promo_text.match(/(?:£[0-9]+?.[0-9]{2}|£[0-9]+?)/)) {
             savings_text = product_title + ' - you have saved ' + promo_text.match(/(?:£[0-9]+?.[0-9]{2}|£[0-9]+?)/);
         }
+        else if ($this.find('.price strike').length) {
+            // Price we're paying is different!
+            var was_price = parseFloat($.trim($this.find('.price strike').text()).replace('£', '')),
+                current_price = parseFloat($.trim($this.find('.price .basket-price').text()).replace('£', '')),
+                saving = (was_price - current_price).toFixed(2);
+
+            savings_text = product_title + ' - you have saved £' + saving;
+        }
 
         // Add to savings list
         if (savings_text) {
@@ -343,8 +353,9 @@ exp.init = function() {
     // 2. Line added for urgency: "All items in stock: The items below have been
     // reserved for you and will be held for 4 hours. Check out now to avoid
     // disappointment." We'll test a version with different wording here - point 10.
-    var $super_important_urgency_message = $(exp.vars.html.super_important_urgency_message);
-    $savings_box.after($super_important_urgency_message);
+    // ------
+    // Requirement no longer necessary, email from Johann 2015-04-23 17:50:
+    // "You can remove the "Offers may end soon" line at the top altogether."
 
     // 3. Heading changes to "You have qualified for special offers - see below".
     // Next to this appears in smaller font: "If you have an ORDER CODE, click
@@ -441,7 +452,7 @@ exp.init = function() {
     $('dt.delivery-option').before($savings_dt, $savings_dd);
 
     // 6. P&P changes to "Plant-friendly P&P"
-    if (exp.func.basketContainsPlants()){
+    if (exp.func.shouldUseplantFriendlyWording()){
         $pnp_label.text(exp.vars.text.plant_friendly_label).css({
             'margin-top': '-10px',
             'margin-left': '-120px',
@@ -457,7 +468,7 @@ exp.init = function() {
             $whats_this_modal = $(exp.vars.html.whats_this_modal),
             $plant_paragraph = $whats_this_modal.find('.awa_plants_only');
 
-        if (!exp.func.basketContainsPlants()) {
+        if (!exp.func.shouldUseplantFriendlyWording()) {
             $plant_paragraph.remove();
         }
 
