@@ -8,11 +8,9 @@
 
 /*
 
-0. determine product type, set a variable
-
 1. make css and dom changes to our modal
 
-2. recommend 3 products, based on product type, using the object
+2. recommend 3 products, based on product type, insert into a placeholder
 
 3. if neccessary, pull a price through for some products
 
@@ -46,7 +44,7 @@ exp.condition = $('#addBasketSuccess').val() === 'true' ? true : false;
 
 // Check for a condition and return false if it has not been met
 if(exp.condition === false) {
-    //exp.log('Experiment failed a condition');
+    //exp.log('Add to basket flow: failed a condition');
     //return false;
 }
 
@@ -60,17 +58,21 @@ Example
                 prod_name: 'name',
                 prod_url: 'url',
                 prod_image: 'img',
-                prod_meta: {}
+                prod_meta: {
+                    price: ''
+                }
             }
         ],
-        prod_2: [ .. ]
-        prod_3: null,
+        prod_2: []
+        prod_3: [],
         lucky_dip: [
             {
                 prod_name: 'name',
                 prod_url: 'url',
                 prod_image: 'img',
-                prod_meta: {}
+                prod_meta: {
+                    price: ''
+                }
             }
         ]
     }
@@ -84,8 +86,8 @@ Example
                 prod_meta: {}
             }
         ],
-        prod_2: null,
-        prod_3: null,
+        prod_2: [],
+        prod_3: [],
         lucky_dip: [
             {
                 prod_name: 'rand1 Chempak&reg; Potato Fertiliser',
@@ -100,18 +102,121 @@ Example
                 prod_meta: {}
             }
         ]
+    },
+    'onions-garlic': {
+    },
+    'fruit-plants': {
+    },
+    'fruit-trees': {
+    },
+    'flower-seeds': {
+    },
+    'vegetable-seeds': {
+    },
+    'flower-plants': {
+        prod_1: [
+            {
+                prod_name: 'Chempak&reg; Potato Fertiliser',
+                prod_url: '/garden-supplies/fertilisers/chempak-potato-fertiliser/zww2588TM',
+                prod_image: '/static-images/tandm/qubit/recommendations/CHEM-ZWW2588-A_x.jpg',
+                prod_meta: {}
+            }
+        ],
+        prod_2: [],
+        prod_3: [],
+        lucky_dip: [
+            {
+                prod_name: 'rand1 Chempak&reg; Potato Fertiliser',
+                prod_url: '/flowers/flower-plants/petunia-plants/petunia-tidal-wave/p83717TM',
+                prod_image: '/static-images/tandm/qubit/recommendations/CHEM-ZWW2588-A_x.jpg',
+                prod_meta: {}
+            },
+            {
+                prod_name: 'rand2 Chempak&reg; Potato Fertiliser',
+                prod_url: '/garden-supplies/fertilisers/chempak-potato-fertiliser/zww2588TM',
+                prod_image: '/static-images/tandm/qubit/recommendations/CHEM-ZWW2588-A_x.jpg',
+                prod_meta: {}
+            }
+        ]
+    },
+    'flower-bulbs': {
+    },
+    'vegetable-plants': {
+    },
+    'tomato': {
     }
 };
 
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
-    product_type: 'potatoes'
+    this_url: window.location.pathname,
+    product_type: false, // initially set to false so we can use it as a condition shortly
+    basket_ajax: { in_use: false, ready: true } // these will change if AJAX is required to filter basket items
 };
+
+// Set the product type, used to determine recommended products to show
+if( exp.vars.this_url.indexOf('potatoes') !== -1 ) {
+
+    exp.vars.product_type = 'potatoes';
+
+} else if( exp.vars.this_url.indexOf('onion-shallot-and-garlic-sets') !== -1 ) {
+
+    exp.vars.product_type = 'onions-garlic';
+
+} else if( exp.vars.this_url.indexOf('fruit-plants') !== -1 ) {
+
+    exp.vars.product_type = 'fruit-plants';
+
+} else if( exp.vars.this_url.indexOf('fruit-trees') !== -1 ) {
+
+    exp.vars.product_type = 'fruit-trees';
+
+} else if( exp.vars.this_url.indexOf('flower-seeds') !== -1 ) {
+
+    exp.vars.product_type = 'flower-seeds';
+
+} else if( exp.vars.this_url.indexOf('vegetable-seeds') !== -1 &&
+           exp.vars.this_url.indexOf('tomato') === -1 ) {
+
+    exp.vars.product_type = 'vegetable-seeds';
+
+} else if( exp.vars.this_url.indexOf('flower-plants') !== -1 ) {
+
+    exp.vars.product_type = 'flower-plants';
+
+} else if( exp.vars.this_url.indexOf('flower-bulbs') !== -1 ) {
+
+    exp.vars.product_type = 'flower-bulbs';
+
+} else if( exp.vars.this_url.indexOf('vegetable-plants') !== -1 &&
+           exp.vars.this_url.indexOf('tomato') === -1 ) {
+
+    exp.vars.product_type = 'vegetable-plants';
+
+} else if( exp.vars.this_url.indexOf('tomato') !== -1 ) {
+
+    exp.vars.product_type = 'tomato';
+
+}
+
+// If no product type set, then it is not included in the experiment, return false
+if( exp.vars.product_type === false ) {
+    exp.log('Add to basket flow: not an included category');
+    return false;
+}
 
 // Styles
 // String containing the CSS for the experiment
-exp.css = '';
+exp.css = ' \
+#addBasketSuccessDIV .header2Class, \
+#addBasketSuccessDIV h2 { \
+    display: none; \
+} \
+#addBasketSuccessDIV .header3Class, #addBasketSuccessDIV h3 { \
+} \
+#addBasketSuccessDIV .closeButton { \
+}';
 
 // Functions
 // Object containing functions, some helpful functions are included
@@ -123,19 +228,26 @@ exp.func.filterBasketContents = function( product_type ) {
     var basketOverflow = $('#cart-content').text().indexOf('You have additional items');
     var AJAX = basketOverflow === -1 ? false : true;
     var items = [];
+    var filterArray = function(arr, val) {
+        arr.forEach(function(prod, index) {
+            if(prod.prod_url === val ) {
+                arr.splice(index,1);
+            }
+        });
+    };
     var compare = function(items) {
-        console.log(items);
-        // Check whether our items exist in our product list, if so remove them
-        items.forEach(function(value){
+        items.forEach(function(val){
+            filterArray(exp.json[product_type].prod_1, val);
+            filterArray(exp.json[product_type].prod_2, val);
+            filterArray(exp.json[product_type].prod_3, val);
+            filterArray(exp.json[product_type].lucky_dip, val);
+/*
             if( exp.json[product_type].prod_1 !== null ) {
                 exp.json[product_type].prod_1.forEach(function(prod,index) {
                     if(prod.prod_url === value ) {
                         exp.json[product_type].prod_1.splice(index,1);
                     }
-                });
-                if(exp.json[product_type].prod_1.length === 0) {
-                    delete exp.json[product_type].prod1;
-                }        
+                });   
             }
             if( exp.json[product_type].prod_2 !== null ) {
                 exp.json[product_type].prod_2.forEach(function(prod,index) {
@@ -153,20 +265,20 @@ exp.func.filterBasketContents = function( product_type ) {
                         exp.json[product_type].prod_3.splice(index,1);
                     }
                 });
-                if(exp.json[product_type].prod_3.length === 0) {
-                    delete exp.json[product_type].prod_3;
-                }
             }
             exp.json[product_type].lucky_dip.forEach( function(prod, index ) {
                 if(prod.prod_url === value) {
                     exp.json[product_type].lucky_dip.splice(index,1);
                 }
             });
+*/
         });
     };
     // gather our basket items, either via AJAX (too many to display in widget), or plain old DOM
     // them make a comparison to filter any items that are in the basket from our master list
     if(AJAX) {
+        exp.vars.basket_ajax.in_use = true;
+        exp.vars.basket_ajax.ready = false;
         $.ajax({
             url: '/basket',
             success: function( resp ) {
@@ -176,6 +288,13 @@ exp.func.filterBasketContents = function( product_type ) {
                         items.push( $(this).attr('href') );
                     });
                 }
+                compare(items);
+                exp.vars.basket_ajax.ready = true;
+            },
+            error: function() {
+                exp.vars.basket_ajax.ready = true;
+                // we tell the experiment it is ready even on error, as filtering these products
+                // is not absolutely vital
             }
         });
     } else {
@@ -184,6 +303,17 @@ exp.func.filterBasketContents = function( product_type ) {
         });
         compare(items);
     }
+};
+
+// Function to calculate the recommended products
+exp.vars.recommendProducts = function() {
+    var prod_1, prod_2, prod_3;
+    exp.func.insertProducts( prod_1, prod_2, prod_3 );
+};
+
+// Function to insert the recommended products
+// accept 3 products as objects
+exp.vars.insertProducts = function( prod_1, prod_2, prod_3 ) {
 };
 
 // This function waits till a condition returns true
@@ -206,19 +336,6 @@ exp.func.waitFor = function(condition, callback, timeout, keepAlive) {
         }, intervalTime);
 };
 
-// This function allows you to always round a number 'up', 'down', or normally, returns a string
-exp.func.roundNum = function(number, decimals, direction) {
-    decimals = decimals || 0;
-    var factor = Math.pow(10,decimals);
-    var base;
-    if( direction === 'up') {
-        base = Math.ceil(number*factor);
-    } else if( direction === 'down') {
-        base = Math.floor(number*factor);
-    }
-    return direction ? (base/factor).toFixed(decimals) : number.toFixed(decimals);
-};
-
 // Init function
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
 exp.init = function() {
@@ -228,6 +345,25 @@ exp.init = function() {
 
     // Filter our master list by basket contents
     exp.func.filterBasketContents( exp.vars.product_type );
+
+    // Make initial adjustments to our modal
+
+    $('#addBasketSuccessDIV .header3Class, #addBasketSuccessDIV h3').append(
+        ' was added to your basket'
+    );
+
+    $('#addBasketSuccessDIV .closeButton').text('X');
+
+    // Recommend the poducts
+    // if AJAX is being used for the basket filtering, wait till it is ready
+    exp.func.waitFor(
+        function() {
+            return exp.vars.basket_ajax.ready === true;
+        },
+        function() {
+            exp.func.recommendProducts( exp.vars.product_type );
+        }
+    );
 
 };
 
