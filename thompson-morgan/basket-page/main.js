@@ -403,7 +403,7 @@ exp.init = function() {
             }
 
             // Calc savings
-            var savings =  worthVal - priceVal;
+            var savings =  (worthVal - priceVal).toFixed(2);
 
             // Add "You pay..." line under 'Worth' col
             $this.find('.promotionPriceSection')
