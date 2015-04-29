@@ -22,7 +22,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('T&M Basket page - dev 0.3');
+exp.log('T&M Basket page - dev 0.4');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -257,6 +257,7 @@ exp.css += '\
 .useOrderCode { \
     text-align: left; \
     line-height: 14px; \
+    height: auto; \
 }';
 
 // Functions
@@ -343,12 +344,10 @@ exp.init = function() {
         }
     });
 
-
-    // TODO: Any more promo detection? Get details from Johann
-
-
-    $savings_box.append($savings_box_title, $savings_box_contents);
-    $('.heading-basket').append($savings_box);
+    if ($savings_box_contents.find('li').length > 0) {
+        $savings_box.append($savings_box_title, $savings_box_contents);
+        $('.heading-basket').append($savings_box);
+    }
 
     // 2. Line added for urgency: "All items in stock: The items below have been
     // reserved for you and will be held for 4 hours. Check out now to avoid
@@ -404,7 +403,7 @@ exp.init = function() {
             }
 
             // Calc savings
-            var savings =  worthVal - priceVal;
+            var savings =  (worthVal - priceVal).toFixed(2);
 
             // Add "You pay..." line under 'Worth' col
             $this.find('.promotionPriceSection')
@@ -449,17 +448,23 @@ exp.init = function() {
         $pnp_label = $('dt.delivery-option').next(),
         pnp_value = parseFloat($pnp_label.next('dd').text().match(/£([0-9]+?.[0-9]{2})/)[1]);
 
-    $('dt.delivery-option').before($savings_dt, $savings_dd);
+    if (total_savings > 0.00) {
+        $('dt.delivery-option').before($savings_dt, $savings_dd);
+
+        // Reduce unecessary whitespace between total savings and p&p row
+        $pnp_label.css({ 'margin-top': '-10px' });
+        $pnp_label.next().css('margin-top', '-10px');
+    }
 
     // 6. P&P changes to "Plant-friendly P&P"
     if (exp.func.shouldUseplantFriendlyWording()){
-        $pnp_label.text(exp.vars.text.plant_friendly_label).css({
-            'margin-top': '-10px',
-            'margin-left': '-120px',
-            'width': '120px'
-        });
-        $pnp_label.next().css('margin-top', '-10px');
+        $pnp_label.text(exp.vars.text.plant_friendly_label);
     }
+    // Give more width for the P&P label (no need for a tiny width, only causes beef with other augmentations we're doing)
+    $pnp_label.css({
+        'margin-left': '-120px',
+        'width': '120px'
+    });
 
     // 7. "what's this?" link opens a modal. See copy tab for copy.
     // We'll run a variation without this - point 10.
@@ -508,6 +513,25 @@ exp.init = function() {
 
     // Done via exp.vars.variation and if statements :-)
 
+    // If there's a delivery surcharge element when position it sensibly
+    var $delivery_surcharge = $('.deliverySurcharge');
+    if ($delivery_surcharge.length > 0) {
+        $delivery_surcharge.css({
+            'margin-right': '-100px',
+            'width': '250px'
+        });
+
+        // Push PNP down a bit so we can fit this in.
+        $pnp_label.css({ 'margin-top': '20px' });
+        $pnp_label.next().css('margin-top', '20px');
+
+        // If there are total savings then we need to reduce the space we're taking vertically
+        if (total_savings > 0.00) {
+            $delivery_surcharge.parent().css({
+                'margin-top': '-10px'
+            });
+        }
+    }
 };
 
 // Run the experiment
