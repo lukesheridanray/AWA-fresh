@@ -1,3 +1,3 @@
-# Optimizely #
+# AWA Split Tests #
 
-Code and resources for Optimizely experiments.
+Code and resources for AWA experiments.

@@ -8,7 +8,7 @@
 
 // Wrap the experiment code in an IIFE, this creates a local scope and allows us to
 // pass in jQuery to use as $. Other globals could be passed in if required.
-var exp = (function($) {
+var tm_basketpage = (function($) {
 
 // Initialise the experiment object
 var exp = {};
@@ -22,7 +22,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('T&M Basket page - dev 0.1');
+exp.log('T&M Basket page - dev 0.4');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -47,7 +47,6 @@ exp.vars = {
         whats_this_label: 'what\'s this?'
     },
     html: {
-        super_important_urgency_message: '<p id="awa-super-important-urgency-message"><img src="//cdn.optimizely.com/img/174847139/a306d4dd37fa41fa9a015af30c859aa2.png" alt=""/> Offers may end soon. Check out now to avoid disappointment.</p>',
         special_offers_subtitle: '<a href="">Have an ORDER CODE?  Click here to see more offers <img src="//cdn.optimizely.com/img/174847139/22958340217743f187234b2ea6f2130e.png" alt=""/></a>',
 
         whats_this_modal: '<div class="awa-whats-this-modal"> \
@@ -60,7 +59,7 @@ exp.vars = {
  \
         <div class="modalContent"> \
  \
-        <p>Your <strong>plants are guaranteed to arrive in perfect condition</strong>, thanks to <strong>specially designed containers</strong> which prevent dehydration and protect from knocks and bruises.</p> \
+        <p class="awa_plants_only">Your <strong>plants are guaranteed to arrive in perfect condition</strong>, thanks to <strong>specially designed containers</strong> which prevent dehydration and protect from knocks and bruises.</p> \
  \
         <table> \
         <thead> \
@@ -258,43 +257,29 @@ exp.css += '\
 .useOrderCode { \
     text-align: left; \
     line-height: 14px; \
+    height: auto; \
 }';
 
 // Functions
 // Object containing functions, some helpful functions are included
 exp.func = {};
 
-// This function waits till a condition returns true
-exp.func.waitFor = function(condition, callback, timeout, keepAlive) {
-    timeout = timeout || 20000;
-    keepAlive = keepAlive || false;
-    var intervalTime = 50,
-        maxAttempts = timeout / intervalTime,
-        attempts = 0,
-        interval = setInterval(function() {
-            if (condition()) {
-                if (!keepAlive) {
-                    clearInterval(interval);
-                }
-                callback();
-            } else if (attempts > maxAttempts) {
-                clearInterval(interval);
-            }
-            attempts ++;
-        }, intervalTime);
-};
+// Determine if the basket contains plants or not by iterating through each row
+// and checking
+exp.func.shouldUseplantFriendlyWording = function() {
+    var plant_friendly_wording = false;
 
-// This function allows you to always round a number 'up', 'down', or normally, returns a string
-exp.func.roundNum = function(number, decimals, direction) {
-    decimals = decimals || 0;
-    var factor = Math.pow(10,decimals);
-    var base;
-    if( direction === 'up') {
-        base = Math.ceil(number*factor);
-    } else if( direction === 'down') {
-        base = Math.floor(number*factor);
-    }
-    return direction ? (base/factor).toFixed(decimals) : number.toFixed(decimals);
+    $('.basket-items .details .price').each(function(){
+        var $this = $(this);
+        if ($this.text().toLowerCase().indexOf("plant") !== -1 ||
+            $this.text().toLowerCase().indexOf("tree") !== -1 ||
+            $this.text().toLowerCase().indexOf("bulb") !== -1 ||
+            $this.text().toLowerCase().indexOf("tuber") !== -1) {
+            plant_friendly_wording = true;
+        }
+    });
+
+    return plant_friendly_wording;
 };
 
 // Init function
@@ -342,6 +327,14 @@ exp.init = function() {
         if (promo_text.indexOf('SAVE') === 0 && promo_text.match(/(?:£[0-9]+?.[0-9]{2}|£[0-9]+?)/)) {
             savings_text = product_title + ' - you have saved ' + promo_text.match(/(?:£[0-9]+?.[0-9]{2}|£[0-9]+?)/);
         }
+        else if ($this.find('.price strike').length) {
+            // Price we're paying is different!
+            var was_price = parseFloat($.trim($this.find('.price strike').text()).replace('£', '')),
+                current_price = parseFloat($.trim($this.find('.price .basket-price').text()).replace('£', '')),
+                saving = (was_price - current_price).toFixed(2);
+
+            savings_text = product_title + ' - you have saved £' + saving;
+        }
 
         // Add to savings list
         if (savings_text) {
@@ -351,18 +344,17 @@ exp.init = function() {
         }
     });
 
-
-    // TODO: Any more promo detection? Get details from Johann
-
-
-    $savings_box.append($savings_box_title, $savings_box_contents);
-    $('.heading-basket').append($savings_box);
+    if ($savings_box_contents.find('li').length > 0) {
+        $savings_box.append($savings_box_title, $savings_box_contents);
+        $('.heading-basket').append($savings_box);
+    }
 
     // 2. Line added for urgency: "All items in stock: The items below have been
     // reserved for you and will be held for 4 hours. Check out now to avoid
     // disappointment." We'll test a version with different wording here - point 10.
-    var $super_important_urgency_message = $(exp.vars.html.super_important_urgency_message);
-    $savings_box.after($super_important_urgency_message);
+    // ------
+    // Requirement no longer necessary, email from Johann 2015-04-23 17:50:
+    // "You can remove the "Offers may end soon" line at the top altogether."
 
     // 3. Heading changes to "You have qualified for special offers - see below".
     // Next to this appears in smaller font: "If you have an ORDER CODE, click
@@ -411,7 +403,7 @@ exp.init = function() {
             }
 
             // Calc savings
-            var savings =  worthVal - priceVal;
+            var savings =  (worthVal - priceVal).toFixed(2);
 
             // Add "You pay..." line under 'Worth' col
             $this.find('.promotionPriceSection')
@@ -456,21 +448,34 @@ exp.init = function() {
         $pnp_label = $('dt.delivery-option').next(),
         pnp_value = parseFloat($pnp_label.next('dd').text().match(/£([0-9]+?.[0-9]{2})/)[1]);
 
-    $('dt.delivery-option').before($savings_dt, $savings_dd);
+    if (total_savings > 0.00) {
+        $('dt.delivery-option').before($savings_dt, $savings_dd);
+
+        // Reduce unecessary whitespace between total savings and p&p row
+        $pnp_label.css({ 'margin-top': '-10px' });
+        $pnp_label.next().css('margin-top', '-10px');
+    }
 
     // 6. P&P changes to "Plant-friendly P&P"
-    $pnp_label.text(exp.vars.text.plant_friendly_label).css({
-        'margin-top': '-10px',
+    if (exp.func.shouldUseplantFriendlyWording()){
+        $pnp_label.text(exp.vars.text.plant_friendly_label);
+    }
+    // Give more width for the P&P label (no need for a tiny width, only causes beef with other augmentations we're doing)
+    $pnp_label.css({
         'margin-left': '-120px',
         'width': '120px'
     });
-    $pnp_label.next().css('margin-top', '-10px');
 
     // 7. "what's this?" link opens a modal. See copy tab for copy.
     // We'll run a variation without this - point 10.
     if (exp.vars.variation == 1 && pnp_value !== 0.0) {
         var $whats_this_link = $('<a href="#" class="awa-pnp-whatsthis">' + exp.vars.text.whats_this_label + '</a>'),
-            $whats_this_modal = $(exp.vars.html.whats_this_modal);
+            $whats_this_modal = $(exp.vars.html.whats_this_modal),
+            $plant_paragraph = $whats_this_modal.find('.awa_plants_only');
+
+        if (!exp.func.shouldUseplantFriendlyWording()) {
+            $plant_paragraph.remove();
+        }
 
         $('body').append($whats_this_modal);
         $pnp_label.append($whats_this_link);
@@ -508,6 +513,25 @@ exp.init = function() {
 
     // Done via exp.vars.variation and if statements :-)
 
+    // If there's a delivery surcharge element when position it sensibly
+    var $delivery_surcharge = $('.deliverySurcharge');
+    if ($delivery_surcharge.length > 0) {
+        $delivery_surcharge.css({
+            'margin-right': '-100px',
+            'width': '250px'
+        });
+
+        // Push PNP down a bit so we can fit this in.
+        $pnp_label.css({ 'margin-top': '20px' });
+        $pnp_label.next().css('margin-top', '20px');
+
+        // If there are total savings then we need to reduce the space we're taking vertically
+        if (total_savings > 0.00) {
+            $delivery_surcharge.parent().css({
+                'margin-top': '-10px'
+            });
+        }
+    }
 };
 
 // Run the experiment
