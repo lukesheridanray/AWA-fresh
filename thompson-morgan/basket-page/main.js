@@ -22,7 +22,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('T&M Basket page - dev 0.4');
+exp.log('T&M Basket page - dev 0.5');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -44,7 +44,8 @@ exp.vars = {
         you_pay: 'You pay only',
         total_savings_label: 'Total Savings:',
         plant_friendly_label: 'Plant-friendly P&P',
-        whats_this_label: 'what\'s this?'
+        whats_this_label: 'what\'s this?',
+        discount_label: 'Voucher Discounts'
     },
     html: {
         special_offers_subtitle: '<a href="">Have an ORDER CODE?  Click here to see more offers <img src="//cdn.optimizely.com/img/174847139/22958340217743f187234b2ea6f2130e.png" alt=""/></a>',
@@ -299,18 +300,9 @@ exp.init = function() {
         ),
         $savings_box_contents = $('<ul id="awa-savings-box-contents"></ul>');
 
-    // Add any existing savings to savings list
-    $('.basket-items > h3').each(function(){
-        var $this = $(this);
-
-        // Hide h3, we don't like it!
-        $this.hide();
-
-        // Add to savings list
-        $savings_box_contents.append(
-            $('<li></li>').text($this.text())
-        );
-    });
+    // Hide any existing savings, otherwise we might get duplicate savings highlights
+    // in the savings box.
+    $('.basket-items > h3').hide();
 
     // Construct savings list (loop through basket items looking for ".promo" contents)
     $('#removeTable tr').each(function(){
@@ -532,6 +524,18 @@ exp.init = function() {
             });
         }
     }
+
+
+
+    // Clarify in the totals that the "Discount" field is referring to voucher discounts
+    $('#basket-total').find('dl').each(function(){
+        var $this = $(this),
+        $label = $this.find('dt');
+
+        if ($.trim($label.text()) == 'Discount') {
+            $label.text(exp.vars.text.discount_label);
+        }
+    });
 };
 
 // Run the experiment
