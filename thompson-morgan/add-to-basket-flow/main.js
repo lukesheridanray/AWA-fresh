@@ -6,13 +6,6 @@
 // jshint multistr: true
 // jshint jquery: true
 
-/*
-
-1. tidy up CSS for modal
-3. gather all required data
-
-*/
-
 // Wrap the experiment code in an IIFE, this creates a local scope and allows us to
 // pass in jQuery to use as $. Other globals could be passed in if required.
 var exp = (function($) {
@@ -380,9 +373,6 @@ window.universal_variable.basket.line_items.forEach(function(obj, index){
     }
 });
 
-console.log(exp.vars.just_added);
-console.log(exp.vars.this_product);
-
 // Set the product type, used to determine recommended products to show
 if( exp.vars.just_added.indexOf('potatoes') !== -1 ) {
 
@@ -442,6 +432,7 @@ exp.css = ' \
     margin-left: 15%; \
     background: #fff; \
     border: 1px solid #000; \
+    top: -129px; \
     -webkit-box-shadow: 0px 1px 8px 1px rgba(50, 50, 50, 0.5); \
     -moz-box-shadow:    0px 1px 5px 1px rgba(50, 50, 50, 0.5); \
     box-shadow:         0px 1px 8px 1px rgba(50, 50, 50, 0.5); \
@@ -463,8 +454,20 @@ exp.css = ' \
     top: 0; \
     left: 8px; \
     font-size: 22px; \
+    line-height: 26px; \
     width: 600px; \
     text-align: left; \
+} \
+#addBasketSuccessDIV .header3Class:after, #addBasketSuccessDIV h3:after { \
+    content: ""; \
+    width: 20px; \
+    height: 20px; \
+    display: inline-block; \
+    background-position: 0 0; \
+    position: relative; \
+    left: 8px; \
+    background-repeat: no-repeat; \
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAVCAIAAADJt1n/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wQeCSYDP/xrJwAAASpJREFUOMtj/P//PwO5gImBAkBHzYs2zzx15SiC/59oEFvlp+4nrO4nvG7vcogIExl27jmxjQRnP331ePLyTjg33i+dBM2VE3M+f/0EYQc6RZjpWBOrGdnB0mKyVSltxIb2jftXkB08tWoxLzcfsZorkBycE1mmoaiDPZ5v3L8yZUXXjftX4CLIXDMd65yIMnSzITF28vIRSBz659t/+vLx////1+9dhoio+wmbRCo+efkIM+ahNi/cNBNuv1OqwY37Vyom5sAt6MifIi0mi+kpRkiuunH/Smy1H9x7yCDON70qpRVf2tZQ1Fncugk5JOHiuZHluIKTETk/Y9q/YcIBtBDGEmBwcP3eZZNIRUg4Ldw0A39WwZKrrt+7HFvl1zq7imA+YxywYggAWyMrrtK1vMoAAAAASUVORK5CYII="); \
 } \
 #addBasketSuccessDIV .closeButton { \
     background: #666; \
@@ -509,6 +512,7 @@ exp.css = ' \
     text-align: left; \
     color: #000; \
     font-size: 15px; \
+    padding: 0 0 10px 0; \
 } \
 .awa-basket-flow-recommended__product { \
     float: left; \
@@ -605,11 +609,10 @@ exp.func.insertProducts = function( products ) {
                 <a href="'+prod.prod_url+'"><img src="'+prod.prod_image+'" /></a> \
                 <p><a href="'+prod.prod_url+'">'+prod.prod_name+'<br /><span class="awa-basket-flow-price" data-awa-id="'+prod.prod_sku+'">&nbsp;<span></a></p> \
                 <form action="/public/QLOnline/product?portal:componentId=32485735&amp;portal:type=action&amp;portal:isSecure=false&amp;productCode='+prod.prod_code+'" method="post"> \
-                    <input name="addToBasket" value="true" type="hidden"><input name="quantity" value="1" type="hidden"> \
-                    <input name="skuCodes" value="'+prod.prod_sku+'" type="hidden"> \
+                    <input name="addToBasket" value="true" type="hidden" /><input name="quantity" value="1" type="hidden" /> \
+                    <input name="skuCodes" value="'+prod.prod_sku+'" type="hidden" /> \
                     <input class="awa-basket-flow-recommended__submit" type="submit" value="Add to basket" name="submit" /> \
                 </form> \
-                <!-- <a class="awa-basket-flow-recommended__button" data-awa-recommended-id="1">Add to basket</a>--> \
             </div>'
         );
     });
@@ -651,7 +654,7 @@ exp.func.modalDOMChanges = function() {
     $('#addBasketSuccessDIV .closeButton').text('X');
 
     $('#addBasketSuccessDIV p').next('a').remove();
-    $('#addBasketSuccessDIV p').replaceWith(
+    $('#addBasketSuccessDIV p:eq(0)').replaceWith(
         '<div class="awa-basket-flow-buttons"> \
             <a href="#" class="awa-basket-flow-buttons__continue" onmousedown="dismissAddToBasketPopup();return false;">Continue Shopping</a> \
             <a href="/basket" class="awa-basket-flow-buttons__proceed">Proceed to Checkout</a> \
