@@ -22,7 +22,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('T&M Basket page - dev 0.5');
+exp.log('T&M Basket page - dev 0.6');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -42,9 +42,9 @@ exp.vars = {
         savings_box_title: 'Your savings:',
         special_offers_title: 'You qualify for the special offers below',
         you_pay: 'You pay only',
-        total_savings_label: 'Total Savings:',
+        total_savings_label: 'Product Savings:',
         plant_friendly_label: 'Plant-friendly P&P',
-        whats_this_label: 'what\'s this?',
+        whats_this_label: 'details',
         discount_label: 'Voucher Discounts'
     },
     html: {
@@ -449,7 +449,7 @@ exp.init = function() {
     }
 
     // 6. P&P changes to "Plant-friendly P&P"
-    if (exp.func.shouldUseplantFriendlyWording()){
+    if (exp.vars.variation == 1 && exp.func.shouldUseplantFriendlyWording()){
         $pnp_label.text(exp.vars.text.plant_friendly_label);
     }
     // Give more width for the P&P label (no need for a tiny width, only causes beef with other augmentations we're doing)
