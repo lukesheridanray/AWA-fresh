@@ -199,6 +199,24 @@ exp.init = function() {
             }
     });
 
+    // -------------------------------------------------------------------------
+    // Mobile nav changes
+    // -------------------------------------------------------------------------
+
+    // Make a new nav that will be always shown, before the existing nav
+    var $extra_mobile_nav = $('<ul>', { 'class': 'mobile-nav awa-mobile-nav' }),
+        $existing_mobile_nav = $('#header-div .mobile-nav');
+
+    // Move 'furniture' and 'accessories' to extra nav so they are always shown
+    $extra_mobile_nav.append($existing_mobile_nav.find('li:contains("Furniture"), li:contains("Accessories")'));
+
+    $extra_mobile_nav.insertBefore($existing_mobile_nav);
+
+    // Re-write 'menu' button event handler to only toggle visiblity of the original site nav
+    $("a.navigation").off('click').on('click', function() {
+        $("#mobile-nav .mobile-nav:not(.awa-mobile-nav)").slideToggle();
+    });
+
 };
 
 // Run the experiment
