@@ -73,6 +73,32 @@ exp.vars = {
 // String containing the CSS for the experiment
 exp.css = '.header .tier1 li.awa-catalogue-req-nav-item { \
     padding-left: 5px; \
+} \
+\
+/* Main navigations style tweaks, to best fill whitespace (else it looks unpleasant) */ \
+ul#cat-nav li ul.sub li.main ul > li { \
+    width: 140px; \
+} \
+ul#cat-nav li ul.sub li.main, \
+#cat-nav li.custom li.middle { \
+    float: none; \
+    margin: 0 auto; \
+} \
+@media only screen and (max-width: 1200px) and (min-width: 979px) { \
+    ul#cat-nav li ul.sub li.main { \
+        padding-left: 150px; \
+    } \
+    #cat-nav li.custom li.middle { \
+        padding-left: 50px; \
+    } \
+} \
+@media (min-width: 1200px) { \
+    ul#cat-nav li ul.sub li.main { \
+        padding-left: 250px; \
+    } \
+    #cat-nav li.custom li.middle { \
+        padding-left: 150px; \
+    } \
 }';
 
 // Functions
