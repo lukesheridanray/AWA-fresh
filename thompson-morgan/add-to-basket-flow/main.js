@@ -129,7 +129,7 @@ exp.css = ' \
 } \
 #addBasketSuccessDIV .popUpMiddle { \
     background: transparent !important; \
-    padding: 5px 30px; \
+    padding: 5px 30px 5px 20px; \
 } \
 #addBasketSuccessDIV .header2Class, \
 #addBasketSuccessDIV h2 { \
@@ -194,7 +194,7 @@ exp.css = ' \
 .awa-basket-flow-recommended { \
     clear: both; \
     overflow: auto; \
-    padding: 40px 0 0 0; \
+    padding: 40px 0 10px 10px; \
 } \
 .awa-basket-flow-recommended h4 { \
     text-align: left; \
