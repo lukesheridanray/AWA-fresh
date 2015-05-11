@@ -145,14 +145,15 @@ exp.css = ' \
     width: 600px; \
     text-align: left; \
 } \
-#addBasketSuccessDIV .header3Class:after, #addBasketSuccessDIV h3:after { \
+#addBasketSuccessDIV .header3Class:before, #addBasketSuccessDIV h3:before { \
     content: ""; \
     width: 20px; \
     height: 20px; \
     display: inline-block; \
     background-position: 0 0; \
     position: relative; \
-    left: 8px; \
+    left: 0; \
+    margin: 0 8px 0 0; \
     background-repeat: no-repeat; \
     background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAVCAIAAADJt1n/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wQeCSYDP/xrJwAAASpJREFUOMtj/P//PwO5gImBAkBHzYs2zzx15SiC/59oEFvlp+4nrO4nvG7vcogIExl27jmxjQRnP331ePLyTjg33i+dBM2VE3M+f/0EYQc6RZjpWBOrGdnB0mKyVSltxIb2jftXkB08tWoxLzcfsZorkBycE1mmoaiDPZ5v3L8yZUXXjftX4CLIXDMd65yIMnSzITF28vIRSBz659t/+vLx////1+9dhoio+wmbRCo+efkIM+ahNi/cNBNuv1OqwY37Vyom5sAt6MifIi0mi+kpRkiuunH/Smy1H9x7yCDON70qpRVf2tZQ1Fncugk5JOHiuZHluIKTETk/Y9q/YcIBtBDGEmBwcP3eZZNIRUg4Ldw0A39WwZKrrt+7HFvl1zq7imA+YxywYggAWyMrrtK1vMoAAAAASUVORK5CYII="); \
 } \
@@ -218,12 +219,29 @@ exp.css = ' \
     color: #fff !important; \
     font-size: 1.1em; \
     height: 24px !important; \
+    width: 110px; \
     display: block; \
     line-height: 20px !important;  \
     padding: 0 6px !important;  \
     font-weight: bold; \
     margin: 6px 0 0 0; \
     border: 0; \
+} \
+.awa-button-loading { \
+    background-image: url("data:image/gif;base64,R0lGODlhEAAQAPIAALYHGP///8dBTuu9wv///+Kepdl/iNRweSH+GkNyZWF0ZWQgd2l0aCBhamF4bG9hZC5pbmZvACH5BAAKAAAAIf8LTkVUU0NBUEUyLjADAQAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQACgABACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkEAAoAAgAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkEAAoAAwAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkEAAoABAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQACgAFACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQACgAGACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAAKAAcALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==") !important; \
+    background-repeat: no-repeat !important; \
+    background-position: center !important; \
+    color: #B60718 !important; \
+    font-size: 0em !important; \
+} \
+.awa-button-cart-success .awa-basket-flow-recommended__submit { \
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAVCAIAAADJt1n/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wQeCSYDP/xrJwAAASpJREFUOMtj/P//PwO5gImBAkBHzYs2zzx15SiC/59oEFvlp+4nrO4nvG7vcogIExl27jmxjQRnP331ePLyTjg33i+dBM2VE3M+f/0EYQc6RZjpWBOrGdnB0mKyVSltxIb2jftXkB08tWoxLzcfsZorkBycE1mmoaiDPZ5v3L8yZUXXjftX4CLIXDMd65yIMnSzITF28vIRSBz659t/+vLx////1+9dhoio+wmbRCo+efkIM+ahNi/cNBNuv1OqwY37Vyom5sAt6MifIi0mi+kpRkiuunH/Smy1H9x7yCDON70qpRVf2tZQ1Fncugk5JOHiuZHluIKTETk/Y9q/YcIBtBDGEmBwcP3eZZNIRUg4Ldw0A39WwZKrrt+7HFvl1zq7imA+YxywYggAWyMrrtK1vMoAAAAASUVORK5CYII="); \
+    background-repeat: no-repeat; \
+    background-color: #fff; \
+    background-position: left; \
+    color: #345E2E !important; \
+    text-align: left; \
+    padding-left: 25px !important; \
 }';
 
 // Functions
@@ -292,13 +310,13 @@ exp.func.insertProducts = function( products ) {
             slots.push( '' );
         }
         slots.push(
-            '<div class="awa-basket-flow-recommended__product"> \
+            '<div class="awa-basket-flow-recommended__product" data-awa-sku="'+prod.prod_sku+'" data-awa-code="'+prod.prod_code+'"> \
                 <a href="'+prod.prod_url+'"><img src="'+prod.prod_image+'" /></a> \
                 <p><a href="'+prod.prod_url+'">'+prod.prod_name+'<br /><span class="awa-basket-flow-price" data-awa-id="'+prod.prod_sku+'">&nbsp;<span></a></p> \
                 <form action="/public/QLOnline/product?portal:componentId=32485735&amp;portal:type=action&amp;portal:isSecure=false&amp;productCode='+prod.prod_code+'" method="post"> \
                     <input name="addToBasket" value="true" type="hidden" /><input name="quantity" value="1" type="hidden" /> \
                     <input name="skuCodes" value="'+prod.prod_sku+'" type="hidden" /> \
-                    <input class="awa-basket-flow-recommended__submit" type="submit" value="Add to basket" name="submit" /> \
+                    <input class="awa-basket-flow-recommended__submit" type="submit" value="Add to basket" name="submit" data-awa-sku="'+prod.prod_sku+'" data-awa-code="'+prod.prod_code+'" /> \
                 </form> \
             </div>'
         );
@@ -308,6 +326,12 @@ exp.func.insertProducts = function( products ) {
     exp.vars.recommendedHTML = $(html);
     $('.awa-basket-flow-recommended').append( exp.vars.recommendedHTML );
     exp.func.scrapePrices(products);
+    // Add to cart event listener
+    $('.awa-basket-flow-recommended__submit').bind('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        exp.func.addToCart($(this));
+    });
 };
 
 // Function to scrape the prices for our recommended products
@@ -321,13 +345,69 @@ exp.func.scrapePrices = function(products) {
             url: prod.prod_url,
             success: function( resp ) {
                 var $resp = $(resp);
-                var price = $.trim( $resp.find('.productInfoLeft .price:eq(0)').text() );
+                var price = $.trim( $resp.find('.productInfoLeft .price:eq(0)').html() );
                 if( price ) {
                     exp.vars.recommendedHTML.find('[data-awa-id="'+prod.prod_sku+'"]').html( price );
                 }
             }
         });
     });
+};
+
+// Function to add product to the cart
+exp.func.addToCart = function($this) {
+
+    var code = $this.attr('data-awa-code');
+    var sku = $this.attr('data-awa-sku');
+
+    $this.addClass('awa-button-loading');
+
+    $.ajax({
+        url: 'http://www.thompson-morgan.com/public/QLOnline/product?portal:componentId=32485735&portal:type=action&portal:isSecure=false&productCode='+code,
+        type: 'POST',
+        async: false,
+        data: {
+            addToBasket: true,
+            quantity: 1,
+            skuCodes: sku
+        },
+        error: function() {
+            exp.func.cartResultMessage($this,'error');
+        },
+        success: function(resp) {
+            exp.func.cartResultMessage($this,'success');
+            //var contents = $(resp).find('#cart-content').html();
+            var widget = $(resp).find('#basket').html();
+            $('#basket').html( widget );
+            //$('#cart-content').html( contents );
+        }
+    });
+
+};
+
+// Function to show a success or error message on adding to cart
+exp.func.cartResultMessage = function($this, result) {
+
+    var $parent = $this.parents('.awa-basket-flow-recommended__product');
+    var url = $parent.find('a:eq(0)').attr('href');
+    var className;
+
+    $this.removeClass('awa-button-loading');
+
+    if(result === 'error') {
+        className = 'awa-button-cart-error';
+        alert('There seems to be a problem adding this product to the cart, please try again.');
+    } else if(result === 'success') {
+        className = 'awa-button-cart-success';
+    }
+    $this.addClass(className);
+    $parent.addClass(className);
+    $this.val('Added');
+    $this.unbind().bind('click', function(e) {
+        e.preventDefault();
+        window.location = url;
+    });
+
 };
 
 // Make DOM changes to the modal
