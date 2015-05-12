@@ -22,7 +22,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Example experiment - dev 0.1');
+exp.log('Example experiment - dev 0.2');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -107,6 +107,20 @@ ul#cat-nav li ul.sub li.main, \
         margin-top: 12px; \
         opacity: .25; \
     } \
+} \
+ul#cat-nav li ul li li a { \
+    text-transform: none; \
+} \
+ul#cat-nav li ul li li a.strong { \
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; \
+} \
+ul.awa-mobile-nav li ul { \
+    margin: 0; \
+    text-indent: 1em; \
+} \
+ul.awa-mobile-nav li ul li ul { \
+    margin: 0; \
+    text-indent: 2em; \
 }';
 
 // Functions
@@ -270,43 +284,41 @@ exp.init = function() {
         }
     });
 
-    // Pull latest furniture nav and accessories nav
-    $.get('/furniture/', function(data){
-        var $subnav = $(data).find('#sub-nav ul');
+    // Dupe furniture and accessories nav
+    $.each([
+        [$furniture_nav_item, $furniture_mobilenav_item, '.main > ul'],
+        [$accessories_nav_item, $accessories_mobilenav_item, '.middle.top > ul'],
+    ], function(i, elem){
+        var $main_nav_item = elem[0],
+            $mobile_nav_item = elem[1],
+            menu_selector = elem[2];
 
-        // Change chevron to point down
-        $furniture_mobilenav_item.find('i')
-            .removeClass('icon-chevron-right')
-            .addClass('icon-chevron-down');
+        // Dupe nav structure from main nav into mobile nav
+        var $duped_nav = $main_nav_item.find(menu_selector).clone();
+        $mobile_nav_item.append($duped_nav);
 
-        // Throw subnav into main nav DOM
-        $furniture_mobilenav_item.append($subnav);
-        $subnav.hide();
+        // Clean up duped DOM a little, to be styled consistently with the mobile nav
+        $duped_nav.find('li a').removeClass('strong').prepend('<i class="icon-chevron-right visible-phone"></i>');
+        $duped_nav.find('> li > a i')
+           .removeClass('icon-chevron-right')
+           .addClass('icon-chevron-down');
 
-        // Rejiggle event handlers to handle it
-        $furniture_mobilenav_item.find('a').on('click', function(e){
+       $mobile_nav_item.find('> a i')
+           .removeClass('icon-chevron-right')
+           .addClass('icon-chevron-down');
+
+        // Collapse nav boyos
+        $duped_nav.find('ul').hide();
+        $duped_nav.hide();
+
+        // Set up click events to expose second and third-level navs
+        $mobile_nav_item.find('> a').click(function(e){
             e.preventDefault();
-            $subnav.slideToggle();
+            $duped_nav.slideToggle();
         });
-    });
-
-    // Pull latest furniture nav and accessories nav
-    $.get('/accessories/', function(data){
-        var $subnav = $(data).find('#sub-nav ul');
-
-        // Change chevron to point down
-        $accessories_mobilenav_item.find('i')
-            .removeClass('icon-chevron-right')
-            .addClass('icon-chevron-down');
-
-        // Throw subnav into main nav DOM
-        $accessories_mobilenav_item.append($subnav);
-        $subnav.hide();
-
-        // Rejiggle event handlers to handle it
-        $accessories_mobilenav_item.find('a').on('click', function(e){
+        $duped_nav.find('> li > a').click(function(e){
             e.preventDefault();
-            $subnav.slideToggle();
+            $(this).next('ul').slideToggle();
         });
     });
 
