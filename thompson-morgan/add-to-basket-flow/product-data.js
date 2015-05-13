@@ -1,3 +1,27 @@
+/*
+//Use this to grab the meta data
+var str = '';
+for(var prod in exp.json ) {
+    exp.json[prod]['lucky_dip'].forEach(function(prod){
+        $.ajax( {
+            async: false,
+            url: prod.prod_url,
+            success: function(resp) {
+                var $resp = $(resp);
+                var sku = $resp.find('[name="skuCodes"]:eq(0)').val();
+                var code = $resp.find('#addToBasket').attr('action').match(/(productCode=)([a-zA-Z0-9]+)/)[2];
+                var img = $resp.find('#myZoom img').attr('src');
+                str += prod.prod_name + ' ' + img + ' ' + code + ' ' + sku + ' \n';
+            },
+            error: function() {
+                str += prod.prod_name + ' failed \n';
+            }
+        });
+    });
+}
+$('body').prepend(str);
+*/
+
 window.AWA_basket_flow_data = {
     'potatoes': {
         prod_1: [

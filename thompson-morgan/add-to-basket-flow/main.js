@@ -22,7 +22,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Add to basket flow - 0.1');
+exp.log('Add to basket flow - 0.3');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -227,7 +227,7 @@ exp.css = ' \
     margin: 6px 0 0 0; \
     border: 0; \
 } \
-.awa-button-loading { \
+.awa-basket-flow-recommended__submit.awa-button-loading { \
     background-image: url("data:image/gif;base64,R0lGODlhEAAQAPIAALYHGP///8dBTuu9wv///+Kepdl/iNRweSH+GkNyZWF0ZWQgd2l0aCBhamF4bG9hZC5pbmZvACH5BAAKAAAAIf8LTkVUU0NBUEUyLjADAQAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQACgABACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkEAAoAAgAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkEAAoAAwAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkEAAoABAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQACgAFACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQACgAGACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAAKAAcALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==") !important; \
     background-repeat: no-repeat !important; \
     background-position: center !important; \
@@ -250,6 +250,7 @@ exp.func = {};
 
 // Grab basket contents and remove any items from our recommended products list
 exp.func.filterBasketContents = function( product_type ) {
+
     product_type = product_type || 'flower-plants';
     var filterArray = function(arr, val) {
         arr.forEach(function(prod, index) {
@@ -265,10 +266,12 @@ exp.func.filterBasketContents = function( product_type ) {
         filterArray(exp.json[product_type].prod_3, val);
         filterArray(exp.json[product_type].lucky_dip, val);
     });
+
 };
 
 // Function to calculate the recommended products
 exp.func.recommendProducts = function( product_type ) {
+
     var json = exp.json[product_type];
     var prod_1, prod_2, prod_3;
     var luckyDip = function() {
@@ -298,11 +301,13 @@ exp.func.recommendProducts = function( product_type ) {
         prod_3 = luckyDip();
     }
     exp.func.insertProducts( [prod_1, prod_2, prod_3] );
+
 };
 
 // Function to insert the recommended products
 // accept 3 products as objects
 exp.func.insertProducts = function( products ) {
+
     var slots = [];
     var html;
     products.forEach(function( prod ){
@@ -311,8 +316,8 @@ exp.func.insertProducts = function( products ) {
         }
         slots.push(
             '<div class="awa-basket-flow-recommended__product" data-awa-sku="'+prod.prod_sku+'" data-awa-code="'+prod.prod_code+'"> \
-                <a href="'+prod.prod_url+'"><img src="'+prod.prod_image+'" /></a> \
-                <p><a href="'+prod.prod_url+'">'+prod.prod_name+'<br /><span class="awa-basket-flow-price" data-awa-id="'+prod.prod_sku+'">&nbsp;<span></a></p> \
+                <a href="'+prod.prod_url+'"><img src="'+prod.prod_image+'" alt="" /></a> \
+                <p><a href="'+prod.prod_url+'">'+prod.prod_name+'<br /><span class="awa-basket-flow-price" data-awa-id="'+prod.prod_sku+'">&nbsp;</span></a></p> \
                 <form action="/public/QLOnline/product?portal:componentId=32485735&amp;portal:type=action&amp;portal:isSecure=false&amp;productCode='+prod.prod_code+'" method="post"> \
                     <input name="addToBasket" value="true" type="hidden" /><input name="quantity" value="1" type="hidden" /> \
                     <input name="skuCodes" value="'+prod.prod_sku+'" type="hidden" /> \
@@ -332,6 +337,7 @@ exp.func.insertProducts = function( products ) {
         e.stopPropagation();
         exp.func.addToCart($(this));
     });
+
 };
 
 // Function to scrape the prices for our recommended products
@@ -352,6 +358,7 @@ exp.func.scrapePrices = function(products) {
             }
         });
     });
+    exp.func.requestSelf();
 };
 
 // Function to add product to the cart
@@ -376,12 +383,11 @@ exp.func.addToCart = function($this) {
         },
         success: function(resp) {
             exp.func.cartResultMessage($this,'success');
-            //var contents = $(resp).find('#cart-content').html();
             var widget = $(resp).find('#basket').html();
             $('#basket').html( widget );
-            //$('#cart-content').html( contents );
         }
     });
+    exp.func.requestSelf();
 
 };
 
@@ -410,23 +416,34 @@ exp.func.cartResultMessage = function($this, result) {
 
 };
 
+// Function to request the current page (flash data breadcrumb fix)
+exp.func.requestSelf = function() {
+    var url = exp.vars.just_added;
+    $.ajax({
+        async: false,
+        type: 'GET',
+        contentType: 'text/plain',
+        url: url
+    });
+};
+
 // Make DOM changes to the modal
 exp.func.modalDOMChanges = function() {
+
     var $heading = ($('#addBasketSuccessDIV .header3Class').length !== 0) ?
                     $('#addBasketSuccessDIV .header3Class') : $('#addBasketSuccessDIV h3');
+    var dom =   '<div class="awa-basket-flow-buttons"> \
+                    <a href="#" class="awa-basket-flow-buttons__continue" onmousedown="dismissAddToBasketPopup();return false;">Continue Shopping</a> \
+                    <a href="/basket" class="awa-basket-flow-buttons__proceed">Proceed to Checkout</a> \
+                </div> \
+                <div class="awa-basket-flow-recommended"> \
+                    <h4>Frequently bought with '+$heading.text()+'.</h4> \
+                </div>';
 
     $('#addBasketSuccessDIV .closeButton').text('X');
 
     $('#addBasketSuccessDIV p').next('a').remove();
-    $('#addBasketSuccessDIV p:eq(0)').replaceWith(
-        '<div class="awa-basket-flow-buttons"> \
-            <a href="#" class="awa-basket-flow-buttons__continue" onmousedown="dismissAddToBasketPopup();return false;">Continue Shopping</a> \
-            <a href="/basket" class="awa-basket-flow-buttons__proceed">Proceed to Checkout</a> \
-        </div> \
-        <div class="awa-basket-flow-recommended"> \
-            <h4>Frequently bought with '+$heading.text()+'. \
-        </div>'
-    );
+    $('#addBasketSuccessDIV p:eq(0)').replaceWith( dom );
 
     $heading.append(
         ' was added to your basket'
@@ -452,14 +469,10 @@ exp.init = function() {
 
 };
 
-// Run the experiment
 exp.init();
 
-// Return the experiment object so we can access it later if required
 return exp;
 
-// Close the IIFE, passing in jQuery and any other global variables as required
-// if jQuery is not already used on the site use optimizely.$ instead
 };
 
 // This function waits till a condition returns true
@@ -482,6 +495,7 @@ window.AWA_func_waitFor = function(condition, callback, timeout, keepAlive) {
         }, intervalTime);
 };
 
+// Wait for our JSON
 AWA_func_waitFor(
     function(){
         return (window.AWA_basket_flow_data !== undefined);
@@ -490,28 +504,3 @@ AWA_func_waitFor(
         window.exp(jQuery);
     }
 );
-
-
-//Use this to grab the meta data
-/*
-var str = '';
-for(var prod in exp.json ) {
-    exp.json[prod]['lucky_dip'].forEach(function(prod){
-        $.ajax( {
-            async: false,
-            url: prod.prod_url,
-            success: function(resp) {
-                var $resp = $(resp);
-                var sku = $resp.find('[name="skuCodes"]:eq(0)').val();
-                var code = $resp.find('#addToBasket').attr('action').match(/(productCode=)([a-zA-Z0-9]+)/)[2];
-                var img = $resp.find('#myZoom img').attr('src');
-                str += prod.prod_name + ' ' + img + ' ' + code + ' ' + sku + ' \n';
-            },
-            error: function() {
-                str += prod.prod_name + ' failed \n';
-            }
-        });
-    });
-}
-$('body').prepend(str);
-*/
