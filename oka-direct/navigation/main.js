@@ -99,6 +99,14 @@ ul#cat-nav li ul.sub li.main, \
     #cat-nav li.custom li.middle { \
         padding-left: 150px; \
     } \
+} \
+@media only screen and (max-width: 767px) { \
+    .mobile-nav .icon-chevron-down { \
+        position: absolute; \
+        right: 10px; \
+        margin-top: 12px; \
+        opacity: .25; \
+    } \
 }';
 
 // Functions
@@ -209,20 +217,20 @@ exp.init = function() {
             subcategory_name = $.trim($subcategory.find('> a').text()).toLowerCase(),
             items_names_map = {};
 
-            $subcategory.find('ul > li').each(function(){
-                var $item = $(this),
-                    name = $.trim($item.text()).toLowerCase();
-                    items_names_map[name] = $item;
+        $subcategory.find('ul > li').each(function(){
+            var $item = $(this),
+                name = $.trim($item.text()).toLowerCase();
+                items_names_map[name] = $item;
+        });
+
+
+        // Change to our desired order
+        if (Object.keys(exp.vars.furniture_desired_order).indexOf(subcategory_name) !== -1) {
+            var desired_order = $.map(exp.vars.furniture_desired_order[subcategory_name], function(elem){
+                return items_names_map[elem];
             });
-
-
-            // Change to our desired order
-            if (Object.keys(exp.vars.furniture_desired_order).indexOf(subcategory_name) !== -1) {
-                var desired_order = $.map(exp.vars.furniture_desired_order[subcategory_name], function(elem){
-                    return items_names_map[elem];
-                });
-                $subcategory.find('ul').append(desired_order);
-            }
+            $subcategory.find('ul').append(desired_order);
+        }
     });
 
     // -------------------------------------------------------------------------
@@ -242,6 +250,72 @@ exp.init = function() {
     $("a.navigation").off('click').on('click', function() {
         $("#mobile-nav .mobile-nav:not(.awa-mobile-nav)").slideToggle();
     });
+
+    // ----
+
+    // Add second-level mobile nav entries for furniture and accessories
+    var $furniture_mobilenav_item,
+        $accessories_mobilenav_item;
+
+    $.each($extra_mobile_nav.find('li'), function(){
+        var $this = $(this);
+        switch ($.trim($this.text()).toLowerCase()) {
+            case 'furniture':
+                $furniture_mobilenav_item = $this;
+                break;
+
+            case 'accessories':
+                $accessories_mobilenav_item = $this;
+                break;
+        }
+    });
+
+    // Pull latest furniture nav and accessories nav
+    $.get('/furniture/', function(data){
+        var $subnav = $(data).find('#sub-nav ul');
+
+        // Change chevron to point down
+        $furniture_mobilenav_item.find('i')
+            .removeClass('icon-chevron-right')
+            .addClass('icon-chevron-down');
+
+        // Throw subnav into main nav DOM
+        $furniture_mobilenav_item.append($subnav);
+        $subnav.hide();
+
+        // Rejiggle event handlers to handle it
+        $furniture_mobilenav_item.find('a').on('click', function(e){
+            e.preventDefault();
+            $subnav.slideToggle();
+        });
+    });
+
+    // Pull latest furniture nav and accessories nav
+    $.get('/accessories/', function(data){
+        var $subnav = $(data).find('#sub-nav ul');
+
+        // Change chevron to point down
+        $accessories_mobilenav_item.find('i')
+            .removeClass('icon-chevron-right')
+            .addClass('icon-chevron-down');
+
+        // Throw subnav into main nav DOM
+        $accessories_mobilenav_item.append($subnav);
+        $subnav.hide();
+
+        // Rejiggle event handlers to handle it
+        $accessories_mobilenav_item.find('a').on('click', function(e){
+            e.preventDefault();
+            $subnav.slideToggle();
+        });
+    });
+
+    // If we are on the furniture page or the accessories page we should hide the
+    // existing submenu, because we've moved it under the main nav.
+    var prod_list_header = $.trim($('h1.prodlistheader').text()).toLowerCase();
+    if (prod_list_header == 'furniture' || prod_list_header == 'accessories') {
+        $('#sub-nav').hide();
+    }
 
 };
 
