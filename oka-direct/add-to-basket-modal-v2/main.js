@@ -2,14 +2,6 @@
 // CGIT Optimizely Boilerplate - version 0.1.4
 //
 
-/*
-Goals
-    sales confirmation
-    revenue
-    proceed to checkout page
-
-*/
-
 // JSHint flags
 // jshint multistr: true
 // jshint jquery: true
@@ -30,7 +22,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Add to basket modal - 0.1');
+exp.log('Add to basket modal - 0.2');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -47,20 +39,24 @@ if(exp.condition && !exp.condition.length) {
 exp.vars = {
     page: ( $('.btnaddtobasket,#product-info').length !== 0 ) ? 'product' : 'other',
     $closeButton: $('<a class="awa-modal-close" onclick="jQuery(\'#basket-modal\').modal(\'hide\');return false;" href="#">X</a>'),
-    $continueLink: $('<a class="awa-modal-text-link" onclick="jQuery(\'#basket-modal\').modal(\'hide\');return false;" href="#">&lt; Continue shopping</a>'),
+    $continueLink: $('<a class="awa-modal-text-link" onclick="jQuery(\'#basket-modal\').modal(\'hide\');return false;" href="#">Continue shopping</a>'),
 };
 
 // Styles
 // String containing the CSS for the experiment
 exp.css = ' \
+#basket-modal .modal-body { \
+    padding-bottom: 40px; \
+} \
 #basket-modal .button-group .btn { \
     display: none; \
 } \
 #basket-modal .button-group .btn.btn-primary { \
     display: inline-block; \
-    width: 410px; \
+    width: 310px; \
     position: relative; \
     left: -10px; \
+    top: -5px; \
     font-weight: bold; \
     font-size: 1.2em; \
 } \
@@ -84,8 +80,18 @@ exp.css = ' \
     color: #fff; \
 } \
 .awa-modal-text-link { \
-    padding: 10px 0 0 0; \
-    color: #858787; \
+    position: relative; \
+    top: 10px; \
+    color:#666; \
+    border:1px solid #ccc; \
+    padding: 5px 10px 5px 20px; \
+    font-family: Bliss2ExtraLight; \
+    background: transparent url("https://resources1.okadirect.com/assets/img/icons/arrow-back-grey.png") no-repeat scroll 5px 8px; \
+} \
+.awa-modal-text-link:hover,.awa-modal-text-link:focus { \
+    color:#fff; \
+    border:1px solid #ccc; \
+    background:#ccc url("https://resources1.okadirect.com/assets/img/icons/arrow-back-white.png") no-repeat scroll 5px 4px; \
 } \
 .awa-modal-text-link:hover { \
     text-decoration: none; \
