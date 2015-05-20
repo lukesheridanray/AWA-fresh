@@ -22,7 +22,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Example experiment - dev 0.2');
+exp.log('Example experiment - dev 0.3');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -122,6 +122,10 @@ ul.awa-mobile-nav li ul li ul { \
 } \
 #cat-nav li.custom li.middle li.group { \
     width: 14%; \
+} \
+ul#cat-nav li ul.sub > li > ul > li > a:nth-of-type(2) { \
+  padding-top: 1em; \
+  display: block; \
 }';
 
 // Functions
@@ -275,16 +279,14 @@ exp.init = function() {
     });
 
     // Move scent items into storage and change label appropriately
-    $storage_subnav_item.find('> a').text(exp.vars.labels.storage_scent);
-    $storage_subnav_item.find('> ul').append(
-        $scent_subnav_item.find('> ul > li')
+    $storage_subnav_item.append(
+        $scent_subnav_item.find('> *')
     );
     $scent_subnav_item.remove();
 
     // Move pet items into curtains and change label appropriately
-    $pets_subnav_item.find('> a').text(exp.vars.labels.pets_curtains);
-    $pets_subnav_item.find('> ul').append(
-        $curtains_subnav_item.find('> ul > li')
+    $pets_subnav_item.append(
+        $curtains_subnav_item.find('> *')
     );
     $curtains_subnav_item.remove();
 
