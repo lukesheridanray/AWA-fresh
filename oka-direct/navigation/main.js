@@ -22,7 +22,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Example experiment - dev 0.3');
+exp.log('OKA Navigation - 0.4');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -126,6 +126,9 @@ ul.awa-mobile-nav li ul li ul { \
 ul#cat-nav li ul.sub > li > ul > li > a:nth-of-type(2) { \
   padding-top: 1em; \
   display: block; \
+} \
+#cat-nav li.custom li.middle { \
+    width: 100%; \
 }';
 
 // Functions
