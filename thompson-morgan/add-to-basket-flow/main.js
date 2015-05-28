@@ -495,12 +495,15 @@ window.AWA_func_waitFor = function(condition, callback, timeout, keepAlive) {
         }, intervalTime);
 };
 
-// Wait for our JSON
-AWA_func_waitFor(
-    function(){
-        return (window.AWA_basket_flow_data !== undefined);
-    },
-    function(){
-        window.exp(jQuery);
-    }
-);
+// Grab and execute the js file containing JSON, then run a callback
+// waiting for the JSON to be ready (file has been executed)
+$.getScript( 'https://d1m54pdnjzjnhe.cloudfront.net/thompsonmorgan/awa/product-data.min.js.gz', function() {
+    AWA_func_waitFor(
+        function(){
+            return (window.AWA_basket_flow_data !== undefined);
+        },
+        function(){
+            window.exp(jQuery);
+        }
+    );
+});
