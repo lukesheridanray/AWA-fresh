@@ -22,7 +22,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Add to basket modal - 0.2');
+exp.log('Add to basket modal - 0.3');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -95,6 +95,21 @@ exp.css = ' \
 } \
 .awa-modal-text-link:hover { \
     text-decoration: none; \
+} \
+@media screen and (max-width: 766px) { \
+    #basket-modal .button-group .btn.btn-primary { \
+        left: 0px; \
+        padding-left: 15px; \
+        padding-right: 15px; \
+        border-right: 0; \
+    } \
+} \
+@media screen and (max-width: 400px) { \
+    #basket-modal .button-group .btn.btn-primary, \
+    #basket-modal .button-group .btn.btn-primary:hover, \
+    #basket-modal .button-group .btn.btn-primary:focus { \
+        width: 90%; \
+    } \
 }';
 
 // Functions
