@@ -22,11 +22,11 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('T&M Basket page - dev 0.6');
+exp.log('T&M Basket page - dev 0.7');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
-exp.condition = $('.basket-portlet');
+exp.condition = $('.basket-portlet .basket-items');
 
 // Check for a condition and return false if it has not been met
 if(exp.condition && !exp.condition.length) {
@@ -37,7 +37,7 @@ if(exp.condition && !exp.condition.length) {
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
-    variation: 1,
+    variation: 2,
     text: {
         savings_box_title: 'Your savings:',
         special_offers_title: 'You qualify for the special offers below',
@@ -438,7 +438,12 @@ exp.init = function() {
     var $savings_dt = $('<dt class="awa-red">'+ exp.vars.text.total_savings_label +'</dt>'),
         $savings_dd = $('<dd class="awa-red">£'+ total_savings.toFixed(2) +'</dd>'),
         $pnp_label = $('dt.delivery-option').next(),
-        pnp_value = parseFloat($pnp_label.next('dd').text().match(/£([0-9]+?.[0-9]{2})/)[1]);
+        price_match = $pnp_label.next('dd').text().match(/£([0-9]+?.[0-9]{2})/),
+        pnp_value = 0.0;
+
+    if (price_match && price_match.length >= 2) {
+        pnp_value = parseFloat(price_match[1]);
+    }
 
     if (total_savings > 0.00) {
         $('dt.delivery-option').before($savings_dt, $savings_dd);
