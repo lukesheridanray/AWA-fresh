@@ -378,11 +378,12 @@ exp.init = function() {
         );
 
         // Note price difference below "Worth X" and ATB button
-        var offer_info = $this.find('.details > p:first').text().match(/for (?:just |)((?:£[0-9]+?.[0-9]{2}|[0-9]{1,2}p))/i);
+        var offer_info = $this.find('.details > p:first').text().match(/for (?:just |)((?:£[0-9]+?.[0-9]{2}|[0-9]{1,2}p))/i),
+            worth_info = $this.find('.promotionPriceSection').text().match(/(£[0-9]+?.[0-9]{2})/);
 
-        if (offer_info) {
+        if (offer_info && offer_info.length >= 2 && worth_info && worth_info.length >= 2) {
             var price = offer_info[1],
-                worth = $this.find('.promotionPriceSection').text().match(/(£[0-9]+?.[0-9]{2})/)[1],
+                worth = worth_info[1],
                 priceVal,
                 worthVal = parseFloat(worth.replace('£', ''));
 
@@ -421,15 +422,17 @@ exp.init = function() {
     // Calculmagic total savings.  (orig_price * qty) - total
     $('#removeTable tr').each(function(){
         var $this = $(this),
-            original_price_match = $this.find('.price strike').text().match(/£([0-9]+?.[0-9]{2})/);
+            original_price_match = $this.find('.price strike').text().match(/£([0-9]+?.[0-9]{2})/),
+            total_price_match = $this.find('.total').text().match(/£([0-9]+?.[0-9]{2})/);
 
-        if (!original_price_match) {
+        if (!original_price_match || original_price_match.length < 2 ||
+            !total_price_match || total_price_match.length < 2) {
             return;
         }
 
         var original_price = parseFloat(original_price_match[1]),
             qty = parseInt($this.find('.quantity select').val(), 10),
-            total = parseFloat($this.find('.total').text().match(/£([0-9]+?.[0-9]{2})/)[1]);
+            total = parseFloat(total_price_match[1]);
 
         total_savings += (original_price * qty) - total;
     });
