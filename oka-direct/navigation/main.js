@@ -148,7 +148,6 @@ exp.init = function() {
         $online_exclusives_nav_item,
         $shops_nav_item,
         $catalogue_req_nav_item,
-        $new_season_nav_item,
         $furniture_nav_item,
         $accessories_nav_item,
         $inspirations_nav_item,
@@ -182,10 +181,6 @@ exp.init = function() {
                 $online_exclusives_nav_item = $this;
                 break;
 
-            case 'new season':
-                $new_season_nav_item = $this;
-                break;
-
             case 'furniture':
                 $furniture_nav_item = $this;
                 break;
@@ -213,7 +208,6 @@ exp.init = function() {
     $shops_nav_item.addClass('first-child');
     $catalogue_req_nav_item.removeClass('first-child').addClass('awa-catalogue-req-nav-item');
     $blog_nav_item.removeClass('last-child top container hidden-tablet-potrait1');
-    $new_season_nav_item.addClass('last-child');
 
     // Under furniture, please remove "Shop by room".
     $furniture_nav_item.find('.main > ul:first-child > li:first-child').remove();
