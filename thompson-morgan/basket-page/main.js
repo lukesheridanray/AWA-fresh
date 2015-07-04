@@ -22,11 +22,11 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('T&M Basket page - dev 0.6');
+exp.log('T&M Basket page - dev 0.7');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
-exp.condition = $('.basket-portlet');
+exp.condition = $('.basket-portlet .basket-items');
 
 // Check for a condition and return false if it has not been met
 if(exp.condition && !exp.condition.length) {
@@ -37,7 +37,7 @@ if(exp.condition && !exp.condition.length) {
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
-    variation: 1,
+    variation: 2,
     text: {
         savings_box_title: 'Your savings:',
         special_offers_title: 'You qualify for the special offers below',
@@ -378,11 +378,12 @@ exp.init = function() {
         );
 
         // Note price difference below "Worth X" and ATB button
-        var offer_info = $this.find('.details > p:first').text().match(/for (?:just |)((?:£[0-9]+?.[0-9]{2}|[0-9]{1,2}p))/i);
+        var offer_info = $this.find('.details > p:first').text().match(/for (?:just |)((?:£[0-9]+?.[0-9]{2}|[0-9]{1,2}p))/i),
+            worth_info = $this.find('.promotionPriceSection').text().match(/(£[0-9]+?.[0-9]{2})/);
 
-        if (offer_info) {
+        if (offer_info && offer_info.length >= 2 && worth_info && worth_info.length >= 2) {
             var price = offer_info[1],
-                worth = $this.find('.promotionPriceSection').text().match(/(£[0-9]+?.[0-9]{2})/)[1],
+                worth = worth_info[1],
                 priceVal,
                 worthVal = parseFloat(worth.replace('£', ''));
 
@@ -421,15 +422,17 @@ exp.init = function() {
     // Calculmagic total savings.  (orig_price * qty) - total
     $('#removeTable tr').each(function(){
         var $this = $(this),
-            original_price_match = $this.find('.price strike').text().match(/£([0-9]+?.[0-9]{2})/);
+            original_price_match = $this.find('.price strike').text().match(/£([0-9]+?.[0-9]{2})/),
+            total_price_match = $this.find('.total').text().match(/£([0-9]+?.[0-9]{2})/);
 
-        if (!original_price_match) {
+        if (!original_price_match || original_price_match.length < 2 ||
+            !total_price_match || total_price_match.length < 2) {
             return;
         }
 
         var original_price = parseFloat(original_price_match[1]),
             qty = parseInt($this.find('.quantity select').val(), 10),
-            total = parseFloat($this.find('.total').text().match(/£([0-9]+?.[0-9]{2})/)[1]);
+            total = parseFloat(total_price_match[1]);
 
         total_savings += (original_price * qty) - total;
     });
@@ -438,7 +441,12 @@ exp.init = function() {
     var $savings_dt = $('<dt class="awa-red">'+ exp.vars.text.total_savings_label +'</dt>'),
         $savings_dd = $('<dd class="awa-red">£'+ total_savings.toFixed(2) +'</dd>'),
         $pnp_label = $('dt.delivery-option').next(),
-        pnp_value = parseFloat($pnp_label.next('dd').text().match(/£([0-9]+?.[0-9]{2})/)[1]);
+        price_match = $pnp_label.next('dd').text().match(/£([0-9]+?.[0-9]{2})/),
+        pnp_value = 0.0;
+
+    if (price_match && price_match.length >= 2) {
+        pnp_value = parseFloat(price_match[1]);
+    }
 
     if (total_savings > 0.00) {
         $('dt.delivery-option').before($savings_dt, $savings_dd);
