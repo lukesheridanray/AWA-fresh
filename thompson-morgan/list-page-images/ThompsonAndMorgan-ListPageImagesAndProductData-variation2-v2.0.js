@@ -12,7 +12,7 @@ function () {
 	  String.prototype.trim = function() {
 	    return this.replace(/^\s+|\s+$/g, ''); 
 	  };
-	}i
+	}
 
 	// Wrap the experiment code in an IIFE, this creates a local scope and allows us to
 	// pass in jQuery to use as $. Other globals could be passed in if required.
@@ -30,7 +30,7 @@ function () {
 		};
 
 		// Log the experiment, useful when multiple experiments are running
-		exp.log('List Page Images & Product Data - 2.0');
+		exp.log('List Page Images & Product Data - 2.0 var 2');
 
 		/*
 		// Condition
@@ -50,11 +50,94 @@ function () {
 		}
 		
 		// Run only if not on a garden supplies page
-		if (window.location.pathname.substring(0, 9) == "/flowers/" || window.location.pathname.substring(0, 12) == "/plug-plants") {
-        	exp.log('List Page Images & Product Data Experiment passed: running on flowers category');
-		} else {
-		    exp.log('List Page Images & Product Data Experiment failed a condition: should only run on flowers categories');
-		    return false;
+		switch(window.location.pathname.substring()) {
+		    case "/flowers/flower-plants/annual-plants":
+		        break;
+		    case "/flowers/flower-plants/perennial-and-biennial-plants":
+		        break;
+		    case "/flowers/flower-plants/begonia-plants":
+		        break;
+		    case "/flowers/flower-plants/busy-lizzie-plants":
+		        break;
+		    case "/flowers/flower-plants/dianthus-plants":
+		        break;
+		    case "/flowers/flower-plants/fuchsia-plants":
+		        break;
+		    case "/flowers/flower-plants/geranium-and-pelargonium-plants":
+		        break;
+		    case "/flowers/flower-plants/pansy-plants":
+		        break;
+		    case "/flowers/flower-plants/petunia-plants":
+		        break;
+		    case "/flowers/flower-plants/sweet-pea-plants":
+		        break;
+		    case "/flowers/flower-bulbs/allium-bulbs":
+		        break;
+		    case "/flowers/flower-bulbs/anemones":
+		        break;
+		    case "/flowers/flower-bulbs/begonia-tubers":
+		        break;
+		    case "/flowers/flower-bulbs/crocus-bulbs":
+		        break;
+		    case "/flowers/flower-bulbs/daffodil-bulbs":
+		        break;
+		    case "/flowers/flower-bulbs/dahlia-tubers":
+		        break;
+		    case "/flowers/flower-bulbs/hyacinth-bulbs":
+		        break;
+		    case "/flowers/flower-bulbs/lily-bulbs":
+		        break;
+		    case "/flowers/flower-bulbs/tulip-bulbs":
+		        break;
+		    case "/flowers/flower-bulbs/other-flower-bulbs-and-tubers":
+		    	break;
+		    case "/flowers/flower-seeds/hardy-annual-seeds":
+		        break;
+		    case "/flowers/flower-seeds/perennial-and-biennial-seeds":
+		        break;
+		    case "/flowers/flower-seeds/cosmos-seeds":
+		    	break;
+		    case "/flowers/flower-seeds/marigold-seeds":
+		        break;
+		    case "/flowers/flower-seeds/nasturtium-seeds":
+		        break;
+		    case "/flowers/flower-seeds/petunia-seeds":
+		    	break;
+		    case "/flowers/flower-seeds/poppy-seeds":
+		        break;
+		    case "/flowers/flower-seeds/sunflower-seeds":
+		        break;
+		    case "/flowers/flower-seeds/sweet-pea-seeds":
+		    	break;
+		    case "/flowers/all-other-seeds-and-plants/bamboo-and-grasses":
+		        break;
+		    case "/flowers/all-other-seeds-and-plants/cacti":
+		        break;
+		    case "/flowers/all-other-seeds-and-plants/clematis-plants":
+		    	break;
+		    case "/flowers/all-other-seeds-and-plants/climbing-seeds-and-plants":
+		        break;
+		    case "/flowers/all-other-seeds-and-plants/foliage-seeds-and-plants":
+		        break;
+		    case "/flowers/all-other-seeds-and-plants/shrubs-and-roses":
+		    	break;
+		    case "/flowers/all-other-seeds-and-plants/trees":
+		        break;
+		    case "/flowers/all-other-seeds-and-plants/new-spring-plants-and-bulbs-range":
+		        break;
+		    case "/flowers/all-other-seeds-and-plants/new-autumn-plants-bulbs-shrubs-range":
+		    	break;
+		    case "/plug-plants":
+		        break;
+		    case "/flower-plants-top-20-best-sellers":
+		    	break;
+		    case "/flower-bulbs-top-20-best-sellers":
+		        break;
+		    case "/flower-seeds-top-20-best-sellers":
+		    	break;
+		    default:
+		    	exp.log('List Page Images & Product Data Experiment failed a condition: should only run on flowers categories');
+		        return false;
 		}
 
 		// Variables
@@ -87,6 +170,15 @@ function () {
 		exp.init = function() {
 		    // Append style to head
 		    $('head').append('<style type="text/css">'+this.css+'</style>');
+
+		  	// Increase font-size of page by approxmiately 1pt
+		  	$('body').css({'font-size':'13px'});
+			$('h3').css({'font-size':'18px'});
+			$('.latin').css({'font-size':'15px'});
+			$('.moreInfo').css({'font-size':'13px'});
+			$('.viewall.facetNavTitle').css({'font-size':'13px'});
+			$('#headerNav li.telephone').css({'margin-left':'22px'});
+			
 
 		    /* --------------------------- Replace Images --------------------------- */
 			// WaitFor JSON hander
@@ -261,13 +353,6 @@ function () {
 		  	};
 
 		  	waitFor(conditionProductInfo, productInfoCallback);
-
-		  	$('body').css({'font-size':'13px'});
-			$('h3').css({'font-size':'18px'});
-			$('.latin').css({'font-size':'15px'});
-			$('.moreInfo').css({'font-size':'13px'});
-			$('.viewall.facetNavTitle').css({'font-size':'13px'});
-			$('#headerNav li.telephone').css({'margin-left':'22px'});
 		};
 
 		// Run the experiment
