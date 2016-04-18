@@ -1,0 +1,128 @@
+.productPromo li.vm023-what-this {
+	display: none;
+}
+.productPromo li.size {
+	position: relative;
+	padding-left: 20px;
+}
+.productPromo li.size:before {
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	top: 5px;
+	left: 0;
+	border: solid 1px #333;
+	border-radius: 50%;
+	content:"";
+}
+.productPromo li.size::after {
+  background: #333 none repeat scroll 0 0;
+  border-radius: 50%;
+  content: "";
+  height: 6px;
+  left: 3px;
+  position: absolute;
+  top: 8px;
+  width: 6px;
+  display: none;
+}
+.stockInfo.active .productPromo li.size::after {
+	display: block;
+}
+.clearFloat li.prodPageDes,
+.wishListLinkContainer {
+	display: none;
+}
+ .basket.prodPageBask,
+.quantity {
+	visibility: hidden;
+	height: 0px;
+	width: 0;
+}
+.productInfoLeft .productPromo ,
+.productInfoLeft .clearFloat {
+	display: inline-block;
+	vertical-align: top;
+}
+.stockInfo strike {
+  display: inline-block;
+  margin-right: 10px;
+}
+.stockInfo li.price {
+  margin-top: 0;
+  width: auto;
+}
+.stockInfo {
+  background: #f9f9f9 none repeat scroll 0 0;
+  border-bottom: medium none;
+  margin: 0;
+  padding: 0 10px;
+}
+.stockInfo.vm-023-stockInfo-margin {
+	padding-top: 10px;
+	border-radius: 5px 5px 0 0;
+	margin-top: 20px;
+}
+.add-to-cart {
+  background: #f9f9f9 none repeat scroll 0 0;
+  border-radius: 0 0 5px 5px;
+  margin-bottom: 30px;
+  padding: 20px 20px 0 20px;
+  text-align: right;
+  padding-bottom: 20px;
+}
+.add-to-cart p {
+  float: right;
+  margin: 10px 16px 0 0;
+  min-width: 210px;
+  text-align: center;
+}
+#additional-links {
+  margin: 0;
+  text-align: right;
+}
+.stockInfo li.quantity,
+.stockInfo li.prodPageBask {
+  width: 0;
+  padding: 0 !important;
+}
+.add-to-cart > label {
+  display: inline-block;
+  vertical-align: middle;
+}
+.add-to-cart > label {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 15px;
+}
+.add-to-cart .number-product {
+  display: inline-block;
+  width: 15px;
+  text-align: center;
+  font-size: 14px;
+  margin-right: 40px;
+}
+.add-to-cart button {
+  background: #cf2a28 none repeat scroll 0 0;
+  border: 1px solid #757575;
+  color: #fff;
+  height: 47px;
+  min-width: 210px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: 16px;
+  cursor: pointer;
+  transition: 0.5s all;
+}
+.add-to-cart button:hover {
+	opacity: 0.8;
+}
+.clear {
+	clear: both;
+}
+.stockInfo .productPromo {
+	height: auto;
+}
+.stockInfo li.promo {
+  margin-bottom: 10px;
+}

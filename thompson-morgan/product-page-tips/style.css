@@ -1,0 +1,217 @@
+.button.addToBasket {
+  background-image: url('//d1m54pdnjzjnhe.cloudfront.net/vanmeuwen/vm023/vm023-button.png') !important;
+}
+
+#vm023-popup-circle {
+  background: url('//d1m54pdnjzjnhe.cloudfront.net/vanmeuwen/vm023/vm023-popup-circle.png') no-repeat;
+  display: inline-block;
+  height: 13px;
+  width: 14px;
+  margin-left: 2px;
+  margin-bottom: -3px;
+  cursor: pointer;
+}
+
+#vm023-hardines-popup {
+  z-index: 10;
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  background: url('//d1m54pdnjzjnhe.cloudfront.net/vanmeuwen/vm023/vm023-hardiness-popup.png') no-repeat;
+  width: 488px;
+  height: 162px;
+  margin-top: -163px;
+  margin-left: -239px;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+#vm-023-header-text, .vm-023-what-this-header, .vm-023-why-not-sooner-header {
+  position: relative;
+  z-index: 1;
+  color: white;
+  margin-left: 20px;
+  margin-top: 13px;
+  font-size: 1.4em;
+}
+
+#vm-023-main-text {
+  ul {
+    margin-top: 30px;
+    margin-left: 20px;
+    color: #636363;
+    li {
+      margin-bottom: 7px;
+      span{
+        color: #0F9031;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+#vm023-popup-circle:hover {
+  #vm023-hardines-popup {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0s;
+  }
+}
+
+.vm023-what-this  {
+  position: relative;
+  margin-left: -143px;
+  margin-top: 21px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.vm023-what-this-popup {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  background: url('//d1m54pdnjzjnhe.cloudfront.net/vanmeuwen/vm023/vm023-what-is-this-popup.png') no-repeat;
+  width: 488px;
+  height: 250px;
+  bottom: 31px;
+  margin-left: -210px;
+  cursor: default;
+  z-index: 10;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  a {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.vm023-what-this:hover {
+  .vm023-what-this-popup {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0s;
+  }
+}
+
+.vm-023-what-this-main-text {
+  margin-left: 110px;
+  margin-top: 28px;
+  width: 350px;
+  .vm023-what-this-image {
+    position: absolute;
+    width: 160px;
+    height: 173px;
+    margin-left: -95px;
+    margin-top: -9px;
+  }
+  ul {
+    margin-left: 74px;
+    li {
+      margin-bottom: 15px;
+    }
+  }
+}
+
+.vm023-why-not-sooner {
+  margin-left: 15px;
+  width: 85px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.vm023-why-not-sooner-popup {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  background: url('//d1m54pdnjzjnhe.cloudfront.net/vanmeuwen/vm023/vm023-why-not-sooner-popup.png') no-repeat;
+  width: 488px;
+  height: 245px;
+  margin-top: -260px;
+  margin-left: -202px;
+  cursor: default;
+  z-index: 10;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.vm-023-why-not-sooner-main-text {
+  margin-left: 15px;
+  margin-top: 20px;
+  ul {
+    width: 460px;
+    li {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.vm023-why-not-sooner:hover {
+  .vm023-why-not-sooner-popup {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0s;
+  }
+}
+
+.vm023-why-not-sooner-popup:hover {
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+.new-tabs-small a {
+  padding: 0 10px;
+}
+
+#vm023-arrive-image {
+  position: relative;
+  background: url('//d1m54pdnjzjnhe.cloudfront.net/vanmeuwen/vm023/vm023-arrive-image.png') no-repeat;
+  width: 175px;
+  height: 264px;
+  span {
+    position: relative;
+    top: 263px;
+  }
+}
+
+#vm-023-arrive {
+  margin-left: 187px;
+  margin-top: -268px;
+  li {
+    margin-bottom: 7px;
+  }
+
+  #vm023-checked-for li{
+    margin-bottom: 0px;
+  }
+}
+
+#tabbed-panel-23 {
+  display: none;
+}
+
+#vm023-reviews {
+  color: #009530;
+  text-decoration: underline;
+}
+
+.promo {
+  position: absolute;
+  text-align: center;
+  right: 10px;
+  margin-top: 48px;
+  width: 130px !important;
+}
+
+
+.vm-023-stockInfo-margin {
+  margin-top: 10px !important;
+}
+.stockInfo li.size {
+  margin-top: -8px;
+}

@@ -1,0 +1,245 @@
+.split-test-ON .split-test-ratings a,
+.split-test-ON .split-test-qa a,
+.split-test-ON .split-test-product > a,
+.split-test-ON .split-text-delivery-info a,
+.split-test-ON .wishlist-link a,
+.split-test-ON .split-test-more-like a,
+.split-test-ON .split-test-moreinfolinks a,
+.split-test-ON .pricematch a {
+    color: rgb(2, 85, 165) !important;
+    text-decoration: underline !important;
+}
+
+.split-test-ON .split-text-delivery-info {
+    background: url('http://www.awa-digital.com/optimizely/northern-parrots/product-page/np-delivery.png') left no-repeat transparent;
+    padding-left: 20px;
+    float: left;
+}
+
+.split-test-ON .split-text-delivery-info a {
+    font-style: italic;
+}
+
+.split-test-ON .wishlist-link {
+    background: url('http://www.awa-digital.com/optimizely/northern-parrots/product-page/np-wishlist.png') left no-repeat transparent;
+    padding-left: 20px;
+    line-height: 16px;
+    position: relative;
+    top: -10px;
+}
+
+.split-test-ON #prodIMAGES p {
+    background: url('http://www.awa-digital.com/optimizely/northern-parrots/product-page/np-magnify.png') left no-repeat transparent;
+    padding-left: 25px;
+    font-size: 0.9em;
+    line-height: 16px;
+}
+
+.split-test-ON .split-test-ship-timer {
+    color: rgb(51,51,51) !important;
+    float: right;
+    margin-top: -15px;
+    position: relative;
+    top: -20px;
+}
+
+.split-test-ON .split-test-moreinfolinks span:after {
+    content: ' | ';
+    font-size: 1.2em;
+}
+
+.split-test-ON .split-test-moreinfolinks span:last-child:after {
+    content: '';
+}
+
+.split-test-ON .split-test-container {
+    width: 100%;
+    clear: both;
+    overflow: auto;
+}
+
+.split-test-ON .split-test-header {
+    font-size: 2.3em;
+    font-weight: bold;
+    text-align: center;
+    padding: 15px 90px 20px 90px;
+    margin: 0;
+    color: #0053A8;
+}
+
+.split-test-ON #prodDETAILS {
+    position: relative;
+    padding-top: 40px;
+}
+
+.split-test-ON .split-test-ratings {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.split-test-ON .BVRRRatingSummaryLinkRead {
+    float: left;
+    line-height: 25px;
+}
+
+.split-test-ON .split-test-qa {
+    position: absolute;
+    top: 3px;
+    right: 0;
+}
+
+.split-test-ON .qa-link {
+    line-height: 18px;
+}
+
+.split-test-ON #prodIMAGES {
+    width: 360px;
+}
+
+.split-test-ON .prod-images-wrap {
+    width: 360px;
+    min-height: 570px;
+    padding: 10px 0 0 59px;
+    border: 0px solid rgb(205,205,205);
+    float: left;
+    clear: left;
+}
+
+.split-test-ON #prodALTERNATIVES ul {
+    width: 360px !important;
+}
+
+.split-test-ON #prodALTERNATIVES ul li {
+    margin-right: 20px;
+    padding: 12px;
+}
+
+.split-test-ON #zoomArea {
+    width: 330px !important;
+    height: 330px !important;
+    overflow: auto;
+}
+
+.split-test-ON #zoomArea img {
+    width: 330px !important;
+    height: 330px !important;
+}
+
+.split-test-ON .BVQASummaryBoxQuestionAndAnswerCount {
+    float: right;
+    margin-left: 6px;
+}
+
+.split-test-ON .prodOPTIONS {
+    position: relative;
+}
+
+.split-test-ON .prodOPTIONS table .split-test-option-select {
+    border: 1px solid rgb(204,0,0);
+    padding: 0 5px 5px 5px;
+}
+
+.split-test-ON .split-test-option-select .prodOPTIONS select {
+    border: 0px !important;
+}
+
+.split-test-ON td.label {
+    font-size: 1.1em;
+}
+
+.split-test-ON .stock-message {
+    padding-top: 15px;
+    display: block;
+}
+
+.split-test-ON .AddBasket ul {
+    float: left;
+}
+
+.split-test-ON .split-test-qty {
+    text-transform: uppercase;
+    font-size: 1.2em;
+    padding-right: 5px;
+    float: left;
+    line-height: 38px;
+}
+
+.split-test-ON .split-test-product > a {
+    float: left;
+    clear: left;
+}
+
+.split-test-ON .related-title {
+    background:url(../images/core/review_header_bg.jpg) no-repeat;
+    height:15px; width:740px; padding:10px; font-size:14px; font-weight:bold; color:#0255A5; padding:10px;
+    margin-top: 10px;
+}
+
+.split-test-ON .split-test-related-prods {
+    clear: both;
+}
+
+.split-test-ON #div_large,
+.split-test-ON .div_large {
+    left: -40px !important;
+    top: 10px !important;
+}
+
+.split-test-ON .catHOLDER ul {
+    width: 155px !important;
+    margin-top: 10px !important;
+}
+
+.split-test-ON #prodALTERNATIVES ul {
+    width: 320px;
+}
+
+.split-test-ON #prodALTERNATIVES ul li {
+    margin-right: 20px;
+}
+
+.split-test-ON .split-test-more-like .title {
+    font-size: 1.1em;
+    font-weight: bold;
+    padding-top: 30px;
+    padding-bottom: 5px;
+}
+
+.split-test-ON .facebook {
+    width: 50px !important;
+    overflow: hidden;
+    border-right: 30px solid #fff;
+}
+
+.split-test-ON .holder_CENTRE_tabcontent,
+.split-test-ON #holder_CENTRE_tabs {
+    display : none;
+}
+
+.split-test-ON .split-test-hidden {
+    display:none !important;
+}
+
+.split-test-ON .prmatch {
+    position: absolute;
+    top: -76px;
+    right: 0px;
+}
+
+.split-test-ON td.pricematch div {
+    margin: 0 80px 0 0 !important;
+    text-align: right;
+}
+
+.split-test-clear {
+    width: 100%;
+    height: 1px;
+    font-size: 0;
+    line-height: 0;
+    clear: both;
+}
+
+.split-test-product {
+    overflow: visible;
+}

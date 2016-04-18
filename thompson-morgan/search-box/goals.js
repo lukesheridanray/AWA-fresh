@@ -1,0 +1,1 @@
+window.universal_variable.events=window.universal_variable.events||[];$("#sli_search_1").live('focus',function(e){window.universal_variable.events.push({"category":"conversion_goals","action":"search_interaction"});});$("#search").live('submit',function(e){window.universal_variable.events.push({"category":"conversion_goals","action":"search_executed"});});

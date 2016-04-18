@@ -1,0 +1,206 @@
+#review-links {
+    font-weight: normal;
+    text-decoration: underline;
+}
+.hidden {
+    display: none;
+}
+.qtip {
+    max-width: 550px !important;
+}
+#productCont a.modal-link {
+    font-size: .9em;
+    text-decoration: underline;
+    font-weight: normal;
+    display: inline-block;
+    position: relative;
+    color: #999 !important;
+    top: -5px;
+}
+.packaging-info-link {
+    left: 3em;
+}
+.not-sooner-link {
+    left: 3em;
+}
+.tooltip {
+    padding: 1.5em .5em;
+}
+.tooltip p {
+    font-size: 1.15em !important;
+    line-height: 1.5em;
+}
+.tooltip h3, .tooltip h2 {
+    margin-bottom: 1em;
+    font-size: 1.4em;
+}
+.tooltip p + p {
+    margin-top: 1em;
+}
+.tooltip ul {
+    list-style-position: inside !important;
+    list-style-type: disc !important;
+    margin: 1.5em 1em !important;
+}
+.tooltip ul li {
+    font-size: 1.15em !important;
+    padding-left: 1.5em !important;
+}
+.tooltip ul li + li {
+    margin-top: .5em;
+}
+.tooltip a {
+    text-decoration: underline;
+    color: #719fbf !important;
+}
+.tooltip a:hover {
+    text-decoration: none;
+}
+.tooltip .image-box, .pkg-modal img {
+    float: left;
+    margin-right: 1.5em;
+    margin-bottom: 1.5em;
+}
+.tooltip .image-box .caption {
+    font-size: 1.1em;
+    display: block;
+}
+.stockInfo-first {
+    border-top: 1px solid #D8D2C9;
+}
+.more-vertical-space {
+    padding: 2.5em 0;
+}
+.how-link {
+    background-repeat: no-repeat;
+    display: block;
+    line-height: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.how-box {
+    margin-top: 1.5em;
+    margin-bottom: 1em;
+}
+.how-box:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+.promo {
+    margin-left: 16px;
+    text-align: center;
+    display: block;
+}
+#prodSizeList {
+    margin: 0 0 2.5em 0;
+    padding: 20px 0;
+}
+#prodSizeList dt {
+    display: block;
+    clear: left;
+    float: left;
+    width: 117px;
+    color: #00572D;
+    font-weight: bold;
+}
+#prodSizeList dd {
+    display: block;
+    float: left;
+    width: 351px;
+}
+.delivery-table {
+    margin-top: 1.5em;
+}
+.delivery-table td {
+    border: 1px black solid;
+    padding: 5px;
+}
+#addToBasket input.button.addToBasket {
+    background-color: #345e2e;
+    background-image: none !important;
+    text-indent: 0;
+    color: white;
+    font-size: 1.1em;
+    height: 30px !important;
+    line-height: 30px !important;
+    padding: 0 !important;
+    font-weight: bold;
+}
+.button.addToBasket:hover {
+    opacity: .9;
+}
+.stockInfo li.size {
+    width: 280px !important;
+}
+.stockInfo li.price {
+    width: 50px !important;
+}
+#productCont { float: right !important }
+#product-media { display: none !important }
+#calendar-display {float: none !important; margin-left: auto; margin-right: auto; }
+.t011 { 
+  float: left;
+}
+.t011 .main {
+    position: relative;
+    width: 440px;
+    height: 440px;
+    background-color: white;
+}
+.t011 .main img {
+    width: 440px;
+    height: 440px;
+}
+.t011 .main img.hide {
+    display: none;
+}
+.t011 .main #tm011video {
+    position: absolute;
+    top: 70px;
+    left: 70px;
+    width: 300px;
+    height: 300px;
+    display: none;
+    z-index: 1;
+}
+.t011 .main #tm011vide.show {
+    display: block;
+}
+.t011 .control { display: none; z-index: 2; top: 50%; margin-top: -30px; cursor: pointer; line-height: 55px; text-align: center; font-size: 30px; position: absolute; height: 60px; width: 35px; background-color: white; background-color: rgba(255, 255, 255, 0.7); color: #444; position: absolute; }
+.t011 .control:hover { background-color: rgba(255, 255, 255, 0.8); }
+.t011 .control.left { left: 10px; }
+.t011 .control.right { right: 10px; }
+.t011 .thumbs { text-align: center; margin-top: 5px; max-width: 440px; }
+.t011 .thumbs img { cursor: pointer; border: 7px solid white; margin: 5px; }
+.t011 .thumbs img:hover { border-color: #efefef; }
+.t011 .thumbs img.active { border-color: #eee; }
+.info-icon {
+    position: relative;
+    cursor: pointer;
+    top: 2px;
+    left: 2px;
+}
+/*v2*/
+.new-tabs-small a { padding: 0 7px; }
+.arrive-tab-image {
+    float: left;
+    margin-right: 1.5em;
+    margin-bottom: 2em;
+}
+.arrive-tab-image span {
+    display: block;
+    color: #666;
+}
+#tabbed-panel-5 ul {
+    list-style-type: disc;
+    margin-top: 3px;
+}
+#tabbed-panel-5 p + p,
+#tabbed-panel-5 ul + p {
+    margin-top: 3px;
+}
+#tabbed-panel-5 li {
+    position: relative;
+    left: 10px;
+}

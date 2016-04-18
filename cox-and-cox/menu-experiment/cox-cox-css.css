@@ -1,0 +1,72 @@
+.split-test-on#wrapper #navigation li {
+    padding: 0;
+}
+
+.split-test-on#wrapper #navigation .drop-frame {
+    border: 1px solid #ededed;
+    height: auto;
+    min-height: 100px;
+    z-index: 999;
+    position: relative;
+    top: -1px;
+}
+
+.split-test-on#wrapper #navigation a.nav-cat {
+    border-top: 1px solid #fff;
+    border-left: 1px solid #fff;
+    border-right: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    display: block;
+    margin: 3px 0 0 0;
+    padding: 7px 14px;
+    z-index: 9999;
+    position: relative;
+}
+
+.split-test-on#wrapper #navigation a.nav-cat:hover,
+.split-test-on#wrapper #navigation li:hover a.nav-cat {
+    border-top: 1px solid #ededed;
+    border-left: 1px solid #ededed;
+    border-right: 1px solid #ededed;
+}
+
+.split-test-on#wrapper #navigation a.nav-cat.has-sub:hover:after,
+.split-test-on#wrapper #navigation li:hover a.nav-cat.has-sub:after {
+    display: block;
+    content: '';
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    background: #fff;
+}
+
+.split-test-on#wrapper #navigation li:last-child a.nav-cat,
+.split-test-on#wrapper #navigation li:last-child a.nav-cat:hover {
+    color: inherit;
+}
+
+/*
+.split-test-on#wrapper #navigation li:last-child a.nav-cat:before {
+    content: '';
+    float: left;
+    display: block;
+    width: 18px;
+    height: 18px;
+    background: url('http://www.awa-digital.com/optimizely/cox-cox/cox-cox-tag.png');
+    margin: 0 5px 0 0;
+}
+*/
+
+.split-test-on#wrapper #navigation .drop .product-box {
+    display: none;
+}
+
+.split-test-on#wrapper #navigation .home-cat-drop .sub-cat1.column {
+    width: 185px;
+}
+
+.split-test-on#wrapper #navigation .home-cat-drop .sub-cat1.column.sub-cat-kids-col {
+    width: 140px;
+}

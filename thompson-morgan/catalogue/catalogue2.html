@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link href="booklet/jquery.booklet.latest.css" type="text/css" rel="stylesheet" media="screen, projection, tv" />
+
+</head>
+<body>
+<!-- jQuery -->
+<script src="booklet/jquery-2.1.0.min.js"></script>
+
+
+
+
+<!-- Booklet -->
+<script src="booklet/jquery.easing.1.3.js"></script>
+<script src="booklet/jquery.booklet.latest.min.js"></script>
+
+<div id="mybook">
+    <div> 
+		<img usemap="#test" src="http://dd6zx4ibq538k.cloudfront.net/static/images/2841/a0c00f88ddb60b089edf4b4860e5005e_615_871.jpeg">
+		<map name="test">
+			<area shape="rect" coords="128,132,241,179" href="http://www.trees.com/furniture.html">
+		</map>
+    </div>
+    <div> 
+        <img src="http://dd6zx4ibq538k.cloudfront.net/static/images/2841/147bcbde535ddbf73cea300cc670c2ef_615_871.jpeg">
+    </div>
+    <div> 
+        <img src="http://dd6zx4ibq538k.cloudfront.net/static/images/2841/be5189eb2f1e5563271e992886c72c80_615_871.jpeg">
+    </div>
+    <div> 
+        <img src="http://dd6zx4ibq538k.cloudfront.net/static/images/2841/dccb32944da4984c7224a6bd65e6ab1e_615_871.jpeg">
+    </div>
+	<div>
+		<img src="http://dd6zx4ibq538k.cloudfront.net/static/images/2841/517c81b62e94e3a749a2f0d92c38e3a5_615_871.jpeg">
+	</div>
+</div>
+<a id="prev" href="#">PREV</a>
+<a id="next" href="#">NEXT</a>
+	<script type="text/javascript">
+		$(function() {
+		    $('#mybook').booklet({
+		    	width: 1230,
+		    	height: 871
+		    });
+		});
+
+		$("#next").click(function(e) {
+			e.preventDefault();
+			$('#mybook').booklet("next");
+		});
+		$("#prev").click(function(e) {
+			e.preventDefault();
+			$('#mybook').booklet("prev");
+		})
+	</script>
+
+
+</body>
+</html>
+
+

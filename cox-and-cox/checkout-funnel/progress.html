@@ -1,0 +1,38 @@
+<style>
+.step {
+    display: inline-block;
+    width: 150px;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+.step.active:before {
+	background: black;
+}
+
+.step:before {
+	content: "";
+	display:block;
+	width: 14px;
+	height: 14px;
+	background: #ccc;
+	position: relative;
+    left: 70px;
+    top: -15px;
+	border-radius: 7px;
+}
+
+.steps-line {
+	border-bottom: 3px solid #ccc;
+	position: relative;
+	top: -7px;
+	left: 78px;
+	width: 456px;
+}
+</style>
+<h1>Hello</h1>
+<div class="steps-line"></div>
+<div class="step active">Login</div>
+<div class="step">Billing information</div>
+<div class="step">Delivery</div>
+<div class="step">Payment</div>
