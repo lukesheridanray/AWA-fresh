@@ -1,7 +1,3 @@
-
-
-
-
 //function() {
 //
 // CGIT Optimizely Boilerplate - version 0.1.4
@@ -46,11 +42,6 @@ var exp = (function($) {
 	// if (exp.condition && !exp.condition.length) {
 	//     exp.log('Mobile Product Page failed a condition');
 	//     return false;
-	// }
-
-	// if ($('.no-background-image').text() != "Flowers" && $('.no-background-image').text() != "Vegetables" && $('.no-background-image').text() != "Fruit" && $('.no-background-image').text() != "Large plants" && $('.no-background-image').text() != "Garden Supplies"){
-	// 	exp.log('Exp not running on Fruit, Large Plants, Vegetables, or Garden supplies, exiting');
-	// 	return false;
 	// }
 	
 	// Variables

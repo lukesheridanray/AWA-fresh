@@ -38,7 +38,7 @@ var exp = function($) {
     };
 
     // Log the experiment, useful when multiple experiments are running
-    exp.log('Checkout v4');
+    exp.log('Checkout v5');
 
     
     // Condition
@@ -194,14 +194,10 @@ var exp = function($) {
 
         // Hide first link button
         $("#LinkButton1").hide();
-        // Hide Address 2
-        $("label:contains('Address 2')").closest('.row').hide();
         // Move Postcode
         $("label:contains('Address 2')").closest('.row').after($("#tb_Postcode").closest(".row"));
         // Change text for Address 1    
         $("label:contains('Address 1*')").text("House name or number:");
-
-
 
         // Making the marketing message less blatant
         $("h2:contains('Marketing Options')").closest(".row").hide();
@@ -220,8 +216,8 @@ var exp = function($) {
         cp_obj.set("elem_postcode" , "tb_Postcode");
 
 
-        cp_obj.set("elem_company", "tb_Address1");
-        cp_obj.set("elem_street2", "");
+        cp_obj.set("elem_street1", "tb_Address1");
+        cp_obj.set("elem_company", "tb_Address2");
         cp_obj.set("elem_street3", "");
         cp_obj.set("elem_town", "tb_Town");
         cp_obj.set("elem_county", "tb_County");
@@ -264,6 +260,11 @@ var exp = function($) {
         var houseDiv = $("label:contains('House name or number:')").closest(".row");
         var postcodeDiv = $("label:contains('Postcode*:')").closest(".row");
         postcodeDiv.after(houseDiv);
+
+ 		// Move Address 2
+        $("label:contains('Phone (optional)')").closest(".row").before($("label:contains('Address 2')").closest('.row'));
+        $("label:contains('Address 2')").text("Company:");
+
 
         // Set tab order
 		var tabindex = 1;

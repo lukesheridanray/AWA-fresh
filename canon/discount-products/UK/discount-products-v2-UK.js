@@ -102,8 +102,9 @@ var exp = function($) {
         // Get price differential
         var discount = parseFloat($(".content:not('.mini-basket--content') .badge-4").first().text().match(/\d+/)[0].replace(/,/g, ""));
 
-        var currentPrice = parseFloat($(".content:not('.mini-basket--content') .price-amount").first().text().substring(1).replace(/,/g, ""));
-        var wasPrice = currentPrice + discount;
+        var wasPrice = parseFloat($(".content:not('.mini-basket--content') .price-amount").first().text().substring(1).replace(/,/g, ""));
+
+        var currentPrice = wasPrice - discount;
 
         discount = numberWithCommas(discount.toFixed(2));
 		currentPrice = numberWithCommas(currentPrice.toFixed(2));
