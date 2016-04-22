@@ -29,7 +29,7 @@ var exp = (function($) {
 	};
 
 	// Log the experiment, useful when multiple experiments are running
-	exp.log('Landing Page Seeds Offer Popup - v1 - var2');
+	exp.log('Landing Page Seeds Offer Popup - v1 -var2');
 
 	/*
 	// Condition
