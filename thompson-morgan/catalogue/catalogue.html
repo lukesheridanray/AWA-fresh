@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script type="text/javascript" src="turnjs4/lib/turn.min.js"></script>
+	<div id="prev">PREV</div>
+	<div id="flipbook">
+		<div class="hard"></div>
+		<div> 
+			Page 1 
+			<img usemap="#test" src="DadJackNicholson copy.jpg">
+			<map name="test">
+				<area shape="rect" coords="128,132,241,179" href="http://www.trees.com/furniture.html">
+			</map>
+		</div>
+		<div> Page 2 <img src="MaureenChase copy.jpg"></div>
+		<div> Page 3 <img src="MikeMentos copy.jpg"></div>
+		<div class="hard"></div>
+		<div class="hard"></div>
+	</div>
+	<div id="next">NEXT</div>
+	<script type="text/javascript">
+		$("#flipbook").turn({
+			width: 600,
+			height: 500,
+			autoCenter: true
+		});
+
+		$("#prev").click(function() {
+			$("#flipbook").turn("previous");
+		});
+		$("#next").click(function() {
+			$("#flipbook").turn("next");
+		});
+	</script>
+
+
+</body>
+</html>
+
+

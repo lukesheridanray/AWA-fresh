@@ -1,0 +1,19 @@
+
+var data = {
+	__EVENTTARGET: "cctl00$ContentPlaceHolder1$BuyButton1$btn_buynow",
+	__EVENTARGUMENT: "",
+	__VIEWSTATE: "/wEPDwULLTE2MDA4MjE4ODcPZBYCZg9kFgICAg9kFgYCAg8PFgIeBFRleHQFDzIgaXRlbXMgaW4geW91cmRkAgUPZBYCAgEPDxYCHwAFDzIgaXRlbXMgaW4geW91cmRkAhMPFgIeC18hSXRlbUNvdW50AgQWCGYPZBYCAgEPDxYEHgtOYXZpZ2F0ZVVybAU2aHR0cDovL3d3dy5oaWdoc3BlZWR0cmFpbmluZy5jby51ay9odWIvYXV0aXNtLWZlbWFsZXMvHwAFPkZlbWFsZSBBdXRpc206IElzIGl0IERpZmZlcmVudCBhbmQgV2hhdCBTaG91bGQgSSBMb29rIE91dCBGb3I/ZGQCAQ9kFgICAQ8PFgQfAgU1aHR0cDovL3d3dy5oaWdoc3BlZWR0cmFpbmluZy5jby51ay9odWIvZHlzbGV4aWEtcXVpei8fAAUNRHlzbGV4aWEgUXVpemRkAgIPZBYCAgEPDxYEHwIFP2h0dHA6Ly93d3cuaGlnaHNwZWVkdHJhaW5pbmcuY28udWsvaHViL2RhdGEtcHJvdGVjdGlvbi1tZXRob2RzLx8ABTlRdWljayBHdWlkZSB0byBTZWxlY3RpbmcgU3VpdGFibGUgRGF0YSBQcm90ZWN0aW9uIE1ldGhvZHNkZAIDD2QWAgIBDw8WBB8CBUJodHRwOi8vd3d3LmhpZ2hzcGVlZHRyYWluaW5nLmNvLnVrL2h1Yi9ob3ctdG8tb3Blbi1jcmVhdGl2ZS1zdG9yeS8fAAVBMyBEZXBlbmRhYmxlIFdyaXRlcuKAmXMgU29sdXRpb25zIGZvciBPcGVuaW5nIFlvdXIgQ3JlYXRpdmUgU3RvcnlkZGT/oka1akAVqmgClkeV0FSBPWD1UQdTl6QL/1ZDybX0dQ==",
+	__VIEWSTATEGENERATOR: "700A1AFB",
+	__EVENTVALIDATION: "/wEdAAJ02UjK4xn8E7lKsRWnfbhbPClOUii7PaaiCvLE7p03J2/xUh5g8rev6XmFsDxnK7uKbiC5vkL2aC90ELBbdueb"
+};
+
+
+$.ajax({
+  	type: "POST",
+	crossDomain: false,
+	url: "https://www.highspeedtraining.co.uk/food-hygiene/choose-level-1.aspx",
+	data: data,
+	success: function() {
+		alert("Success");
+	}
+});

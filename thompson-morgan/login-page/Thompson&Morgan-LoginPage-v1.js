@@ -113,7 +113,12 @@ var exp = (function($) {
 	    $("#login-customer p").hide();
 
 	    // Remove existing "Forgot Your Password?" Text
-	    $('.text.clearFloat').first().contents().eq(2).replaceWith("");
+	    if ($('.text.clearFloat').first().contents().eq(1).text() == "Forgot Your Password?") {
+	    	// Needed for IE
+	    	$('.text.clearFloat').first().contents().eq(1).replaceWith("");
+	    } else {
+	    	$('.text.clearFloat').first().contents().eq(2).replaceWith("");
+	    }
 
 	    // Change password reset link text
 	    $(".quickLinks").text("Forgot Your Password?");

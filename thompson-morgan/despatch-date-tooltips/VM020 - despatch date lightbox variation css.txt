@@ -1,0 +1,27 @@
+#removeTable tbody .dispatch {
+  position: relative;
+}
+
+.vm020 {
+  display: none;
+  position: absolute;
+  background: url('https://d1m54pdnjzjnhe.cloudfront.net/pngineer/5ebe0fd0-15bb-11e5-a13c-cb6c389c2e42.png');
+  width: 369px;
+  height: 206px;
+  top: -177px;
+  left: -132px;
+  z-index: 100;
+  box-sizing: border-box;
+  padding: 13px;
+  font-weight: normal;
+  
+  .title {
+    font-size: 15px;
+    color: #00572d;
+  }
+  
+  p {
+    line-height: 14px;
+    margin: 8px 0;
+  }
+}
