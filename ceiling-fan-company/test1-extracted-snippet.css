@@ -1,0 +1,16 @@
+.AWA-newList {
+    display: block;
+    text-align: center;
+    padding-top: 10px;
+    margin-left: 0;
+    margin-bottom: 20px;
+}
+
+.AWA-newList li {
+    display: inline-block;
+    margin-right: 39px;
+}
+
+.AWA-checkmark {
+    vertical-align: middle;
+}
