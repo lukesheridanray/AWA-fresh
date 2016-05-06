@@ -22,20 +22,6 @@ var exp = function($) {
     // Log the experiment, useful when multiple experiments are running
     exp.log('Checkout Crosspromo - v2');
 
-    /*
-    // Condition
-    // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
-    exp.condition = $('.unique-selector');
-    */
-    //exp.condition = $("#main_internal_full_box");
-
-    // Check for a condition and return false if it has not been met
-    // if (exp.condition && !exp.condition.length) {
-    //     exp.log('Gift Guide 2 failed a condition');
-    //     return false;
-    // }
-    // Commenting out conditions since IE is having a hard time with it
-
     // Variables
     // Object containing variables, generally these would be strings or jQuery objects
     exp.vars = {
@@ -318,13 +304,19 @@ var exp = function($) {
 				margin-bottom: 34px;\
 			}\
 		}\
-		@media (max-width: 550px) {\
-			#AWA-modal-popup {\
-				width: 90%;\
-				height: 450px;\
-				overflow-y: scroll;\
-			}\
-		}\
+        @media (max-width: 550px) {\
+            #AWA-modal-popup {\
+                width: 90%;\
+                height: 450px;\
+                overflow-y: scroll;\
+            }\
+        }\
+        @media (max-height: 780px) {\
+            #AWA-modal-popup {\
+                height: 90%;\
+                overflow-y: scroll;\
+            }\
+        }\
     ';
 
 
@@ -428,6 +420,7 @@ var exp = function($) {
 
 		// Determine which product to showcase
 		$(".basket-table").find("tr").find("td:nth-child(2)").each(function() {
+
 			var product = $.trim($(this).text());
 
 			if (product === "Level 2 Food Hygiene For Catering") {
