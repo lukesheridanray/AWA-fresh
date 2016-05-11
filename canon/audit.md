@@ -16,7 +16,7 @@ Here are my notes on the Canon site:
 GENERAL DOMAIN
 
 http://www.canon.co.uk/
-http://www.canon.dk/
+http://www.canon.de/
 http://www.canon.fr/
 
 Using jQuery v1.11.1
@@ -34,9 +34,8 @@ A significant challenge will be ensuring that the same HTML dependencies exist a
 STORE
 
 https://store.canon.co.uk
+https://store.canon.de
 https://store.canon.fr
-
-I could not locate the store on the Denmark domain
 
 The PDPs are using using an image carousel. Experiments modifying this element will have added complexity.
 
