@@ -7,7 +7,7 @@
 
 // Wrap the experiment code in an IIFE, this creates a local scope and allows us to
 // pass in jQuery to use as $. Other globals could be passed in if required.
-var exp = (function($) {
+var exp = (function($,COUNTRY_CODE) {
 
 // Initialise the experiment object
 var exp = {};
@@ -20,10 +20,61 @@ exp.log = function (str) {
     }
 };
 
-exp.vars = {
-    'saveBanner': $('.product-detail-media .badge-4:contains(Save)'),
-    'bannerText': '. Instant cashback applied at checkout',
-};
+// Set different vars based on country code
+switch(COUNTRY_CODE) {
+
+    case 'UK':
+
+        exp.vars = {
+            'saveBanner': $('.product-detail-media .badge-4:contains(Save)'),
+            'bannerText': '. Instant cashback applied at checkout',
+        };
+
+    break;
+
+    case 'FR':
+
+        exp.vars = {
+            'saveBanner': $('.product-detail-media .badge-4:contains(Economisez)'),
+            'bannerText': '. Remboursement immédiat au moment de la commande!',
+        };
+
+    break;
+
+    case 'DE':
+
+        exp.vars = {
+            'saveBanner': $('.product-detail-media .badge-4:contains(Sparen Sie)'),
+            'bannerText': '. Cashback erfolgt bei der Zahlung',
+        };
+
+    break;
+
+    case 'AT':
+
+        exp.vars = {
+            'saveBanner': $('.product-detail-media .badge-4:contains(Bespaar)'),
+            'bannerText': '. De cashback wordt bij het afrekenen direct toegepast.',
+        };
+
+    break;
+
+    case 'IT':
+
+    break;
+
+    case 'NL':
+
+    break;
+
+    default:
+
+        exp.vars = {
+            'saveBanner': [],
+            'bannerText': ''
+        };
+
+}
 
 // Styles
 // String containing the CSS for the experiment
@@ -36,11 +87,11 @@ exp.css = ' \
         text-transform: none; \
         display: inline-block; \
         min-height: 30px; \
-        line-height: 15px; \
+        line-height: 20px; \
         margin: 0; \
         padding: 6px 12px; \
         color: #fff; \
-        font-size: 12px; \
+        font-size: 13px; \
         font-weight: 700; \
     } \
     .product-detail-media .awa-saving-band { \
@@ -106,4 +157,5 @@ return exp;
 
 // Close the IIFE, passing in jQuery and any other global variables as required
 // if jQuery is not already used on the site use optimizely.$ instead
-})(jQuery);
+
+})(jQuery, 'K'); // UK, FR, DE, AT, IT, NL
