@@ -69,6 +69,9 @@ var exp = (function($) {
             z-index: 2;\
             color: white;\
             top: 5px;\
+            right: 50px;\
+        }\
+        .t011 #AWA-circle {\
             right: 5px;\
         }\
         #AWA-circle-inner {\
@@ -120,10 +123,11 @@ var exp = (function($) {
         // Enter all discounted products into an array and calculate their discount
         var discounts = [];
         $(".stockInfo").find(".price").each(function() {
+
             var self = $(this);
 
             // Exit loop if there's no markdown price
-            if (self.find("strike").text() == "") {
+            if (self.find("strike").text() === "") {
                 return;
             }
 
@@ -143,17 +147,24 @@ var exp = (function($) {
             var largestDiscount = Math.round(Math.max.apply(Math, discounts));
 
             // Add circle with text
-            $(".t011").prepend(exp.vars.circle);
+            if($(".t011").length) {
+                $(".t011").prepend(exp.vars.circle);
+            } else {
+                $("#product-media").prepend(exp.vars.circle);
+            }
             $("#AWA-circle-savings-amount").text(largestDiscount);
         }
-
-
 
 
     };
 
     // Run the experiment
-    exp.func.waitFor(function() { return $(".t011").length }, exp.init);
+    exp.func.waitFor(function() {
+        if($("#product-media").length || $(".t011").length) {
+            return true;
+        }
+        return false;
+    }, exp.init);
 
     // Return the experiment object so we can access it later if required
     return exp;

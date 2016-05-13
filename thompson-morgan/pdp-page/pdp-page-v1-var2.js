@@ -32,18 +32,6 @@ var exp = (function($) {
     // Log the experiment, useful when multiple experiments are running
     exp.log('PDP Page - v1 - var2');
 
-    /*
-    // Condition
-    // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
-    exp.condition = $('.unique-selector');
-    */
-    // exp.condition = $("#268917436");
-
-    // // Check for a condition and return false if it has not been met
-    // if (exp.condition && !exp.condition.length) {
-    //     exp.log('PLP Condensed failed a condition');
-    // }
-    
     // Variables
     // Object containing variables, generally these would be strings or jQuery objects
     exp.vars = {};
@@ -82,6 +70,16 @@ var exp = (function($) {
         .stockInfo.active .productPromo li.size::after {\
             display: block;\
         }\
+        .stockInfo.active.single-radio .productPromo li.size::before,\
+        .stockInfo.active.single-radio .productPromo li.size::after {\
+            content: none;\
+        }\
+        .stockInfo.active.single-radio .productPromo li.size {\
+            padding-left: 0;\
+        }\
+        .stockInfo.active .productPromo li.size::after {\
+            display: block;\
+        }\
         .clearFloat li.prodPageDes,\
         .wishListLinkContainer {\
             display: none;\
@@ -109,7 +107,7 @@ var exp = (function($) {
           background: #f9f9f9 none repeat scroll 0 0;\
           border-bottom: medium none;\
           margin: 0;\
-          padding: 0 10px 10px 0;\
+          padding: 10px 10px 0 10px;\
         }\
         .stockInfo.vm-023-stockInfo-margin {\
             padding-top: 10px;\
@@ -127,21 +125,8 @@ var exp = (function($) {
         .add-to-cart p {\
           float: right;\
           margin: 10px 16px 0 0;\
-          min-width: 210px;\
+          min-width: 240px;\
           text-align: center;\
-        }\
-        #additional-links {\
-          margin: 0;\
-          text-align: right;\
-        }\
-        .stockInfo li.quantity,\
-        .stockInfo li.prodPageBask {\
-          width: 0;\
-          padding: 0 !important;\
-        }\
-        .add-to-cart > label {\
-          display: inline-block;\
-          vertical-align: middle;\
         }\
         .add-to-cart > label {\
           display: inline-block;\
@@ -159,8 +144,8 @@ var exp = (function($) {
           background: #cf2a28 none repeat scroll 0 0;\
           border: 1px solid #757575;\
           color: #fff;\
-          height: 47px;\
-          min-width: 210px;\
+          height: 54px;\
+          min-width: 240px;\
           font-size: 16px;\
           font-weight: bold;\
           margin-right: 16px;\
@@ -169,6 +154,15 @@ var exp = (function($) {
         }\
         .add-to-cart button:hover {\
             opacity: 0.8;\
+        }\
+        #additional-links {\
+          margin: 0;\
+          text-align: right;\
+        }\
+        .stockInfo li.quantity,\
+        .stockInfo li.prodPageBask {\
+          width: 0;\
+          padding: 0 !important;\
         }\
         .clear {\
             clear: both;\
@@ -198,48 +192,49 @@ var exp = (function($) {
         $.fn.ignore = function(sel) {
             return this.clone().find(sel || ">*").remove().end();
         };
-        var m = $(".productInfoLeft .price").size();
-        m = parseInt(m);
-        if (m == 1) {
-            $(".stockInfo").eq(0).addClass("active");
 
-        } else if (m < 3) {
-            var num1 = $(".stockInfo:eq(" + i + ") .price").ignore("strike").text().trim();
-            var k1 = num1.substr(1);
+        // Jamies method for highlighting second highest price option
+        (function() {
 
-            var num2 = $(".stockInfo:eq(" + i + ") .price").ignore("strike").text().trim();
-            var k2 = num2.substr(1);
-            if (k1 > k2) {
-                $(".stockInfo").eq(0).addClass("active");
-            } else {
-                $(".stockInfo").eq(1).addClass("active");
+            var $options = $(".stockInfo");
+            var prices = [];
+            var secondHighest;
+
+            if($options.length === 1) {
+                // just the one, so highlight it
+                $options.addClass('active').addClass('single-radio');
+                return;
             }
 
+            // get price of each, assign to DOM attribute and prices array
+            $options.each(function() {
+                var $self = $(this);
+                var price = parseFloat($self.find(".price").ignore("strike").text().trim().replace('£',''));
+                $self.data('awa-price', price);
+                prices.push(price);
+            });
 
-        } else if (m % 2 == 1 && m > 2) {
+            // Sort array
+            prices.sort(function(a,b) { return a - b; });
 
-            var j = Math.floor(m / 2);
-            $(".stockInfo").eq(j).addClass("active");
-        } else if (m % 2 == 0 && m > 2) {
+            // pop off the highest
+            prices.pop();
 
-            var max = 0;
-            var n = m - 1;
-            var j = 0;
-            for (var i = 1; i < n; i++) {
-                i = parseInt(i);
-                var num = $(".stockInfo:eq(" + i + ") .price").ignore("strike").text().trim();
-                var k = num.substr(1);
-                k = parseFloat(k);
-                if (k > max) {
-                    max = k;
-                    j = i;
+            // grab what is now the highest
+            secondHighest = prices.pop();
+
+            // find the element and apply the active class
+            var justOne = false;
+            $(".stockInfo").filter(function() {
+                if(!justOne) {
+                    justOne = $(this).data('awa-price') === secondHighest;
+                    return justOne;
+                } else {
+                    return false;
                 }
+            }).addClass('active');
 
-            }
-            j = parseInt(j);
-            $('.stockInfo').eq(j).addClass("active");
-
-        }
+        })();
 
         var desptch = $(".stockInfo.active .despatch").html();
         $(".desatch-date").html(desptch);
