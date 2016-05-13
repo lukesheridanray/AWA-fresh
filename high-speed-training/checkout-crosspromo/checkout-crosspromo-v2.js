@@ -1,3 +1,6 @@
+// jshint multistr: true
+// jshint laxcomma: true
+
 //* NOTE - Add href to Umara Z-Trail More Information Link
 if (typeof String.prototype.trim !== 'function') {
   String.prototype.trim = function() {
@@ -25,7 +28,7 @@ var exp = function($) {
     // Variables
     // Object containing variables, generally these would be strings or jQuery objects
     exp.vars = {
-    	level2Summary: 	"<div class='row'>\
+    	level2Summary: 	"<div class='row'> \
     						<div id='AWA-fbt'>\
     							<h2>Frequently bought together:</h2>\
     						</div>\
@@ -44,7 +47,7 @@ var exp = function($) {
     									<div class='AWA-course-summary-add'>\
     										<label>Quantity:</label>\
 											<input class='AWA-input' name='' type='test' value='1' size='3' id=''>\
-											<a id='' class='btn btn-green' href='#'>Add to basket »</a>\
+											<a id='' class='btn btn-green awa-add-cart-generic' href='#'>Add to basket »</a>\
     									</div>\
     								</div>\
     							</div>\
@@ -64,7 +67,7 @@ var exp = function($) {
     									<div class='AWA-course-summary-add'>\
     										<label>Quantity:</label>\
 											<input class='AWA-input' name='' type='test' value='1' size='3' id=''>\
-											<a id='' class='btn btn-green' href='#'>Add to basket »</a>\
+											<a id='' class='btn btn-green awa-add-cart-catering' href='#'>Add to basket »</a>\
     									</div>\
     								</div>\
     							</div>\
@@ -84,7 +87,7 @@ var exp = function($) {
     									<div class='AWA-course-summary-add'>\
     										<label>Quantity:</label>\
 											<input class='AWA-input' name='' type='test' value='1' size='3' id=''>\
-											<a id='' class='btn btn-green' href='#'>Add to basket »</a>\
+											<a id='' class='btn btn-green awa-add-cart-manufacturing' href='#'>Add to basket »</a>\
     									</div>\
     								</div>\
     							</div>\
@@ -104,7 +107,7 @@ var exp = function($) {
     									<div class='AWA-course-summary-add'>\
     										<label>Quantity:</label>\
 											<input class='AWA-input' name='' type='test' value='1' size='3' id=''>\
-											<a id='' class='btn btn-green' href='#'>Add to basket »</a>\
+											<a id='' class='btn btn-green awa-add-cart-retail' href='#'>Add to basket »</a>\
     									</div>\
     								</div>\
     							</div>\
@@ -437,6 +440,41 @@ var exp = function($) {
 
 		});
 
+        /**
+         * Add to cart actions
+         */
+        $('.awa-add-cart-generic').on('click', function(e) {
+
+            e.preventDefault();
+            ga('send','event','BuyNow','LandingPage');
+            __doPostBack('ctl00$ContentPlaceHolder1$btn_l2haccp_generic$btn_buynow','');
+
+        });
+
+        $('.awa-add-cart-catering').on('click', function(e) {
+
+            e.preventDefault();
+            ga('send','event','BuyNow','LandingPage');
+            __doPostBack('ctl00$ContentPlaceHolder1$btn_l3_food_catering$btn_buynow','');
+
+        });
+
+        $('.awa-add-cart-retail').on('click', function(e) {
+
+            e.preventDefault();
+            ga('send','event','BuyNow','LandingPage');
+            __doPostBack('ctl00$ContentPlaceHolder1$btn_l3_food_retail$btn_buynow','');
+
+        });
+
+        $('.awa-add-cart-manufacturing').on('click', function(e) {
+
+            e.preventDefault();
+            ga('send','event','BuyNow','LandingPage');
+            __doPostBack('ctl00$ContentPlaceHolder1$btn_l3_food_manufacturing$btn_buynow','');
+
+        });
+
 	};
 
 
@@ -463,7 +501,7 @@ var exp = function($) {
     };
 
 
-    exp.waitFor(function() { return $("#lb_UpdateBasket").length }, exp.init, 10000);
+    exp.waitFor(function() { return $("#lb_UpdateBasket").length; }, exp.init, 10000);
 
 
 	// Return the experiment object so we can access it later if required
