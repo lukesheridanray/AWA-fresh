@@ -84,7 +84,7 @@ var exp = (function($) {
 						</div>\
 					</div>\
 					<div id='AWA-LP-ships'>\
-						Ships within 1 day\
+						Despatched within 1 day\
 					</div>\
 				</div>"
 
