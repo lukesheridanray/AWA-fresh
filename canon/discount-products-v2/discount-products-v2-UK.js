@@ -50,20 +50,21 @@ switch(COUNTRY_CODE) {
 
     break;
 
-    case 'AT':
+    case 'IT':
+
+        exp.vars = {
+            'saveBanner': $('.product-detail-media .badge-4:contains(Rispamia)'),
+            'bannerText': '. Incassa subito alla cassa',
+        };
+
+    break;
+
+    case 'NL':
 
         exp.vars = {
             'saveBanner': $('.product-detail-media .badge-4:contains(Bespaar)'),
             'bannerText': '. De cashback wordt bij het afrekenen direct toegepast.',
         };
-
-    break;
-
-    case 'IT':
-
-    break;
-
-    case 'NL':
 
     break;
 
@@ -158,4 +159,4 @@ return exp;
 // Close the IIFE, passing in jQuery and any other global variables as required
 // if jQuery is not already used on the site use optimizely.$ instead
 
-})(jQuery, 'K'); // UK, FR, DE, AT, IT, NL
+})(jQuery, 'UK'); // UK, FR, DE, IT, NL
