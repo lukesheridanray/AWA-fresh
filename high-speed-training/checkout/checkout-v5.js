@@ -1,3 +1,5 @@
+// jshint multistr: true
+
 /*
 // This is a collection of JavaScript code to allow easy integration of 
 // postcode / address finder functionality into any website
@@ -38,7 +40,7 @@ var exp = function($) {
     };
 
     // Log the experiment, useful when multiple experiments are running
-    exp.log('Checkout v5');
+    exp.log('Checkout v5.1');
 
     
     // Condition
@@ -275,6 +277,21 @@ var exp = function($) {
 				tabindex++;
 			}
 		});
+
+
+        // Add listener to proceed button
+        // checks for errors on the address fields, if found opens up all fields
+        $('#LinkButton1, #LinkButton2').on('click', function() {
+
+            //if($('#AWA-right .errorClass').length > 0) {
+            if($('#AWA-right .required').filter(function() { return $(this).val() === ''; }).length > 0) {
+                $(".AWA-hidden-form").show();
+                $("#AWA-manual").hide();
+            }
+
+        });
+
+
 	};
 
 
