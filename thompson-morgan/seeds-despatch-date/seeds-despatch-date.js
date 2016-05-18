@@ -29,7 +29,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Seeds Despatch Date - dev 0.1');
+exp.log('Seeds Despatch Date - 0.2');
 
 /*
 // Condition
@@ -114,8 +114,8 @@ exp.init = function() {
     // Basket
     if ($('.dispatch .price').length) {
         $('.dispatch .price').each(function () {
-            var url = $(this).attr('href');
-            if (url.indexOf('seeds') !== -1 && url.indexOf('potato') === -1) {
+            var text = $(this).text();
+            if (text.trim() === 'Within 1 days' || text.trim() === 'Within 3 days') {
                 $(this).text(by);
             }
         });
