@@ -7,7 +7,7 @@
 
 // Wrap the experiment code in an IIFE, this creates a local scope and allows us to
 // pass in jQuery to use as $. Other globals could be passed in if required.
-var exp = (function($,COUNTRY_CODE) {
+var exp = (function(COUNTRY_CODE) {
 
 // Initialise the experiment object
 var exp = {};
@@ -26,7 +26,7 @@ switch(COUNTRY_CODE) {
     case 'UK':
 
         exp.vars = {
-            'saveBanner': $('.product-detail-media .badge-4:contains(Save)'),
+            'saveBanner': $('.product-detail-media .badge-4:contains(cashback)'),
             'bannerText': '. Instant cashback applied at checkout',
         };
 
@@ -35,17 +35,8 @@ switch(COUNTRY_CODE) {
     case 'FR':
 
         exp.vars = {
-            'saveBanner': $('.product-detail-media .badge-4:contains(Economisez)'),
+            'saveBanner': $('.product-detail-media .badge-4:contains(votre)'),
             'bannerText': '. Remboursement immédiat au moment de la commande!',
-        };
-
-    break;
-
-    case 'DE':
-
-        exp.vars = {
-            'saveBanner': $('.product-detail-media .badge-4:contains(Sparen Sie)'),
-            'bannerText': '. Cashback erfolgt bei der Zahlung',
         };
 
     break;
@@ -53,17 +44,8 @@ switch(COUNTRY_CODE) {
     case 'IT':
 
         exp.vars = {
-            'saveBanner': $('.product-detail-media .badge-4:contains(Rispamia)'),
+            'saveBanner': $('.product-detail-media .badge-4:contains(SCONTO)'),
             'bannerText': '. Incassa subito alla cassa',
-        };
-
-    break;
-
-    case 'NL':
-
-        exp.vars = {
-            'saveBanner': $('.product-detail-media .badge-4:contains(Bespaar)'),
-            'bannerText': '. De cashback wordt bij het afrekenen direct toegepast.',
         };
 
     break;
@@ -130,15 +112,37 @@ exp.init = function() {
         $('head').append('<style type="text/css">'+this.css+'</style>');
 
         // create new banner text
-        exp.vars.bannerText = exp.vars.saveBanner.text() + exp.vars.bannerText;
+        if(COUNTRY_CODE === 'UK') {
+
+            exp.vars.bannerText = 'Save ' + exp.vars.saveBanner.text().replace(' cashback at checkout', '') + exp.vars.bannerText;
+
+        } else if(COUNTRY_CODE === 'FR') {
+
+            exp.vars.bannerText = exp.vars.saveBanner.text().replace(' (visible des votre panier)', '').replace('- ', 'Economisez ') + exp.vars.bannerText;
+
+        } else if(COUNTRY_CODE === 'IT') {
+
+            exp.vars.bannerText = 'Rispamia ' + exp.vars.saveBanner.text().replace(' SCONTO IN CASSA', '') + exp.vars.bannerText;
+
+        }
         
         // hide old banner
         exp.vars.saveBanner.addClass('awa-hidden');
 
         // add new banner after price
-        $('.product-detail-core .pricing').after(
-            '<div class="awa-saving-band">'+exp.vars.bannerText+'</div>'
-        );
+        if($('.product-detail-core .product-detail--tax-info').length !== 0) {
+
+            $('.product-detail-core .product-detail--tax-info').after(
+                '<div class="awa-saving-band">'+exp.vars.bannerText+'</div>'
+            );
+
+        } else {
+
+            $('.product-detail-core .pricing').after(
+                '<div class="awa-saving-band">'+exp.vars.bannerText+'</div>'
+            );
+
+        }
 
         // add new banner over media
         $('.product-detail-media').prepend(
@@ -159,4 +163,4 @@ return exp;
 // Close the IIFE, passing in jQuery and any other global variables as required
 // if jQuery is not already used on the site use optimizely.$ instead
 
-})(jQuery, 'UK'); // UK, FR, DE, IT, NL
+})('UK'); // UK, FR, IT
