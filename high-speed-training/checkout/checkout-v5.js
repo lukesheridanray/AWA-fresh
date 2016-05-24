@@ -40,7 +40,7 @@ var exp = function($) {
     };
 
     // Log the experiment, useful when multiple experiments are running
-    exp.log('Checkout v5.1');
+    exp.log('Checkout v5.2');
 
     
     // Condition
@@ -238,10 +238,11 @@ var exp = function($) {
         var $townRow = $("label:contains('Town*:')").closest('.row');
         $townRow.before($phoneRow);
         $("label:contains('Phone:')").text("Phone (optional)");
-        $("label:contains('Town*:')").closest(".row").addClass("AWA-hidden-form");
+// show town by default        $("label:contains('Town*:')").closest(".row").addClass("AWA-hidden-form");
         $("label:contains('County:')").closest(".row").addClass("AWA-hidden-form");
         $("label:contains('Country:')").closest(".row").addClass("AWA-hidden-form");
-        $("#tb_Phone").closest(".row").after(exp.vars.manual);
+        //$("#tb_Phone") we now show town by default
+        $("#tb_Town").closest(".row").after(exp.vars.manual);
 
         $("#AWA-manual-link").click(function(e) {
             e.preventDefault();
