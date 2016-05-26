@@ -1,5 +1,5 @@
 // TODO: For dev only. Optimizely loads its own jQuery
-// if (!jQuery) {
+// if (jQuery === undefined) {
 //     var jq = document.createElement('script');
 //     jq.src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js";
 //     document.getElementsByTagName('head')[0].appendChild(jq);
@@ -29,7 +29,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Easy Ink Landing Page - dev 0.1');
+exp.log('Easy Ink Landing Page - dev 0.2');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -59,32 +59,6 @@ exp.vars = {
         xl_black_text: 'XL versions provide up to 3.3 times more prints than regular sized cartridges',
     }
 };
-
-// Styles
-// String containing the CSS for the experiment
-exp.css = ' \
-.btn.product-tile--add-to-basket-btn, .btn.product-tile--add-to-basket-btn:hover {\
-    background: #6a963b;\
-    color: #fff; \
-\
-    padding: 5px 0px; \
-    width: 100%; \
-    line-height: 100%; \
-    text-align: left; \
-    margin-bottom: 5px; \
-    border: none; \
-}\
-.btn.product-tile--add-to-basket-btn .add-to-basket--submit, .btn.product-tile--add-to-basket-btn:hover .add-to-basket--submit {\
-    color: #fff; \
-} \
-.product-tile .btn.product-tile--add-to-basket-btn, .product-tile .btn.product-tile--add-to-basket-btn:hover {\
-    margin: 10px 5px 10px 0;\
-    padding: 5px 10px;\
-}\
-label[for="add-to-wishlist"] {\
-    margin: 10px 5px 10px 0;\
-    padding: 5px 10px; \
-}';
 
 // Functions
 // Object containing functions, some helpful functions are included
@@ -126,23 +100,32 @@ exp.func.roundNum = function(number, decimals, direction) {
 // Init function
 // Called to run the actual experiment, DOM manipulation, event listeners, etc
 exp.init = function() {
+    exp.func.rename_header();
+    exp.func.add_genuine_canon_text();
+    exp.func.xl_inks_wording();
+    exp.func.turn_links_into_buttons();
+    exp.func.make_free_shipping_explicit();
+    exp.func.move_paper();
+};
 
-    // append styles to head
-    $('head').append('<style type="text/css">'+this.css+'</style>');
-
-    // 1. Changing the header to “Ink for your PIXMA MG3550 Printer” and for all headers included the relevant printer
+// 1. Changing the header to “Ink for your PIXMA MG3550 Printer” and for all headers included the relevant printer
+exp.func.rename_header = function(){
     exp.vars.product_title = exp.vars.elems.page_h1.text().replace(' - Compatible inks', '');
     exp.vars.elems.page_h1.text(
         exp.vars.text.new_title.replace('__PRODUCT__', exp.vars.product_title)
     );
+};
 
-    // 2. Including text about genuine Canon products.
+// 2. Including text about genuine Canon products.
+exp.func.add_genuine_canon_text = function(){
     exp.vars.elems.page_h1.after(
         '<p class="p-2">' + exp.vars.text.genuine_canon_text + '</p>'
     );
-    
-    // 3. Putting in wording about XL inks having 3.3 times the volume for black and 2.2 times for colour
-    // Find XL inks section
+};
+
+// 3. Putting in wording about XL inks having 3.3 times the volume for black and 2.2 times for colour
+// Find XL inks section
+exp.func.xl_inks_wording = function(){
     $('.block-margin-btm-2').each(function(){
 
         // Skip checking once found
@@ -172,20 +155,118 @@ exp.init = function() {
 
                 $product.find('p.description').after(
                     '<p>'+ ($product.find('.product-tile--header').text().indexOf('Black') !== -1 ? exp.vars.text.xl_black_text : exp.vars.text.xl_colour_text) +'</p>'
-                ); 
+                );
             });
         }
     });
-    
-    // 4. Turning text links in to buttons
-        // Done via CSS
-    
-    // 5. Making the free shipping message explicit
-        // TODO: I don't know what this means.
-    
-    // 6. Moving paper further up the page
-        // TODO: To where exactly?
+};
 
+// 4. Turning text links in to buttons
+exp.func.turn_links_into_buttons = function(){
+    var buttons_css = ' \
+        .btn.product-tile--add-to-basket-btn, .btn.product-tile--add-to-basket-btn:hover {\
+            background: #6a963b;\
+            color: #fff; \
+        \
+            padding: 5px 0px; \
+            width: 100%; \
+            line-height: 100%; \
+            text-align: left; \
+            margin-bottom: 5px; \
+            border: none; \
+        }\
+        .btn.product-tile--add-to-basket-btn .add-to-basket--submit, .btn.product-tile--add-to-basket-btn:hover .add-to-basket--submit {\
+            color: #fff; \
+        } \
+        .product-tile .btn.product-tile--add-to-basket-btn, .product-tile .btn.product-tile--add-to-basket-btn:hover {\
+            margin: 10px 5px 10px 0;\
+            padding: 5px 10px;\
+        }\
+        label[for="add-to-wishlist"] {\
+            margin: 10px 5px 10px 0;\
+            padding: 5px 10px; \
+        }';
+    $('head').append('<style type="text/css">' + buttons_css + '</style>');
+};
+
+// 5. Making the free shipping message explicit
+exp.func.make_free_shipping_explicit = function(){
+    var free_shipping_css = ' \
+        .awa-free-shipping-label { \
+            font-size: 14px; \
+        }';
+    $('head').append('<style type="text/css">' + free_shipping_css + '</style>');
+
+    var $add_to_basket_buttons = $('.product-tile--add-to-basket-btn');
+    $add_to_basket_buttons.before(
+        '<label class="awa-free-shipping-label">\
+            <a href="https://store.canon.co.uk/delivery-information/" target="_blank"> \
+                Free shipping\
+                <i class="icon-checkmark"></i>\
+            </a> \
+        </label>'
+    );
+};
+
+// 6. Moving paper further up the page
+exp.func.move_paper = function(){
+
+    // Sort the page into content blocks. Pages appear to follow the following layout:
+    // .page
+    //      .container          | Breadcrumb
+    //      .block-margin-btm-2 | Page title
+    //
+    //      .block-margin-btm-2 | Value packs: Title
+    //      .container          | Value packs: Description
+    //      .container          | Value packs: Products
+    //
+    //      .block-margin-btm-2 | XL inks: Title
+    //      .container          | XL inks: Description
+    //      .container          | XL inks: Products
+    //
+    //      .block-margin-btm-2 | Standard inks: Title
+    //      .container          | Standard inks: Description
+    //      .container          | Standard inks: Products
+    //
+    //      .container          | Photo paper
+    //      .container          | Paper
+
+    // Can target the packs / inks blocks with .page > .block-margin-btm-2 + .container + .container
+    // and get the paper blocks by getting all containers except those directly
+    // after and after+1 a .block-margin-btm-2: .page > .container:not(.block-margin-btm-2 + .container, .block-margin-btm-2 + .container + .container)
+    // This will also give the breadcrumb, but we're only interested in the paper block, so we can filter that down easily.
+
+    // Each inks listing box
+    var $product_sections = $('.page > .block-margin-btm-2 + .container + .container');
+
+    // "Paper" section
+    var $paper_section = $('.page > .container:not(.block-margin-btm-2 + .container, .block-margin-btm-2 + .container + .container)').filter(function(){
+        return $(this).find('.layout-header').length
+            && $(this).find('.layout-header').text()
+                      .toLowerCase()
+                      .trim()
+                     .toLowerCase() == 'paper';
+    });
+
+    // If we haven't found a normal paper section, run awaaaaaaaay!
+    if ($paper_section.length !== 1) {
+        return;
+    }
+
+    // If there are no product sections, freak out!
+    if ($product_sections.length === 0) {
+        return;
+    }
+
+    // Move paper section to be the third section overall, or last - if there's only 1 section.
+    if ($product_sections.length > 1) {
+        exp.log("Moving paper section to 3rd product slot");
+        $product_sections.eq(1).after($paper_section);
+    }
+    else {
+        exp.log("Moving paper section to last product slot");
+        $product_sections.last().after($paper_section);
+    }
 };
 
 // Run the experiment
@@ -196,4 +277,4 @@ return exp;
 
 // Close the IIFE, passing in jQuery and any other global variables as required
 // if jQuery is not already used on the site use optimizely.$ instead
-})(jQuery);
+})($);
