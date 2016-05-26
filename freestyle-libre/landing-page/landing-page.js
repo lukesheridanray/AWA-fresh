@@ -56,7 +56,7 @@ p.AWA-review-name {\
   .AWA-hero {\
       height: 925px;\
       display: inline-block;\
-      background: url('https://useruploads.visualwebsiteoptimizer.com/useruploads/230591/images/558fd162d73ee3d265237b7a71e33de3_reader-libre.jpg') no-repeat right;\
+      background: url('http://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/6c13687f22ba3f30792117ce6fce59d2_awa-final-picture-hand-libre.png') no-repeat right;\
       text-align: center;\
       background-position: 69% 59%;\
       background-size: 35%;\
@@ -96,8 +96,7 @@ p.AWA-review-name {\
       text-align: center;\
     }\
     .AWA-we-work-img{\
-    height: 50px;\
-    margin-right: 10px;\
+    margin-right: 20px;\
     }\
     .AWA-header-container h1 {\
     margin: 0;\
@@ -133,7 +132,7 @@ p.AWA-review-name {\
     margin-bottom: 50%;\
 padding-bottom: 0px;\
 margin-top: 0px;\
-top: 510px;\
+top: 414px;\
     border: 2px solid gray;\
     background-color: white;\
     z-index: 100000000;\
@@ -144,7 +143,7 @@ top: 510px;\
     border-radius: 12px;\
      display: none;\
     position: absolute;\
-    right: 80px;\
+    right: 176px;\
     margin: auto;\
     padding-bottom: 61px;\
   }\
@@ -171,13 +170,8 @@ bottom: 392px;\
   }\
   .AWA-info-container {\
     display: inline-flex;\
-    float: right;\
-    flex-direction: row-reverse;\
-    display: inline-flex;\
 float: right;\
 flex-direction: row-reverse;\
-padding-top: 110px;\
-padding-right: 68px;\
 }\
 .buy-here-btn {\
   background-color: #909;\
@@ -235,26 +229,32 @@ margin-left: 40px;\
   max-width: 100%;\
   width: 1000px;\
 }\
+.AWA-info-container-two .AWA-pull-fix {\
+    width: 100%;\
+}\
 .AWA-info-box-two {\
-  border: 2px dashed gray;\
-  background-color: #FEEFA9;\
+  margin-bottom: 50%;\
+padding-bottom: 0px;\
+margin-top: 0px;\
+top: 364px;\
+  border: 2px solid gray;\
+  background-color: white;\
   z-index: 100000000;\
   position: absolute;\
   height: 214px;\
-  width: 300px;\
+  width: 235px;\
   max-width: 100%;\
   border-radius: 12px;\
-  display:block;\
-  display: none;\
-  margin-bottom: 100px;\
-padding-bottom: 0px;\
-margin-left: 30px;\
+   display: none;\
+  position: absolute;\
+  margin: auto;\
+  padding-bottom: 61px;\
 }\
 .AWA-info-box-two h1{\
   color: #5e5953;\
   font-size: 2.0rem;\
   padding: 7px;\
-  margin-left: 28px;\
+  margin-left: 10px;\
 margin-bottom: 0px;\
 padding-bottom: 0px;\
 margin-top: 0px;\
@@ -267,12 +267,16 @@ bottom: 392px;\
 }\
 .AWA-info-box-two img{\
   float: right;\
+  position: relative;\
+  right: 5px;\
+  top: 5px;\
 }\
 .AWA-info-container-two {\
   background: url(/wp-content/themes/youcandoit/assets/img/bg-top.png) top center repeat-x;\
      height: 1000px;\
      width: 100%;\
      margin: 13px 0;\
+     border-bottom: 1px solid black;\
 }\
 .AWA-info-container-two h1{\
   padding-top: 35px;\
@@ -294,7 +298,6 @@ bottom: 392px;\
       margin-right: 95px;\
   }\
   .AWA-hand-image-libre-two {\
-    float: right;\
     display: flex;\
     margin-right: 186px;\
     flex-direction: column;\
@@ -326,6 +329,9 @@ bottom: 392px;\
     text-align: left;\
     padding-left: 25px;\
   }\
+  .container {\
+  max-width:100%;\
+}\
   .AWA-list-sugar {\
     list-style: none;\
   padding-top: 12px;\
@@ -337,9 +343,12 @@ bottom: 392px;\
   }\
   .AWA-doubt {\
     float: right;\
+    text-align: center;\
     margin-left: 0;\
     text-align: left;\
     padding: 0px;\
+    display: inline-flex;\
+    flex-direction: column;\
   }\
   .AWA-doubt p strong {\
     font-weight: normal;\
@@ -457,22 +466,25 @@ bottom: 392px;\
     <div class="AWA-float-fix row text-left">\
     <div class="AWA-image-review col-lg-3">\
     <div class="AWA-text-wrapper">\
-    <img src="https://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/601c8366ae10c8b4df2ccebaf2675637_awa-apply-libre-on.jpg" alt="Reviews for HST">\
+    <img src="https://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/cf3ede473b690e6393936e9c6946865a_icons-sensors-final-libre.png" alt="Reviews for HST" style="height: 101px;">\
     <p class="AWA-review-name">Apply the small sensor to the back of your upper arm</p>\
     </div>\
     </div>\
     <div class="AWA-image-review col-lg-3">\
     <div class="AWA-text-wrapper">\
-    <img src="https://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/3de9cc05ae7ee725450cc09666ee7dcd_read-awa-libre-scan.jpg" alt="Reviews for HST">\
+    <img src="https://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/5fbfeac12d55e08cb7f8f27d99621d41_final-img-for-l-ibre.png" alt="Reviews for HST">\
     <p class="AWA-review-name">Scan the sensor with the reader for an instant glucose reading.<sup>1</sup></p>\
     </div>\
     </div>\
     <div class="AWA-image-review" style="\
     /* padding-right: 23px; */\
-    padding-left: 172px;\
+    padding-left: 160px;\
+    float: right;\
 "><ul style="\
-    padding-left: 110px;\
-    list-style: none;\
+padding-left: 81px;\
+float: right;\
+padding-top: 22px;\
+list-style: none;\
 "><li style="\
     padding-top: 23px;\
 ">See the direction your glucose is heading</li><li style="\
@@ -485,7 +497,7 @@ bottom: 392px;\
     <div class="AWA-info-box">\
     <img src="https://icons.iconarchive.com/icons/iconsmind/outline/24/Close-Window-icon.png">\
       <h1 style="font-size: 16px; text-align: left; text-decoration: underline; font-weight: bold;">VAT exempt</h1>\
-      <p style="padding-top: 38px;"">No VAT payable if you have Diabetes Mellitus, or buying on behalf of someone aged 4+ with diabetes Mellitus<sup>4</sup></p>\
+      <p style="padding-top: 38px;"">No VAT payable if you have Diabetes Mellitus, or buying on behalf of someone aged 4+ with diabetes Mellitus</p>\
     </div>\
     <div class="buy-here-AWA">\
     <h2 class="header-buy-here-AWA">Get your Starter Pack today</b></h2>\
@@ -511,7 +523,6 @@ bottom: 392px;\
     padding-left: 6%;\
     display: inline-grid;\
     flex-direction: row;\
-    padding-left: 10%;\
     background: #ddd;\
     height: 65px;\
     margin-top: 8px;\
@@ -520,10 +531,10 @@ bottom: 392px;\
         font-size: 1.5em;\
         padding-bottom: 0px;\
         margin-bottom: 0px;\
-        margin-top: 8px;">As Seen ON<sup>3</sup></p>\
+        margin-top: 8px;">As Seen ON</p>\
     <div class="AWA-on-me-libre" style="display: flex; flex-direction: row;">\
-    <img class="AWA-we-work-img" src="http://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/c3e8666a11e16fce9b0a8f8db9dae2b7_bbc-awa.png" alt="Who we work with for HST" style="width: 85px;">\
-    <img class="AWA-we-work-img" src="http://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/a756557f4f8440f0b896229f95a6c737_express-awa-libre.png" alt="Who we work with for HST" style=""> \
+    <img class="AWA-we-work-img" src="http://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/c3e8666a11e16fce9b0a8f8db9dae2b7_bbc-awa.png" alt="Who we work with for HST" style="width: 57px; height: 53px;">\
+    <img class="AWA-we-work-img" src="http://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/a756557f4f8440f0b896229f95a6c737_express-awa-libre.png" alt="Who we work with for HST" style="height: 55px;"> \
     <img class="AWA-we-work-img" src="https://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/879a3c5dcf4b4065f71b0d652b4ca391_awa-daily-mail-libre.jpg" alt="Who we work with for HST" style="height: 55px;">\
     <img class="AWA-we-work-img" src="http://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/4d4f73e7c0747dd6730c037c26f213f8_the-guardian-logo1-awa-libre.jpg" alt="Who we work with for HST" style="width: 175px; height: 55px;">\
     </div>\
@@ -567,38 +578,53 @@ bottom: 392px;\
     <div class="AWA-button-box-two col-md-6">\
     <div class="button-area">\
     <div class="price AWA-pull pull-left">\
-    <div class="AWA-pull-fix"><strong>What you will receive in your FreeStyle Libre Starter Kit:</strong>\
-    <p>1x FreeStyle Libre Reader Kit,<br>which incudes:<br>\
-    </p>\
-    <ul class="AWA-list-sugar">\
-    <li>Reader</li>\
+    <div class="AWA-pull-fix" style="width: 100%;">\
+  <strong style="/* float: left; */white-space: nowrap;">What you will recEIve in your FreeStyle Libre Starter Kit:</strong>\
+  <p>1x FreeStyle Libre Reader Kit,<br>which incudes:<br>\
+  </p>\
+  <ul class="AWA-list-sugar">\
+  <li>Reader</li>\
     <li>Power Adapter</li>\
-    <li>USB Cable</li>\
-    <li>User Manual and other</li>\
-    </ul>\
-    <p>2x FreeStyle Libre Sensor Kits,<br>each of which incudes:<br>\
-    </p>\
-    <ul class="AWA-list-sugar">\
-    <li>Sensor Pack</li>\
-    <li>Sensor Applicator</li>\
-    <li>Alcohol wipe</li>\
-    <li>Product insert</li>\
-    </ul>\
-    </div>\
-    <div class="AWA-info-box-two" style="margin-top: 500px;margin-left: 225px;">\
+  <li>USBCable</li>\
+  <li>User Manual and other</li>\
+  </ul>\
+  <p>2x FreeStyle Libre Sensor Kits,<br>each of which incudes:<br>\
+  </p>\
+  <ul class="AWA-list-sugar">\
+  <li>Sensor Pack</li>\
+  <li>Sensor Applicator</li>\
+  <li>Alcohol wipe</li>\
+  <li>Product insert</li>\
+  </ul>\
+</div>\
+<div class="AWA-doubt">\
+  <div class="AWA-info-box-two" style="display: none;">\
     <img src="https://icons.iconarchive.com/icons/iconsmind/outline/24/Close-Window-icon.png">\
     <h1 style="padding: 0;">VAT exempt</h1><p style="margin: 0;">No VAT payable if you have Diabetes Mellitus, or buying on behalf of someone aged 4+ with diabetes Mellitus</p>\
-    </div>\
-    <div class="AWA-doubt">\
-    <p><strong>Price VAT incl:</strong><span> £159.95</span></p>\
-    <p class="AWA-info-fix-two">\
-    <strong>With VAT RELIEF:</strong><span> £133.29<sup>\
-    <img src="http://vignette2.wikia.nocookie.net/gravityfalls/images/5/55/More_info_icon.png/revision/latest?cb=20140601022437"></sup></span></p>\
-    <a href="http://www.freestylelibre.co.uk/products.html?utm_source=freestylediabetes&amp;utm_medium=referral&amp;utm_term=buy-now&amp;utm_content=button-1&amp;utm_campaign=libre" target="_blank" class="cta-button btn pull-left" style="width: 23%;">Buy Now</a>\
-    <a href="https://youcandoit.freestylediabetes.co.uk/product-overview/"><p style="text-decoration: underline; color: grey;width:210px;text-align:center">More information</p></a>\
-    </div>\
-    </div>\
-    </div>\
+  </div>\
+  <p style="\
+    font-size: 15px;\
+    padding: 0;\
+    margin: 0;\
+    padding-right: 80px;\
+">\
+    <strong>Price VAT incl:</strong>\
+    <span> £159.95</span>\
+  </p>\
+  <p class="AWA-info-fix-two" style="\
+    font-size: 14px;\
+    padding: 0;\
+    margin: 0;\
+">\
+    <strong>With VAT RELIEF:</strong>\
+    <span> £133.29<sup>\
+    <img src="http://vignette2.wikia.nocookie.net/gravityfalls/images/5/55/More_info_icon.png/revision/latest?cb=20140601022437"></sup>\
+    </span>\
+  </p>\
+  <a href="http://www.freestylelibre.co.uk/products.html?utm_source=freestylediabetes&amp;utm_medium=referral&amp;utm_term=buy-now&amp;utm_content=button-1&amp;utm_campaign=libre" target="_blank" class="cta-button btn pull-left" style="">Buy Now</a>\
+  <a href="https://youcandoit.freestylediabetes.co.uk/product-overview/"><p style="text-decoration: underline;color: grey;/* width:210px; */padding-left: 41px;font-size: 14px;font-weight: 500;/* text-align:center */padding-top: 0;/* padding-left: 140px; */">More information</p>\
+  </a>\
+</div>\
     </div>\
     </div>\
     </div>\
