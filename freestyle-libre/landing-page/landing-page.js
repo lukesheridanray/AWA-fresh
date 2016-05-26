@@ -54,7 +54,6 @@ p.AWA-review-name {\
     padding-left: 20px;\
 }\
   .AWA-hero {\
-      height: 925px;\
       display: inline-block;\
       background: url('https://useruploads.visualwebsiteoptimizer.com/useruploads/230591/images/558fd162d73ee3d265237b7a71e33de3_reader-libre.jpg') no-repeat right;\
       text-align: center;\
@@ -387,6 +386,7 @@ bottom: 392px;\
         border-radius: 20px;\
         margin-bottom: 105px;\
         margin-right: 7%;\
+        margin-top: 32px; \
     }\
     .header-buy-here-AWA {\
         margin-bottom: 15px;\
@@ -450,7 +450,7 @@ bottom: 392px;\
         <div class="AWA-header-container">\
         <h1>See your glucose level anytime</h1>\
         <p>\
-        <strong>No lancets. No<sup>†</sup> finger pricking. Just a 1 second scan.</strong></p>\
+        <strong>No lancets. No routine finger pricking<sup>†</sup>. Just a 1 second scan.</strong></p>\
           </div>\
     <div class="AWA-review-img">\
     <div class="AWA-instruction-libre">\
@@ -512,7 +512,7 @@ bottom: 392px;\
     display: inline-grid;\
     flex-direction: row;\
     padding-left: 10%;\
-    background: #ddd;\
+    background: #eee;\
     height: 65px;\
     margin-top: 8px;\
     padding-top: 5px;">\
@@ -542,16 +542,6 @@ bottom: 392px;\
       <p>The impact on my control has been revolutionary. I can see my levels quickly and whenever I choose to take a look at them.</p>\
       <p>- Martin A.</p>\
     </div>\
-    <div class="AWA-testimony-img">\
-      <img class="AWA-phto-fix" src="http://useruploads.visualwebsiteoptimizer.com/useruploads/177734/images/e7d0fa8f6a1ac8a7968963c040969174_awa-ian-img.png"> \
-      <p>Now, things were different and I actually enjoyed looking at my levels throughout the day. I could make comparisons with other days, new foods, and times in which I may go particularly high and low.</p>\
-      <p>- Ian W.</p>\
-    </div>\
-    <div class="AWA-testimony-img">\
-      <img class="AWA-phto-fix" src="http://useruploads.visualwebsiteoptimizer.com/useruploads/177734/images/1b1e82936e6ca5b37e7dfe201053da47_awa-amy-img.png"> \
-      <p>Within seconds I know my glucose levels. I know which direction they are heading in. This means I can eat somethings small before I have a serious hypo and I no longer run my glucose levels high.</p>\
-      <p>- Amy B.</p>\
-    </div>\
     <a href="#story-list"><p class="AWA-see-more">See More Stories</p></a>\
     </div>\
     \
@@ -574,7 +564,7 @@ bottom: 392px;\
     <li>Reader</li>\
     <li>Power Adapter</li>\
     <li>USB Cable</li>\
-    <li>User Manual and other</li>\
+    <li>User Manual and other additional labelling</li>\
     </ul>\
     <p>2x FreeStyle Libre Sensor Kits,<br>each of which incudes:<br>\
     </p>\
@@ -587,7 +577,8 @@ bottom: 392px;\
     </div>\
     <div class="AWA-info-box-two" style="margin-top: 500px;margin-left: 225px;">\
     <img src="https://icons.iconarchive.com/icons/iconsmind/outline/24/Close-Window-icon.png">\
-    <h1 style="padding: 0;">VAT exempt</h1><p style="margin: 0;">No VAT payable if you have Diabetes Mellitus, or buying on behalf of someone aged 4+ with diabetes Mellitus</p>\
+    <h1 style="font-size: 16px; text-align: left; text-decoration: underline; font-weight: bold;">VAT exempt</h1>\
+    <p style="margin: 0;padding-top: 38px;font-weight: normal;line-height:24px;">No VAT payable if you have Diabetes Mellitus, or buying on behalf of someone aged 4+ with diabetes Mellitus</p>\
     </div>\
     <div class="AWA-doubt">\
     <p><strong>Price VAT incl:</strong><span> £159.95</span></p>\
