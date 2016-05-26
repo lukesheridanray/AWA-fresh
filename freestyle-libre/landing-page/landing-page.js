@@ -277,7 +277,7 @@ bottom: 392px;\
      margin: 13px 0;\
      border-bottom: 1px solid black;\
 }\
-.AWA-info-container-two h1{\
+.AWA-info-container-two > h1{\
   padding-top: 35px;\
   color: #5e5953;\
   padding-left: 22%;\
