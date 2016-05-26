@@ -54,7 +54,7 @@ p.AWA-review-name {\
     padding-left: 20px;\
 }\
   .AWA-hero {\
-      height: 925px;\
+      height: 850px;\
       display: inline-block;\
       background: url('http://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/6c13687f22ba3f30792117ce6fce59d2_awa-final-picture-hand-libre.png') no-repeat right;\
       text-align: center;\
@@ -169,9 +169,13 @@ bottom: 392px;\
     top: 5px;\
   }\
   .AWA-info-container {\
+    height: 400px;\
+    padding-top: 101px;\
     display: inline-flex;\
 float: right;\
+text-align: center;\
 flex-direction: row-reverse;\
+padding-right: 50px;\
 }\
 .buy-here-btn {\
   background-color: #909;\
@@ -461,6 +465,27 @@ bottom: 392px;\
         <p>\
         <strong>No lancets. No<sup>†</sup> finger pricking. Just a 1 second scan.</strong></p>\
           </div>\
+          </div>\
+          <div class="AWA-image-review" style="\
+          /* padding-right: 23px; */\
+          padding-left: 160px;\
+          float: right;\
+      ">\
+      <p style="\
+          padding-top: 44px;\
+          padding-right: 74px;\
+      ">See the direction your glucose is heading</p>\
+      <ul style="\
+      float: right;\
+      padding-top: 22px;\
+      padding-right: 100px;\
+      list-style: none;\
+      "><li style="\
+          padding-top: 1px;\
+      ">Your current glucose reading</li><li style="\
+        margin-top: 35px;\
+      ">Your levels over the last 8 hours</li></ul></div>\
+          </div>\
     <div class="AWA-review-img">\
     <div class="AWA-instruction-libre">\
     <div class="AWA-float-fix row text-left">\
@@ -475,23 +500,6 @@ bottom: 392px;\
     <img src="https://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/5fbfeac12d55e08cb7f8f27d99621d41_final-img-for-l-ibre.png" alt="Reviews for HST">\
     <p class="AWA-review-name">Scan the sensor with the reader for an instant glucose reading.<sup>1</sup></p>\
     </div>\
-    </div>\
-    <div class="AWA-image-review" style="\
-    /* padding-right: 23px; */\
-    padding-left: 160px;\
-    float: right;\
-"><ul style="\
-padding-left: 81px;\
-float: right;\
-padding-top: 22px;\
-list-style: none;\
-"><li style="\
-    padding-top: 23px;\
-">See the direction your glucose is heading</li><li style="\
-    padding-top: 1px;\
-">Your current glucose reading</li><li style="\
-    padding-top: 24px;\
-">Your levels over the last 8 hours</li></ul></div>\
     </div>\
     <div class="AWA-info-container">\
     <div class="AWA-info-box">\
