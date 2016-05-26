@@ -1,8 +1,3 @@
-//
-// CGIT Optimizely Boilerplate - version 0.1.4
-//
-// Wrap the experiment code in an IIFE, this creates a local scope and allows us to
-// pass in jQuery to use as $. Other globals could be passed in if required.
 var exp = function($) {
 
     // Initialise the experiment object
@@ -54,8 +49,9 @@ p.AWA-review-name {\
     padding-left: 20px;\
 }\
   .AWA-hero {\
+      height: 925px;\
       display: inline-block;\
-      background: url('http://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/6c13687f22ba3f30792117ce6fce59d2_awa-final-picture-hand-libre.png') no-repeat right;\
+      background: url('https://useruploads.visualwebsiteoptimizer.com/useruploads/230591/images/558fd162d73ee3d265237b7a71e33de3_reader-libre.jpg') no-repeat right;\
       text-align: center;\
       background-position: 69% 59%;\
       background-size: 35%;\
@@ -328,9 +324,6 @@ bottom: 392px;\
     text-align: left;\
     padding-left: 25px;\
   }\
-  .container {\
-  max-width:100%;\
-}\
   .AWA-list-sugar {\
     list-style: none;\
   padding-top: 12px;\
@@ -395,7 +388,6 @@ bottom: 392px;\
         border-radius: 20px;\
         margin-bottom: 105px;\
         margin-right: 7%;\
-        margin-top: 32px; \
     }\
     .header-buy-here-AWA {\
         margin-bottom: 15px;\
@@ -459,7 +451,7 @@ bottom: 392px;\
         <div class="AWA-header-container">\
         <h1>See your glucose level anytime</h1>\
         <p>\
-        <strong>No lancets. No routine finger pricking<sup>†</sup>. Just a 1 second scan.</strong></p>\
+        <strong>No lancets. No<sup>†</sup> finger pricking. Just a 1 second scan.</strong></p>\
           </div>\
     <div class="AWA-review-img">\
     <div class="AWA-instruction-libre">\
@@ -523,8 +515,7 @@ list-style: none;\
     padding-left: 6%;\
     display: inline-grid;\
     flex-direction: row;\
-    padding-left: 10%;\
-    background: #eee;\
+    background: #ddd;\
     height: 65px;\
     margin-top: 8px;\
     padding-top: 5px;">\
@@ -554,6 +545,16 @@ list-style: none;\
       <p>The impact on my control has been revolutionary. I can see my levels quickly and whenever I choose to take a look at them.</p>\
       <p>- Martin A.</p>\
     </div>\
+    <div class="AWA-testimony-img">\
+      <img class="AWA-phto-fix" src="http://useruploads.visualwebsiteoptimizer.com/useruploads/177734/images/e7d0fa8f6a1ac8a7968963c040969174_awa-ian-img.png"> \
+      <p>Now, things were different and I actually enjoyed looking at my levels throughout the day. I could make comparisons with other days, new foods, and times in which I may go particularly high and low.</p>\
+      <p>- Ian W.</p>\
+    </div>\
+    <div class="AWA-testimony-img">\
+      <img class="AWA-phto-fix" src="http://useruploads.visualwebsiteoptimizer.com/useruploads/177734/images/1b1e82936e6ca5b37e7dfe201053da47_awa-amy-img.png"> \
+      <p>Within seconds I know my glucose levels. I know which direction they are heading in. This means I can eat somethings small before I have a serious hypo and I no longer run my glucose levels high.</p>\
+      <p>- Amy B.</p>\
+    </div>\
     <a href="#story-list"><p class="AWA-see-more">See More Stories</p></a>\
     </div>\
     \
@@ -570,14 +571,14 @@ list-style: none;\
     <div class="button-area">\
     <div class="price AWA-pull pull-left">\
     <div class="AWA-pull-fix" style="width: 100%;">\
-  <strong style="/* float: left; */white-space: nowrap;">What you will recEIve in your FreeStyle Libre Starter Kit:</strong>\
+  <strong style="/* float: left; */white-space: nowrap;">What you will receive in your FreeStyle Libre Starter Kit:</strong>\
   <p>1x FreeStyle Libre Reader Kit,<br>which incudes:<br>\
   </p>\
   <ul class="AWA-list-sugar">\
   <li>Reader</li>\
     <li>Power Adapter</li>\
   <li>USBCable</li>\
-    <li>User Manual and other additional labelling</li>\
+  <li>User Manual and other</li>\
   </ul>\
   <p>2x FreeStyle Libre Sensor Kits,<br>each of which incudes:<br>\
   </p>\
@@ -589,10 +590,9 @@ list-style: none;\
   </ul>\
 </div>\
 <div class="AWA-doubt">\
-  <div class="AWA-info-box-two" style="display: none;margin-left:225px;">\
+  <div class="AWA-info-box-two" style="display: none;">\
     <img src="https://icons.iconarchive.com/icons/iconsmind/outline/24/Close-Window-icon.png">\
-    <h1 style="font-size: 16px; text-align: left; text-decoration: underline; font-weight: bold;">VAT exempt</h1>\
-    <p style="padding-top: 38px;font-weight: normal;line-height:24px;">No VAT payable if you have Diabetes Mellitus, or buying on behalf of someone aged 4+ with diabetes Mellitus</p>\
+    <h1 style="padding: 0;">VAT exempt</h1><p style="margin: 0;">No VAT payable if you have Diabetes Mellitus, or buying on behalf of someone aged 4+ with diabetes Mellitus</p>\
   </div>\
   <p style="\
     font-size: 15px;\
