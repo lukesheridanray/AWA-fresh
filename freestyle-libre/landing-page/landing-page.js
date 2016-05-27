@@ -55,12 +55,14 @@ p.AWA-review-name {\
 }\
   .AWA-hero {\
       height: 850px;\
-      display: inline-block;\
+      display: block;\
       background: url('http://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/6c13687f22ba3f30792117ce6fce59d2_awa-final-picture-hand-libre.png') no-repeat right;\
       text-align: center;\
       background-position: 69% 59%;\
       background-size: 35%;\
       padding: 30px 0;\
+      width: 1264px; \
+      margin: 0 auto; \
     }\
     .AWA-instruction-libre {\
      max-width: 85%\
@@ -96,7 +98,7 @@ p.AWA-review-name {\
       text-align: center;\
     }\
     .AWA-we-work-img{\
-    margin-right: 80px;\
+    margin-right: 60px;\
     height: 40px;\
     }\
     .AWA-header-container h1 {\
@@ -113,7 +115,7 @@ p.AWA-review-name {\
   .AWA-pull p{\
   line-height: 0px;\
 }\
-  .pull-left p{\
+  .pull-left p {\
     text-align: left;\
     padding: 10px;\
     font-weight: bold;\
@@ -182,6 +184,12 @@ padding-right: 45px;\
   background-color: #909;\
       color: white;\
 }\
+.AWA-testimony-container, \
+.AWA-info-container-two, \
+.AWA-we-work-img-wrapper { \
+      width: 1264px; \
+      margin: 0 auto; \
+} \
 .AWA-testimony-container h1 {\
     color: #5e5953;\
     padding-bottom: 20px;\
@@ -237,6 +245,27 @@ margin-left: 40px;\
 .AWA-info-container-two .AWA-pull-fix {\
     width: 100%;\
 }\
+.AWA-info-container-two-title {\
+  background: url(/wp-content/themes/youcandoit/assets/img/bg-top.png) top center repeat-x;\
+    height: 100px;\
+     width: 100%;\
+     margin: 13px 0;\
+}\
+.AWA-info-container-two-title h1 {\
+  text-align: center; \
+  padding-top: 35px; \
+}\
+.AWA-info-container-two {\
+  height: 850px;\
+}\
+.AWA-info-container-two h1{\
+  padding-top: 35px;\
+  color: #5e5953;\
+  padding-left: 22%;\
+}\
+.AWA-info-container-two .AWA-pull-fix {\
+    padding-top: 0 !important;\
+}\
 .AWA-info-box-two {\
   margin-bottom: 50%;\
 padding-bottom: 0px;\
@@ -254,6 +283,8 @@ top: 364px;\
   position: absolute;\
   margin: auto;\
   padding-bottom: 61px;\
+  margin-left: 340px;\
+  margin-top: 130px;\
 }\
 .AWA-info-box-two h1{\
   color: #5e5953;\
@@ -275,21 +306,6 @@ bottom: 392px;\
   position: relative;\
   right: 5px;\
   top: 5px;\
-}\
-.AWA-info-container-two {\
-  background: url(/wp-content/themes/youcandoit/assets/img/bg-top.png) top center repeat-x;\
-     height: 1000px;\
-     width: 100%;\
-     margin: 13px 0;\
-     border-bottom: 1px solid black;\
-}\
-.AWA-info-container-two h1{\
-  padding-top: 35px;\
-  color: #5e5953;\
-  padding-left: 22%;\
-}\
-.AWA-info-container-two .AWA-pull-fix {\
-    padding-top: 0 !important;\
 }\
   .AWA-button-box-two.col-md-6 {\
       /* position: absolute; */\
@@ -347,7 +363,6 @@ bottom: 392px;\
     padding-left: 0;\
   }\
   .AWA-doubt {\
-    float: right;\
     text-align: center;\
     margin-left: 0;\
     text-align: left;\
@@ -392,8 +407,10 @@ bottom: 392px;\
     }\
     .AWA-header-container p {\
         color: #5e5953;\
+        margin-top: 1em;\
     }\
     .buy-here-AWA {\
+        text-align: center;\
         width: 320px;\
         float: right;\
         border: 1px black dashed;\
@@ -416,6 +433,18 @@ bottom: 392px;\
     .buy-here-AWA a p {\
         font-size: 13px;\
     }\
+    .buy-here-AWA p span { font-weight: bold; } \
+    .buy-here-AWA p { \
+      text-align: center;\
+      padding: 10px;\
+      font-weight: normal;\
+      float: none;\
+      line-height: 24px;\
+      margin: 0; \
+    } \
+    .AWA-info-container-two .buy-here-AWA { \
+      float: left; \
+    } \
     .buy-here-btn {\
         border: 0;\
         height: auto !important; \
@@ -423,6 +452,8 @@ bottom: 392px;\
         background: #909;\
         border: 2px solid #c633c6;\
         margin-top: 10px;\
+        font-size: 1.3em;\
+        margin-bottom: 0.5em;\
     }\
     .buy-here-btn:hover {\
         background: #c633c6;\
@@ -439,10 +470,18 @@ bottom: 392px;\
     .AWA-info-container-two .AWA-pull-fix .AWA-list-sugar {\
         clear: left;\
     }\
+    .AWA-info-container-two .AWA-pull-fix p {\
+        margin-bottom: 0; \
+        padding-bottom: 0; \
+    }\
     .AWA-info-container-two .AWA-info-fix-two {\
         width: auto;\
     }\
     \
+    .section.stories { \
+      border-top: 1px solid black;\
+      padding-top: 20px; \
+    } \
   ";
 
     // Functions
@@ -473,7 +512,7 @@ bottom: 392px;\
           float: right;\
       ">\
       <p style="\
-          padding-top: 44px;\
+          padding-top: 28px;\
           padding-right: 74px;\
       ">See the direction your glucose is heading</p>\
       <ul style="\
@@ -510,9 +549,9 @@ bottom: 392px;\
     </div>\
     <div class="buy-here-AWA">\
     <h2 class="header-buy-here-AWA">Get your Starter Pack today</b></h2>\
-    <p style="padding: 10px; color: black;">Price VAT incl: <small>£159.95</small></p>\
-    <p class="click-info-here-AWA" style="color: black;">With VAT RELIEF:<small> £133.29<sup style="width: 1px;">\
-    <img src="http://vignette2.wikia.nocookie.net/gravityfalls/images/5/55/More_info_icon.png/revision/latest?cb=20140601022437" style="width: 15px;"></sup></small></p>\
+    <p style="padding: 10px; color: black;">Price VAT incl: <span>£159.95</span></p>\
+    <p class="click-info-here-AWA" style="color: black;">With VAT RELIEF:<span> £133.29<sup style="width: 1px;">\
+    <img src="http://vignette2.wikia.nocookie.net/gravityfalls/images/5/55/More_info_icon.png/revision/latest?cb=20140601022437" style="width: 15px;"></sup></span></p>\
     <a href="http://www.freestylelibre.co.uk/freestyle-libre-starter-pack-english.html"><button class="buy-here-btn" style="height: 30px;">Add to Basket</button></a>\
     <a href="https://youcandoit.freestylediabetes.co.uk/product-overview/"><p style="\
         text-decoration: unerline;\
@@ -526,6 +565,8 @@ bottom: 392px;\
     <p>Sensor can be worn 24/7 while bathing, showering, swimming<sup>2</sup> and exercising for glucose readings anywhere, any time. Wear discreetly on the back of the upper arm for up to 14 days.</p>\
     </div>\
     </div>\
+    </section>\
+    <section>\
     <div class="AWA-we-work-img" style="\
   display: inline-block;\
     width: 100%;\
@@ -535,21 +576,21 @@ bottom: 392px;\
     height: 65px;\
     margin-top: 8px;\
     padding-top: 5px;">\
-    <p style="float: left; padding-right: 91px;\
+    <div class="AWA-we-work-img-wrapper"> \
+    <p style="float: left; padding-right: 51px;\
         font-size: 1.5em;\
         padding-bottom: 0px;\
         margin-bottom: 0px;\
-        padding-left: 66px;\
+        padding-left: 36px;\
         margin-top: 8px;">As Seen ON</p>\
     <div class="AWA-on-me-libre" style="display: flex; flex-direction: row;">\
-    <img class="AWA-we-work-img" src="https://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/310e7bc8c00d67111bc2f16fa4d9a130_bbc-logo-awa-libre.jpg" alt="Who we work with for HST" style="width: 72px; height: 53px;">\
-    <img class="AWA-we-work-img" src="http://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/a756557f4f8440f0b896229f95a6c737_express-awa-libre.png" alt="Who we work with for HST" style="margin-top: 7px"> \
-    <img class="AWA-we-work-img" src="https://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/879a3c5dcf4b4065f71b0d652b4ca391_awa-daily-mail-libre.jpg" alt="Who we work with for HST" style="height: 44px; margin-top: 8px;">\
-    <img class="AWA-we-work-img" src="http://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/4d4f73e7c0747dd6730c037c26f213f8_the-guardian-logo1-awa-libre.jpg" alt="Who we work with for HST" style="width: 154px; height: 44px; margin-top: 9px;">\
+    <img class="AWA-we-work-img" src="//useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/388602fdbd759d0a705b6229010ed2f3_300px-bbc.svg.png" alt="Who we work with for HST" style="height: 32px;margin-top: 11px;">\
+    <img class="AWA-we-work-img" src="//useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/a756557f4f8440f0b896229f95a6c737_express-awa-libre.png" alt="Who we work with for HST" style="margin-top: 7px"> \
+    <img class="AWA-we-work-img" src="//useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/de113386cfc4c28247bda7b26218e860_daily_mail_main.png" alt="Who we work with for HST" style="height: 40px; margin-top: 12px;">\
+    <img class="AWA-we-work-img" src="//useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/beffb25d09f3c741fe63e03f54357742_the_guardian.svg.png" alt="Who we work with for HST" style="height: 42px; margin-top: 9px;">\
     </div>\
     </div>\
-    </section>\
-    <section>\
+    </div>\
     <div class="AWA-testimony-container">\
     <h1>"Seeing your glucose trend up or down is invaluable"<p style="font-size: 12px;">-Niali M</p></h1>\
     <div class="AWA-testimony-img">\
@@ -562,13 +603,25 @@ bottom: 392px;\
       <p>The impact on my control has been revolutionary. I can see my levels quickly and whenever I choose to take a look at them.</p>\
       <p>- Martin A.</p>\
     </div>\
+    <div class="AWA-testimony-img">\
+      <img class="AWA-phto-fix" src="http://useruploads.visualwebsiteoptimizer.com/useruploads/177734/images/e7d0fa8f6a1ac8a7968963c040969174_awa-ian-img.png"> \
+      <p>Now, things were different and I actually enjoyed looking at my levels throughout the day. I could make comparisons with other days, new foods, and times in which I may go particularly high and low.</p>\
+      <p>- Ian W.</p>\
+    </div>\
+    <div class="AWA-testimony-img">\
+      <img class="AWA-phto-fix" src="http://useruploads.visualwebsiteoptimizer.com/useruploads/177734/images/1b1e82936e6ca5b37e7dfe201053da47_awa-amy-img.png"> \
+      <p>Within seconds I know my glucose levels. I know which direction they are heading in. This means I can eat somethings small before I have a serious hypo and I no longer run my glucose levels high.</p>\
+      <p>- Amy B.</p>\
+    </div>\
     <a href="#story-list"><p class="AWA-see-more">See More Stories</p></a>\
     </div>\
     \
-    <div class="AWA-info-container-two">\
-    <h1 style="padding-top: 35px;padding-left: 25%;">\
+    <div class="AWA-info-container-two-title">\
+    <h1>\
     Take control of your diabetes now\
     </h1>\
+    </div>\
+    <div class="AWA-info-container-two">\
     <div class="AWA-product-kit">\
     <img src="http://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/c671f3ca596a34dd2713ef3d8c73dbe4_new-awa-kit-libre.jpg">\
     <img src="http://www.freestylelibre.co.uk/media/catalog/product/cache/7/image/9df78eab33525d08d6e5fb8d27136e95/s/e/sensor3_2_1_1.jpg">\
@@ -596,35 +649,30 @@ bottom: 392px;\
   <li>Product insert</li>\
   </ul>\
 </div>\
-<div class="AWA-doubt">\
-  <div class="AWA-info-box-two" style="display: none;">\
-    <img src="https://icons.iconarchive.com/icons/iconsmind/outline/24/Close-Window-icon.png">\
-    <h1 style="font-size: 16px; text-align: left; text-decoration: underline; font-weight: bold;">VAT exempt</h1>\
-    <p style="padding-top: 38px;font-weight: normal;line-height:24px;">No VAT payable if you have Diabetes Mellitus, or buying on behalf of someone aged 4+ with diabetes Mellitus</p>\
-  </div>\
-  <p style="\
-    font-size: 15px;\
-    padding: 0;\
-    margin: 0;\
-    padding-right: 80px;\
-">\
-    <strong>Price VAT incl:</strong>\
-    <span> £159.95</span>\
-  </p>\
-  <p class="AWA-info-fix-two" style="\
-    font-size: 14px;\
-    padding: 0;\
-    margin: 0;\
-">\
-    <strong>With VAT RELIEF:</strong>\
-    <span> £133.29<sup>\
-    <img src="http://vignette2.wikia.nocookie.net/gravityfalls/images/5/55/More_info_icon.png/revision/latest?cb=20140601022437"></sup>\
-    </span>\
-  </p>\
-  <a href="http://www.freestylelibre.co.uk/products.html?utm_source=freestylediabetes&amp;utm_medium=referral&amp;utm_term=buy-now&amp;utm_content=button-1&amp;utm_campaign=libre" target="_blank" class="cta-button btn pull-left" style="">Buy Now</a>\
-  <a href="https://youcandoit.freestylediabetes.co.uk/product-overview/"><p style="text-decoration: underline;color: grey;/* width:210px; */padding-left: 41px;font-size: 14px;font-weight: 500;/* text-align:center */padding-top: 0;/* padding-left: 140px; */">More information</p>\
-  </a>\
-</div>\
+\
+<div class="buy-here-AWA"> \
+    <div class="AWA-info-box-two" style="display: none;">\
+      <img src="https://icons.iconarchive.com/icons/iconsmind/outline/24/Close-Window-icon.png">\
+      <h1 style="font-size: 16px; text-align: left; text-decoration: underline; font-weight: bold;">VAT exempt</h1>\
+      <p style="padding-top: 38px;font-weight: normal;line-height:24px;">No VAT payable if you have Diabetes Mellitus, or buying on behalf of someone aged 4+ with diabetes Mellitus</p>\
+    </div>\
+    <h2 class="header-buy-here-AWA">Get your Starter Pack today</h2> \
+    <p style="padding: 10px; color: black;">Price VAT incl: <span>£159.95</span></p> \
+    <p class="AWA-info-fix-two" style="color: black;">With VAT RELIEF: \
+        <span> £133.29 \
+            <sup style="width: 1px;"> \
+                <img src="http://vignette2.wikia.nocookie.net/gravityfalls/images/5/55/More_info_icon.png/revision/latest?cb=20140601022437" style="width: 15px;"> \
+            </sup> \
+        </span> \
+    </p> \
+    <a href="http://www.freestylelibre.co.uk/freestyle-libre-starter-pack-english.html"> \
+        <button class="buy-here-btn" style="height: 30px;">Add to Basket</button> \
+    </a> \
+    <a href="https://youcandoit.freestylediabetes.co.uk/product-overview/"> \
+        <p style="text-decoration: unerline; text-decoration: underline; color: grey;">More information</p> \
+    </a> \
+</div> \
+\
     </div>\
     </div>\
     </div>\
@@ -661,26 +709,32 @@ bottom: 392px;\
       //POP Up box
       jQuery('.click-info-here-AWA').click(function(){
       jQuery('.AWA-info-box').slideToggle();
-      console.log('I like a click');
       });
 
       jQuery('.AWA-info-fix-two').click(function(){
       jQuery('.AWA-info-box-two').slideToggle();
-      console.log('I like a click');
       });
 
       //Close Pop up box
       jQuery('.AWA-info-box-two').click(function(){
       jQuery('.AWA-info-box-two').hide();
-      console.log('I like to hide');
       });
       jQuery('.AWA-info-box').click(function(){
       jQuery('.AWA-info-box').hide();
-      console.log('I like to hide');
       });
 
       //Move down page
 
+      // testimonial section tweaks
+      var $testimonial_section = jQuery('.section.stories'),
+          $testimonial_section_title = $testimonial_section.find(' > .container > h3');
+
+      $testimonial_section_title.text('What others are saying about the FreeStyle Libre System');
+
+      // Hide the next 2 paragraphs
+      $testimonial_section_title
+        .nextAll('p')
+        .remove();
 
     };
 
