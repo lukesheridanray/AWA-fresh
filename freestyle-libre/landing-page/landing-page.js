@@ -1,4 +1,3 @@
-/* CUSTOM CODE */
 //
 // CGIT Optimizely Boilerplate - version 0.1.4
 //
@@ -97,7 +96,8 @@ p.AWA-review-name {\
       text-align: center;\
     }\
     .AWA-we-work-img{\
-    margin-right: 20px;\
+    margin-right: 80px;\
+    height: 40px;\
     }\
     .AWA-header-container h1 {\
     margin: 0;\
@@ -139,12 +139,12 @@ top: 414px;\
     z-index: 100000000;\
     position: absolute;\
     height: 214px;\
-    width: 235px;\
+    width: 275px;\
     max-width: 100%;\
     border-radius: 12px;\
      display: none;\
     position: absolute;\
-    right: 176px;\
+    right: 66px;\
     margin: auto;\
     padding-bottom: 61px;\
   }\
@@ -171,12 +171,12 @@ bottom: 392px;\
   }\
   .AWA-info-container {\
     height: 400px;\
-    padding-top: 101px;\
+    padding-top: 60px;\
     display: inline-flex;\
 float: right;\
 text-align: center;\
 flex-direction: row-reverse;\
-padding-right: 50px;\
+padding-right: 45px;\
 }\
 .buy-here-btn {\
   background-color: #909;\
@@ -464,7 +464,7 @@ bottom: 392px;\
         <div class="AWA-header-container">\
         <h1>See your glucose level anytime</h1>\
         <p>\
-        <strong>No lancets. No<sup>†</sup> finger pricking. Just a 1 second scan.</strong></p>\
+        <strong>No lancets. No finger pricking<sup>†</sup> Just a 1 second scan.</strong></p>\
           </div>\
           </div>\
           <div class="AWA-image-review" style="\
@@ -529,24 +529,23 @@ bottom: 392px;\
     <div class="AWA-we-work-img" style="\
   display: inline-block;\
     width: 100%;\
-    padding-left: 6%;\
     display: inline-grid;\
     flex-direction: row;\
-    padding-left: 10%;\
     background: #eee;\
     height: 65px;\
     margin-top: 8px;\
     padding-top: 5px;">\
-    <p style="float: left; padding-right: 31px;\
+    <p style="float: left; padding-right: 91px;\
         font-size: 1.5em;\
         padding-bottom: 0px;\
         margin-bottom: 0px;\
+        padding-left: 66px;\
         margin-top: 8px;">As Seen ON</p>\
     <div class="AWA-on-me-libre" style="display: flex; flex-direction: row;">\
-    <img class="AWA-we-work-img" src="http://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/c3e8666a11e16fce9b0a8f8db9dae2b7_bbc-awa.png" alt="Who we work with for HST" style="width: 57px; height: 53px;">\
-    <img class="AWA-we-work-img" src="http://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/a756557f4f8440f0b896229f95a6c737_express-awa-libre.png" alt="Who we work with for HST" style="height: 55px;"> \
-    <img class="AWA-we-work-img" src="https://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/879a3c5dcf4b4065f71b0d652b4ca391_awa-daily-mail-libre.jpg" alt="Who we work with for HST" style="height: 55px;">\
-    <img class="AWA-we-work-img" src="http://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/4d4f73e7c0747dd6730c037c26f213f8_the-guardian-logo1-awa-libre.jpg" alt="Who we work with for HST" style="width: 175px; height: 55px;">\
+    <img class="AWA-we-work-img" src="https://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/310e7bc8c00d67111bc2f16fa4d9a130_bbc-logo-awa-libre.jpg" alt="Who we work with for HST" style="width: 72px; height: 53px;">\
+    <img class="AWA-we-work-img" src="http://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/a756557f4f8440f0b896229f95a6c737_express-awa-libre.png" alt="Who we work with for HST" style="margin-top: 7px"> \
+    <img class="AWA-we-work-img" src="https://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/879a3c5dcf4b4065f71b0d652b4ca391_awa-daily-mail-libre.jpg" alt="Who we work with for HST" style="height: 44px; margin-top: 8px;">\
+    <img class="AWA-we-work-img" src="http://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/4d4f73e7c0747dd6730c037c26f213f8_the-guardian-logo1-awa-libre.jpg" alt="Who we work with for HST" style="width: 154px; height: 44px; margin-top: 9px;">\
     </div>\
     </div>\
     </section>\
@@ -579,7 +578,7 @@ bottom: 392px;\
     <div class="button-area">\
     <div class="price AWA-pull pull-left">\
     <div class="AWA-pull-fix" style="width: 100%;">\
-  <strong style="/* float: left; */white-space: nowrap;">What you will recEIve in your FreeStyle Libre Starter Kit:</strong>\
+  <strong style="/* float: left; */white-space: nowrap;">What you will receive in your FreeStyle Libre Starter Kit:</strong>\
   <p>1x FreeStyle Libre Reader Kit,<br>which incudes:<br>\
   </p>\
   <ul class="AWA-list-sugar">\
@@ -598,7 +597,7 @@ bottom: 392px;\
   </ul>\
 </div>\
 <div class="AWA-doubt">\
-  <div class="AWA-info-box-two" style="display: none;margin-left:225px;">\
+  <div class="AWA-info-box-two" style="display: none;">\
     <img src="https://icons.iconarchive.com/icons/iconsmind/outline/24/Close-Window-icon.png">\
     <h1 style="font-size: 16px; text-align: left; text-decoration: underline; font-weight: bold;">VAT exempt</h1>\
     <p style="padding-top: 38px;font-weight: normal;line-height:24px;">No VAT payable if you have Diabetes Mellitus, or buying on behalf of someone aged 4+ with diabetes Mellitus</p>\
