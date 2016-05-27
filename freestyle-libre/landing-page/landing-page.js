@@ -54,11 +54,11 @@ p.AWA-review-name {\
     padding-left: 20px;\
 }\
   .AWA-hero {\
-      height: 850px;\
+      height: 750px;\
       display: block;\
       background: url('http://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/6c13687f22ba3f30792117ce6fce59d2_awa-final-picture-hand-libre.png') no-repeat right;\
       text-align: center;\
-      background-position: 69% 59%;\
+      background-position: 69% 89%;\
       background-size: 35%;\
       padding: 30px 0;\
       width: 1264px; \
@@ -98,7 +98,7 @@ p.AWA-review-name {\
       text-align: center;\
     }\
     .AWA-we-work-img{\
-    margin-right: 60px;\
+    margin-right: 40px;\
     height: 40px;\
     }\
     .AWA-header-container h1 {\
@@ -256,7 +256,7 @@ margin-left: 40px;\
   padding-top: 35px; \
 }\
 .AWA-info-container-two {\
-  height: 850px;\
+  height: 800px;\
 }\
 .AWA-info-container-two h1{\
   padding-top: 35px;\
@@ -386,9 +386,11 @@ bottom: 392px;\
   .yellow-bottom p {\
     max-width: 56%;\
     text-align: center;\
-    display: inline-block;\
-    margin-left: 90px;\
-\
+    display: block;\
+    margin: 0 auto;\
+  }\
+  .footer-final-AWA .yellow-bottom p {\
+    max-width: 100%; \
   }\
   footer .container {\
     max-width: 100%;\
@@ -480,7 +482,7 @@ bottom: 392px;\
     \
     .section.stories { \
       border-top: 1px solid black;\
-      padding-top: 20px; \
+      padding-top: 30px; \
     } \
   ";
 
@@ -503,7 +505,7 @@ bottom: 392px;\
         <div class="AWA-header-container">\
         <h1>See your glucose level anytime</h1>\
         <p>\
-        <strong>No lancets. No finger pricking<sup>†</sup> Just a 1 second scan.</strong></p>\
+        <strong>No lancets* No finger pricking<sup>†</sup> Just a 1 second scan.</strong></p>\
           </div>\
           </div>\
           <div class="AWA-image-review" style="\
@@ -532,7 +534,7 @@ bottom: 392px;\
     <div class="AWA-image-review col-lg-3">\
     <div class="AWA-text-wrapper">\
     <img src="https://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/cf3ede473b690e6393936e9c6946865a_icons-sensors-final-libre.png" alt="Reviews for HST" style="height: 101px;">\
-    <p class="AWA-review-name">Apply the small sensor to the back of your upper arm</p>\
+    <p class="AWA-review-name">Apply the small sensor to the back of your upper arm.</p>\
     </div>\
     </div>\
     <div class="AWA-image-review col-lg-3">\
@@ -545,7 +547,7 @@ bottom: 392px;\
     <div class="AWA-info-box">\
     <img src="https://icons.iconarchive.com/icons/iconsmind/outline/24/Close-Window-icon.png">\
       <h1 style="font-size: 16px; text-align: left; text-decoration: underline; font-weight: bold;">VAT exempt</h1>\
-      <p style="padding-top: 38px;"">No VAT payable if you have Diabetes Mellitus, or buying on behalf of someone aged 4+ with diabetes Mellitus</p>\
+      <p style="padding-top: 38px;"">No VAT payable if you have Diabetes Mellitus<sup>3</sup>, or buying on behalf of someone aged 4+ with diabetes Mellitus<sup>3</sup></p>\
     </div>\
     <div class="buy-here-AWA">\
     <h2 class="header-buy-here-AWA">Get your Starter Pack today</b></h2>\
@@ -577,17 +579,17 @@ bottom: 392px;\
     margin-top: 8px;\
     padding-top: 5px;">\
     <div class="AWA-we-work-img-wrapper"> \
-    <p style="float: left; padding-right: 51px;\
+    <p style="float: left; padding-right: 20px;\
         font-size: 1.5em;\
         padding-bottom: 0px;\
         margin-bottom: 0px;\
-        padding-left: 36px;\
         margin-top: 8px;">As Seen ON</p>\
     <div class="AWA-on-me-libre" style="display: flex; flex-direction: row;">\
     <img class="AWA-we-work-img" src="//useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/388602fdbd759d0a705b6229010ed2f3_300px-bbc.svg.png" alt="Who we work with for HST" style="height: 32px;margin-top: 11px;">\
     <img class="AWA-we-work-img" src="//useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/a756557f4f8440f0b896229f95a6c737_express-awa-libre.png" alt="Who we work with for HST" style="margin-top: 7px"> \
     <img class="AWA-we-work-img" src="//useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/de113386cfc4c28247bda7b26218e860_daily_mail_main.png" alt="Who we work with for HST" style="height: 40px; margin-top: 12px;">\
     <img class="AWA-we-work-img" src="//useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/beffb25d09f3c741fe63e03f54357742_the_guardian.svg.png" alt="Who we work with for HST" style="height: 42px; margin-top: 9px;">\
+    <img class="AWA-we-work-img" src="//useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/49c63f468386531f15429c7092fc50a6_itv_logo_2013.svg.png" alt="Who we work with for HST" style="height: 34px; margin-top: 7px;">\
     </div>\
     </div>\
     </div>\
@@ -654,7 +656,7 @@ bottom: 392px;\
     <div class="AWA-info-box-two" style="display: none;">\
       <img src="https://icons.iconarchive.com/icons/iconsmind/outline/24/Close-Window-icon.png">\
       <h1 style="font-size: 16px; text-align: left; text-decoration: underline; font-weight: bold;">VAT exempt</h1>\
-      <p style="padding-top: 38px;font-weight: normal;line-height:24px;">No VAT payable if you have Diabetes Mellitus, or buying on behalf of someone aged 4+ with diabetes Mellitus</p>\
+      <p style="padding-top: 38px;font-weight: normal;line-height:24px;">No VAT payable if you have Diabetes Mellitus<sup>3</sup>, or buying on behalf of someone aged 4+ with diabetes Mellitus<sup>3</sup></p>\
     </div>\
     <h2 class="header-buy-here-AWA">Get your Starter Pack today</h2> \
     <p style="padding: 10px; color: black;">Price VAT incl: <span>£159.95</span></p> \
@@ -685,12 +687,13 @@ bottom: 392px;\
         <div class="container">\
         <div class="footer-final-AWA">\
           <p><a href="https://youcandoit.freestylediabetes.co.uk/privacy-policy/">Privacy Policy</a>  |  <a href="https://youcandoit.freestylediabetes.co.uk/cookie-policy/">Cookie Policy</a></p>\
-           <p class="small text-left">*&nbsp;\
-† Scanning the sensor to obtain glucose values does not require lancets\
-1. The reader can capture data from the sensor when it is within 1cm to 4cm of the sensor.\
-2. Each scan of the reader over the sensor gives a current glucose reading, the last 8-hours of glucose history, and a trend arrow showing if glucose is going up, down, or changing slowly. The reader can even scan through clothing with a thickness of up to 4 mm.\
-3. The Guardian, 14 November 2014, Digital, Data on File; Daily Mail, 10 February 2016, Digital, Data on File; Express, 19 April 2016, Digital, Data on File\
-4. The FreeStyle Libre Flash Glucose Monitoring System is indicated for measuring interstitial fluid glucose levels in people (age 4 and older) with diabetes mellitus. The indication for children (age 4 - 17) is limited to those who are supervised by a caregiver who is at least 18 years of age. A caregiver at least 18 years old is responsible for supervising, managing, and assisting the child in using the FreeStyle Libre system and interpreting its readings.</p>\
+           <p class="small text-left">*A finger prick test using a blood glucose meter is required during times of rapidly changing glucose levels when interstitial fluid glucose levels may not accurately reflect blood glucose levels, or if hypoglycemia or impending hypoglycemia is reported or the symptoms do not match the system readings.\
+           <br/>\
+           <br/>† Scanning the sensor to obtain glucose values does not require lancets\
+           <br/>\
+<br/>1. The reader can capture data from the sensor when it is within 1cm to 4cm of the sensor.\
+<br/>2. Sensor is water resistant in up to 1 metre (3 feet) of water for a maximum of 30 minutes.\
+<br/>3. The FreeStyle Libre Flash Glucose Monitoring System is indicated for measuring interstitial fluid glucose levels in people (age 4 and older) with diabetes mellitus. The indication for children (age 4 - 17) is limited to those who are supervised by a caregiver who is at least 18 years of age. A caregiver at least 18 years old is responsible for supervising, managing, and assisting the child in using the FreeStyle Libre system and interpreting its readings.</p>\
             <p class="small">FreeStyle and related brand marks are trademarks of Abbott Diabetes Care Inc. in various jurisdictions. Other trademarks are the property of their respective owners. No use of any Abbott trademark, trade name, or trade dress in this site may be made without the prior written authorisation of Abbott Laboratories, except to identify the product or services of the company. This website and the information contained herein is intended for use by residents of the UK. The product images are for illustrative purposes only.</p>\
             <p class="small">©2004 - 2016 Abbott Laboratories Limited. All rights reserved. Registered Number: 329102 England<br>\
             Registered Office: Abbott House, Vanwall Business Park, Vanwall Road, Maidenhead, Berkshire SL6 4XE</p>\
