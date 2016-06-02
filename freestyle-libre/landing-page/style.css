@@ -1,0 +1,32 @@
+header {
+    height: 100%;
+    background: #ffd100;
+    padding: 18px 0;
+    -webkit-box-shadow: 0 5px 10px 0 rgba(50,50,50,.3);
+    -moz-box-shadow: 0 5px 10px 0 rgba(50,50,50,.3);
+    box-shadow: 0 5px 10px 0 rgba(50,50,50,.3);
+    position: relative;
+    z-index: 1001;
+}
+.AWA-mobile-header {
+    color: black;
+    font-size: 2.8rem;
+}
+.AWA-mobile-sub-header {
+    font-size: 21px;
+    color: #5D5C5C;
+}
+.AWA-mobile-reader {
+    display: inline-block;
+  }
+  .AWA-mobile-right-words {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    padding-top: 28px;
+    float: right;
+    padding-left: 211px;
+}
+.AWA-reader-list {
+    list-style: none;
+}
