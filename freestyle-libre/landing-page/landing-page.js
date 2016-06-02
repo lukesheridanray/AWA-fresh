@@ -384,12 +384,10 @@ bottom: 392px;\
     display: inline-block;\
   }\
   .yellow-bottom p {\
-    max-width: 100%;\
-    width: 100%\
+    max-width: 56%;\
     text-align: center;\
     display: block;\
     margin: 0 auto;\
-    font-weight: 100;\
   }\
   .footer-final-AWA .yellow-bottom p {\
     max-width: 100%; \
@@ -406,7 +404,7 @@ bottom: 392px;\
         font-size: 65%;\
     }\
     .AWA-header-container sup {\
-        font-size: 43%;\
+        font-size: 55%;\
         top: -1em;\
     }\
     .AWA-header-container p {\
@@ -507,7 +505,7 @@ bottom: 392px;\
         <div class="AWA-header-container">\
         <h1>See your glucose level anytime</h1>\
         <p>\
-        <strong>No lancets.<sup>*</sup> No finger pricking.<sup>†</sup> Just a 1 second scan.</strong></p>\
+        <strong>No lancets* No finger pricking<sup>†</sup> Just a 1 second scan.</strong></p>\
           </div>\
           </div>\
           <div class="AWA-image-review" style="\
@@ -556,8 +554,8 @@ bottom: 392px;\
     <p style="padding: 10px; color: black;">Price VAT incl: <span>£159.95</span></p>\
     <p class="click-info-here-AWA" style="color: black;">With VAT RELIEF:<span> £133.29<sup style="width: 1px;">\
     <img src="http://vignette2.wikia.nocookie.net/gravityfalls/images/5/55/More_info_icon.png/revision/latest?cb=20140601022437" style="width: 15px;"></sup></span></p>\
-    <a href="http://www.freestylelibre.co.uk/freestyle-libre-starter-pack-english.html"><button class="buy-here-btn" style="height: 30px;">Buy now</button></a>\
-    <a href="https://youcandoit.freestylediabetes.co.uk/product-overview/"><p class="AWA-more-info" style="\
+    <a href="http://www.freestylelibre.co.uk/freestyle-libre-starter-pack-english.html"><button class="buy-here-btn" style="height: 30px;">Add to Basket</button></a>\
+    <a href="https://youcandoit.freestylediabetes.co.uk/product-overview/"><p style="\
         text-decoration: unerline;\
         text-decoration: underline;\
         color: grey;\
@@ -585,8 +583,7 @@ bottom: 392px;\
         font-size: 1.5em;\
         padding-bottom: 0px;\
         margin-bottom: 0px;\
-        margin-top: 8px;\
-        margin-left: 5px;">As Seen ON</p>\
+        margin-top: 8px;">As Seen ON</p>\
     <div class="AWA-on-me-libre" style="display: flex; flex-direction: row;">\
     <img class="AWA-we-work-img" src="//useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/388602fdbd759d0a705b6229010ed2f3_300px-bbc.svg.png" alt="Who we work with for HST" style="height: 32px;margin-top: 11px;">\
     <img class="AWA-we-work-img" src="//useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/a756557f4f8440f0b896229f95a6c737_express-awa-libre.png" alt="Who we work with for HST" style="margin-top: 7px"> \
@@ -671,10 +668,10 @@ bottom: 392px;\
         </span> \
     </p> \
     <a href="http://www.freestylelibre.co.uk/freestyle-libre-starter-pack-english.html"> \
-        <button class="buy-here-btn" style="height: 30px;">Buy now</button> \
+        <button class="buy-here-btn" style="height: 30px;">Add to Basket</button> \
     </a> \
     <a href="https://youcandoit.freestylediabetes.co.uk/product-overview/"> \
-        <p class="AWA-more-info" style="text-decoration: unerline; text-decoration: underline; color: grey;">More information</p> \
+        <p style="text-decoration: unerline; text-decoration: underline; color: grey;">More information</p> \
     </a> \
 </div> \
 \
@@ -685,7 +682,7 @@ bottom: 392px;\
       ').insertAfter("header")
 
       $('<footer class="yellow-bottom">\
-      <p>The views, opinions and positions expressed by the authors are theirs alone,<br> and do not necessarily reflect the views,\
+      <p>The views, opinions and positions expressed by the authors are theirs alone, and do not necessarily reflect the views,\
       opinions or positions of Abbott Diabetes Care or any employee thereof</p>\
         <div class="container">\
         <div class="footer-final-AWA">\
