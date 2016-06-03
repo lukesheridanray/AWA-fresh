@@ -29,7 +29,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Easy Ink Landing Page - dev 0.2');
+exp.log('Easy Ink Landing Page - dev 0.3');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -200,10 +200,8 @@ exp.func.make_free_shipping_explicit = function(){
     var $add_to_basket_buttons = $('.product-tile--add-to-basket-btn');
     $add_to_basket_buttons.before(
         '<label class="awa-free-shipping-label">\
-            <a href="https://store.canon.co.uk/delivery-information/" target="_blank"> \
-                Free shipping\
-                <i class="icon-checkmark"></i>\
-            </a> \
+            Free shipping\
+            <i class="icon-checkmark"></i>\
         </label>'
     );
 };
