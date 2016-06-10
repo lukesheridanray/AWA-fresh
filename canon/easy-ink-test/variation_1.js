@@ -29,7 +29,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Easy Ink Landing Page - dev 0.2');
+exp.log('Easy Ink Landing Page - dev 0.4');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -54,6 +54,7 @@ exp.vars = {
     },
     text: {
         new_title: 'Ink for your __PRODUCT__ Printer',
+        heading_suffix: ' for your __PRODUCT__ Printer',
         genuine_canon_text: 'Genuine Canon inks bring out the best in your Canon printer, so you are always assured of exceptional results.',
         xl_colour_text: 'XL versions provide up to 2.2 times more prints than regular sized cartridges',
         xl_black_text: 'XL versions provide up to 3.3 times more prints than regular sized cartridges',
@@ -106,6 +107,7 @@ exp.init = function() {
     exp.func.turn_links_into_buttons();
     exp.func.make_free_shipping_explicit();
     exp.func.move_paper();
+    exp.func.suffix_all_headers();
 };
 
 // 1. Changing the header to “Ink for your PIXMA MG3550 Printer” and for all headers included the relevant printer
@@ -118,8 +120,13 @@ exp.func.rename_header = function(){
 
 // 2. Including text about genuine Canon products.
 exp.func.add_genuine_canon_text = function(){
+    var text_css = '.awa-genuine-canon-text { \
+        padding-left: 10px;\
+     }';
+    $('head').append('<style type="text/css">' + text_css + '</style>');
+
     exp.vars.elems.page_h1.after(
-        '<p class="p-2">' + exp.vars.text.genuine_canon_text + '</p>'
+        '<p class="p-2 awa-genuine-canon-text">' + exp.vars.text.genuine_canon_text + '</p>'
     );
 };
 
@@ -154,7 +161,7 @@ exp.func.xl_inks_wording = function(){
                 var $product = $(this);
 
                 $product.find('p.description').after(
-                    '<p>'+ ($product.find('.product-tile--header').text().indexOf('Black') !== -1 ? exp.vars.text.xl_black_text : exp.vars.text.xl_colour_text) +'</p>'
+                    '<p class="p-3 product-tile-desc--para">'+ ($product.find('.product-tile--header').text().indexOf('Black') !== -1 ? exp.vars.text.xl_black_text : exp.vars.text.xl_colour_text) +'</p>'
                 );
             });
         }
@@ -200,10 +207,8 @@ exp.func.make_free_shipping_explicit = function(){
     var $add_to_basket_buttons = $('.product-tile--add-to-basket-btn');
     $add_to_basket_buttons.before(
         '<label class="awa-free-shipping-label">\
-            <a href="https://store.canon.co.uk/delivery-information/" target="_blank"> \
-                Free shipping\
-                <i class="icon-checkmark"></i>\
-            </a> \
+            Free shipping\
+            <i class="icon-checkmark"></i>\
         </label>'
     );
 };
@@ -267,6 +272,29 @@ exp.func.move_paper = function(){
         exp.log("Moving paper section to last product slot");
         $product_sections.last().after($paper_section);
     }
+};
+
+// Suffix all headers with "For your dsfjsdfojsdfj printer"
+exp.func.suffix_all_headers = function(){
+    $('h2.layout--header').each(function(){
+
+        var $this = $(this),
+            current_text = $this.text().trim();
+
+        // We shorten "Multipacks and Value Packs" to just "Value packs"
+        if (current_text == 'Multipacks and Value Packs') {
+            $this.text(
+                'Value Packs'
+                + exp.vars.text.heading_suffix.replace('__PRODUCT__', exp.vars.product_title)
+            );
+            return;
+        }
+
+        $this.text(
+            $this.text()
+            + exp.vars.text.heading_suffix.replace('__PRODUCT__', exp.vars.product_title)
+        );
+    });
 };
 
 // Run the experiment
