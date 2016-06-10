@@ -48,7 +48,7 @@ var exp = (function($) {
 	// Object containing variables, generally these would be strings or jQuery objects
 	exp.vars = {
 		freeUKDelivery: 	"<li id='AWA-free-UK-delivery'>\
-								<img class='alignnone size-full wp-image-5646' alt='icon-delivery' width='85' height='92' src='/wp-content/uploads/2014/01/85x92xicon-delivery.png.pagespeed.ic.qhc08fV3Uy.png'>\
+								<img class='alignnone size-full wp-image-5646' alt='icon-delivery' width='85' height='49' src='//useruploads.visualwebsiteoptimizer.com/useruploads/202360/images/263cf757d1b816b5e8b9b649712d53f0_icon-delivery.png'>\
 								<div class='AWA-delivery-ins'>on orders over &pound;50<br>Use code ICING in the basket.</div>\
 								<div class='AWA-pink'>FREE UK DELIVERY</div>\
 							</li>",
@@ -112,11 +112,11 @@ var exp = (function($) {
 	}\
 	#AWA-free-UK-delivery {\
 		padding: 0;\
-		width: 420px;\
+		width: 440px;\
 	}\
 	#AWA-free-UK-delivery img {\
 		position: absolute;\
-		top: 12px;\
+		top: 22px;\
 	}\
 	#AWA-free-UK-delivery img:hover {\
 		opacity: 0.8\
