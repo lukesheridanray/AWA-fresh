@@ -29,7 +29,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Easy Ink Landing Page - dev 0.4');
+exp.log('Easy Ink Landing Page - dev 0.5');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -48,16 +48,59 @@ if(exp.condition && !exp.condition.length) {
 // Variables
 // Object containing variables, generally these would be strings or jQuery objects
 exp.vars = {
+    current_language: 'en',
     elems: {
         page_h1: $('h1.header-1'),
         xl_inks_products_section: undefined,
     },
+    site_content: {
+        en: {
+            multi_and_value_packs: 'Multipacks and Value Packs',
+            xl_inks: 'XL Inks',
+            paper_heading: 'paper',
+            compatible_inks: ' - Compatible inks',
+        },
+        fr: {
+            multi_and_value_packs: 'Multipacks et packs économiques',
+            xl_inks: 'Encres XL',
+            paper_heading: 'papier',
+            compatible_inks: ' - Encres compatibles',
+        },
+        de: {
+            multi_and_value_packs: 'Multipacks und Value Packs',
+            xl_inks: 'XL-Tinten',
+            paper_heading: 'papier',
+            compatible_inks: ' – Kompatible Tinten',
+        },
+    },
     text: {
-        new_title: 'Ink for your __PRODUCT__ Printer',
-        heading_suffix: ' for your __PRODUCT__ Printer',
-        genuine_canon_text: 'Genuine Canon inks bring out the best in your Canon printer, so you are always assured of exceptional results.',
-        xl_colour_text: 'XL versions provide up to 2.2 times more prints than regular sized cartridges',
-        xl_black_text: 'XL versions provide up to 3.3 times more prints than regular sized cartridges',
+        en: {
+            new_title: 'Ink for your __PRODUCT__ Printer',
+            heading_suffix: ' for your __PRODUCT__ Printer',
+            genuine_canon_text: 'Genuine Canon inks bring out the best in your Canon printer, so you are always assured of exceptional results.',
+            xl_colour_text: 'XL versions provide up to 2.2 times more prints than regular sized cartridges',
+            xl_black_text: 'XL versions provide up to 3.3 times more prints than regular sized cartridges',
+            free_shipping: 'Free shipping',
+            value_packs_tho: 'Value Packs',
+        },
+        fr: {
+            new_title: 'Encres pour votre imprimante __PRODUCT__', // TODO: Get this signed off
+            heading_suffix: ' pour votre imprimante __PRODUCT__',
+            genuine_canon_text: 'Seules les cartouches Canon authentiques préservent votre imprimante et garantissent une qualité d’impression optimale',
+            xl_colour_text: 'Les cartouches d’encre XL permettent d’effectuer jusqu’à 2,2 fois plus d’impressions que les cartouches classiques',
+            xl_black_text: 'Les cartouches d’encre XL permettent d’effectuer jusqu’à 3,3 fois plus d’impressions que les cartouches classiques',
+            free_shipping: 'Livraison gratuite',
+            value_packs_tho: 'Packs économiques',
+        },
+        de: {
+            new_title: 'Tinten Für Ihren __PRODUCT__ Drucker', // TODO: Get this signed off
+            heading_suffix: ' Für Ihren __PRODUCT__ Drucker',
+            genuine_canon_text: 'Nur originale Canon Tinten sind garantiert Ihren Drucker zu schützen und gute Ergebnisse zu liefern',
+            xl_colour_text: 'XL Versionen bieten bis auf 2.2 mal mehr Drucke als normale Patronen',
+            xl_black_text: 'XL Versionen bieten bis auf 3.3 mal mehr Drucke als normale Patronen',
+            free_shipping: 'Kostenloser Versand',
+            value_packs_tho: 'Value Packs',
+        }
     }
 };
 
@@ -112,9 +155,11 @@ exp.init = function() {
 
 // 1. Changing the header to “Ink for your PIXMA MG3550 Printer” and for all headers included the relevant printer
 exp.func.rename_header = function(){
-    exp.vars.product_title = exp.vars.elems.page_h1.text().replace(' - Compatible inks', '');
+    exp.vars.product_title = exp.vars.elems.page_h1.text().replace(
+        exp.vars.site_content[exp.vars.current_language].compatible_inks,
+    '');
     exp.vars.elems.page_h1.text(
-        exp.vars.text.new_title.replace('__PRODUCT__', exp.vars.product_title)
+        exp.vars.text[exp.vars.current_language].new_title.replace('__PRODUCT__', exp.vars.product_title)
     );
 };
 
@@ -126,7 +171,7 @@ exp.func.add_genuine_canon_text = function(){
     $('head').append('<style type="text/css">' + text_css + '</style>');
 
     exp.vars.elems.page_h1.after(
-        '<p class="p-2 awa-genuine-canon-text">' + exp.vars.text.genuine_canon_text + '</p>'
+        '<p class="p-2 awa-genuine-canon-text">' + exp.vars.text[exp.vars.current_language].genuine_canon_text + '</p>'
     );
 };
 
@@ -141,7 +186,7 @@ exp.func.xl_inks_wording = function(){
         }
 
         var $block_margin_btm = $(this);
-        if ($block_margin_btm.text() == 'XL Inks') {
+        if ($block_margin_btm.text().trim() == exp.vars.site_content[exp.vars.current_language].xl_inks) {
             $block_margin_btm.nextUntil('.block-margin-btm', '.container').each(function(){
 
                 // Skip checking once found
@@ -161,7 +206,7 @@ exp.func.xl_inks_wording = function(){
                 var $product = $(this);
 
                 $product.find('p.description').after(
-                    '<p class="p-3 product-tile-desc--para">'+ ($product.find('.product-tile--header').text().indexOf('Black') !== -1 ? exp.vars.text.xl_black_text : exp.vars.text.xl_colour_text) +'</p>'
+                    '<p class="p-3 product-tile-desc--para">'+ ($product.find('.product-tile--header').text().indexOf('Black') !== -1 ? exp.vars.text[exp.vars.current_language].xl_black_text : exp.vars.text[exp.vars.current_language].xl_colour_text) +'</p>'
                 );
             });
         }
@@ -207,7 +252,7 @@ exp.func.make_free_shipping_explicit = function(){
     var $add_to_basket_buttons = $('.product-tile--add-to-basket-btn');
     $add_to_basket_buttons.before(
         '<label class="awa-free-shipping-label">\
-            Free shipping\
+            '+ exp.vars.text[exp.vars.current_language].free_shipping +'\
             <i class="icon-checkmark"></i>\
         </label>'
     );
@@ -250,7 +295,7 @@ exp.func.move_paper = function(){
             && $(this).find('.layout-header').text()
                       .toLowerCase()
                       .trim()
-                     .toLowerCase() == 'paper';
+                     .toLowerCase() == exp.vars.site_content[exp.vars.current_language].paper_heading;
     });
 
     // If we haven't found a normal paper section, run awaaaaaaaay!
@@ -281,18 +326,18 @@ exp.func.suffix_all_headers = function(){
         var $this = $(this),
             current_text = $this.text().trim();
 
-        // We shorten "Multipacks and Value Packs" to just "Value packs"
-        if (current_text == 'Multipacks and Value Packs') {
+        // We shorten "Multipacks and Value Packs" to ujst "Value packs"
+        if (current_text == exp.vars.site_content[exp.vars.current_language].multi_and_value_packs) {
             $this.text(
-                'Value Packs'
-                + exp.vars.text.heading_suffix.replace('__PRODUCT__', exp.vars.product_title)
+                exp.vars.text[exp.vars.current_language].value_packs_tho
+                + exp.vars.text[exp.vars.current_language].heading_suffix.replace('__PRODUCT__', exp.vars.product_title)
             );
             return;
         }
 
         $this.text(
             $this.text()
-            + exp.vars.text.heading_suffix.replace('__PRODUCT__', exp.vars.product_title)
+            + exp.vars.text[exp.vars.current_language].heading_suffix.replace('__PRODUCT__', exp.vars.product_title)
         );
     });
 };
