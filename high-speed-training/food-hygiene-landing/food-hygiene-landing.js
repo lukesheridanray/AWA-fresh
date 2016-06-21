@@ -415,7 +415,7 @@
                     <p><strong>4.7</strong> Average</p>\
                     <p><strong>1685</strong> Reviews</p>\
                 </div>')
-        .after('<h2>Take one of our UK &amp; EU accredited courses to complete your food safety training</h2>');
+        .after('<h2>Take one of our accredited UK &amp; EU courses to complete your food safety training</h2>');
 
     $('.food-hygiene-hero .col-lg-12, .food-hygiene-hero .col-sm-12').remove();
 
@@ -488,7 +488,7 @@
                     <h4>Level 2 Food Safety Awareness</h4>\
                     <p class="awa-course-intro">Best for anyone who works where food is cooked, prepared or handled.</p>\
                     <ul class="icons-ul">\
-                        <li><i class="icon-li icon-ok-sign"></i>6 Module Online course</li>\
+                        <li><i class="icon-li icon-ok-sign"></i>5 Module Online course</li>\
                         <li><i class="icon-li icon-ok-sign"></i>No time limits to complete the training</li>\
                         <li><i class="icon-li icon-ok-sign"></i>Approximate duration- 2 hours</li>\
                         <li><i class="icon-li icon-ok-sign"></i>Matches RSPH and CIEH syllabus</li>\
@@ -510,7 +510,7 @@
                     <h4>Level 3 Food Safety Awareness</h4>\
                     <p class="awa-course-intro">Intermediate certificate for supervisors and managers.</p>\
                     <ul class="icons-ul">\
-                        <li><i class="icon-li icon-ok-sign"></i>6 Module Online course</li>\
+                        <li><i class="icon-li icon-ok-sign"></i>16 Module Online course</li>\
                         <li><i class="icon-li icon-ok-sign"></i>No time limits to complete the training</li>\
                         <li><i class="icon-li icon-ok-sign"></i>Approximate duration- 2 hours</li>\
                         <li><i class="icon-li icon-ok-sign"></i>Matches RSPH and CIEH syllabus</li>\
