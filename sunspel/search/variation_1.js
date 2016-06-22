@@ -38,14 +38,14 @@
     // Custom CSS
     $('head').append('\
         <style type="text/css">\
-            html:not(.is-scrolled) button {\
+            .skip--search form button {\
                 background: none;\
                 border: none;\
             }\
-            html:not(.is-scrolled) input[type="text"]#search {\
+            .skip--search form input[type="text"] {\
                 height: 30px; \
             }\
-            html:not(.is-scrolled) #search_mini_form input[type="submit"] {\
+            .skip--search form input[type="submit"] {\
                 display: none;\
             }\
             \
@@ -54,22 +54,31 @@
                 display: none;\
             }\
             \
-            html.is-scrolled .awa-search-box button {\
+            .awa-search-box { \
+                display: none; \
+            }\
+            html.is-scrolled .awa-search-box { \
+                display: block; \
+            }\
+            .awa-search-box button {\
                 display: none;\
             }\
-            .awa-search-box #search_mini_form {\
+            .awa-search-box form {\
                 padding-top: 0.5em;\
             }\
         </style>\
     ');
 
     // Move search box form to header.
-    AWA.vars.elements.search_box_menu_item.on('click', function(e){ e.preventDefault(); });
-    AWA.vars.elements.search_box_menu_item.children().remove();
-    AWA.vars.elements.search_box_menu_item.append(
+    var $better_search_box_menu_item = $('<div class="skip skip--search not-palm not-lap">');
+    AWA.vars.elements.search_box_menu_item.replaceWith($better_search_box_menu_item);
+    $better_search_box_menu_item.append(
         AWA.vars.elements.search_box_form
     );
     AWA.vars.elements.search_box_container.remove();
+
+    // Remove ID from search form. It's confusing.
+    AWA.vars.elements.search_box_form.attr('id', false);
 
     // Swap submit button with a search icon
     var $search_button = $('<button></button>'),
@@ -81,8 +90,7 @@
         AWA.vars.elements.search_box_form.submit();
     });
 
-    $search_submit
-        .after($search_button);
+    $search_submit.after($search_button);
 
 
     // Have another search form that only shows up in the "is-scrolled" reduced nav bar
