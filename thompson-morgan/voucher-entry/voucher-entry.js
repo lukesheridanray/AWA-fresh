@@ -44,6 +44,12 @@
 
         var $input = $inputGroup.find('input:eq(0)');
         var $submit = $inputGroup.find('.button');
+        var $addedVoucher = $inputGroup.find('.addedVoucher');
+
+        if($addedVoucher.length !== 0 && $inputGroup.parent('#vouchercodeContent').length === 0) {
+            // dont add field if a promo code has been added
+            return;
+        }
 
         // add HTML
         $inputGroup.find('input').eq(0).before(AWA.var.inputsTemplate);
@@ -111,6 +117,14 @@
     #vouchercodeContent .voucherField > div > input {\
         display: none;\
     }\
+    #promovoucherContainer .voucherField > .addedVoucher,\
+    #vouchercodeContent .voucherField > div > .addedVoucher {\
+        display: block;\
+    }\
+    .voucherActionMessage .error {\
+        display: block;\
+        clear: both;\
+    }\
     .awa-proxy-button {\
         background: #B70719;\
         padding: 0.5em;\
@@ -135,13 +149,13 @@
         padding-bottom: 20px;\
     }\
     .awa-proxy-fields input {\
-        width: 21%;\
+        width: 20%;\
         box-sizing: border-box;\
         margin: 0;\
         font-size: 1.1em;\
     }\
     .awa-proxy-dash {\
-        width: 4%;\
+        width: 3.5%;\
         text-align: center;\
         display: inline-block;\
     }\
