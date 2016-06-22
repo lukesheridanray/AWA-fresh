@@ -29,7 +29,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Easy Ink Landing Page - dev 0.5');
+exp.log('Easy Ink Landing Page - dev 0.6');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -86,11 +86,11 @@ exp.vars = {
         fr: {
             new_title: 'Encres pour votre imprimante __PRODUCT__', // TODO: Get this signed off
             heading_suffix: ' pour votre imprimante __PRODUCT__',
-            genuine_canon_text: 'Seules les cartouches Canon authentiques préservent votre imprimante et garantissent une qualité d’impression optimale',
+            genuine_canon_text: 'Choisir des encres Canon d\'origine maintient la qualité d\'impression et prolonge la durée de vie de votre imprimante.',
             xl_colour_text: 'Les cartouches d’encre XL permettent d’effectuer jusqu’à 2,2 fois plus d’impressions que les cartouches classiques',
             xl_black_text: 'Les cartouches d’encre XL permettent d’effectuer jusqu’à 3,3 fois plus d’impressions que les cartouches classiques',
             free_shipping: 'Livraison gratuite',
-            value_packs_tho: 'Packs économiques',
+            value_packs_tho: 'Multipacks et packs économiques',
         },
         de: {
             new_title: 'Tinten Für Ihren __PRODUCT__ Drucker', // TODO: Get this signed off
@@ -100,6 +100,7 @@ exp.vars = {
             xl_black_text: 'XL Versionen bieten bis auf 3.3 mal mehr Drucke als normale Patronen',
             free_shipping: 'Kostenloser Versand',
             value_packs_tho: 'Value Packs',
+            do_you_need_help: 'Brauchen Sie Hilfe?',
         }
     }
 };
@@ -151,6 +152,10 @@ exp.init = function() {
     exp.func.make_free_shipping_explicit();
     exp.func.move_paper();
     exp.func.suffix_all_headers();
+
+    if (exp.vars.current_language == 'de') {
+        exp.func.update_do_you_need_help_link();
+    }
 };
 
 // 1. Changing the header to “Ink for your PIXMA MG3550 Printer” and for all headers included the relevant printer
@@ -246,14 +251,18 @@ exp.func.make_free_shipping_explicit = function(){
     var free_shipping_css = ' \
         .awa-free-shipping-label { \
             font-size: 14px; \
+            color: #6a963b;\
+        }\
+        .awa-free-shipping-label .icon-checkmark { \
+            margin-right: 0.5em;\
         }';
     $('head').append('<style type="text/css">' + free_shipping_css + '</style>');
 
     var $add_to_basket_buttons = $('.product-tile--add-to-basket-btn');
     $add_to_basket_buttons.before(
         '<label class="awa-free-shipping-label">\
-            '+ exp.vars.text[exp.vars.current_language].free_shipping +'\
             <i class="icon-checkmark"></i>\
+            '+ exp.vars.text[exp.vars.current_language].free_shipping +'\
         </label>'
     );
 };
@@ -340,6 +349,13 @@ exp.func.suffix_all_headers = function(){
             + exp.vars.text[exp.vars.current_language].heading_suffix.replace('__PRODUCT__', exp.vars.product_title)
         );
     });
+};
+
+
+exp.func.update_do_you_need_help_link = function(){
+    $('.primary-service-navigation--anchor[href="/store-faqs/"]').text(
+        exp.vars.text[exp.vars.current_language].do_you_need_help
+    );
 };
 
 // Run the experiment
