@@ -34,7 +34,19 @@
         <style type="text/css">\
             @media only screen and (min-width: 900px) {\
                 .listing--grid .item { \
+                    width: 50%; \
+                }\
+                .listing--grid .item:nth-of-type(2n+1) {\
+                    clear: left;\
+                }\
+            }\
+            \
+            @media only screen and (min-width: 1100px) {\
+                .listing--grid .item { \
                     width: 33%; \
+                }\
+                .listing--grid .item:nth-of-type(2n+1) {\
+                    clear: none;\
                 }\
                 .listing--grid .item:nth-of-type(3n+1) {\
                     clear: left;\
@@ -44,6 +56,9 @@
             @media only screen and (min-width: 1500px) {\
                 .listing--grid .item {\
                     width: 25%;\
+                }\
+                .listing--grid .item:nth-of-type(2n+1) {\
+                    clear: none;\
                 }\
                 .listing--grid .item:nth-of-type(3n+1) {\
                     clear: none;\
