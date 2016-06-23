@@ -26,11 +26,6 @@
 
         var email = docCookies.getItem(cookieName);
 
-/*
-        var email = window.location.search.slice(12);
-            email = email.slice(0, email.indexOf('&qw='));
-*/
-
         var field = document.getElementById('tb_Email');
 
         if(email && field) {
@@ -132,7 +127,6 @@
         docCookies.setItem(cookieName, email, null, '/');
 
         document.location = course;
-        //document.location = course.replace('?qw=', '?user_email='+email+'&qw=');
 
     };
 
@@ -468,11 +462,10 @@
                     <ul class="icons-ul">\
                         <li><i class="icon-li icon-ok-sign"></i>6 Module Online course</li>\
                         <li><i class="icon-li icon-ok-sign"></i>No time limits to complete the training</li>\
-                        <li><i class="icon-li icon-ok-sign"></i>Approximate duration- 2 hours</li>\
+                        <li><i class="icon-li icon-ok-sign"></i>Approximate duration: 2-3 hours</li>\
                         <li><i class="icon-li icon-ok-sign"></i>Matches RSPH and CIEH syllabus</li>\
                         <li><i class="icon-li icon-ok-sign"></i>Meets UK & EU legal training requirements for food handlers</li>\
                         <li><i class="icon-li icon-ok-sign"></i>CPD & RoSPA accredited certificate</li>\
-                        <li><i class="icon-li icon-ok-sign"></i>Environmental Health Officer approved</li>\
                         <li><i class="icon-li icon-ok-sign"></i>On successful completion get a digital certificate that you can use straightaway</li>\
                         <li><i class="icon-li icon-ok-sign"></i>Hard-copy of your certificate is posted to you the next working day</li>\
                     </ul>\
@@ -485,16 +478,15 @@
             </div>\
             <div class="col-md-4 awa-course-box awa-most-popular">\
                 <div class="col-highlighted">\
-                    <h4>Level 2 Food Safety Awareness</h4>\
+                    <h4>Level 2 Food Hygiene &amp; Safety</h4>\
                     <p class="awa-course-intro">Best for anyone who works where food is cooked, prepared or handled.</p>\
                     <ul class="icons-ul">\
                         <li><i class="icon-li icon-ok-sign"></i>5 Module Online course</li>\
                         <li><i class="icon-li icon-ok-sign"></i>No time limits to complete the training</li>\
-                        <li><i class="icon-li icon-ok-sign"></i>Approximate duration- 2 hours</li>\
+                        <li><i class="icon-li icon-ok-sign"></i>Approximate duration: 2-3 hours</li>\
                         <li><i class="icon-li icon-ok-sign"></i>Matches RSPH and CIEH syllabus</li>\
                         <li><i class="icon-li icon-ok-sign"></i>Meets UK & EU legal training requirements for food handlers</li>\
                         <li><i class="icon-li icon-ok-sign"></i>CPD & RoSPA accredited certificate</li>\
-                        <li><i class="icon-li icon-ok-sign"></i>Environmental Health Officer approved</li>\
                         <li><i class="icon-li icon-ok-sign"></i>On successful completion get a digital certificate that you can use straightaway</li>\
                         <li><i class="icon-li icon-ok-sign"></i>Hard-copy of your certificate is posted to you the next working day</li>\
                     </ul>\
@@ -507,16 +499,15 @@
             </div>\
             <div class="col-md-4 awa-course-box">\
                 <div class="col-highlighted">\
-                    <h4>Level 3 Food Safety Awareness</h4>\
+                    <h4>Level 3 Supervising Food Safety</h4>\
                     <p class="awa-course-intro">Intermediate certificate for supervisors and managers.</p>\
                     <ul class="icons-ul">\
                         <li><i class="icon-li icon-ok-sign"></i>16 Module Online course</li>\
                         <li><i class="icon-li icon-ok-sign"></i>No time limits to complete the training</li>\
-                        <li><i class="icon-li icon-ok-sign"></i>Approximate duration- 2 hours</li>\
+                        <li><i class="icon-li icon-ok-sign"></i>Approximate duration: 10 hours</li>\
                         <li><i class="icon-li icon-ok-sign"></i>Matches RSPH and CIEH syllabus</li>\
                         <li><i class="icon-li icon-ok-sign"></i>Meets UK & EU legal training requirements for food handlers</li>\
                         <li><i class="icon-li icon-ok-sign"></i>CPD & RoSPA accredited certificate</li>\
-                        <li><i class="icon-li icon-ok-sign"></i>Environmental Health Officer approved</li>\
                         <li><i class="icon-li icon-ok-sign"></i>On successful completion get a digital certificate that you can use straightaway</li>\
                         <li><i class="icon-li icon-ok-sign"></i>Hard-copy of your certificate is posted to you the next working day</li>\
                     </ul>\
