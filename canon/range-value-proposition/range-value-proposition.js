@@ -40,14 +40,19 @@
     AWA.css = ' \
     .gallery-category-stamp .layout-primary-header h2 {\
         visibility: hidden;\
+        font-size: 40px;\
     }\
     .live-text-banner-link-list {\
         display: none;\
     }\
+    @media screen and (max-width: 1100px) {\
+        .gallery-category-stamp .layout-primary-header h2 {\
+            font-size: 30px;\
+        }\
+    }\
     .awa-value-banner {\
         background: #eceded;\
-        max-width: 1680px;\
-        margin: 0 auto;\
+        margin: -20px auto 10px auto;\
         text-align: center;\
         padding: 1.5em 0;\
     }\
@@ -134,7 +139,7 @@
         .css({visibility: 'visible'});
 
     // Append new banner
-    $('.live-text-banner-link-list').before(AWA.var.banner);
+    $('.gallery-category-stamp').prepend(AWA.var.banner);
 
 
 })(jQuery); // vwo_$ || optimizely.$
