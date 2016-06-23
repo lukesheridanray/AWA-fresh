@@ -622,7 +622,7 @@
             </div>\
             <div class="col-md-4 awa-course-box awa-most-popular">\
                 <div class="col-highlighted">\
-                    <h4>Level 2 Food Safety Awareness</h4>\
+                    <h4>Level 2 Food Hygiene &amp; Safety</h4>\
                     <p class="awa-course-intro">Best for anyone who works where food is cooked, prepared or handled.</p>\
                     <div class="awa-course-bottom">\
                         <p class="awa-course-price">'+AWA.var.level2.price+'</p>\
@@ -633,7 +633,7 @@
             </div>\
             <div class="col-md-4 awa-course-box">\
                 <div class="col-highlighted">\
-                    <h4>Level 3 Food Safety Awareness</h4>\
+                    <h4>Level 3 Supervising Food Safety</h4>\
                     <p class="awa-course-intro">Intermediate certificate for supervisors and managers.</p>\
                     <div class="awa-course-bottom">\
                         <p class="awa-course-price">'+AWA.var.level3.price+'</p>\
