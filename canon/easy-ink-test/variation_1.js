@@ -59,18 +59,21 @@ exp.vars = {
             xl_inks: 'XL Inks',
             paper_heading: 'paper',
             compatible_inks: ' - Compatible inks',
+            black: 'Black',
         },
         fr: {
             multi_and_value_packs: 'Multipacks et packs économiques',
             xl_inks: 'Encres XL',
             paper_heading: 'papier',
             compatible_inks: ' - Encres compatibles',
+            black: 'noire',
         },
         de: {
             multi_and_value_packs: 'Multipacks und Value Packs',
             xl_inks: 'XL-Tinten',
             paper_heading: 'papier',
             compatible_inks: ' – Kompatible Tinten',
+            black: 'Schwarz',
         },
     },
     text: {
@@ -211,7 +214,11 @@ exp.func.xl_inks_wording = function(){
                 var $product = $(this);
 
                 $product.find('p.description').after(
-                    '<p class="p-3 product-tile-desc--para">'+ ($product.find('.product-tile--header').text().indexOf('Black') !== -1 ? exp.vars.text[exp.vars.current_language].xl_black_text : exp.vars.text[exp.vars.current_language].xl_colour_text) +'</p>'
+                    '<p class="p-3 product-tile-desc--para">'+ (
+                        $product.find('.product-tile--header').text().indexOf(exp.vars.site_content[exp.vars.current_language].black) !== -1
+                        ? exp.vars.text[exp.vars.current_language].xl_black_text
+                        : exp.vars.text[exp.vars.current_language].xl_colour_text
+                    ) +'</p>'
                 );
             });
         }
