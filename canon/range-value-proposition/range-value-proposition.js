@@ -59,6 +59,8 @@
     .awa-value-banner ul {\
         text-align: center;\
         margin: 0 auto;\
+        line-height: 0;\
+        padding: 0;\
     }\
     .awa-value-banner li {\
         display: inline-block;\
