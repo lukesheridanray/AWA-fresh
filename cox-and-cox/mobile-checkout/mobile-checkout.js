@@ -5,7 +5,6 @@
 // Home and Garden https://useruploads.visualwebsiteoptimizer.com/useruploads/230591/images/49d1e71d1636c7e7631426f85edc5680_home-garden-awa-cox.png
 // Elle Deco https://useruploads.visualwebsiteoptimizer.com/useruploads/230591/images/665cd7db323632d49d245bb746ef1b91_elle-cox-awa.png
 // Good Homes https://useruploads.visualwebsiteoptimizer.com/useruploads/230591/images/472d653737c55ae7c67925342add82f1_goodhomes-cox-awa.png
-
 var exp = function($) {
 
     // Get an instance of the Validation object for our own use
@@ -266,6 +265,7 @@ var exp = function($) {
         var telephone = $('#billing-new-address-form > fieldset > ul > li:nth-child(10) > div');
         var password = $('#register-customer-password > div:nth-child(1)');
         var confirmPassword = $('#register-customer-password > div:nth-child(2)');
+        var addressLine1 = $('#billing-new-address-form > fieldset > ul > li:nth-child(6)');
         var detailaddress = $('#billing-new-address-form > fieldset > ul > li:nth-child(7)');
         var townCity = $('#billing-new-address-form > fieldset > ul > li:nth-child(8)');
         var country = $('#billing-new-address-form > fieldset > ul > li:nth-child(9)');
@@ -278,15 +278,13 @@ var exp = function($) {
         $('#billing-new-address-form > fieldset > ul > li:nth-child(7)').hide();
 
         // fix the address pop up box.
-/*
-@Luke Do we need this here? - Jamie
-        $('ul li:nth-child(5)').click(function(e) {
-            $('#billing-new-address-form > fieldset > ul > li:nth-child(6), #billing-new-address-form > fieldset > ul > li:nth-child(7)').show(); 
-        });
-        $('ul li:nth-child(5)').find('input').focus(function(e) {
-            $('#billing-new-address-form > fieldset > ul > li:nth-child(6), #billing-new-address-form > fieldset > ul > li:nth-child(7)').show(); 
-        });
-*/
+        // $('ul li:nth-child(5)').click(function(e) {
+        //     $('#billing-new-address-form > fieldset > ul > li:nth-child(6), #billing-new-address-form > fieldset > ul > li:nth-child(7)').show(); 
+        // });
+        // $('ul li:nth-child(5)').find('input').focus(function(e) {
+        //     $('#billing-new-address-form > fieldset > ul > li:nth-child(6), #billing-new-address-form > fieldset > ul > li:nth-child(7)').show(); 
+        // });
+
 
     
         $('.input-box').find('.validation-advice').remove();
@@ -323,6 +321,12 @@ var exp = function($) {
             $('#billing-new-address-form > fieldset > ul > li:nth-child(7)').show();
         });
 */
+        addressLine1.click(function(e) {
+            $("#billing-new-address-form > fieldset > ul > li:nth-child(8)").show();
+        });
+        addressLine1.find('input').focus(function(e) {
+            $("#billing-new-address-form > fieldset > ul > li:nth-child(8)").show();
+        });
         detailaddress.click(function(e) {
             $("#billing-new-address-form > fieldset > ul > li:nth-child(8)").show();
         });
@@ -330,26 +334,50 @@ var exp = function($) {
             $("#billing-new-address-form > fieldset > ul > li:nth-child(8)").show();
         });
         /*
-        This interval will check the value of the second address field every second
+        This interval will check the value of the billing address fields every second
         if it finds a value it will clear the interval and revalidate the form
+        it will also show the next field
         */
-        var checkValInterval = setInterval(function(){
-            if( $('#billing-new-address-form > fieldset > ul > li:nth-child(7) input').val() != '') {
+        var checkBillValInterval = setInterval(function(){
+            if(
+                $('#billing-new-address-form > fieldset > ul > li:nth-child(6) input').val() !== '' ||
+                $('#billing-new-address-form > fieldset > ul > li:nth-child(7) input').val() !== ''
+            ) {
                 validator.validate();
-                clearInterval(checkValInterval);
-        };
+                clearInterval(checkBillValInterval);
+                $("#billing-new-address-form > fieldset > ul > li:nth-child(8)").show();
+            }
+        }, 1000);
+        /*
+        This interval will check the value of the billing address fields every second
+        if it finds a value it will clear the interval and revalidate the form
+        it will also show the next field
+        */
+        var checkShipValInterval = setInterval(function(){
+            if(
+                $('#shipping-new-address-form > fieldset > ul > li:nth-child(6) input').val() !== '' ||
+                $('#shipping-new-address-form > fieldset > ul > li:nth-child(7) input').val() !== ''
+            ) {
+/*
+We need a seperate validator instance for the shipping form
+*/
+                validator.validate();
+                clearInterval(checkShipValInterval);
+                $("#shipping-new-address-form > fieldset > ul > li:nth-child(8)").show();
+            }
         }, 1000);
 
         selectAddress.click(function(e) {
-            console.log('click event');
             $("#billing-new-address-form > fieldset > ul > li:nth-child(6), #billing-new-address-form > fieldset > ul > li:nth-child(7) ").show();
         });
 
         townCity.click(function(e) {
             $("#billing-new-address-form > fieldset > ul > li:nth-child(9)").show();
+            $('#billing-new-address-form > fieldset > ul > li:nth-child(10) > div').show();
         });
         townCity.find('input').focus(function(e) {
             $("#billing-new-address-form > fieldset > ul > li:nth-child(9)").show();
+            $('#billing-new-address-form > fieldset > ul > li:nth-child(10) > div').show();
         });
         county.click(function(e) {
             $("").show();
@@ -360,10 +388,6 @@ var exp = function($) {
         //  country.hover(function(e) {
         //      $("#billing-new-address-form > fieldset > ul > li:nth-child(10)").show();
         //  });
-
-        $( "#billing-new-address-form > fieldset > ul > li:nth-child(9)" ).hover(function() {
-            $('#billing-new-address-form > fieldset > ul > li:nth-child(10) > div').show();
-        });
 
         telephone.click(function(e) {
             $("#register-customer-password > div:nth-child(1), #continue-btn").show();
