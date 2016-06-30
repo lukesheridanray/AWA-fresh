@@ -9,8 +9,6 @@ var exp = function($) {
 
     // Get an instance of the Validation object for our own use
     var validator = new Validation('co-billing-form');
-    
-    //validator.validate();
 
     var exp = {};
     var exptwo= {};
@@ -194,8 +192,8 @@ var exp = function($) {
         //task b
 
 
-        //remove company
-        $('#billing-new-address-form > fieldset > ul > li:nth-child(2) > div:nth-child(1)').remove();
+        //hide company
+        $('#billing-new-address-form > fieldset > ul > li:nth-child(2) > div:nth-child(1)').css({'position':'absolute','top':'-1000px'});
 
         //center find adress.
         document.getElementById("meanbee:billing_address_selector").style.margin = '0px';
@@ -213,7 +211,7 @@ var exp = function($) {
         // $('#billing-new-address-form > fieldset > ul > li:nth-child(3) > div.field.meanbee-postcode-element').hide();
         // $('#billing-new-address-form > fieldset > ul > li.wide.meanbee-postcode-element').hide();
         // $('#billing-new-address-form > fieldset > ul > li:nth-child(8) > div:nth-child(2) > label').removeClass();
-        
+
         // shipping to different adress
 
         // hide company
@@ -279,15 +277,15 @@ var exp = function($) {
 
         // fix the address pop up box.
         // $('ul li:nth-child(5)').click(function(e) {
-        //     $('#billing-new-address-form > fieldset > ul > li:nth-child(6), #billing-new-address-form > fieldset > ul > li:nth-child(7)').show(); 
+        //     $('#billing-new-address-form > fieldset > ul > li:nth-child(6), #billing-new-address-form > fieldset > ul > li:nth-child(7)').show();
         // });
         // $('ul li:nth-child(5)').find('input').focus(function(e) {
-        //     $('#billing-new-address-form > fieldset > ul > li:nth-child(6), #billing-new-address-form > fieldset > ul > li:nth-child(7)').show(); 
+        //     $('#billing-new-address-form > fieldset > ul > li:nth-child(6), #billing-new-address-form > fieldset > ul > li:nth-child(7)').show();
         // });
 
 
-    
-        $('.input-box').find('.validation-advice').remove();
+
+        //$('.input-box').find('.validation-advice').remove();
 
         firstName.click(function(e) {
            $(".name-lastname").show();
@@ -403,7 +401,7 @@ We need a seperate validator instance for the shipping form
             $("#register-customer-password > div:nth-child(2)").show();
         });
 
-        $('ul li:nth-child(6)').find('.validation-advice').remove();
+        //$('ul li:nth-child(6)').find('.validation-advice').remove();
 
 
     // ADD phone message.
