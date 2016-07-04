@@ -111,16 +111,32 @@
 
     };
 
+    // Request the script containing our data, then run the experiment on successful load
+
     $.ajax({
         type: 'GET',
-        url: 'http://cgit.co.uk/awa/search-results-price-data.js',
+        url: '//s3-eu-west-1.amazonaws.com/qubit-etc/thompsonmorgan/awa/search-results-price-data.js',
         dataType: 'script',
         success: function() {
+
+            // Log
             AWA.log('AWA - Search results price');
+
+            // Process items
             $('.sli_grid_result').each(AWA.processItem);
+
+            // Unhide the price (hidden in variation CSS)
+            $('.sli_grid_price').css({display: 'block'});
+
         },
         error: function(response) {
+
+            // Log
             AWA.log('AWA - Search results price - Could Not Load');
+
+            // Unhide the price (hidden in variation CSS)
+            $('.sli_grid_price').css({display: 'block'});
+            
         }
     });
 
