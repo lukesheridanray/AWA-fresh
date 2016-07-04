@@ -414,6 +414,14 @@ var COURSE_DESCS = {
   "Childhood Weight Management": {
     desc: "This course is suitable for parents, carers and anyone who works in childcare.",
     type: "healthnutrition"
+  },
+  "Designated Safeguarding Officer": {
+    desc: "This Designated Safeguarding Officer course is suitable for anyone who works frequently with children and who holds a management, supervisory or designated child protection role.",
+    type: "safeguardingpeople"
+  },
+  "Safer Recruitment in Education Training": {
+    desc: "This course is suitable for anyone who has responsibility for hiring and/or supervising new staff members to work with children and young people.",
+    type: "safeguardingpeople"
   }
 };
 
@@ -809,6 +817,14 @@ exp.func.getDescription = function(title) {
             .replace(/ +(?= )/g,'')
             .replace(/(\r\n|\n|\r)/gm,"");
 
+
+    if(COURSE_DESCS[title] === undefined) {
+
+        exp.log('Course not found: '+ title);
+        return '';
+
+    }
+
     if(COURSE_DESCS[title]['desc'] !== undefined) {
 
         return COURSE_DESCS[title]['desc'];
@@ -827,7 +843,7 @@ exp.func.getCourses = function() {
 
     var output = '';
     var $courses = $('.course');
-    
+
     if($courses.length === 0) {
         return output;
     }
@@ -893,8 +909,6 @@ exp.func.getCourses = function() {
         </div>\
     </div>\
 </div>';
-    
-// <a onclick="ga(\'send\',\'event\',\'BuyNow\',\'LandingPage\');" id="btn_buynow" class="btn btn-green" href="javascript:__doPostBack(\'ctl00$ContentPlaceHolder1$BuyNow1$btn_buynow\',\'\')">Buy Now »</a>\
 
         output += HTMLString;
 
@@ -946,6 +960,10 @@ exp.func.addToType = function(title,$obj) {
     title = title
             .replace(/ +(?= )/g,'')
             .replace(/(\r\n|\n|\r)/gm,"");
+
+    if(COURSE_DESCS[title] === undefined) {
+        return;
+    }
 
     if(COURSE_DESCS[title]['type']) {
 
