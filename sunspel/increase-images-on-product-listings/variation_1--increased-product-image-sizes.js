@@ -32,6 +32,18 @@
     // at the start of the body; the <head> isn't being properly respected.)
     $('body').append('\
         <style type="text/css">\
+            @media only screen and (max-width: 1499px) and (min-width: 900px) {\
+                .desk-clear {\
+                    clear: none;\
+                }\
+            }\
+            \
+            @media only screen and (min-width: 1500px) {\
+                .listing--grid .item.wide-clear {\
+                    clear: none;\
+                }\
+            }\
+            \
             @media only screen and (min-width: 900px) {\
                 .listing--grid .item { \
                     width: 50%; \
@@ -65,18 +77,6 @@
                 }\
                 .listing--grid .item:nth-of-type(4n+1) {\
                     clear: left;\
-                }\
-            }\
-            \
-            @media only screen and (max-width: 1499px) and (min-width: 900px) {\
-                .desk-clear {\
-                    clear: none;\
-                }\
-            }\
-            \
-            @media only screen and (min-width: 1500px) {\
-                .listing--grid .item.wide-clear {\
-                    clear: none;\
                 }\
             }\
         </style>\
