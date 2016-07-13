@@ -208,7 +208,7 @@
                         url: $self.find('.product-tile-header--anchor, .product-tile-list-header--anchor').attr('href'),
                         title: $self.find('.product-tile-header--anchor, .product-tile-list-header--anchor').text(),
                         image: {
-                            front: $self.find('img').attr('srcset').split(',')[0].slice(0,-3),
+                            front: 'https:' + $self.find('img').attr('data-zoom-image').split(',')[0].slice(0,-4),
                             back: ''
                         },
                         price: $.trim($self.find('.price-now').text()),
@@ -404,7 +404,7 @@
          */
         defaultToListView: function() {
 
-            if(window.location.search.indexOf('view=') !== -1) {
+            if(window.location.search.indexOf('?view=') !== -1 || window.location.search.indexOf('&view=') !== -1) {
 
                 // user has already specified a view
                 return;
