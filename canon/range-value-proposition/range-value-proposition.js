@@ -7,7 +7,7 @@
 
     var AWA = {};
 
-    var LANG = 'en';
+    var LANG = 'fr';
 
     // Logging
 
@@ -23,7 +23,20 @@
 
     AWA.var = {
         en: {
-            title: 'The full Canon range - unbeatable choice',
+            //title: 'The full Canon range - unbeatable choice',
+            title: 'A bigger, better choice of Canon products',
+            delivery: '//cdn.optimizely.com/img/2201792135/7b698721980f431ab57bd7eb1b34aeb1.png',
+            guarantee: '//cdn.optimizely.com/img/2201792135/1f6aba218d924e89a276ddef1849a678.png',
+            range: '//cdn.optimizely.com/img/2201792135/a3522f4a0a294b98a3b3ed4b64e850d5.png'
+        },
+        fr: {
+            title: 'Un choix de produits Canon plus vaste et plus pr&#233;cis',
+            delivery: '//cdn.optimizely.com/img/2201792135/7b698721980f431ab57bd7eb1b34aeb1.png',
+            guarantee: '//cdn.optimizely.com/img/2201792135/1f6aba218d924e89a276ddef1849a678.png',
+            range: '//cdn.optimizely.com/img/2201792135/a3522f4a0a294b98a3b3ed4b64e850d5.png'
+        },
+        de: {
+            title: 'Mehr Produkte. Mehr Auswahl. Direkt von Canon.',
             delivery: '//cdn.optimizely.com/img/2201792135/7b698721980f431ab57bd7eb1b34aeb1.png',
             guarantee: '//cdn.optimizely.com/img/2201792135/1f6aba218d924e89a276ddef1849a678.png',
             range: '//cdn.optimizely.com/img/2201792135/a3522f4a0a294b98a3b3ed4b64e850d5.png'
@@ -40,14 +53,15 @@
     AWA.css = ' \
     .gallery-category-stamp .layout-primary-header h2 {\
         visibility: hidden;\
-        font-size: 40px;\
+        font-size: 37px;\
+        margin: 5px 0 25px;\
     }\
     .live-text-banner-link-list {\
         display: none;\
     }\
     @media screen and (max-width: 1100px) {\
         .gallery-category-stamp .layout-primary-header h2 {\
-            font-size: 30px;\
+            font-size: 25px;\
         }\
     }\
     .awa-value-banner {\
@@ -112,6 +126,9 @@
             float: left;\
             background-size: auto 40px;\
         }\
+        .gallery-category-stamp .layout-primary-header h2 {\
+            margin-bottom: 0;\
+        }\
     }\
     @media screen and (max-width: 467px) {\
         .awa-value-banner ul {\
@@ -137,7 +154,7 @@
 
     // Change title text
     $('.gallery-category-stamp .layout-primary-header h2')
-        .text(AWA.var[LANG].title)
+        .html(AWA.var[LANG].title)
         .css({visibility: 'visible'});
 
     // Append new banner
