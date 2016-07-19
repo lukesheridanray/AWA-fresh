@@ -58,6 +58,11 @@
 
             /**
              * Use these settings to control what is included in the variation
+             * v1: true, false, false
+             * v2: false, true, false
+             * v3: false, true, true
+             * v4: true, true, false
+             * v5: true, true, true
              */
 
             // Should we show the prompt on the cart?
@@ -67,7 +72,7 @@
             showOnCategory: true,
 
             // Should we delay showing the prompt on the category?
-            delayPrompt: false,
+            delayPrompt: true,
 
             /**
              * Experiment CSS
