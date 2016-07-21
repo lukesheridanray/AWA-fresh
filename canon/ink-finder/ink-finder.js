@@ -56,7 +56,11 @@
     // Data
     AWA.data = {
         'PIXMA iP series': {
+            iP100: '/pixma-ip100-ink-cartridges',
             iP110: '/pixma-ip110-ink-cartridges',
+            iP1200: '/pixma-ip1200-ink-cartridges',
+            iP1300: '/pixma-ip1300-ink-cartridges',
+            iP1600: '/pixma-ip1600-ink-cartridges',
             iP1900: '/pixma-ip1900-ink-cartridges',
             iP2700: '/pixma-ip2700-ink-cartridges',
             iP2702: '/pixma-ip2702-ink-cartridges',
@@ -68,7 +72,7 @@
             iP4950: '/pixma-ip4950-ink-cartridges',
             iP7250: '/pixma-ip7250-ink-cartridges',
             iP8750: '/pixma-ip8750-ink-cartridges',
-            Other: '/ink-toner/f/3349056800/'
+            Other: '/ink-toner/f/3349056800/'  
         },
         'PIXMA iX series': {
             iX6550: '/pixma-ix6550-ink-cartridges',
@@ -191,13 +195,22 @@
         },
         'MAXIFY MB series': {
             MB2050: '/maxify-mb2050-ink-cartridges',
+            MB2150: '/maxify-mb2150-ink-cartridges',
+            MB2155: '/maxify-mb2155-ink-cartridges',
             MB2350: '/maxify-mb2350-ink-cartridges',
+            MB2750: '/maxify-mb2750-ink-cartridges',
+            MB2755: '/maxify-mb2755-ink-cartridges',
             MB5050: '/maxify-mb5050-ink-cartridges',
+            MB5150: '/maxify-mb5150-ink-cartridges',
+            MB5155: '/maxify-mb5155-ink-cartridges',
             MB5350: '/maxify-mb5350-ink-cartridges',
+            MB5450: '/maxify-mb5450-ink-cartridges',
+            MB5455: '/maxify-mb5455-ink-cartridges',
             Other: '/ink-toner/f/3036661443/'
         },
         'MAXIFY iB series': {
             iB4050: '/maxify-ib4050-ink-cartridges',
+            iB4150: '/maxify-ib4150-ink-cartridges',
             Other: '/ink-toner/f/3036661443/'
         },
         'MAXIFY other': {
@@ -206,6 +219,80 @@
         'imagePROGRAF': {
             'PRO-1000': '/imageprograf-pro-1000-ink-cartridges',
             Other: '/ink-toner/'
+        },
+        'i-SENSYS LB series': {
+            LBP251dw: '/toner-cartridge-719/',
+            LBP252dw: '/toner-cartridge-719/',
+            LBP253x: '/toner-cartridge-719/',
+            LBP351x: '/toner-cartridge-crg039',
+            LBP352x: '/toner-cartridge-crg039',
+            LBP710Cx: '/toner-cartridge-crg040',
+            LBP712Cx: '/toner-cartridge-crg040',
+            LBP5000: '/toner-cartridge-707/',
+            LBP5050: '/toner-cartridge-716/',
+            LBP5050n: '/toner-cartridge-716/',
+            LBP5100: '/toner-cartridge-707/',
+            LBP5300: '/toner-cartridge-711/',
+            LBP5360: '/toner-cartridge-711/',
+            LBP6300dn: '/toner-cartridge-719/',
+            LBP6310dn: '/toner-cartridge-719/',
+            LBP6650dn: '/toner-cartridge-719/',
+            LBP6670dn: '/toner-cartridge-719/',
+            LBP6680x: '/toner-cartridge-719/',
+            LBP6750dn: '/toner-cartridge-724/',
+            LBP6780x: '/toner-cartridge-724/',
+            LBP7010C: '/toner-cartridge-729/',
+            LBP7018C: '/toner-cartridge-729/',
+            LBP7100Cn: '/toner-cartridge-731/',
+            LBP7110Cw: '/toner-cartridge-731/',
+            LBP7200Cdn: '/toner-cartridge-718/',
+            LBP7210Cdn: '/toner-cartridge-718/',
+            LBP7660Cdn: '/toner-cartridge-718/',
+            LBP7680Cx: '/toner-cartridge-718/',
+            LBP7750Cdn: '/toner-cartridge-723/',
+            LBP7780Cx: '/toner-cartridge-732/',
+            Other: '/ink-toner/f/2269284995/'
+        },
+        'i-SENSYS MF series': {
+            MF411dw: '/toner-cartridge-719/',
+            MF416dw: '/toner-cartridge-719/',
+            MF418x: '/toner-cartridge-719/',
+            MF419x: '/toner-cartridge-719/',
+            MF512x: '/toner-cartridge-724/',
+            MF515x: '/toner-cartridge-724/',
+            MF623Cn: '/toner-cartridge-731/',
+            MF628Cw: '/toner-cartridge-731/',
+            MF724Cdw: '/toner-cartridge-718/',
+            MF728Cdw: '/toner-cartridge-718/',
+            MF729Cx: '/toner-cartridge-718/',
+            MF5840dn: '/toner-cartridge-719/',
+            MF5880dn: '/toner-cartridge-719/',
+            MF5940dn: '/toner-cartridge-719/',
+            MF5980dw: '/toner-cartridge-719/',
+            MF6140dn: '/toner-cartridge-719/',
+            MF6180dw: '/toner-cartridge-719/',
+            MF8030Cn: '/toner-cartridge-716/',
+            MF8040Cn: '/toner-cartridge-716/',
+            MF8050Cn: '/toner-cartridge-716/',
+            MF8080Cw: '/toner-cartridge-716/',
+            MF8230Cn: '/toner-cartridge-731/',
+            MF8280Cw: '/toner-cartridge-731/',
+            MF8330Cdn: '/toner-cartridge-718/',
+            MF8340Cdn: '/toner-cartridge-718/',
+            MF8350Cdn: '/toner-cartridge-718/',
+            MF8360Cdn: '/toner-cartridge-718/',
+            MF8380Cdw: '/toner-cartridge-718/',
+            MF8540Cdn: '/toner-cartridge-718/',
+            MF8550Cdn: '/toner-cartridge-718/',
+            MF8580Cdw: '/toner-cartridge-718/',
+            MF9130: '/toner-cartridge-711/',
+            MF9170: '/toner-cartridge-711/',
+            MF9220Cdn: '/toner-cartridge-711/',
+            MF9280Cdn: '/toner-cartridge-711/',
+            Other: '/ink-toner/f/2269284995/'
+        },
+        'i-SENSYS other': {
+            Other: '/ink-toner/f/2269284995/'
         },
         'Other': {
             Other: '/ink-toner/'
