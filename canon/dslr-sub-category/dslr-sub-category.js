@@ -96,7 +96,7 @@
                 display: block;\
             }\
             .awa-lang-de .awa-list-extras li {\
-                font-size: 13px;\
+                font-size: 0.9em;\
             }\
         }\
         @media screen and (min-width: 1200px) {\
@@ -221,7 +221,7 @@
                 delLink: 'Kostenloser Standardversand',
                 gauranteeLink: 'Einschließlich mind. 2 Jahre Garantie',
                 cartSubmit: 'In den Warenkorb',
-                more: ''
+                more: 'Weitere Informationen'
             }
         },
 
@@ -377,10 +377,10 @@
                         case 'de':
 
                         productData.desc =
-                            'Approx ' + fromDB.megapixels + ' Megapixels<br />' +
-                            'Lens mount ' + fromDB.lens + '<br />' +
-                            'ISO Sensitivity ' + fromDB.iso + '<br />' +
-                            'Speed ' + fromDB.speed;
+                            'Ungefähr ' + fromDB.megapixels + ' Megapixeln<br />' +
+                            'Objetivfassung ' + fromDB.lens + '<br />' +
+                            'ISO-Empfindlichkeit ' + fromDB.iso + '<br />' +
+                            'Verschlusszeit ' + fromDB.speed;
 
                         break;
 
@@ -680,4 +680,4 @@
 
     $('.catalog-image--img-container').on('mouseover mouseout', AWA.imageFlip);
 
-})(jQuery, 'fr'); // vwo_$ || optimizely.$
+})(jQuery, 'de'); // vwo_$ || optimizely.$
