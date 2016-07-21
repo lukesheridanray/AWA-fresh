@@ -110,6 +110,9 @@
             list-style-type: none;\
             line-height: 60px;\
         }\
+        .awa-lang-de .awa-value li {\
+            font-size: 1.2em;\
+        }\
         .awa-value li:before {\
             content: "";\
             display: inline-block;\
@@ -139,6 +142,92 @@
             top: 5px;\
             position: relative;\
             background: url("//cdn.optimizely.com/img/2201792135/1fbb7d07cfa94103a6157f9d0d59dfac.png") 0 0 no-repeat;\
+        }\
+        @media screen and (max-width: 1199px) {\
+            .awa-lang-de .awa-value li {\
+                font-size: 1.1em;\
+            }\
+            .awa-lang-fr .awa-value li {\
+                font-size: 1.2em;\
+            }\
+            .awa-lang-fr .awa-value h2 {\
+                font-size: 1.6em;\
+            }\
+            .awa-lang-de .awa-value li:after,\
+            .awa-lang-fr .awa-value li:after {\
+                display: none;\
+            }\
+            .awa-lang-de .awa-value li:before,\
+            .awa-lang-fr .awa-value li:before {\
+                margin-right: 0;\
+            }\
+            .awa-lang-de .awa-value,\
+            .awa-lang-fr .awa-value {\
+                padding-left: 0.5em;\
+            }\
+            .awa-lang-de .product-detail--info-text-block p,\
+            .awa-lang-fr .product-detail--info-text-block p {\
+                float: none;\
+            }\
+            .awa-lang-de .product-detail--info-text-block p + p:before,\
+            .awa-lang-fr .product-detail--info-text-block p + p:before {\
+                content: none;\
+            }\
+            .awa-lang-de .product-detail--info-text-block a,\
+            .awa-lang-fr .product-detail--info-text-block a {\
+                margin-right: 0;\
+            }\
+            .awa-lang-de .product-detail--info-text-block p + p a,\
+            .awa-lang-fr .product-detail--info-text-block p + p a {\
+                margin-left: 0;\
+            }\
+        }\
+        @media screen and (max-width: 991px) {\
+            .awa-lang-de .awa-value li,\
+            .awa-lang-fr .awa-value li {\
+                font-size: 1.2em;\
+            }\
+            .awa-lang-fr .awa-value h2 {\
+                font-size: 1.8em;\
+            }\
+            .awa-lang-de .awa-value li:after,\
+            .awa-lang-fr .awa-value li:after {\
+                display: inline-block;\
+            }\
+            .awa-lang-de .awa-value li:before,\
+            .awa-lang-fr .awa-value li:before {\
+                margin-right: 8px;\
+            }\
+            .awa-lang-de .awa-value,\
+            .awa-lang-fr .awa-value {\
+                padding-left: 1em;\
+            }\
+        }\
+        @media screen and (max-width: 600px) {\
+            .awa-lang-de .awa-value li,\
+            .awa-lang-fr .awa-value li,\
+            .awa-value li {\
+                font-size: 1.1em;\
+            }\
+            .awa-lang-fr value h2.\
+            .awa-value h2 {\
+                font-size: 1.6em;\
+            }\
+            .awa-lang-de .awa-value li:after,\
+            .awa-lang-fr .awa-value li:after,\
+            .awa-value li:after {\
+                display: none;\
+            }\
+            .awa-lang-de .awa-value li:before,\
+            .awa-lang-fr .awa-value li:before,\
+            .awa-value li:before {\
+                margin-right: 0;\
+            }\
+            .awa-lang-de .awa-value,\
+            .awa-lang-fr .awa-value,\
+            .awa-value {\
+                padding-left: 0.5em;\
+            }\
         }\
         ',
 
