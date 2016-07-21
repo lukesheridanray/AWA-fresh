@@ -75,36 +75,70 @@
             position: relative;\
         }\
         .awa-value {\
-            background: #f00;\
+            background: #0d7577;\
             color: #fff;\
-            padding: 0.5em 1em;\
+            padding: 0.5em 0 0.5em 1em;\
+            position: relative;\
+        }\
+        .awa-value:before {\
+            content: "";\
+            position: absolute;\
+            top: -15px;\
+            margin: auto;\
+            left: 0;\
+            right: 0;\
+            width: 0;\
+            height: 0;\
+            border-style: solid;\
+            border-width: 0 15px 15px 15px;\
+            border-color: transparent transparent #0d7577 transparent;\
         }\
         .awa-value h2 {\
             color: #fff;\
-            font-size: 2em;\
-            margin: 0;\
+            font-size: 1.8em;\
+            margin: 2px 0 0 8px;\
         }\
         .awa-value ul {\
-            margin: 1em 0 0.5em 0;\
+            margin: 1em 0;\
             padding: 0;\
             list-style-type: none;\
         }\
         .awa-value li {\
-            margin: 0.5em 0;\
+            margin: 0;\
             padding: 0;\
-            font-size: 1.4em;\
+            font-size: 1.3em;\
             list-style-type: none;\
+            line-height: 60px;\
         }\
         .awa-value li:before {\
             content: "";\
-            width: 60px;\
-            height: 10px;\
             display: inline-block;\
+            background-position: 0 0;\
+            background-repeat: no-repeat;\
+            width: 60px;\
+            height: 60px;\
+            float: left;\
+            margin: 0 8px 0 0;\
+        }\
+        .awa-value li.range:before {\
+            background-image: url("//cdn.optimizely.com/img/2201792135/fdb0ce06742b4156ab968e3ece675658.png");\
+        }\
+        .awa-value li.gaurantee:before {\
+            background-image: url("//cdn.optimizely.com/img/2201792135/f9ace0066e764eda8691f3a7cadebcb8.png");\
+        }\
+        .awa-value li.delivery:before {\
+            background-image: url("//cdn.optimizely.com/img/2201792135/4baa05dcda45418294739410ebfae4aa.png");\
         }\
         .awa-value li:after {\
             content: "";\
-            width: 60px;\
-            height: 10px;\
+            width: 20px;\
+            height: 20px;\
+            display: inline-block;\
+            height: 20px;\
+            margin: 0 0 0 14px;\
+            top: 5px;\
+            position: relative;\
+            background: url("//cdn.optimizely.com/img/2201792135/1fbb7d07cfa94103a6157f9d0d59dfac.png") 0 0 no-repeat;\
         }\
         ',
 
@@ -172,19 +206,62 @@
 
         },
 
+        // wait for a condition
+        waitFor: function(condition, callback, timeout, keepAlive) {
+            timeout = timeout || 20000;
+            keepAlive = keepAlive || false;
+            var intervalTime = 50,
+                maxAttempts = timeout / intervalTime,
+                attempts = 0,
+                interval = setInterval(function() {
+                    if(condition()) {
+                        if (!keepAlive) {
+                            clearInterval(interval);
+                        }
+                        callback();
+                    } else if(attempts > maxAttempts) {
+                        clearInterval(interval);
+                    }
+                    attempts ++;
+                }, intervalTime);
+        },
+
+        // Move saving band
+        moveSavingBand: function() {
+
+            $('.pricing-product-detail .awa-saving-band')
+                .insertBefore('.pricing-product-detail')
+                .css(
+                    {
+                        position: 'relative',
+                        top: '-3px'
+                    }
+                );
+
+        }
+
     };
 
     /**
      * Run the experiment
      */
 
+    // Conditions
+
+    // product is toner or ink
     if(
-        // Product is toner
         window.location.pathname.indexOf('-toner') !== -1 ||
-        // Product is ink
+        window.location.pathname.indexOf('-encre') !== -1 ||
+        window.location.pathname.indexOf('-tinte') !== -1 ||
         window.location.pathname.indexOf('-ink') !== -1
     ) {
-        AWA.log('AWA 8 - Why buy from Canon? - Experiment ending');
+        AWA.log('AWA 8 - Why buy from Canon? - Not running: Product is ink or toner');
+        return;
+    }
+
+    // not a product page
+    if($('.product-detail-core').length === 0) {
+        AWA.log('AWA 8 - Why buy from Canon? - Not running: Not a product page');
         return;
     }
 
@@ -194,8 +271,18 @@
     // Append CSS
     $('head').append('<style type="text/css">'+AWA.css+'</style>');
 
+    // Add lang attribute to body
+    $('body').addClass('awa-lang-'+LANG);
+
     AWA.moveQuantity();
     AWA.updateLinks();
     AWA.addValueBox();
 
-})(jQuery, 'en'); // vwo_$ || optimizely.$
+    AWA.waitFor(
+        function() {
+            return $('.pricing-product-detail .awa-saving-band').length > 0;
+        },
+        AWA.moveSavingBand
+    );
+
+})(jQuery, 'fr'); // vwo_$ || optimizely.$
