@@ -583,6 +583,9 @@
         .megamenu__group a.megamenu__expand {   \
             color: #000;                        \
         }                                       \
+        .megamenu {                             \
+            text-align: left;                   \
+        }                                       \
     }                                           \
     .no-touch .skip--about_us:hover span {      \
         text-decoration: underline;             \
