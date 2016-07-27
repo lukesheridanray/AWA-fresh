@@ -590,6 +590,67 @@
     .no-touch .skip--about_us:hover span {      \
         text-decoration: underline;             \
     }                                           \
+    .AWA-site-nav__sections {                   \
+        -webkit-transition: padding .3s ease;   \
+        transition: padding .3s ease;           \
+        font-size: .875rem;                     \
+        text-align: center;                     \
+        margin: 0;                              \
+        list-style: none;                       \
+    }                                           \
+                                                \
+    .AWA-site-nav__sections > li {              \
+        float: left;                            \
+        width: 50%;                             \
+    }                                           \
+                                                \
+    .AWA-site-nav__sections > li > a {          \
+        position: relative;                     \
+        padding: 15px 0;                        \
+        line-height: 15px;                      \
+        display: block;                         \
+        color: #fff;                            \
+        font-weight: 700;                       \
+        text-transform: uppercase;              \
+        letter-spacing: .2em;                   \
+        -webkit-transform: scaleX(1);           \
+        transform: scaleX(1);                   \
+        -webkit-font-smoothing: antialiased;    \
+    }                                           \
+                                                \
+    .site-header {                              \
+        height: 135px;                          \
+    }                                           \
+                                                \
+                                                \
+    @media only screen and (min-width: 400px) { \
+        .site-header {                          \
+            height: 150px;                      \
+        }                                       \
+    }                                           \
+                                                \
+    @media only screen and (min-width: 480px) { \
+        .site-header {                          \
+            height: 110px;                      \
+        }                                       \
+        .AWA-site-nav__sections > li {          \
+            float: left;                        \
+            width: 23%;                         \
+        }                                       \
+        .AWA-site-nav__sections >               \
+            li:last-of-type {                   \
+            width: 30%;                         \
+        }                                       \
+    }                                           \
+                                                \
+    @media only screen and (min-width: 900px) { \
+        .site-header {                          \
+            height: 60px;                       \
+        }                                       \
+        .AWA-nondesktop-nav {                   \
+            display: none;                      \
+        }                                       \
+    }                                           \
     ';
 
     $('body').append('<style type="text/css">'+AWA.css+'</style>');
@@ -631,5 +692,30 @@
         AWA.func.rearrangeWomensNav(menu_items.womens);
         AWA.func.rearrangeAccessoriesNav(menu_items.accessories);
     }
+
+    // Add flat links to "Sale", Men's", "Women's", "Accessories"
+    // under main nav, for tablet & smaller layouts
+    var $links = $('.site-nav__sections > li > a')
+        .clone()
+        .removeClass('megamenu__expand')
+        .removeAttr('nav-toggle');
+
+    // Honey, I killed the kids.
+    $links.each(function(){
+        var $link = $(this);
+        $link.children().remove();
+    });
+
+    var $non_desktop_nav = $('<div>', {
+        'class': 'container AWA-nondesktop-nav'
+    });
+    var $links_container = $('<ul>', {
+        'class': 'AWA-site-nav__sections'
+    });
+    $non_desktop_nav.append($links_container);
+    $links_container.append($links);
+    $links.wrap('<li>');
+
+    $('.site-header').append($non_desktop_nav);
 
 })(jQuery); // vwo_$ || optimizely.$
