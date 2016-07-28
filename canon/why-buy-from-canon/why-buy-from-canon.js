@@ -75,13 +75,14 @@
             position: relative;\
         }\
         .awa-value {\
-            background: #0d7577;\
-            color: #fff;\
+            background: #fff;\
+            color: #0d7577;\
+            border: 2px solid #0d7577;\
             padding: 0.5em 0 0.5em 1em;\
             position: relative;\
         }\
         .awa-value:before {\
-            content: "";\
+            content: none;\
             position: absolute;\
             top: -15px;\
             margin: auto;\
@@ -94,7 +95,7 @@
             border-color: transparent transparent #0d7577 transparent;\
         }\
         .awa-value h2 {\
-            color: #fff;\
+            color: #0d7577;\
             font-size: 1.8em;\
             margin: 2px 0 0 8px;\
         }\
@@ -124,13 +125,13 @@
             margin: 0 8px 0 0;\
         }\
         .awa-value li.range:before {\
-            background-image: url("//cdn.optimizely.com/img/2201792135/fdb0ce06742b4156ab968e3ece675658.png");\
+            background-image: url("//cdn.optimizely.com/img/2201792135/fbd2dc585d0644f6bdc30b08a8d7b41d.png");\
         }\
         .awa-value li.gaurantee:before {\
-            background-image: url("//cdn.optimizely.com/img/2201792135/f9ace0066e764eda8691f3a7cadebcb8.png");\
+            background-image: url("//cdn.optimizely.com/img/2201792135/df8bc3273c25404e934b79d5e64a0b23.png");\
         }\
         .awa-value li.delivery:before {\
-            background-image: url("//cdn.optimizely.com/img/2201792135/4baa05dcda45418294739410ebfae4aa.png");\
+            background-image: url("//cdn.optimizely.com/img/2201792135/1bcab78039e34280bcdaa12d61e9b4e8.png");\
         }\
         .awa-value li:after {\
             content: "";\
@@ -141,7 +142,19 @@
             margin: 0 0 0 14px;\
             top: 5px;\
             position: relative;\
-            background: url("//cdn.optimizely.com/img/2201792135/1fbb7d07cfa94103a6157f9d0d59dfac.png") 0 0 no-repeat;\
+            background: url("//cdn.optimizely.com/img/2201792135/e5b14ad90ff84552a67e6318f25f6417.png") 0 0 no-repeat;\
+        }\
+        .awa-lang-de .product-detail--info-text-block p {\
+            float: none;\
+        }\
+        .awa-lang-de .product-detail--info-text-block p + p:before {\
+            content: none;\
+        }\
+        .awa-lang-de .product-detail--info-text-block a {\
+            margin-right: 0;\
+        }\
+        .awa-lang-de .product-detail--info-text-block p + p a {\
+            margin-left: 0;\
         }\
         @media screen and (max-width: 1199px) {\
             .awa-lang-de .awa-value li {\
@@ -165,19 +178,15 @@
             .awa-lang-fr .awa-value {\
                 padding-left: 0.5em;\
             }\
-            .awa-lang-de .product-detail--info-text-block p,\
             .awa-lang-fr .product-detail--info-text-block p {\
                 float: none;\
             }\
-            .awa-lang-de .product-detail--info-text-block p + p:before,\
             .awa-lang-fr .product-detail--info-text-block p + p:before {\
                 content: none;\
             }\
-            .awa-lang-de .product-detail--info-text-block a,\
             .awa-lang-fr .product-detail--info-text-block a {\
                 margin-right: 0;\
             }\
-            .awa-lang-de .product-detail--info-text-block p + p a,\
             .awa-lang-fr .product-detail--info-text-block p + p a {\
                 margin-left: 0;\
             }\
@@ -374,4 +383,4 @@
         AWA.moveSavingBand
     );
 
-})(jQuery, 'fr'); // vwo_$ || optimizely.$
+})(jQuery, 'en'); // vwo_$ || optimizely.$

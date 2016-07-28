@@ -22,6 +22,7 @@ depending on what is being tracked, these are: 9 - hit, 10 - session, 11 - user.
 
 We also need to add a snippet of code to each variation, including the original. An example of this is shown below, where `dimensionValue`
 is a unique value for that variation, this includes the test name, country code, ID number and varation, e.g. variation1, or original.
+Once this has been done please pass the value onto the optimiser.
 
     var dimensionValue = 'RangeVP-UK-6330551084-Variation1';
     ga('tealium_0.set', 'dimension11', dimensionValue);
