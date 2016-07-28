@@ -1,3 +1,5 @@
+var helpers = {
+
 /**
  * Wait for a condition to return true then run a callback function
  *
@@ -6,7 +8,7 @@
  * @param {integer} [timeout=2000] - Time in milliseconds to keep trying the condition
  * @param {boolean} [keepAlive=false] - Whether to keep running condition once it returns true
  */
-AWA.func.waitFor = function(condition, callback, timeout, keepAlive) {
+waitFor: function(condition, callback, timeout, keepAlive) {
     timeout = timeout || 20000;
     keepAlive = keepAlive || false;
     var intervalTime = 50,
@@ -23,7 +25,7 @@ AWA.func.waitFor = function(condition, callback, timeout, keepAlive) {
             }
             attempts ++;
         }, intervalTime);
-};
+},
 
 /**
  * Always round a number up, down, or as standard
@@ -33,7 +35,7 @@ AWA.func.waitFor = function(condition, callback, timeout, keepAlive) {
  * @param {string} [direction=null] - Direction to round [up|down] omit to round as standard
  * @returns {string} - Rounded number
  */
-AWA.func.roundNum = function(number, decimals, direction) {
+roundNum: function(number, decimals, direction) {
     decimals = decimals || 0;
     direction = direction || false;
     var factor = Math.pow(10,decimals),
@@ -44,4 +46,6 @@ AWA.func.roundNum = function(number, decimals, direction) {
         base = Math.floor(number*factor);
     }
     return direction ? (base/factor).toFixed(decimals) : number.toFixed(decimals);
+}
+
 };
