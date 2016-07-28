@@ -6,10 +6,10 @@
 // JSHint flags
 // jshint multistr: true
 // jshint jquery: true
-// 
+//
 if (typeof String.prototype.trim !== 'function') {
   String.prototype.trim = function() {
-    return this.replace(/^\s+|\s+$/g, ''); 
+    return this.replace(/^\s+|\s+$/g, '');
   };
 }
 
@@ -43,7 +43,7 @@ var exp = (function($) {
 	// if (exp.condition && !exp.condition.length) {
 	//     exp.log('PLP Condensed failed a condition');
 	// }
-	
+
 	// Variables
 	// Object containing variables, generally these would be strings or jQuery objects
 	exp.vars = {
@@ -383,4 +383,3 @@ var exp = (function($) {
 	// if jQuery is not already used on the site use optimizely.$ instead
 })(jQuery);
 //}
-

@@ -5,8 +5,6 @@
 //Home and Garden https://useruploads.visualwebsiteoptimizer.com/useruploads/230591/images/49d1e71d1636c7e7631426f85edc5680_home-garden-awa-cox.png
 // Elle Deco https://useruploads.visualwebsiteoptimizer.com/useruploads/230591/images/665cd7db323632d49d245bb746ef1b91_elle-cox-awa.png
 // Good Homes https://useruploads.visualwebsiteoptimizer.com/useruploads/230591/images/472d653737c55ae7c67925342add82f1_goodhomes-cox-awa.png
-
-
 if (typeof String.prototype.trim !== 'function') {
     String.prototype.trim = function() {
         return this.replace(/^\s+|\s+$/g, '');
@@ -483,15 +481,12 @@ margin-top: 32px;\
 			text-decoration: none;\
 			margin: 18px auto;\
 			border: solid 1px #E4E4E6;\
-			margin-bottom: 68px;\
         }\
         #AWA-fav img {\
         	vertical-align: middle;\
         }\
         #AWA-desc-section {\
         	background-color: #EFEFF1;\
-        	padding: 15px;\
-        	padding-bottom: 64px;\
         }\
         .AWA-desc-section-header {\
         	color: #5D6870;\
@@ -503,9 +498,6 @@ margin-top: 32px;\
 			background-size: 13px;\
 			background-repeat: no-repeat;\
 			background-position: 95%;\
-        }\
-        .AWA-bg-arrow-none {\
-        	background: none;\
         }\
         .AWA-desc-section-inner {\
         	margin-top: 20px;\
@@ -545,14 +537,14 @@ margin-top: 32px;\
         	padding-right: 5px;\
         	border: solid 1px #E4E4E6;\
         }\
-        #AWA-buyers-notes {\
-        	padding-top: 35px;\
+        #AWA-buyers-notes .AWA-desc-section-header {\
+          padding-top: 25px;\
         }\
+        .product-detail .price-box .special-price .price {\
+         color: #cd5033;\
+       }\
         #AWA-buyers-notes-inner {\
         	display: block;\
-        }\
-        #AWA-buyers-notes .AWA-desc-section-header {\
-        	padding-top: 0;\
         }\
         #AWA-buyers-notes, #AWA-size-information, #AWA-delivery-returns {\
         	border-bottom: solid 2px #D7D8DA;\
@@ -679,7 +671,34 @@ margin-top: 32px;\
         .AWA-f-logo {\
         	display: block;\
         }\
-        #AWA-copy {\
+        img#pinchHolder {\
+            position: absolute;\
+            z-index: 19090;\
+            top: 30%;\
+            width: 50%;\
+            left: 25%;\
+            background: white;\
+            filter: alpha(opacity=50);\
+        }\
+      .grey-box {\
+            width: 100%;\
+            height: 92.5%;\
+            position: absolute;\
+            z-index: 98483824383483434384347;\
+            opacity:0.7;\
+            background: #999;\
+            filter: alpha(opacity=50);\
+        }\
+        p.pinchZoom {\
+            position: absolute;\
+            top: 65%;\
+            left: 37%;\
+            text-align: center;\
+            font-size: 15px;\
+            color: white;\
+            font-weight: bolder;\
+        }\
+          #AWA-copy {\
         	margin-top: 25px;\
         	font-size: 15px;\
         	font-weight: bold;\
@@ -740,7 +759,6 @@ margin-top: 32px;\
          .product-detail .info-box {\
           background: none; \
           border: none;\
-          padding: 25px 10px; \
           margin-top: 140px;\
     }\
     img.AWA-img-w-fix {\
@@ -775,6 +793,22 @@ margin-top: 32px;\
         display: flex;\
         justify-content: space-around;\
     }\
+    .payment-box {\
+    text-align: center;\
+    margin-top: 20px;\
+    }\
+    .payment-list {\
+    display: flex;\
+    margin-left: 13%;\
+    padding-bottom: 15px;\
+    }\
+    img#AWA-f-logo {\
+    width: 50%;\
+    margin-left: 25%;\
+    }\
+    div#AWA-footer-logos {\
+    background: #efeff1;\
+    }\
     .breadcrumbs span {\
     background: none;\
     font-size: 12px;\
@@ -792,18 +826,39 @@ margin-top: 32px;\
         background: none;\
     }\
     .product-detail .product-name{\
-        font-size: 3.5em;\
+        font-size: 21px;\
+        padding-bottom: 21px;\
     }\
     .product-detail .price-box .price {\
     font-weight: lighter;\
     color: #333;\
-    font-size: 27px;\
-}\
+    font-size: 23px;\
+    }\
+    .price-box {\
+    display: block;\
+    margin-right: auto;\
+    margin-left: auto;\
+    padding-left: 23px;\
+  }\
+  .product-detail .price-box{\
+  font-weight: lighter;\
+  color: #333;\
+  font-size: 23px;\
+  }\
+    .product-detail p {\
+    margin: 0 0 7px;\
+    margin-top: 17px;\
+  }\
+    p.old-price {\
+    float: left;\
+    }\
     .availability {\
         color: grey;\
     }\
     .AWA-desc-section-inner p {\
     margin-bottom: 10px;\
+    padding-left: 7px;\
+    padding-right: 7px;\
     text-align: left;\
 }\
     @media screen and (max-width: 375px) {\
@@ -1040,7 +1095,6 @@ width: 90%;\
 
     exp.init = function() {
         if (window.location.pathname === "/") {
-            homePage();
             exp.log("On homepage");
         } else if (jQuery("#super-product-table").length){
             exp.log("On rug productPage");
@@ -1375,7 +1429,6 @@ width: 90%;\
 
                 .prependTo(".top-menu");
                 $(".AWA-cat").click(function(e) {
-                    e.preventDefault();
                     $(this).next().slideToggle();
                 });
 
@@ -1383,7 +1436,7 @@ width: 90%;\
 
         function rugProductPage(){
         //
-           $('.std').hide();
+           $('#product_addtocart_form > div.info-box > div').hide();
            $('#AWA-qty').hide();
 
 
@@ -1589,7 +1642,8 @@ $('.product-name').after($new_controls_container);
                 ');
             $(".info-box").prepend($('.breadcrumbs'));
             $("br").remove();
-            $('.breadcrumbs ul li:first').after('<li style="padding-top: 10px; color: grey;">></li>')
+            $('.breadcrumbs ul li:first').after('<li style="padding-top: 10px; color: grey;">></li>');
+            $('#product_addtocart_form > div.info-box > div.breadcrumbs').hide();
             $(".info-box").append("<div id='AWA-qty'>\
                       <div id='AWA-minus' class='AWA-qty-input'>&ndash;</div>\
                       <div id='AWA-qty-middle' class='AWA-qty-input'>QTY: <span id='AWA-qty-num'>1</span></div>\
@@ -1612,8 +1666,8 @@ $('.product-name').after($new_controls_container);
                       <div id='AWA-delivery-returns-inner' class='AWA-desc-section-inner'></div>\
                     </div>\
                   </div>");
-                  $('.catagories-box').remove();
-                  $(".categories-menu").append("<div class='categories-box'> <ul id='AWA-drop-down'>\
+
+                  $(".categories-menu").html("<div class='categories-box'> <ul id='AWA-drop-down'>\
                                           <li class='AWA-cat'><a href='#'>Indoor Living</a></li>\
                                           <li class='AWA-h'>\
                                               <ul class='AWA-sub-cat-list'>\
@@ -1736,6 +1790,11 @@ $('.product-name').after($new_controls_container);
 
 
 
+          //Append image for pinch zoom.
+          jQuery('.image-box').prepend('<div class="grey-box"><img id="pinchHolder"src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Pinch_zoom.png" alt=""><p class="pinchZoom">Pinch to Zoom</p></div>');
+
+
+
             //Hide Stuff
             $('.product-collateral').hide();
             $('#footer').hide();
@@ -1749,14 +1808,15 @@ $('.product-name').after($new_controls_container);
 
 
 
-
+            $('#AWA-drop-down > li:nth-child(10) > ul > li:nth-child(1) > a').click(function(e) {
+                console.log('please work');
+            });
 
 
 
             // Menu
-            $(".btn-menu").click(function(e) {
-                e.preventDefault();
-                $("#AWA-drop-down").slideToggle();
+            $(".top-menu").click(function(e) {
+                $("categories-menu").slideToggle();
             });
             $(".AWA-cat").click(function(e) {
                 e.preventDefault();
@@ -1778,6 +1838,18 @@ $('.product-name').after($new_controls_container);
 
 
 
+        // area for pinch to zoom reminder
+
+        var fade_out = function() {
+          $(".grey-box").fadeOut().empty();
+          $("#pinchHolder").fadeOut().empty();
+          }
+
+      setTimeout(fade_out, 2250);
+
+
+
+
 
 
 
@@ -1795,6 +1867,7 @@ $('.product-name').after($new_controls_container);
             var deliveryReturns = $("#tab3").html();
             $("#AWA-delivery-returns-inner").html(deliveryReturns);
 
+            $("#AWA-buyers-notes-inner").hide();
             $(".AWA-desc-section-header").click(function() {
                 $(this).next().slideToggle();
                 $(this).toggleClass("AWA-bg-arrow-none");
@@ -1939,9 +2012,7 @@ $('.product-name').after($new_controls_container);
 
 
         }
-        $('.btn-menu').on('click', function(){
-            $('#AWA-drop-down').slideToggle();
-        });
+
 
     };
 

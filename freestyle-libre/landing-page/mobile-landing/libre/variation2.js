@@ -1,8 +1,6 @@
 var exp = function($) {
-
     // Initialise the experiment object
     var exp = {};
-
     // Wrapper for console.log, to prevent the exp breaking on browsers which don't
     // (always) have 'console' set (e.g. IE9)
     exp.log = function(str) {
@@ -10,22 +8,23 @@ var exp = function($) {
             console.log(str);
         }
     };
-
     // Log the experiment, useful when multiple experiments are running
     exp.log('AWA - Landing page v1');
-
     // Variables
     // Object containing variables, generally these would be strings or jQuery objects
     exp.vars = {
     };
-
     // Styles
     // String containing the CSS for the experiment
     exp.css = "\
+    .nav-menu a {\
+        padding-top: 5px !important;\
+        padding-bottom: 5px !important;\
+    }\
     header {\
         height: 100%;\
         background: #ffd100;\
-        padding: 18px 0;\
+        padding: 18px 0 38px 0;\
         -webkit-box-shadow: 0 5px 10px 0 rgba(50,50,50,.3);\
         -moz-box-shadow: 0 5px 10px 0 rgba(50,50,50,.3);\
         box-shadow: 0 5px 10px 0 rgba(50,50,50,.3);\
@@ -36,11 +35,17 @@ var exp = function($) {
     .AWA-mobile-top-header-container{\
       text-align: center;\
       margin: 0;\
-      padding: 10px;\
+      padding-top: 10px;\
+    padding-left: 10px;\
+    padding-right: 10px;\
+    padding-bottom: 0px;\
+    margin-bottom: 0px;\
     }\
     .AWA-mobile-header {\
         color: black;\
-        font-size: 2.5rem;\
+        padding: 0 0.5em;\
+        font-size: 1.8rem;\
+        height: 100px;\
     }\
     .AWA-mobile-sub-header {\
         font-size: 21px;\
@@ -106,6 +111,8 @@ var exp = function($) {
       display: block;\
       width: 100%;\
       position: relative;\
+      margin-left: 10px;\
+      margin-bottom: 25px;\
     }\
     .buy-here-btn {\
       background-color: #909;\
@@ -266,18 +273,14 @@ var exp = function($) {
             border: none\
         }\
   ";
-
     // Functions
     // Object containing functions, some helpful functions are included
     exp.func = {};
-
     // Init function
     // Called to run the actual experiment, DOM manipulation, event listeners, etc
     exp.init = function() {
         // Append style to head
         $('head').append('<style type="text/css">'+exp.css+'</style>');
-
-
         //Remove Divs Needed
         $('.hero').remove();
         $('.AWA-hero').remove();
@@ -288,39 +291,33 @@ var exp = function($) {
         <div class="row">\
                 \
             <div class="AWA-mobile-top-header-container">\
-            	<h1 class="AWA-mobile-header">See your glucose level anytime</h1>\
-              <p class="AWA-mobile-sub-header">No Lancets.<sup>*</sup> No routine finger pricking.<sup>†</sup> Just a 1 second scan. </p>\
+                <h1 class="AWA-mobile-header">No Lancets.<sup>*</sup> No routine finger pricking.<sup>†</sup> Just a 1 second scan.</h1>\
             </div>\
-                \
+            <div class="AWA-info-container">\
+            <div class="AWA-info-box">\
+            <img src="https://icons.iconarchive.com/icons/iconsmind/outline/24/Close-Window-icon.png">\
+              <h1 style="font-size: 16px; text-align: left; text-decoration: underline; font-weight: bold;">VAT exempt</h1>\
+              <p style="padding-top: 38px; padding-left: 15px;"">No VAT payable if you have Diabetes Mellitus, or buying on behalf of someone aged 4+ with diabetes Mellitus</p>\
+            </div>\
+            <div class="buy-here-AWA">\
+            <h2 class="header-buy-here-AWA">Get your Starter Pack today</b></h2>\
+            <p style="padding: 10px; color: black;">Price VAT incl: <small>£159.95</small></p>\
+            <a href="http://www.freestylelibre.co.uk/freestyle-libre-starter-pack-english.html"><button class="buy-here-btn">Add to basket</button></a>\
+            <a href="https://youcandoit.freestylediabetes.co.uk/product-overview/"><p style="\
+                text-decoration: unerline;\
+                text-decoration: underline;\
+                color: grey;\
+            ">More information</p></a>\
+            </h2>\
+            </div>\
+            </div>\
         <div class="AWA-mobile-reader col-md-6">\
           <img style=" max-width: 100%; width: 100%;" src="http://useruploads.visualwebsiteoptimizer.com/useruploads/232844/images/4c131d22fda5cc9ac2e78bc8a814395c_reader-complete-awa.jpg">\
           </div>\
           </div>\
           </div>\
-          <div class="AWA-info-container">\
-          <div class="AWA-info-box">\
-          <img src="https://icons.iconarchive.com/icons/iconsmind/outline/24/Close-Window-icon.png">\
-            <h1 style="font-size: 16px; text-align: left; text-decoration: underline; font-weight: bold;">VAT exempt</h1>\
-            <p style="padding-top: 38px; padding-left: 15px;"">No VAT payable if you have Diabetes Mellitus, or buying on behalf of someone aged 4+ with diabetes Mellitus</p>\
-          </div>\
-          <div class="buy-here-AWA">\
-          <h2 class="header-buy-here-AWA">Get your Starter Pack today</b></h2>\
-          <p style="padding: 10px; color: black;">Price VAT incl: <small>£159.95</small></p>\
-          <p class="click-info-here-AWA" style="color: black;">With VAT RELIEF:<small> £133.29<sup style="width: 1px;">\
-          <img src="http://vignette2.wikia.nocookie.net/gravityfalls/images/5/55/More_info_icon.png/revision/latest?cb=20140601022437" style="width: 15px;"></sup></small></p>\
-          <a href="http://www.freestylelibre.co.uk/freestyle-libre-starter-pack-english.html"><button class="buy-here-btn">Add to basket</button></a>\
-          <a href="https://youcandoit.freestylediabetes.co.uk/product-overview/"><p style="\
-              text-decoration: unerline;\
-              text-decoration: underline;\
-              color: grey;\
-          ">More information</p></a>\
-          </h2>\
-          </div>\
-          </div>\
         </section>\
 ').insertAfter('header');
-
-
 $( "section" ).first().append('\
 <div class="AWA-as-seen-in">\
   <p>AS SEEN ON:</p>\
@@ -351,9 +348,6 @@ $( "section" ).first().append('\
   </div>\
 </div>\
 ');
-
-
-
 $('.margin-top').before('\
 <div class="AWA-mobile-tesimony-wrapper">\
 <div class="AWA-testimony-img">\
@@ -370,10 +364,7 @@ $('.margin-top').before('\
 </div>\
 </div>\
 ')
-
-
 $('.margin-top').remove();
-
 $('.AWA-mobile-tesimony-wrapper').after('\
             <div class="AWA-info-container-two-title">\
             <h1>\
@@ -433,7 +424,6 @@ $('.AWA-mobile-tesimony-wrapper').after('\
             </div>\
             </section>\
         ');
-
         $('footer').remove();
         $('<footer class="yellow-bottom">\
       <p>The views, opinions and positions expressed by the authors are theirs alone, and do not necessarily reflect the views,\
@@ -453,62 +443,41 @@ $('.AWA-mobile-tesimony-wrapper').after('\
           </div>\
         </div>\
       </footer>').insertAfter('.landing-page')
-
-
-
 //POP Up box
 jQuery('.click-info-here-AWA').click(function(){
 jQuery('.AWA-info-box').slideToggle();
 console.log('I like a click');
 });
-
 jQuery('#AWA-info-fix-two').click(function(){
 jQuery('#AWA-info-box-two').slideToggle();
 console.log('I like a click');
 });
-
 //Close Pop up box
 jQuery('#AWA-info-box-two').click(function(){
 jQuery('#AWA-info-box-two').hide();
 console.log('I like to hide');
 });
-
 jQuery('.AWA-info-box').click(function(){
 jQuery('.AWA-info-box').hide();
 console.log('I like to hide');
 });
-
-
-
     //Hide Header for Thumb Image and such
-
-    $( ".landing-page" ).find( "p" ).first().remove();
-    $( ".landing-page" ).find( "h1" ).first().remove();
-
-
+    // $( ".landing-page" ).find( "p" ).first().remove();
+    // $( ".landing-page" ).find( "h1" ).first().remove();
     // testimonial section tweaks
   var $testimonial_section = jQuery('.section.stories'),
     $testimonial_section_title = $testimonial_section.find(' > .container > h3');
-
   $testimonial_section_title.text('What others are saying about the FreeStyle Libre System');
-
   // Hide the next 2 paragraphs
   $testimonial_section_title
   .nextAll('p')
   .remove();
-
+        // Add tab menu
+        $('.abbott-logo').before('<ul class="nav-menu">\
+            <li style="position:relative;left: 2px;"><a href="/product-overview/" class="">Product Overview</a></li>\
+            <li style="position:relative;left: -2px;"><a href="http://www.freestylelibre.co.uk/products.html?utm_source=Facebook&amp;utm_medium=Social&amp;utm_term=buy-now&amp;utm_content=button-1&amp;utm_campaign=libre" target="_blank" class="cta-button buy" data-track="\'send\', \'event\', \'cta\', \'Buy Now\', \'Header\'">Buy Now</a></li>\
+        </ul>');
   };
-
-
-
-
-
-
-
-
-
-
-
     // Run the experiment
     exp.waitFor = function(condition, callback, timeout, keepAlive) {
         timeout = timeout || 20000;
@@ -528,13 +497,9 @@ console.log('I like to hide');
             attempts ++;
         }, intervalTime);
     };
-
-
     exp.waitFor(function() { return $(".yellow-bottom").length; }, exp.init, 10000);
-
     // Return the experiment object so we can access it later if required
     return exp;
-
     // Close the IIFE, passing in jQuery and any other global variables as required
     // if jQuery is not already used on the site use optimizely.$ instead
 };

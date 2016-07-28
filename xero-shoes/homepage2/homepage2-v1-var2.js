@@ -2,9 +2,9 @@
 vwo_$("#wrapper").css({"display":"none"});
 /* CUSTOM CODE */
 setTimeout(function(){
-  
+
   vwo_$("#wrapper").css({'display':'block'});
-  
+
 },2000);
 //* NOTE - Add href to Umara Z-Trail More Information Link
 if (typeof String.prototype.trim !== 'function') {
@@ -77,6 +77,7 @@ var exp = function($) {
                                         <li>More protection. Lighter weight. Extra comfort.</li>\
                                         <li>20% lighter than our Amuri Z-Trek</li>\
                                         <li>10mm 3-Layer FeelLite&trade; sole</li>\
+                                        <li>$79.99</li>\
                                     </ul>\
                                     <a id='AWA-ammend-men' class='AWA-g-b' href='http://www.xeroshoes.com/shop/umara/ztrail-men'>Men's</a>\
                                     <a id='AWA-ammend-women' class='AWA-g-b' href='http://www.xeroshoes.com/shop/umara/ztrail-women'>Women's</a>\
@@ -100,6 +101,7 @@ var exp = function($) {
                                 <ul class='AWA-shoe-ul'>\
                                     <li class='AWA-shoe-bullet'>Barefoot flexibility, greater ground feel</li>\
                                     <li class='AWA-shoe-bullet'>5.5mm FeelTrue<sup>&reg;</sup> sole</li>\
+                                    <li class='AWA-shoe-bullet'>$59.99</li>\
                                 </ul>\
                                 <div class='AWA-shoe-buttons AWA-sb1'>\
                                     <a class='AWA-shoe-button-link AWA-sbl-left' href='http://xeroshoes.com/shop/feeltrue-products/ztrek-men/'>Men\'s</a>\
@@ -112,6 +114,7 @@ var exp = function($) {
                                 <ul class='AWA-shoe-ul'>\
                                     <li class='AWA-shoe-bullet'>Performance-ready recreation sandals</li>\
                                     <li class='AWA-shoe-bullet'>5.5mm FeelTrue<sup>&reg;</sup> sole</li>\
+                                    <li class='AWA-shoe-bullet'>$49.99</li>\
                                 </ul>\
                                 <div class='AWA-shoe-buttons AWA-sb2'>\
                                     <a class='AWA-shoe-button-link AWA-sbl-left' href='http://xeroshoes.com/shop/feeltrue-products/sensori-venture-mens-barefoot-sandals/'>Men\'s</a>\
@@ -124,6 +127,7 @@ var exp = function($) {
                                 <ul class='AWA-shoe-ul'>\
                                     <li class='AWA-shoe-bullet'>Super light weight with touch of extra comfort</li>\
                                     <li class='AWA-shoe-bullet'>5.5mm FeelTrue<sup>&reg;</sup> sole with 3mm BareFoam&trade; forefoot</li>\
+                                    <li class='AWA-shoe-bullet'>$39.99</li>\
                                 </ul>\
                                 <div class='AWA-shoe-buttons AWA-sb3'>\
                                     <a class='AWA-shoe-button-link AWA-sbl-left' href='http://xeroshoes.com/shop/feeltrue-products/amuri-cloud-mens-barefoot-sandal/'>Men\'s</a>\
@@ -133,7 +137,7 @@ var exp = function($) {
                             <div class='AWA-shoe col-sm-3 col-md-3 col-lg-3'>\
                                 <h5 id='AWA-diy-title'>DIY Xero Shoes Kits</h5>\
                                 <img src='//useruploads.visualwebsiteoptimizer.com/useruploads/197399/images/e03b6d535f7fd4048f2686ca247552ed_all-laces-2rows-withsoles-1124x1124_(1).png'>\
-                                <p>Make your own barefoot sandals in just minutes!</p>\
+                                <p>Make your own barefoot sandals in minutes from just $17.95!</p>\
                                 <div class='AWA-shoe-buttons AWA-sb4'>\
                                     <a class='AWA-shoe-button-link' href='http://xeroshoes.com/shop/product-category/diy-kits/'>DIY Kits</a>\
                                 </div>\
@@ -515,7 +519,7 @@ var exp = function($) {
 
         // Load in video
         $("#AWA-video").html('<p><script charset="ISO-8859-1" src="//fast.wistia.com/assets/external/E-v1.js" async><\/script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_eegsrl8vh7 videoFoam=true" style="height:100%;width:100%">&nbsp;</div></div></div><p>');
-        
+
 
         // Swap Customize and Hear My Story
         $(".stories").after($(".customize-xero"));

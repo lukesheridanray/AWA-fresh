@@ -1,4 +1,4 @@
-
+function (options) {
 //function() {
 //
 // CGIT Optimizely Boilerplate - version 0.1.4
@@ -230,9 +230,9 @@ var exp = (function($) {
 		width: 60%;\
 	}\
 	#AWA-logo img {\
-		width: 80%;\
+		width: 40%;\
 		padding-top: 2%;\
-  		padding-left: 42%;\
+  		padding-left: 2%;\
 	}\
 	#AWA-m-cart {\
 		float: right;\
@@ -545,14 +545,10 @@ var exp = (function($) {
 
 	    // Append style to head
 	    $('head').append('<style type="text/css">'+this.css+'</style>');
-			$('head').append('<meta name="viewport" content="width=320, initial-scale=1">');
+
+
 
 	/* --- MOBILE NAVIATION --- */
-	/*-- This is to fix the navigation on mobile pages.--*/
-
-
-	//Append the basket line to be on top of catologue.
-	$('#AWA-catalogue').before($('#headerBasket'));
 
 
 
@@ -695,9 +691,6 @@ var exp = (function($) {
 				.login-portlet input[type=text], .login-portlet input[type=password], .login-portlet input[type=email], .login-portlet input[type=tel] {\
 					width: 50%;\
 				}\
-				.text.clearFloat {\
-    			text-align: center;\
-				}\
 				.AWA-m-new-button {\
 					display: block;\
 					margin: 0 auto;\
@@ -706,6 +699,7 @@ var exp = (function($) {
 					color: white !important;\
 					padding: 12px;\
 					font-size: 150%;\
+					width: 19%;\
 				}\
 				.AWA-m-new-hidden {\
 					display: none;\
@@ -716,6 +710,7 @@ var exp = (function($) {
 				#AWA-border {\
 					margin: 0 auto;\
 					margin-top: 50px;\
+					width: 30%;\
 					border-top: solid 3px #103E1C;\
 					margin-bottom: 50px;\
 				}\
@@ -723,7 +718,7 @@ var exp = (function($) {
 					width: 25%;\
 					margin: 0 auto;\
 					text-align: center;\
-					background-color: #FFF;\
+					background-color: #F2F2F2;\
 					position: relative;\
 					top: -10px;\
 					font-size: 164%;\
@@ -895,12 +890,9 @@ var exp = (function($) {
 					margin-left: auto;\
 			}\
 			#AWA-logo img {\
-				width: 80%;\
+				width: 40%;\
 				padding-top: 2%;\
-					padding-left: 43%;\
-			}\
-			div#QLCoreContainer {\
-    		width: 100%;\
+					padding-left: 2%;\
 			}\
 			#AWA-m-cart {\
 				float: right;\
@@ -1025,9 +1017,10 @@ var exp = (function($) {
 			}\
 			.headerLinks.floatRight {\
 				display: block;\
-				width: 100%;\
+				margin-right: 15%;\
 		}\
 		.login-portlet {\
+				width: 350px;\
 				display: block;\
 				margin-left: auto;\
 				margin-right: auto;\
@@ -1048,76 +1041,6 @@ var exp = (function($) {
     margin-right: auto;\
     padding-left: 60px;\
 		}\
-		#headerNav li.telephone {\
-    background: url("/thompsonandmorgan/site-theme/images/icon_telephone_tandm.png") no-repeat scroll 0 3px rgba(0, 0, 0, 0);\
-    font-size: 12px;\
-    margin-left: 8px;\
-	}\
-	a#AWA-catalogue-link {\
-    text-align: center;\
-    display: block;\
-    margin-left: auto;\
-    margin-right: auto;\
-    padding-right: 48px;\
-    margin-top: -20px;\
-	}\
-	#headerBasket {\
-    position: relative;\
-    z-index: 10;\
-		margin-right: 10%;\
-    float: right;\
-    width: 300px;\
-	}\
-	.login-helpsection a {\
-		margin-left: 0px;\
-    padding-top: 7px;\
-    height: 30px;\
-    font-size: 11px;\
-}\
-	.dropDownField {\
-    width: 30% !important;\
-		margin-right: 86px;\
-		}\
-		#new-customer label, #login-customer label {\
-    width: 23%;\
-    font-size: 15px;\
-    white-space: nowrap;\
-		text-align: left;\
-		}\
-		input {\
-    font-size: 18px !important;\
-		width: 100% !important;\
-		height: 33px !important;\
-		}\
-		input#postalCode {\
-			height: 21px !important;\
-			margin-left: 35px;\
-			float: left;\
-			margin-bottom: 18px;\
-		}\
-		#QASearch {\
-			border: 1px solid #000;\
-			background-color: #b6071B;\
-			color: #fff;\
-		}\
-		.userDetails {\
-    margin-left: 0px;\
-    margin-right: 0px;\
-		}\
-		#new-customer .checkboxLabel {\
-    margin: 0 0 10px 0 !important;\
-    text-align: left;\
-    width: 260px !important;\
-    height: auto;\
-    white-space: pre-wrap;\
-		}\
-		table.subscriptionTable {\
-    display: block;\
-    margin-left: auto;\
-    margin-right: auto;\
-    position: relative;\
-    right: 32px;\
-		}\
 		';
 
 			// Functions
@@ -1129,7 +1052,6 @@ var exp = (function($) {
 
 					// Append style to head
 					$('head').append('<style type="text/css">'+this.css+'</style>');
-
 
 
 					/* --- ROW 1 --- */
@@ -1161,17 +1083,8 @@ var exp = (function($) {
 
 
 
-				/*-- This is to fix the navigation on mobile pages.--*/
-
-
-				//Append the basket line to be on top of catologue.
-				$('#AWA-catalogue').before($('#headerBasket'));
-
-
-
-
 				/* --- FINAL STUFF --- */
-				// change button login style
+				// Hide original header
 
 
 				//change text for guest checkout
@@ -1212,13 +1125,13 @@ var exp = (function($) {
 						<div id="login-customer">\
 		<div class="login-AWA">\
 		<h2 style="margin-left: 6px; margin-bottom: 25px;">Login to your account</h2>\
-				<p style="margin-left: 40%;">Welcome back.</p>\
-				<p style="margin-left: 35%;">* = required fields</p></div>\
+				<p style="margin-left: 137px;">Welcome back.</p>\
+				<p style="margin-left: 130px;">* = required fields</p></div>\
 				<br>\
 		<form id="loginForm" name="loginForm" method="post" action="/public/QLOnline/secure/checkoutRegistration?portal:componentId=1815133327&amp;portal:type=action&amp;portal:isSecure=true&amp;org.apache.myfaces.portlet.MyFacesGenericPortlet.VIEW_ID=%2Fcheckout%2FcheckoutRegistration.jsp" enctype="application/x-www-form-urlencoded" target="">\
 		 <ul>\
 			<li>\
-			<label style="font-size: 15px; margin-left: 0px;"> Your email address  *</label><input id="loginForm:username" name="loginForm:username" type="text" value="" tabindex="26"> <br>  </li>  <li> <label style="font-size: 15px; margin-left: 0px"> Password *</label><input type="password" id="loginForm:password" name="loginForm:password" tabindex="27"><br>\
+			<label style="font-size: 11px;"> Your email address  *</label><input id="loginForm:username" name="loginForm:username" type="text" value="" tabindex="26"> <br>  </li>  <li> <label style="font-size: 11px;"> Password *</label><input type="password" id="loginForm:password" name="loginForm:password" tabindex="27"><br>\
 		 </li>\
 		 </ul>\
 			<div class="actions_login">\
@@ -1254,25 +1167,12 @@ var exp = (function($) {
 		</div>\
 		');
 
-		$('#login-customer > div.login-AWA > p:nth-child(2)').hide();
-		$('#login-customer > div.login-AWA > p:nth-child(3)').hide();
 
 
 
-		// button center. and other things center.
-
-		$("input#login_submit").attr('style', 'background-color: #B60718; background-image: none; text-indent: 0px; color: white; width: 199px; height: 35px !important; font-size: 150%; margin-top: 10px; float: none !important; margin-right: auto; -webkit-appearance: none; display: block; margin-left: auto;').attr('value', 'Login');
-		$("#loginForm > div > div.text.clearFloat").attr('style', 'padding-left: 21px;')
-		// center forgot password
-
-		$('#loginForm > div > div.text.clearFloat > label').remove();
 
 
-		// Find address button.
 
-		// $("input#QASearch").attr('style', 'background-color: #B60718; background-image: none; text-indent: 0px; color: white; width: 199px; height: 35px !important; font-size: 150%; margin-top: 10px; float: none !important; margin-right: auto; -webkit-appearance: none; display: block; margin-left: auto;').attr('value', 'Login');
-
-		jQuery('#loginForm').attr('style', 'margin-left: 36px;');
 
 
 
@@ -1371,13 +1271,13 @@ var exp = (function($) {
 						// $('#mainform > div.userDetails > div:nth-child(14)').find('input').focus(function(e) {
 						// 	 $("#mainform > div.userDetails > div:nth-child(15)").show();
 						// });
-						// $('#mainform > div.userDetails > div:nth-child(15)').click(function(e) {
-						// 	 $("#mainform > div.userDetails > div:nth-child(16) > div:nth-child(3)").show();
-						// });
+						$('#mainform > div.userDetails > div:nth-child(15)').click(function(e) {
+							 $("#mainform > div.userDetails > div:nth-child(16) > div:nth-child(3)").show();
+						});
 						// $('#mainform > div.userDetails > div:nth-child(15)').find('input').focus(function(e) {
 						// 	 $("#mainform > div.userDetails > div:nth-child(16) > div:nth-child(2)").show();
 						// });
-						$('#mainform > div.userDetails > div:nth-child(15)').click(function(e) {
+						$('#mainform > div.userDetails > div:nth-child(16) > div.clearFloat,').click(function(e) {
 							 $("#mainform > div.userDetails > div:nth-child(16) > div:nth-child(2)").show();
 						});
 						// $('#mainform > div.userDetails > div:nth-child(16) > div.clearFloat').find('input').focus(function(e) {
@@ -1408,11 +1308,7 @@ var exp = (function($) {
 						// 	 $(".subscriptionTable").show();
 						// });
 
-						//Hide Mobile Number
-						$('#mainform > div.userDetails > div:nth-child(16) > div:nth-child(3)').hide();
-
-
-						$('#mainform > div.userDetails > div.clearFloat').append('<p style=" float: left; text-decoration: underline;">Used for order confirmation</p>');
+						$('#mainform > div.userDetails > div.clearFloat').append('<p>Used for order confirmation</p>');
 						$('#mainform > div.userDetails > div:nth-child(16) > div:nth-child(2)').append("<p>Please provide phone numbers<br> where we can contact you<br> regarding your delivery</p>");
 						$('#mainform > div.userDetails > div:nth-child(16) > div:nth-child(3)').append("<p>Don't worry, we will not use your <br> number for marketing purposes</p>");
 						$('#UIContainer-1822378714').hide();
@@ -1435,3 +1331,7 @@ var exp = (function($) {
 	// Close the IIFE, passing in jQuery and any other global variables as required
 	// if jQuery is not already used on the site use optimizely.$ instead
 })(jQuery);
+
+
+
+}

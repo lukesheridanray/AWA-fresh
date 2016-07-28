@@ -36,7 +36,7 @@ var exp = function($) {
 p.AWA-review-name {\
     font-size: 15px;\
 }\
-  .AWA-header-container h1 {\
+  AWA-header-container h1 {\
     margin: 0;\
     padding: 0;\
     color: black;\
