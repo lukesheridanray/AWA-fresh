@@ -17,12 +17,10 @@
          */
         log: function(value, table) {
             table = table || false;
-            console.log(table);
             if(typeof console === 'undefined') {
                 return;
             }
             if(table && typeof console.table === 'function') {
-                console.log('doin a table');
                 console.table(value);
             } else {
                 console.log(value);
@@ -176,7 +174,8 @@
                 float: right;\
             }\
             .select-product .product-selection .button--product {\
-                width: 70px;\
+                width: 100%;\
+                padding: 10px; \
             }\
             .select-product .product-selection .button--product .row {\
                 margin-left: 0;\
@@ -193,6 +192,7 @@
             }\
             .select-product .product-selection .product .panel {\
                 margin-bottom: -10px;\
+                padding-top: 0;\
             }\
             .select-product .product-selection .product:last-child .panel {\
                 margin-bottom: 0;\
@@ -203,14 +203,16 @@
                 padding-right: 0;\
             }\
             .awa-select-label {\
-                margin-top: -1em;\
-                margin-bottom: 2em;\
+                margin-top: 1em;\
+                margin-bottom: 1.5em;\
             }\
             .product__singleprice {\
                 display: none;\
             }\
             .select-product .product-selection .product__select {\
                 margin: 0;\
+                width: 34%;\
+                min-width: 60px;\
             }\
             .select-product .product-selection .product .overview {\
                 float: left;\
@@ -220,7 +222,7 @@
             }\
             .awa-price-summary {\
                 float: left;\
-                margin: 0 0 0 2em;\
+                margin: 0 0 0 1em;\
                 font-weight: normal;\
                 line-height: 42px;\
             }\
@@ -231,15 +233,42 @@
             .select-product .product-selection .product button:hover {\
                 box-shadow: none;\
             }\
+        }\
         @media screen and (max-width: 479px) {\
             .select-product .product-selection .product .panel {\
                 border-radius: 0;\
             }\
         }\
-        @media screen and (max-width: 329px) {\
+        @media screen and (max-width: 380px) {\
+            .select-product .product-selection .product__select {\
+                width: 34%;\
+            }\
+        }\
+        @media screen and (max-width: 349px) {\
+            .select-product .product-selection .product .panel {\
+                padding-left: 15px;\
+                padding-right: 15px;\
+            }\
+            .select-product .product-selection .product__select {\
+                width: 26%;\
+            }\
+        }\
+        @media screen and (max-width: 319px) {\
+            .select-product .product-selection .product .panel {\
+                padding-bottom: 20px;\
+            }\
+            .select-product .product-selection .product__select {\
+                width: 24.5%;\
+            }\
+        }\
+        @media screen and (max-width: 299px) {\
             .awa-price-summary {\
                 clear: left;\
-                margin: 0;\
+                margin: -15px 0 0 0;\
+            }\
+            .select-product .product-selection .product__select {\
+                margin-top: 12px;\
+                width: 40%;\
             }\
         }\
         ',
@@ -285,8 +314,13 @@
             $clone.find('.js-recall-expandable-caller-value').text('39.95');
             $clone.find('.js-recall-expandable-caller-label').text('HPI Multicheck - 5 Vehicle History Checks');
 
-            // remove best value ribbon from the old button
-            $button.find('.product--multi-check__ribbon').remove();
+            // remove best value ribbon from the new button
+            $clone.find('.product--multi-check__ribbon').remove();
+            
+            // change ribbon on the old button
+            $button.find('.product--multi-check__ribbon')
+                .attr('src', '//useruploads.visualwebsiteoptimizer.com/useruploads/239511/images/1be86e25876b4ee57b91f83594a25593_great-value.png')
+                .css({top:'-3px',right:'-3px'});
 
             // add custom class to cloned button
             $clone.addClass('awa-five-checks --' + buttonType);
@@ -352,7 +386,7 @@
      */
 
     if(window.location.pathname.indexOf('product-selection') !== -1) {
-    
+
         // Product selection page
 
         // Append CSS
@@ -376,5 +410,5 @@
         AWA.log('AWA - Add third price point: Reports page');
 
     }
-    
+
 })(jQuery); // vwo_$ || optimizely.$
