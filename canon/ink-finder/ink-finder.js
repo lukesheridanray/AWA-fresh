@@ -656,16 +656,4 @@
 
     AWA.var.rangeSelect.on('change', AWA.func.updateModels);
 
-    AWA.func.waitFor(
-        function() {
-            return typeof ga === 'function';
-        },
-        function() {
-            console.log('sending to ga');
-            var dimensionValue = 'Inkfinder-UK-6312591818-Variation1';
-            ga('tealium_0.set', 'dimension11', dimensionValue);
-            ga('tealium_0.send', 'event', 'E-Commerce', 'Optimizely', dimensionValue, 0, {nonInteraction: true});
-        }
-    );
-
 })(optimizely.$, 'en', 1);
