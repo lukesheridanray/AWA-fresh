@@ -444,6 +444,9 @@
     color: #c00;\
     text-align: left;\
 }\
+.awa-ink-finder.-listings-form {\
+    clear: both;\
+}\
 .awa-ink-finder.-listings-form h2 {\
     font-size: 1.7em;\
     padding-bottom: 10px;\
