@@ -17,13 +17,6 @@ Each country specific domain has its own project in Optimizely, some goals are s
 
 ## Google Analytics
 
-Use universal analytics, set the custom tracker to `tealium_0` and custom dimension to `11`. There are 3 possible values for dimension, 
-depending on what is being tracked, these are: 9 - hit, 10 - session, 11 - user. Unless specified we will always be tracking user (11).
-
-We also need to add a snippet of code to each variation, including the original. An example of this is shown below, where `dimensionValue`
-is a unique value for that variation, this includes the test name, country code, ID number and varation, e.g. variation1, or original.
-Once this has been done please pass the value onto the optimiser.
-
-    var dimensionValue = 'RangeVP-UK-6330551084-Variation1';
-    ga('tealium_0.set', 'dimension11', dimensionValue);
-    ga('tealium_0.send', 'event', 'E-Commerce', 'Optimizely', dimensionValue, 0, {nonInteraction: true});
+Do not set up analytics using the usual integrations options. Instead analytics must be manually triggered via a snippet of code for each 
+variation and the control. An example of the code required is included in the `ga-snippet.js` file, along with some explanation as 
+to how to configure it for each variation.
