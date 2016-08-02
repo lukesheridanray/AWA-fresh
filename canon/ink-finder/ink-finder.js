@@ -655,8 +655,8 @@
 
     // Add event listeners
 
-    $('.awa-ink-finder form').on('submit', AWA.func.findInk);
+    $('.awa-ink-finder form').bind('submit', AWA.func.findInk);
 
-    AWA.var.rangeSelect.on('change', AWA.func.updateModels);
+    AWA.var.rangeSelect.bind('change', AWA.func.updateModels);
 
 })(optimizely.$, 'en', 1);
