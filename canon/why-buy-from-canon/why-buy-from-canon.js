@@ -107,7 +107,7 @@
         .awa-value li {\
             margin: 0;\
             padding: 0;\
-            font-size: 1.3em;\
+            font-size: 1.25em;\
             list-style-type: none;\
             line-height: 60px;\
         }\
@@ -139,7 +139,7 @@
             height: 20px;\
             display: inline-block;\
             height: 20px;\
-            margin: 0 0 0 14px;\
+            margin: 0 0 0 10px;\
             top: 5px;\
             position: relative;\
             background: url("//cdn.optimizely.com/img/2201792135/e5b14ad90ff84552a67e6318f25f6417.png") 0 0 no-repeat;\
@@ -158,10 +158,14 @@
         }\
         @media screen and (max-width: 1199px) {\
             .awa-lang-de .awa-value li {\
-                font-size: 1.1em;\
+                font-size: 1.15em;\
+            }\
+            .awa-lang-de .awa-value li.range,\
+            .awa-lang-de .awa-value li.delivery {\
+                line-height: 30px;\
             }\
             .awa-lang-fr .awa-value li {\
-                font-size: 1.2em;\
+                font-size: 1.15em;\
             }\
             .awa-lang-fr .awa-value h2 {\
                 font-size: 1.6em;\
@@ -172,7 +176,7 @@
             }\
             .awa-lang-de .awa-value li:before,\
             .awa-lang-fr .awa-value li:before {\
-                margin-right: 0;\
+                margin-right: 6px;\
             }\
             .awa-lang-de .awa-value,\
             .awa-lang-fr .awa-value {\
@@ -195,6 +199,10 @@
             .awa-lang-de .awa-value li,\
             .awa-lang-fr .awa-value li {\
                 font-size: 1.2em;\
+            }\
+            .awa-lang-de .awa-value li.range,\
+            .awa-lang-de .awa-value li.delivery {\
+                line-height: 60px;\
             }\
             .awa-lang-fr .awa-value h2 {\
                 font-size: 1.8em;\
@@ -244,21 +252,21 @@
 
             en: {
                 title: 'Why buy direct from Canon?',
-                range: 'Full range of genuine Canon products',
+                range: 'Extensive range of genuine Canon products',
                 gaurantee: 'Minimum 2 year guarantee',
                 delivery: 'Free delivery - easy returns'
             },
 
             de: {
                 title: 'Warum direkt von Canon kaufen?',
-                range: 'Vollständige Palette von originalen Canon Produkten',
+                range: 'Ein umfangreiches Sortiment an Canon Originalprodukten',
                 gaurantee: 'Mindestens zweijährige Garantie',
                 delivery: 'Kostenlose Liefering - Umstandslose Warenrücksendung'
             },
 
             fr: {
                 title: 'Pourquoi acheter directement chez Canon?',
-                range: 'Gamme complète de produits Canon authentiques',
+                range: 'Une vaste gamme de produits Canon authentiques',
                 gaurantee: 'Garantie de 2 ans minimum',
                 delivery: 'Livraison gratuite et retours faciles'
             }
@@ -383,4 +391,4 @@
         AWA.moveSavingBand
     );
 
-})(jQuery, 'en'); // vwo_$ || optimizely.$
+})(jQuery, 'fr'); // vwo_$ || optimizely.$
