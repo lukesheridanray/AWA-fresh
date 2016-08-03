@@ -367,7 +367,7 @@
     AWA.func = {
         getMenuItems: function(){
             var menu_items = {
-                'sale': undefined,
+                'new': undefined,
                 'mens': undefined,
                 'womens': undefined,
                 'accessories': undefined,
@@ -379,8 +379,8 @@
                 var $item = $(this);
 
                 switch (true) {
-                    case $item.hasClass('site-nav__sale'):
-                        menu_items.sales = $item;
+                    case $item.hasClass('site-nav__new'):
+                        menu_items.new = $item;
                         break;
 
                     case $item.hasClass('site-nav__mens'):
@@ -638,7 +638,7 @@
             width: 23%;                         \
         }                                       \
         .AWA-site-nav__sections >               \
-            li:last-of-type {                   \
+            li:nth-of-type(3) {                 \
             width: 30%;                         \
         }                                       \
     }                                           \
@@ -684,6 +684,11 @@
         $('.skip__links.skip__links--right .skip.skip--search').after($about_us_link);
 
         menu_items.about_us.remove();
+    }
+
+    // Move 'New' to the end of the nav
+    if (menu_items.new !== undefined && menu_items.accessories !== undefined) {
+        menu_items.new.insertAfter(menu_items.accessories);
     }
 
     // New menu structure for mens
