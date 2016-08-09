@@ -3,9 +3,7 @@
 
 /**
 
-TO DOS: we need to say we have seen the modal is seen a paper
-
-is form too long for cookie?
+TO DOS: CSS
 
  */
 
@@ -61,22 +59,71 @@ is form too long for cookie?
             background: rgba(0,0,0,0.3);\
         }\
         .easyink-modal {\
-            width: 40%;\
-            left: 30%;\
-            height: 300px;\
-            margin: auto;\
+            width: 37%;\
+            margin: 0 auto;\
+            padding: 1.5em 1.5em 0 1.5em;\
             z-index: 100;\
             position: fixed;\
             background: #fff;\
             top: 50%;\
-            -webkit-transform: translate(0,-50%);\
-               -moz-transform: translate(0,-50%);\
-                 -o-transform: translate(0,-50%);\
-                    transform: translate(0,-50%);\
-            margin-top: 0;\
+            left: 50%;\
+            -webkit-transform: translate(-50%,-50%);\
+               -moz-transform: translate(-50%,-50%);\
+                 -o-transform: translate(-50%,-50%);\
+                    transform: translate(-50%,-50%);\
+            -webkit-box-shadow: 0 0 20px 1px rgba(0,0,0,0.5);\
+               -moz-box-shadow: 0 0 20px 1px rgba(0,0,0,0.5);\
+                 -o-box-shadow: 0 0 20px 1px rgba(0,0,0,0.5);\
+                    box-shadow: 0 0 20px 1px rgba(0,0,0,0.5);\
         }\
         .easyink-modal-form {\
             display: none;\
+        }\
+        .easyink-modal-close {\
+            position: absolute;\
+            top: 10px;\
+            right: 10px;\
+            width: 26px;\
+            height: 26px;\
+            line-height: 27px;\
+            text-align: center;\
+            color: #fff;\
+            background: #077;\
+            border-radius: 50%;\
+            font-size: 1.3em;\
+            text-decoration: none;\
+        }\
+        .easyink-modal-close:hover,\
+        .easyink-modal-close:focus {\
+            text-decoration: none;\
+        }\
+        .easyink-modal h4 {\
+            font-size: 1.2em;\
+            font-weight: normal;\
+        }\
+        .easyink-modal h4 a {\
+            color: #000;\
+        }\
+        .easyink-modal img {\
+            float: left;\
+            margin: -0.5em 2.5em 0.5em 1em;\
+        }\
+        .easyink-modal-price {\
+            float: right;\
+            font-size: 1.4em;\
+            position: relative;\
+            top: -2em;\
+        }\
+        .easyink-modal-submit {\
+            position: absolute;\
+            bottom: 15px;\
+            right: 15px;\
+            cursor: pointer;\
+        }\
+        .easyink-modal-dismiss {\
+            position: absolute;\
+            bottom: 25px;\
+            right: 200px;\
         }\
         ',
 
@@ -91,6 +138,9 @@ is form too long for cookie?
 
         // This will hold our product data
         productData: {},
+
+        // This will hold our product elements
+        productElems: {},
 
         // Text copy
         copy: {
@@ -200,9 +250,8 @@ is form too long for cookie?
                                 \
                                 <a class="easyink-modal-dismiss" href="#">No thanks</a>\
                                 \
-                                <a class="easyink-modal-submit">'+AWA.copy[LANG].submit+'</a>\
+                                <a class="easyink-modal-submit btn-success">'+AWA.copy[LANG].submit+'</a>\
                                 \
-                                <div class="easyink-modal-form">'+data.form+'</div>\
                                 <div class="easyink-modal-form">'+AWA.getForm(data.sku, data.title, data.price)+'</div>\
                                 \
                             </div>\
@@ -239,11 +288,11 @@ is form too long for cookie?
          */
         showModal: function() {
 
-            if(!AWA.seenModal) {
+//            if(!AWA.seenModal) {
 
                 $('body').addClass('easyink-modal-visible');
 
-            }
+//            }
             
         },
 
@@ -268,8 +317,6 @@ is form too long for cookie?
             e.preventDefault();
 
             var $submit = $(this).next('.easyink-modal-form').find('.btn-success');
-
-AWA.log($submit);
 
             $submit.trigger('click');
 
@@ -434,12 +481,42 @@ AWA.log($submit);
     // If modal is ready attach event handlers, otherwise log as an error
     if(AWA.modalReady) {
 
-        // Add event handler to add to basket buttons, filtering out paper products
-        $('.product-tile .btn-success').filter(function() {
+        // Get all products which are not paper
+        AWA.productElems = $('.product-tile').filter(function() {
             var $parent = $(this).parents('.row:eq(0)');
             return !$parent.find('.layout--header:contains("Paper for")').length && !$parent.find('.layout--header:contains("Papers for")').length;
-        }).on('click', AWA.goToShowModal);
+        });
 
+        // Loop through each product
+        AWA.productElems.each(function() {
+
+            var $self = $(this);
+
+            // Add event handler
+            $self.find('.btn-success').on('click', AWA.goToShowModal);
+
+            $self.find('a').each(function() {
+
+                var $self = $(this);
+                var href = $self.attr('href');
+                var query = 'awaref=easyink';
+
+                // Add custom param
+                if(href.split('/').pop().slice(0,1) === '?') {
+                    // already has a query
+                    $self.attr('href', href + '&' + query);
+                } else {
+                    $self.attr('href', href + '?' + query);
+                }
+
+            });
+
+        });
+
+        // Add handler to product page button
+        $('.product-detail-core .btn-success').on('click', AWA.goToShowModal);
+
+        // Delegate handlers to the body element for closing the modal and adding to cart from modal
         $('body')
             .on('click', '.easyink-modal-close, .easyink-modal-dismiss, .easyink-modal-overlay, .easyink-modal-submit', AWA.hideModal)
             .on('click', '.easyink-modal-submit', AWA.addToCart);
