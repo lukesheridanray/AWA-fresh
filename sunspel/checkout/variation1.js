@@ -94,10 +94,19 @@
                 } \
             } \
             /*--crossSellMeBro-----------------------------------------------*/\
-            .awa-cross-sell .item { \
-                float: left; \
-                width: 25%; \
-                padding: 0 15px; \
+            @media only screen and (min-width: 600px) {\
+                .awa-cross-sell .item { \
+                    float: left; \
+                    width: 50%; \
+                    padding: 0 15px; \
+                } \
+            } \
+            @media only screen and (min-width: 900px) {\
+                .awa-cross-sell .item { \
+                    float: left; \
+                    width: 25%; \
+                    padding: 0 15px; \
+                } \
             } \
             /*---------------------------------------------------------------*/\
         ',
