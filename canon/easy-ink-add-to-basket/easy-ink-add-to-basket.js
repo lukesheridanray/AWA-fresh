@@ -59,7 +59,8 @@ TO DOS: CSS
             background: rgba(0,0,0,0.3);\
         }\
         .easyink-modal {\
-            width: 37%;\
+            width: 36%;\
+            min-width: 552px;\
             margin: 0 auto;\
             padding: 1.5em 1.5em 0 1.5em;\
             z-index: 100;\
@@ -67,10 +68,7 @@ TO DOS: CSS
             background: #fff;\
             top: 50%;\
             left: 50%;\
-            -webkit-transform: translate(-50%,-50%);\
-               -moz-transform: translate(-50%,-50%);\
-                 -o-transform: translate(-50%,-50%);\
-                    transform: translate(-50%,-50%);\
+            z-index: 999;\
             -webkit-box-shadow: 0 0 20px 1px rgba(0,0,0,0.5);\
                -moz-box-shadow: 0 0 20px 1px rgba(0,0,0,0.5);\
                  -o-box-shadow: 0 0 20px 1px rgba(0,0,0,0.5);\
@@ -83,9 +81,9 @@ TO DOS: CSS
             position: absolute;\
             top: 10px;\
             right: 10px;\
-            width: 26px;\
-            height: 26px;\
-            line-height: 27px;\
+            width: 24px;\
+            height: 24px;\
+            line-height: 25px;\
             text-align: center;\
             color: #fff;\
             background: #077;\
@@ -159,7 +157,7 @@ TO DOS: CSS
         getProductData: function() {
 
             // We are looking for a paper option
-            var $papers = $('.layout--header:contains("Paper for")').parents('.row').first().find('.product-tile');
+            var $papers = $('.layout--header:contains("Paper"):not(:contains("Photo"))').parents('.row').first().find('.product-tile');
             var $product;
 
             // Go through all our paper options and get the first suitable one
@@ -263,9 +261,11 @@ TO DOS: CSS
         },
 
         /**
-         * Initialise the modal (append modal elements to body)
+         * Initialise the modal (append modal elements to body and set its position)
          */
         initModal: function() {
+
+            var $modal;
 
             if(AWA.productData === null) {
                 return;
@@ -279,6 +279,14 @@ TO DOS: CSS
                     AWA.modalTemplate(AWA.productData)
                 );
 
+            $modal = $('.easyink-modal');
+
+            $modal.css({
+                'margin-top': '-'+ ($modal.height() / 2) +'px',
+                'margin-left': '-'+ ($modal.width() / 2) +'px'
+            });
+
+            // set state
             AWA.modalReady = true;
 
         },
@@ -483,8 +491,7 @@ TO DOS: CSS
 
         // Get all products which are not paper
         AWA.productElems = $('.product-tile').filter(function() {
-            var $parent = $(this).parents('.row:eq(0)');
-            return !$parent.find('.layout--header:contains("Paper for")').length && !$parent.find('.layout--header:contains("Papers for")').length;
+            return !$(this).parents('.row:eq(0)').find('.layout--header:contains("Paper")').length;
         });
 
         // Loop through each product
