@@ -49,20 +49,27 @@
             } \
             \
             .awa-quality-messaging li > * { \
-                vertical-align: top; \
-                display: inline-block; \
+                margin: 0 auto; \
+                text-align: center; \
                 box-sizing: border-box; \
             } \
             \
             .awa-quality-messaging li > div { \
                 max-width: 100px; \
+                height: 50px; \
+                line-height: 50px; \
+                vertical-align: bottom; \
+            } \
+            \
+            .awa-quality-messaging li > div > img { \
+                vertical-align: bottom; \
             } \
             \
             .awa-quality-messaging li > p { \
                 vertical-align: top; \
-                display: inline-block; \
                 width: calc(100% - 110px); \
                 padding: 0 1em; \
+                margin-top: 1em; \
             } \
             \
             @media screen and (min-width: 900px) { \
@@ -115,19 +122,19 @@
             messaging: [
                 {
                     logo: '//useruploads.visualwebsiteoptimizer.com/useruploads/236841/images/3e76ab3dd3d2596328d0232fc5e683f8_gq.png',
-                    message: 'The finest raw materials and traditional techniques... to produce pieces that will last for years',
+                    message: 'Pieces that will last for years',
                 },
                 {
                     logo: '//useruploads.visualwebsiteoptimizer.com/useruploads/236841/images/18ec6abcd95ce6a74d1c3cf09a7fa780_the-times-logo.png',
-                    message: 'Make some of the best T-shirts and boxer shorts around',
+                    message: 'Some of the best T-shirts and boxer shorts around',
                 },
                 {
                     logo: '//useruploads.visualwebsiteoptimizer.com/useruploads/236841/images/ce3fa39cc00033e848d0339b4c9b41be_esquire.jpg',
-                    message: 'In terms of great quality wardrobe essential, few do it better than Sunspel',
+                    message: 'Great quality wardrobe essentials',
                 },
             ],
             cross_sell: {
-                header: 'Add one of our most purchased wardrole staples:',
+                header: 'Have you seen these? Our most popular pieces right now',
                 items: [
                     {
                         img: 'http://www.sunspel.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/m/p/mpol1004-buaa.jpg',
@@ -200,6 +207,23 @@
     };
 
     AWA.func.crossSellMeBro = function(){
+
+        // Only cross sell if there are mens products in the cart.
+        var thar_be_male_products = false;
+
+        $.each(window.digitalData.cart.items, function(i, item){
+            $.each(item.category, function(i, category) {
+                if (category && category.indexOf('Men\'s') !== -1) {
+                    thar_be_male_products = true;
+                }
+            });
+        });
+
+        if (thar_be_male_products === false) {
+            AWA.log('No male products, not exposing cross-sell');
+            return;
+        }
+
 
         var $cart_footer = $('.cart-footer');
         var $cross_sell_title = $('<p>', { text: AWA.vars.cross_sell.header });
