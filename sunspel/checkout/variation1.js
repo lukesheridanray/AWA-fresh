@@ -101,12 +101,10 @@
                 } \
             } \
             /*--crossSellMeBro-----------------------------------------------*/\
-            @media only screen and (min-width: 600px) {\
-                .awa-cross-sell .item { \
-                    float: left; \
-                    width: 50%; \
-                    padding: 0 15px; \
-                } \
+            .awa-cross-sell .item { \
+                float: left; \
+                width: 50%; \
+                padding: 0 15px; \
             } \
             @media only screen and (min-width: 900px) {\
                 .awa-cross-sell .item { \
@@ -134,25 +132,25 @@
                 },
             ],
             cross_sell: {
-                header: 'Have you seen these? Our most popular pieces right now',
+                header: 'You might also like...',
                 items: [
                     {
                         img: 'http://www.sunspel.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/m/p/mpol1004-buaa.jpg',
-                        name: 'Men\'s Combed Cotton Riviera Polo Shirt in Navy',
+                        name: 'Men\'s Cotton Riviera Polo Shirt in Navy',
                         price: '80.00',
                         extra: '',
                         url: 'http://www.sunspel.com/uk/mens-combed-cotton-riviera-polo-shirt-in-navy-mpol1004-buaa.html'
                     },
                     {
                         img: 'http://www.sunspel.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/0/0/0007s-234-_1.jpg',
-                        name: 'Men\'s Long-Staple Cotton Riviera T-Shirt in White',
+                        name: 'Men\'s Cotton Riviera T-shirt in White',
                         price: '65.00',
                         extra: 'UPDATED DESIGN',
                         url: 'http://www.sunspel.com/uk/mens-riviera-crew-neck-t-shirt-white.html'
                     },
                     {
                         img: 'http://www.sunspel.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/m/s/mswe1500-gyaa.jpg',
-                        name: 'Men\'s Loopback Cotton Sweatshirt in Grey Melange',
+                        name: 'Men\'s Cotton Loopback Sweatshirt in Grey Melange',
                         price: '95.00',
                         extra: '',
                         url: 'http://www.sunspel.com/uk/men-s-loopback-cotton-sweatshirt-in-grey-melange.html'
