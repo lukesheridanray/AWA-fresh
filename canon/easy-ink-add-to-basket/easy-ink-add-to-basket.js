@@ -1,11 +1,30 @@
 // jshint multistr: true
 // jshint strict: true
 
-/**
+(function(value, slot) {
 
-TO DOS: CSS
+    var maxAttempts = 400, attempts = 0;
 
- */
+    var interval = setInterval(function() {
+
+        if(typeof ga === 'function') {
+
+            ga('tealium_0.set', 'dimension'+slot, value);
+            ga('tealium_0.send', 'event', 'E-Commerce', 'Optimizely', value, 0, {nonInteraction: true});
+        
+            clearInterval(interval);
+
+        } else if(attempts > maxAttempts) {
+
+            clearInterval(interval);
+
+        }
+
+        attempts++;
+
+    }, 50);
+
+})('EasyInkAddToBasket-UK-6914020071-Variation1', '28');
 
 (function($, LANG) {
 
@@ -432,6 +451,20 @@ TO DOS: CSS
 
             AWA.mutationListener('.mini-basket', AWA.showModal, false, 100);
 
+        },
+
+        /**
+         * Check that the user doesn't already have paper in their basket
+         * this sets the seenModal var to true, which prevents the modal from displaying
+         */
+        paperInBasketCheck: function() {
+
+            if($('.mini-basket-item--header:contains(Paper), .mini-basket-item--header:contains(paper)').length !== 0) {
+
+                AWA.seenModal = true;
+
+            }
+
         }
 
     };
@@ -468,6 +501,12 @@ TO DOS: CSS
         return;
 
     }
+
+
+    // Check if we are already buying paper (sets seenModal to true if we have)
+
+    AWA.paperInBasketCheck();
+
 
     // Check if we have already seen the modal
 
