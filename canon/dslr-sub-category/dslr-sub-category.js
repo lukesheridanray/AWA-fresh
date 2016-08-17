@@ -66,8 +66,8 @@
             display: block;\
         }\
         .product-tile-list-view .button-gutter-right {\
-            padding-left: 20px;\
-            padding-right: 20px;\
+            padding-left: 0px;\
+            padding-right: 0px;\
             width: 100%;\
         }\
         .awa-reverse-image {\
@@ -113,90 +113,102 @@
             .product-tile-list--desc {\
                 padding-right: 215px;\
             }\
+            .product-tile-list-view .button-gutter-right {\
+                padding-left: 10px;\
+                padding-right: 0px;\
+                width: 80%;\
+                position: relative;\
+                left: 20%;\
+            }\
+            .product-tile-list-view .button-gutter-right:hover,\
+            .product-tile-list-view .button-gutter-right:focus {\
+                padding-left: 10px;\
+                padding-right: 0px;\
+            }\
         }\
         ',
 
         data: {
             en: {
-                "Canon EOS 5D Mark III Body": { "megapixels":22.3, "lens":"EF (excludes EF-S lenses)", "iso":"Auto (100-12800), 100-25600 (in 1/3-stop or whole stop increments)", "speed":"30-1/8000 sec", "img":"https://i1.adis.ws/i/canon/5260B019_EOS-5D-MARK-III_2/5260b019_eos-5d-mark-iii_2.png?w=420"},
-                "Canon EOS 6D + EF 24-105mm IS STM Lens": { "megapixels":20.2, "lens":"EF (excludes EF-S lenses)", "iso":"Auto (100-25600), 100-25600 (in 1/3-stop or whole stop increments)", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/8035B126_EOS_6D_+_EF_24-105_STM_6/8035b126_eos_6d_-_ef_24-105_stm_6.png?w=550"},
-                "Canon EOS 80D + 18-135mm IS USM Lens": { "megapixels":24.2, "lens":"EF/EF-S", "iso":"Auto (100-16000), 100-16000  (in 1/3-stop or whole stop increments)", "speed":"30-1/8000 sec", "img":"https://i1.adis.ws/i/canon/1263C047_EOS-80D-EF-S-18-135mm-f_3.5-5.6-IS-USM_2/1263c047_eos-80d-ef-s-18-135mm-f_3-5-5-6-is-usm_2.png?w=550"},
-                "Canon EOS 7D Mark II Body": { "megapixels":20.2, "lens":"EF/EF-S", "iso":"Auto (100-16000), 100-16000 (in 1/3-stop or whole stop increments)", "speed":"30-1/8000 sec ", "img":"https://i1.adis.ws/i/canon/9128B043_EOS-7D-Mark-II_2/eos-7d-mark-ii_2.png?w=550"},
-                "Canon EOS 6D Body": { "megapixels":20.2 , "lens":"EF (excludes EF-S lenses)", "iso":"Auto (100-25600), 100-25600  (in 1/3-stop or whole stop increments)", "speed":"30-1/4000 sec", "img":"https://i1.adis.ws/i/canon/8035B022_EOS-6D_4/eos-6d_4.png?w=550"},
-                "Canon EOS 70D + 18-200mm IS Lens": { "megapixels":20.2, "lens":"EF/EF-S", "iso":"Auto (100-12800), 100-12800 (in 1/3-stop or whole stop increments)", "speed":"30-1/8000 sec", "img":"https://i1.adis.ws/i/canon/8469B048_EOS_70D_+_EFS_18-200_IS_2/8469b048_eos_70d_-_efs_18-200_is_2.png?w=550"},
-                "Canon EOS 80D + 18-55mm IS STM Lens": { "megapixels":24.2, "lens":"EF/EF-S", "iso":"Auto (100-16000), 100-16000 (in 1/3-stop or whole stop increments)", "speed":"30-1/8000 sec", "img":"https://i1.adis.ws/i/canon/1263C044_EOS-80D-18-55-IS-STM_2/1263c044_eos-80d-18-55-is-stm_2.png?w=550"},
-                "Canon EOS 70D + 18-135mm IS STM Lens": { "megapixels":20.2, "lens":"EF/EF-S", "iso":"Auto (100-12800), 100-12800 (in 1/3-stop or whole stop increments)", "speed":"30-1/8000 sec", "img":"https://i1.adis.ws/i/canon/8469B038_EOS_70D_+_EFS_18-135_IS_STM_3/8469b038_eos_70d_-_efs_18-135_is_stm_3.png?w=550"},
-                "Canon EOS 80D Body": { "megapixels":24.2, "lens":"EF/EF-S", "iso":"Auto (100-16000), 100-16000 (in 1/3-stop or whole stop increments)", "speed":"30-1/8000 sec", "img":"https://i1.adis.ws/i/canon/1263C036_EOS-80D_2/1263c036_eos-80d_2.png?w=550"},
-                "Canon EOS 70D + 18-55mm IS STM Lens": { "megapixels":20.2, "lens":"EF/EF-S", "iso":"Auto (100-12800), 100-12800 (in 1/3-stop or whole stop increments)", "speed":"30-1/8000 sec", "img":"https://i1.adis.ws/i/canon/8469B031-EOS-70D+18-55-IS-STM-4/8469b031-eos-70d-18-55-is-stm-4.png?w=550"},
-                "Canon EOS 700D + 18-135mm IS STM + EF 40mm STM Lens": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 (in 1/3-stop or whole stop increments)", "speed":"30-1/4000 sec", "img":"https://i1.adis.ws/i/canon/8596B051_EOS_700D_18-135_IS_STM_+_40_STM_3/8596b051_eos_700d_18-135_is_stm_-_40_stm_3.png?w=550"},
-                "Canon EOS 70D Body": { "megapixels":20.2, "lens":"EF/EF-S", "iso":"Auto (100-12800), 100-12800 (in 1/3-stop or whole stop increments)", "speed":"30-1/8000 sec", "img":"https://i1.adis.ws/i/canon/8469B024_EOS-70D_2/eos-70d_2.png?w=420"},
-                "Canon EOS 750D + 18-135mm IS STM Lens": { "megapixels":24.2, "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 (in 1/3-stop or whole stop increments)", "speed":"30-1/4000 sec", "img":"https://i1.adis.ws/i/canon/image_0592C028_EOS_750D_18-135_IS_7/image_0592c028_eos_750d_18-135_is_7.png?w=420"},
-                "Canon EOS 700D + 18-55mm IS STM + 55-250mm IS STM Lens": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec", "img":"https://i1.adis.ws/i/canon/image_8596B080_EOS_700D_18-55_STM+55-250_STM_3/image_8596b080_eos_700d_18-55_stm-55-250_stm_3.png?w=420"},
-                "Canon EOS 700D + 18-135mm IS STM Lens": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/8596B034_EOS-700D-18-135mm-IS-STM-3/8596b034_eos-700d-18-135mm-is-stm-3.png?w=420"},
-                "Canon EOS 100D white + 18-55mm STM lens + Stella McCartney 'Linda' bag": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/9124B029_EOS_100D_+_EF-S_18-55mm_IS_STM_WHITE_STELLA_DONE_3/9124b029_eos_100d_-_ef-s_18-55mm_is_stm_white_stella_done_3.png?w=550"},
-                "Canon EOS 750D + 18-55mm IS STM Lens": { "megapixels":24.2, "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/0592C005_EOS_750D_18-55_IS_7/0592c005_eos_750d_18-55_is_7.png?w=550"},
-                "Canon EOS 760D Body": { "megapixels":24.2, "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/image_0021C016_EOS-760D_2/image_0021c016_eos-760d_2.png?w=550"},
-                "Canon EOS 100D + 18-55mm IS STM + 55-250mm IS STM Lens": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/8576B082_EOS_100D_18-55IS_STM+55-250_IS_STM_3/8576b082_eos_100d_18-55is_stm-55-250_is_stm_3.png?w=550"},
-                "Canon EOS 100D + 18-135mm IS STM Lens": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec (1/2 or 1/3 stop increments)", "img":"https://i1.adis.ws/i/canon/8576B109_100D_18-135_IS_STM_3/8576b109_100d_18-135_is_stm_3.png?w=550"},
-                "Canon EOS 100D + 18-55mm IS STM + 10-18mm IS STM Lens": { "megapixels": 18.0, "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/8576B113_EOS_100D_+_EF-S_18-55IS_STM_+_10-18IS_STM_3/8576b113_eos_100d_-_ef-s_18-55is_stm_-_10-18is_stm_3.png?w=550"},
-                "Canon EOS 750D Body": { "megapixels":24.2, "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/image_0592C014_EOS-750D_2/image_0592c014_eos-750d_2.png?w=420"},
-                "Canon EOS 100D + 18-55mm IS STM + 40mm STM Lens": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/8576B050_EOS_100D_+_EF-S_18-55IS_STM_+_40_STM_3/8576b050_eos_100d_-_ef-s_18-55is_stm_-_40_stm_3.png?w=550"},
-                "Canon EOS 700D + 18-55mm IS STM Lens": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/8596B027_EOS-700D-18-55mm-IS-STM-3/8596b027_eos-700d-18-55mm-is-stm-3.png?w=550"},
-                "Canon EOS 700D Body": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/8596B014_EOS-700D_2/eos-700d_2.png?w=550"},
-                "Canon EOS 1300D + 18-55mm IS II Lens": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"AUTO (100-6400), 100-6400 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/1160C029_EOS-1300D-18-55-IS_2/canon-eos-1300d-18-55mm-is-ii-lens.png?w=420"},
-                "Canon EOS 100D + 18-55mm IS STM Lens": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/8576B021_EOS_100D_+_EF-S_18-55mm_IS_STM_3/8576b021_eos_100d_-_ef-s_18-55mm_is_stm_3.png?w=550"},
-                "Canon EOS 100D White + 18-55mm IS STM White Lens": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec", "img":"https://i1.adis.ws/i/canon/9124B013_EOS_100D_+_EF-S_18-55mm_IS_STM_WHITE_2/9124b013_eos_100d_-_ef-s_18-55mm_is_stm_white_2.png?w=550"},
-                "Canon EOS 1300D + 18-55mm III Lens": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"AUTO (100-6400), 100-6400 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/1160C034_EOS-1300D-18-55_2/canon-eos-1300d-18-55mm-iii-lens.png?w=550"},
-                "Canon EOS 1300D Body": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"AUTO (100-6400), 100-6400 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/1160C017_EOS-1300D_2/canon-eos-1300d-body.png?w=550"},
-                "Canon EOS 100D Body": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec", "img":"https://i1.adis.ws/i/canon/8576B014_EOS-100D_2/eos-100d_2.png?w=550"}
+                "Canon EOS 1300D + 18-55mm IS II Lens": { "megapixels":"18", "lens":"EF/EF-S", "iso":"AUTO (100-6400), 100-6400 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/1160C029_EOS-1300D-18-55-IS_2/canon-eos-1300d-18-55mm-is-ii-lens.png?w=420", "ref":"1160C029"},
+                "Canon EOS 100D White + 18-55mm IS STM White Lens": { "megapixels":"18", "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec", "img":"https://i1.adis.ws/i/canon/9124B013_EOS_100D_+_EF-S_18-55mm_IS_STM_WHITE_2/9124b013_eos_100d_-_ef-s_18-55mm_is_stm_white_2.png?w=550", "ref":"9124B013"},
+                "Canon EOS 700D Body": { "megapixels":"18", "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/8596B014_EOS-700D_2/eos-700d_2.png?w=550", "ref":"8596B014"},
+                "Canon EOS 100D + 18-55mm IS STM Lens": { "megapixels":"18", "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/8576B021_EOS_100D_+_EF-S_18-55mm_IS_STM_3/8576b021_eos_100d_-_ef-s_18-55mm_is_stm_3.png?w=550", "ref":"8576B021"},
+                "Canon EOS 1300D + 18-55mm III Lens": { "megapixels":"18", "lens":"EF/EF-S", "iso":"AUTO (100-6400), 100-6400 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/1160C034_EOS-1300D-18-55_2/canon-eos-1300d-18-55mm-iii-lens.png?w=550", "ref":"1160C034"},
+                "Canon EOS 100D Body": { "megapixels":"18", "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec", "img":"https://i1.adis.ws/i/canon/8576B014_EOS-100D_2/eos-100d_2.png?w=550", "ref":"8576B014"},
+                "Canon EOS 1300D Body": { "megapixels":"18", "lens":"EF/EF-S", "iso":"AUTO (100-6400), 100-6400 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/1160C017_EOS-1300D_2/canon-eos-1300d-body.png?w=550", "ref":"1160C017"},
+                "Canon EOS 100D white + 18-55mm STM lens + Stella McCartney 'Linda' bag": { "megapixels":"18", "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/9124B029_EOS_100D_+_EF-S_18-55mm_IS_STM_WHITE_ST…NE_3/9124b029_eos_100d_-_ef-s_18-55mm_is_stm_white_stella_done_3.png?w=550", "ref":"9124B029"},
+                "Canon EOS 700D + 18-55mm IS STM + 55-250mm IS STM Lens": { "megapixels":"18", "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec", "img":"https://i1.adis.ws/i/canon/image_8596B080_EOS_700D_18-55_STM+55-250_STM_3/image_8596b080_eos_700d_18-55_stm-55-250_stm_3.png?w=420", "ref":"8596B080"},
+                "Canon EOS 750D + 18-135mm IS STM Lens": { "megapixels":"24.2", "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 (in 1/3-stop or whole stop increments)", "speed":"30-1/4000 sec", "img":"https://i1.adis.ws/i/canon/image_0592C028_EOS_750D_18-135_IS_7/image_0592c028_eos_750d_18-135_is_7.png?w=420", "ref":"0592C028"},
+                "Canon EOS 100D + 18-55mm IS STM + 55-250mm IS STM Lens": { "megapixels":"18", "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/8576B082_EOS_100D_18-55IS_STM+55-250_IS_STM_3/8576b082_eos_100d_18-55is_stm-55-250_is_stm_3.png?w=550", "ref":"8576B082"},
+                "Canon EOS 700D + 18-135mm IS STM Lens": { "megapixels":"18", "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/8596B034_EOS-700D-18-135mm-IS-STM-3/8596b034_eos-700d-18-135mm-is-stm-3.png?w=420", "ref":"8596B034"},
+                "Canon EOS 100D + 18-55mm IS STM + 10-18mm IS STM Lens": { "megapixels":"18", "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/8576B113_EOS_100D_+_EF-S_18-55IS_STM_+_10-18IS_STM_3/8576b113_eos_100d_-_ef-s_18-55is_stm_-_10-18is_stm_3.png?w=550", "ref":"8576B113"},
+                "Canon EOS 750D + 18-55mm IS STM Lens": { "megapixels":"24.2", "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/0592C005_EOS_750D_18-55_IS_7/0592c005_eos_750d_18-55_is_7.png?w=550", "ref":"0592C021"},
+                "Canon EOS 760D Body": { "megapixels":"24.2", "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/image_0021C016_EOS-760D_2/image_0021c016_eos-760d_2.png?w=550", "ref":"0021C016"},
+                "Canon EOS 100D + 18-135mm IS STM Lens": { "megapixels":"18", "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec (1/2 or 1/3 stop increments)", "img":"https://i1.adis.ws/i/canon/8576B109_100D_18-135_IS_STM_3/8576b109_100d_18-135_is_stm_3.png?w=550", "ref":"8576B109"},
+                "Canon EOS 100D + 18-55mm IS STM + 40mm STM Lens": { "megapixels":"18", "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/8576B050_EOS_100D_+_EF-S_18-55IS_STM_+_40_STM_3/8576b050_eos_100d_-_ef-s_18-55is_stm_-_40_stm_3.png?w=550", "ref":"8576B050"},
+                "Canon EOS 750D Body": { "megapixels":"24.2", "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/image_0592C014_EOS-750D_2/image_0592c014_eos-750d_2.png?w=420", "ref":"0592C014"},
+                "Canon EOS 700D + 18-55mm IS STM Lens": { "megapixels":"18", "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 in 1-stop increments", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/8596B027_EOS-700D-18-55mm-IS-STM-3/8596b027_eos-700d-18-55mm-is-stm-3.png?w=550", "ref":"8596B027"},
+                "Canon EOS 80D + 18-135mm IS USM Lens": { "megapixels":"24.2", "lens":"EF/EF-S", "iso":"Auto (100-16000), 100-16000  (in 1/3-stop or whole stop increments)", "speed":"30-1/8000 sec", "img":"https://i1.adis.ws/i/canon/1263C047_EOS-80D-EF-S-18-135mm-f_3.5-5.6-IS-USM_2/1263c047_eos-80d-ef-s-18-135mm-f_3-5-5-6-is-usm_2.png?w=550", "ref":"1263C047"},
+                "Canon EOS 80D Body": { "megapixels":"24.2", "lens":"EF/EF-S", "iso":"Auto (100-16000), 100-16000 (in 1/3-stop or whole stop increments)", "speed":"30-1/8000 sec", "img":"https://i1.adis.ws/i/canon/1263C036_EOS-80D_2/1263c036_eos-80d_2.png?w=550", "ref":"1263C036"},
+                "Canon EOS 80D + 18-55mm IS STM Lens": { "megapixels":"24.2", "lens":"EF/EF-S", "iso":"Auto (100-16000), 100-16000 (in 1/3-stop or whole stop increments)", "speed":"30-1/8000 sec", "img":"https://i1.adis.ws/i/canon/1263C044_EOS-80D-18-55-IS-STM_2/1263c044_eos-80d-18-55-is-stm_2.png?w=550", "ref":"1263C044"},
+                "Canon EOS 700D + 18-135mm IS STM + EF 40mm STM Lens": { "megapixels":"18", "lens":"EF/EF-S", "iso":"AUTO(100-6400), 100-12800 (in 1/3-stop or whole stop increments)", "speed":"30-1/4000 sec", "img":"https://i1.adis.ws/i/canon/8596B051_EOS_700D_18-135_IS_STM_+_40_STM_3/8596b051_eos_700d_18-135_is_stm_-_40_stm_3.png?w=550", "ref":"8596B051"},
+                "Canon EOS 5D Mark III Body": { "megapixels":"22.3", "lens":"EF (excludes EF-S lenses)", "iso":"Auto (100-12800), 100-25600 (in 1/3-stop or whole stop increments)", "speed":"30-1/8000 sec", "img":"https://i1.adis.ws/i/canon/5260B019_EOS-5D-MARK-III_2/5260b019_eos-5d-mark-iii_2.png?w=420", "ref":"5260B019"},
+                "Canon EOS 7D Mark II Body": { "megapixels":"20.2", "lens":"EF/EF-S", "iso":"Auto (100-16000), 100-16000 (in 1/3-stop or whole stop increments)", "speed":"30-1/8000 sec ", "img":"https://i1.adis.ws/i/canon/9128B043_EOS-7D-Mark-II_2/eos-7d-mark-ii_2.png?w=550", "ref":"9128B043"},
+                "Canon EOS 6D + EF 24-105mm IS STM Lens": { "megapixels":"20.2", "lens":"EF (excludes EF-S lenses)", "iso":"Auto (100-25600), 100-25600 (in 1/3-stop or whole stop increments)", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/8035B126_EOS_6D_+_EF_24-105_STM_6/8035b126_eos_6d_-_ef_24-105_stm_6.png?w=550", "ref":"8035B126"},
+                "Canon EOS 70D + 18-200mm IS Lens": { "megapixels":"20.2", "lens":"EF/EF-S", "iso":"Auto (100-12800), 100-12800 (in 1/3-stop or whole stop increments)", "speed":"30-1/8000 sec", "img":"https://i1.adis.ws/i/canon/8469B048_EOS_70D_+_EFS_18-200_IS_2/8469b048_eos_70d_-_efs_18-200_is_2.png?w=550", "ref":"8469B048"},
+                "Canon EOS 70D + 18-135mm IS STM Lens": { "megapixels":"20.2", "lens":"EF/EF-S", "iso":"Auto (100-12800), 100-12800 (in 1/3-stop or whole stop increments)", "speed":"30-1/8000 sec", "img":"https://i1.adis.ws/i/canon/8469B038_EOS_70D_+_EFS_18-135_IS_STM_3/8469b038_eos_70d_-_efs_18-135_is_stm_3.png?w=550", "ref":"8469B038"},
+                "Canon EOS 70D Body": { "megapixels":"20.2", "lens":"EF/EF-S", "iso":"Auto (100-12800), 100-12800 (in 1/3-stop or whole stop increments)", "speed":"30-1/8000 sec", "img":"https://i1.adis.ws/i/canon/8469B024_EOS-70D_2/eos-70d_2.png?w=420", "ref":"8469B024"},
+                "Canon EOS 70D + 18-55mm IS STM Lens": { "megapixels":"20.2", "lens":"EF/EF-S", "iso":"Auto (100-12800), 100-12800 (in 1/3-stop or whole stop increments)", "speed":"30-1/8000 sec", "img":"https://i1.adis.ws/i/canon/8469B031-EOS-70D+18-55-IS-STM-4/8469b031-eos-70d-18-55-is-stm-4.png?w=550", "ref":"8469B031"},
+                "Canon EOS 6D Body": { "megapixels":"20.2", "lens":"EF (excludes EF-S lenses)", "iso":"Auto (100-25600), 100-25600  (in 1/3-stop or whole stop increments)", "speed":"30-1/4000 sec", "img":"https://i1.adis.ws/i/canon/8035B022_EOS-6D_4/eos-6d_4.png?w=550", "ref":"8035B022"}
             },
             fr: {
-                "Boîtier nu Canon EOS 5D Mark III": { "megapixels":22.3, "lens":"EF (excludes EF-S lenses)", "iso":"100-25600", "speed":"30-1/8000 sec", "img":"https://i1.adis.ws/i/canon/5260B019_EOS-5D-MARK-III_2/5260b019_eos-5d-mark-iii_2.png?w=420"},
-                "Canon EOS 7D Mark II  Boîtier Nu": { "megapixels":20.2, "lens":"EF/EF-S", "iso":"100-16000", "speed":"30-1/8000 sec ", "img":"https://i1.adis.ws/i/canon/9128B043_EOS-7D-Mark-II_2/eos-7d-mark-ii_2.png?w=550"},
-                "Canon EOS 6D + objectif EF 24-105mm IS STM": { "megapixels":20.2, "lens":"EF (sauf modèles EF-S)", "iso":"100 à 25.600", "speed":"30 à 1/4000 s", "img":"https://i1.adis.ws/i/canon/8035B126_EOS_6D_+_EF_24-105_STM_6/8035b126_eos_6d_-_ef_24-105_stm_6.png?w=550"},
-                "Canon EOS 80D + objectif 18-135mm IS USM": { "megapixels":24.2, "lens":"EF/EF-S", "iso":"100 à 16.000", "speed":"30 à 1/8000 s", "img":"https://i1.adis.ws/i/canon/1263C047_EOS-80D-EF-S-18-135mm-f_3.5-5.6-IS-USM_2/1263c047_eos-80d-ef-s-18-135mm-f_3-5-5-6-is-usm_2.png?w=550"},
-                "Canon EOS 6D Boîtier Nu": { "megapixels":20.2 , "lens":"EF (sauf modèles EF-S)", "iso":"100 à 25.600", "speed":"30 à 1/4000 s", "img":"https://i1.adis.ws/i/canon/8035B022_EOS-6D_4/eos-6d_4.png?w=550"},
-                "Canon EOS 80D + objectif 18-55mm IS STM": { "megapixels":24.2, "lens":"EF/EF-S", "iso":"100 à 16.000", "speed":"30 à 1/8000 s", "img":"https://i1.adis.ws/i/canon/1263C044_EOS-80D-18-55-IS-STM_2/1263c044_eos-80d-18-55-is-stm_2.png?w=550"},
-                "Canon EOS 80D Boîtier nu": { "megapixels":24.2, "lens":"EF/EF-S", "iso":"100 à 16.000", "speed":"30 à 1/8000 s", "img":"https://i1.adis.ws/i/canon/1263C036_EOS-80D_2/1263c036_eos-80d_2.png?w=420"},
-                "Canon EOS 70D + objectif 18-55mm IS STM": { "megapixels":20.2, "lens":"EF/EF-S", "iso":"100 à 12.800", "speed":"30 à 1/8000 s", "img":"https://i1.adis.ws/i/canon/8469B031-EOS-70D+18-55-IS-STM-4/8469b031-eos-70d-18-55-is-stm-4.png?w=420"},
-                "Canon EOS 70D Boîtier Nu": { "megapixels":20.2, "lens":"EF/EF-S", "iso":"100 à 12.800", "speed":"30 à 1/8000 s", "img":"https://i1.adis.ws/i/canon/8469B024_EOS-70D_2/eos-70d_2.png?w=420"},
-                "Canon EOS 750D + Objectif 18-135mm IS STM": { "megapixels":24.2, "lens":"EF/EF-S", "iso":"100 à 12.800", "speed":"30 à 1/4000 s", "img":"https://i1.adis.ws/i/canon/image_0592C028_EOS_750D_18-135_IS_7/image_0592c028_eos_750d_18-135_is_7.png?w=420"},
-                "Canon EOS 100D blanc + objectif 18-55mm STM + étui « Linda » de Stella McCartney": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"100 à 12.800", "speed":"30 à 1/4000 s", "img":"https://i1.adis.ws/i/canon/9124B029_EOS_100D_+_EF-S_18-55mm_IS_STM_WHITE_STELLA_DONE_3/9124b029_eos_100d_-_ef-s_18-55mm_is_stm_white_stella_done_3.png?w=420"},
-                "Canon EOS 700D + Objectif 18-55mm IS STM": { "megapixels":24.2, "lens":"EF/EF-S", "iso":"100 à 12.800", "speed":"30 à 1/4000 s", "img":"https://i1.adis.ws/i/canon/8596B027_EOS-700D-18-55mm-IS-STM-3/8596b027_eos-700d-18-55mm-is-stm-3.png?w=420"},
-                "Canon EOS 750D Boîtier Nu": { "megapixels":24.2, "lens":"EF/EF-S", "iso":"100 à 12.800", "speed":"30 à 1/4000 s", "img":"https://i1.adis.ws/i/canon/image_0592C014_EOS-750D_2/image_0592c014_eos-750d_2.png?w=420"},
-                "Canon EOS 750D + Objectif 18-55mm IS STM": { "megapixels":24.2, "lens":"EF/EF-S", "iso":"100 à 12.800", "speed":"30 à 1/4000 s ", "img":"https://i1.adis.ws/i/canon/0592C005_EOS_750D_18-55_IS_7/0592c005_eos_750d_18-55_is_7.png?w=420"},
-                "Canon EOS 700D Boîtier Nu": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"100 à 12.800", "speed":"30 à 1/4000 s", "img":"https://i1.adis.ws/i/canon/8596B014_EOS-700D_2/eos-700d_2.png?w=420"},
-                "Canon EOS 1300D + objectif 18-55mm IS II": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"100 à 6.400", "speed":"30 à 1/4000 s ", "img":"https://i1.adis.ws/i/canon/1160C029_EOS-1300D-18-55-IS_2/canon-eos-1300d-18-55mm-is-ii-lens.png?w=420"},
-                "Canon EOS 100D + Objectif 18-55mm IS STM": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"100 à 12.800", "speed":"30 à 1/4000 s", "img":"https://i1.adis.ws/i/canon/8576B021_EOS_100D_+_EF-S_18-55mm_IS_STM_3/8576b021_eos_100d_-_ef-s_18-55mm_is_stm_3.png?w=420"},
-                "Canon EOS 100D + Objectif 18-55mm IS STM Blanc": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"100 à 12.800", "speed":"30 à 1/4000 s", "img":"https://i1.adis.ws/i/canon/9124B013_EOS_100D_+_EF-S_18-55mm_IS_STM_WHITE_2/9124b013_eos_100d_-_ef-s_18-55mm_is_stm_white_2.png?w=420"},
-                "Boîtier du Canon EOS 1300D": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"100 à 6.400", "speed":"30 à 1/4000 s", "img":"https://i1.adis.ws/i/canon/1160C017_EOS-1300D_2/canon-eos-1300d-body.png?w=420"},
-                "Boîtier nu Canon EOS 760D": { "megapixels":24.2, "lens":"EF/EF-S", "iso":"100-12800", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/image_0021C016_EOS-760D_2/image_0021c016_eos-760d_2.png?w=550"},
-                "Canon EOS 100D Boîtier Nu": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"100 à 12.800", "speed":"30 à 1/4000 s", "img":"https://i1.adis.ws/i/canon/8576B014_EOS-100D_2/eos-100d_2.png?w=420"}
+                "Canon EOS 100D blanc + objectif 18-55mm STM + étui « Linda » de Stella McCartney": { "megapixels":"18", "lens":"EF/EF-S", "iso":"100 à 12.800", "speed":"30 à 1/4000 s", "img":"https://i1.adis.ws/i/canon/9124B029_EOS_100D_+_EF-S_18-55mm_IS_STM_WHITE_ST…NE_3/9124b029_eos_100d_-_ef-s_18-55mm_is_stm_white_stella_done_3.png?w=420", "ref":"9124B028"},
+                "Canon EOS 750D + Objectif 18-135mm IS STM": { "megapixels":"24.2", "lens":"EF/EF-S", "iso":"100 à 12.800", "speed":"30 à 1/4000 s", "img":"https://i1.adis.ws/i/canon/image_0592C028_EOS_750D_18-135_IS_7/image_0592c028_eos_750d_18-135_is_7.png?w=420", "ref":"0592C029"},
+                "Canon EOS 80D Boîtier nu": { "megapixels":"24.2", "lens":"EF/EF-S", "iso":"100 à 16.000", "speed":"30 à 1/8000 s", "img":"https://i1.adis.ws/i/canon/1263C036_EOS-80D_2/1263c036_eos-80d_2.png?w=420", "ref":"1263C027"},
+                "Canon EOS 80D + objectif 18-135mm IS USM": { "megapixels":"24.2", "lens":"EF/EF-S", "iso":"100 à 16.000", "speed":"30 à 1/8000 s", "img":"https://i1.adis.ws/i/canon/1263C047_EOS-80D-EF-S-18-135mm-f_3.5-5.6-IS-USM_2/1263c047_eos-80d-ef-s-18-135mm-f_3-5-5-6-is-usm_2.png?w=550", "ref":"1263C042"},
+                "Canon EOS 80D + objectif 18-55mm IS STM": { "megapixels":"24.2", "lens":"EF/EF-S", "iso":"100 à 16.000", "speed":"30 à 1/8000 s", "img":"https://i1.adis.ws/i/canon/1263C044_EOS-80D-18-55-IS-STM_2/1263c044_eos-80d-18-55-is-stm_2.png?w=550", "ref":"1263C034"},
+                "Canon EOS 750D + Objectif 18-55mm IS STM": { "megapixels":"24.2", "lens":"EF/EF-S", "iso":"100 à 12.800", "speed":"30 à 1/4000 s ", "img":"https://i1.adis.ws/i/canon/0592C005_EOS_750D_18-55_IS_7/0592c005_eos_750d_18-55_is_7.png?w=420", "ref":"0592C022"},
+                "Boîtier nu Canon EOS 5D Mark III": { "megapixels":"22.3", "lens":"EF (excludes EF-S lenses)", "iso":"100-25600", "speed":"30-1/8000 sec", "img":"https://i1.adis.ws/i/canon/5260B019_EOS-5D-MARK-III_2/5260b019_eos-5d-mark-iii_2.png?w=420", "ref":"5260B020"},
+                "Canon EOS 7D Mark II  Boîtier Nu": { "megapixels":"20.2", "lens":"EF/EF-S", "iso":"100-16000", "speed":"30-1/8000 sec ", "img":"https://i1.adis.ws/i/canon/9128B043_EOS-7D-Mark-II_2/eos-7d-mark-ii_2.png?w=550", "ref":"9128B040"},
+                "Canon EOS 70D Boîtier Nu": { "megapixels":"20.2", "lens":"EF/EF-S", "iso":"100 à 12.800", "speed":"30 à 1/8000 s", "img":"https://i1.adis.ws/i/canon/8469B024_EOS-70D_2/eos-70d_2.png?w=420", "ref":"8469B025"},
+                "Canon EOS 6D + objectif EF 24-105mm IS STM": { "megapixels":"20.2", "lens":"EF (sauf modèles EF-S)", "iso":"100 à 25.600", "speed":"30 à 1/4000 s", "img":"https://i1.adis.ws/i/canon/8035B126_EOS_6D_+_EF_24-105_STM_6/8035b126_eos_6d_-_ef_24-105_stm_6.png?w=550", "ref":"8035B127"},
+                "Canon EOS 70D + objectif 18-55mm IS STM": { "megapixels":"20.2", "lens":"EF/EF-S", "iso":"100 à 12.800", "speed":"30 à 1/8000 s", "img":"https://i1.adis.ws/i/canon/8469B031-EOS-70D+18-55-IS-STM-4/8469b031-eos-70d-18-55-is-stm-4.png?w=420", "ref":"8469B032"},
+                "Canon EOS 6D Boîtier Nu": { "megapixels":"20.2", "lens":"EF (sauf modèles EF-S)", "iso":"100 à 25.600", "speed":"30 à 1/4000 s", "img":"https://i1.adis.ws/i/canon/8035B022_EOS-6D_4/eos-6d_4.png?w=550", "ref":"8035B024"},
+                "Canon EOS 1300D + objectif 18-55mm IS II": { "megapixels":"18", "lens":"EF/EF-S", "iso":"100 à 6.400", "speed":"30 à 1/4000 s ", "img":"https://i1.adis.ws/i/canon/1160C029_EOS-1300D-18-55-IS_2/canon-eos-1300d-18-55mm-is-ii-lens.png?w=420", "ref":"1160C026"},
+                "Boîtier du Canon EOS 1300D": { "megapixels":"18", "lens":"EF/EF-S", "iso":"100 à 6.400", "speed":"30 à 1/4000 s", "img":"https://i1.adis.ws/i/canon/1160C017_EOS-1300D_2/canon-eos-1300d-body.png?w=420", "ref":"1160C023"},
+                "Boîtier nu Canon EOS 760D": { "megapixels":"24.2", "lens":"EF/EF-S", "iso":"100-12800", "speed":"30-1/4000 sec ", "img":"https://i1.adis.ws/i/canon/image_0021C016_EOS-760D_2/image_0021c016_eos-760d_2.png?w=550", "ref":"0021C017"},
+                "Canon EOS 750D Boîtier Nu": { "megapixels":"24.2", "lens":"EF/EF-S", "iso":"100 à 12.800", "speed":"30 à 1/4000 s", "img":"https://i1.adis.ws/i/canon/image_0592C014_EOS-750D_2/image_0592c014_eos-750d_2.png?w=420", "ref":"0592C015"},
+                "Canon EOS 100D + Objectif 18-55mm IS STM": { "megapixels":"18", "lens":"EF/EF-S", "iso":"100 à 12.800", "speed":"30 à 1/4000 s", "img":"https://i1.adis.ws/i/canon/8576B021_EOS_100D_+_EF-S_18-55mm_IS_STM_3/8576b021_eos_100d_-_ef-s_18-55mm_is_stm_3.png?w=420", "ref":"8576B022"},
+                "Canon EOS 100D + Objectif 18-55mm IS STM Blanc": { "megapixels":"18", "lens":"EF/EF-S", "iso":"100 à 12.800", "speed":"30 à 1/4000 s", "img":"https://i1.adis.ws/i/canon/9124B013_EOS_100D_+_EF-S_18-55mm_IS_STM_WHITE_2/9124b013_eos_100d_-_ef-s_18-55mm_is_stm_white_2.png?w=420", "ref":"9124B014"},
+                "Canon EOS 100D Boîtier Nu": { "megapixels":"18", "lens":"EF/EF-S", "iso":"100 à 12.800", "speed":"30 à 1/4000 s", "img":"https://i1.adis.ws/i/canon/8576B014_EOS-100D_2/eos-100d_2.png?w=420", "ref":"8576B015"},
+                "Canon EOS 700D Boîtier Nu": { "megapixels":"18", "lens":"EF/EF-S", "iso":"100 à 12.800", "speed":"30 à 1/4000 s", "img":"https://i1.adis.ws/i/canon/8596B014_EOS-700D_2/eos-700d_2.png?w=420", "ref":"8596B016"},
+                "Canon EOS 700D + Objectif 18-55mm IS STM": { "megapixels":"24.2", "lens":"EF/EF-S", "iso":"100 à 12.800", "speed":"30 à 1/4000 s", "img":"https://i1.adis.ws/i/canon/8596B027_EOS-700D-18-55mm-IS-STM-3/8596b027_eos-700d-18-55mm-is-stm-3.png?w=420", "ref":"8596B028"}
             },
             de: {
-                "Canon EOS 5D Mark III Gehäuse": { "megapixels":22.3, "lens":"EF Objektive (ausgenommen EF-S Objektive)", "iso":"Auto (100-12.800), 100-25.600 (in ganzen oder Drittelstufen)", "speed":"30-1/8000 s", "img":"https://i1.adis.ws/i/canon/5260B019_EOS-5D-MARK-III_2/5260b019_eos-5d-mark-iii_2.png?w=420"},
-                "Canon EOS 6D + EF 24-105mm IS STM Objektiv": { "megapixels":20.2, "lens":"EF (ausgenommen EF-S Objektive)", "iso":"Auto (100-25.600), 100-25.600 (in Drittel- oder ganzen Stufen)", "speed":"30-1/4000 s ", "img":"https://i1.adis.ws/i/canon/8035B126_EOS_6D_+_EF_24-105_STM_6/8035b126_eos_6d_-_ef_24-105_stm_6.png?w=420"},
-                "Canon EOS 80D + 18-135mm IS USM Objektiv": { "megapixels":24.2, "lens":"EF/EF-S", "iso":"Auto (100-16.000), 100-16.000 (in Drittel- oder ganzen Stufen)", "speed":"30-1/8000 s", "img":"https://store.canon.de/canon-eos-80d-18-135mm-is-usm-objektiv/1263C047/"},
-                "Canon EOS 7D Mark II Gehäuse": { "megapixels":20.2, "lens":"EF/EF-S", "iso":"Auto (100-16.000), 100-16.000 (in Drittelstufen oder ganzen Stufen)", "speed":"30-1/8000 s ", "img":"https://i1.adis.ws/i/canon/9128B043_EOS-7D-Mark-II_2/eos-7d-mark-ii_2.png?w=420"},
-                "Canon EOS 6D Gehäuse": { "megapixels":20.2 , "lens":"EF (ausgenommen EF-S Objektive)", "iso":"Auto (100-25.600), 100-25.600 in Drittel- oder ganzen Stufen)", "speed":"30-1/4000 s", "img":"https://i1.adis.ws/i/canon/8035B022_EOS-6D_1/eos-6d_1.png?w=420"},
-                "Canon EOS 80D + 18-55mm IS STM Objektiv": { "megapixels":24.2, "lens":"EF/EF-S", "iso":"Auto (100-16.000), 100-16.000 (in Drittel- oder ganzen Stufen)", "speed":"30-1/8000 s", "img":"https://i1.adis.ws/i/canon/1263C044_EOS-80D-18-55-IS-STM_2/1263c044_eos-80d-18-55-is-stm_2.png?w=420"},
-                "Canon EOS 70D + 18-135mm IS STM Objektiv": { "megapixels":20.2, "lens":"EF/EF-S", "iso":"Auto (100-12.800), 100-12.800 (in Drittel- oder ganzen Stufen)", "speed":"30-1/8000 s", "img":"https://i1.adis.ws/i/canon/8469B038_EOS_70D_+_EFS_18-135_IS_STM_3/8469b038_eos_70d_-_efs_18-135_is_stm_3.png?w=420"},
-                "Canon EOS 80D Gehäuse": { "megapixels":24.2, "lens":"EF/EF-S", "iso":"Auto (100-16.000), 100-16.000 (in Drittel- oder ganzen Stufen)", "speed":"30-1/8000 s", "img":"https://i1.adis.ws/i/canon/1263C036_EOS-80D_7/1263c036_eos-80d_7.png?w=420"},
-                "Canon EOS 70D Gehäuse": { "megapixels":20.2, "lens":"EF/EF-S", "iso":"Auto (100-12.800), 100-12.800 (in Drittel- oder ganzen Stufen)", "speed":"30-1/8000 s", "img":"https://i1.adis.ws/i/canon/8469B024_EOS-70D_2/eos-70d_2.png?w=420"},
-                "Canon EOS 70D + 18-55mm IS STM Lens": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"Auto (100-12.800), 100-12.800 (in Drittel- oder ganzen Stufen)", "speed":"30-1/4000 s", "img":"https://i1.adis.ws/i/canon/8469B031-EOS-70D+18-55-IS-STM-3/8469b031-eos-70d-18-55-is-stm-3.png?w=420"},
-                "Canon EOS 700D + 18-135mm IS STM Objektiv": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"Auto (100-6.400), 100-12.800 (in Drittel-Stufen)", "speed":"30-1/4000 s ", "img":"https://i1.adis.ws/i/canon/8596B034_EOS-700D-18-135mm-IS-STM-3/8596b034_eos-700d-18-135mm-is-stm-3.png?w=420"},
-                "Canon EOS 100D Weiß + 18-55mm STM Objektiv + Stella McCartney Kameratasche „Linda“": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"Auto (100-6.400), 100-12.800 (in Drittel-Stufen)", "speed":"30-1/4000 s ", "img":"https://i1.adis.ws/i/canon/9124B029_EOS_100D_+_EF-S_18-55mm_IS_STM_WHITE_STELLA_DONE_3/9124b029_eos_100d_-_ef-s_18-55mm_is_stm_white_stella_done_3.png?w=550"},
-                "Canon EOS 750D + 18-135mm IS STM Objektiv": { "megapixels":24.2, "lens":"EF/EF-S", "iso":"Auto (100-6.400), 100-12.800 (in Drittel-Stufen)", "speed":"30-1/4000 s ", "img":"https://i1.adis.ws/i/canon/image_0592C028_EOS_750D_18-135_IS_7/image_0592c028_eos_750d_18-135_is_7.png?w=420"},
-                "Canon EOS 750D + 18-55mm IS STM Objektiv": { "megapixels":24.2, "lens":"EF/EF-S", "iso":"Auto (100-6.400), 100-12.800 (in Drittel-Stufen)", "speed":"30-1/4.000 s", "img":"https://i1.adis.ws/i/canon/0592C005_EOS_750D_18-55_IS_7/0592c005_eos_750d_18-55_is_7.png?w=420"},
-                "Canon EOS 760D Gehäuse": { "megapixels":24.2, "lens":"EF/EF-S", "iso":"Auto (100-6.400), 100-12.800 (in Drittel-Stufen)", "speed":"30-1/4000 s ", "img":"https://i1.adis.ws/i/canon/image_0021C016_EOS-760D_2/image_0021c016_eos-760d_2.png?w=550"},
-                "Canon EOS 100D + 18-55mm IS STM Objektiv": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"Auto (100-6.400), 100-12.800 (in Drittel-Stufen)", "speed":"30-1/4000 s ", "img":"https://i1.adis.ws/i/canon/8576B021_EOS_100D_+_EF-S_18-55mm_IS_STM_3/8576b021_eos_100d_-_ef-s_18-55mm_is_stm_3.png?w=420"},
-                "Canon EOS 750D Gehäuse": { "megapixels":24.2, "lens":"EF/EF-S", "iso":"Auto (100-6.400), 100-12.800 (in Drittel-Stufen)", "speed":"30-1/4000 s ", "img":"https://i1.adis.ws/i/canon/image_0592C014_EOS-750D_2/image_0592c014_eos-750d_2.png?w=420"},
-                "Canon EOS 700D + 18-55mm IS STM Objektiv": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"Auto (100-6.400), 100-12.800 (in Drittel-Stufen)", "speed":"30-1/4000 s ", "img":"https://i1.adis.ws/i/canon/8596B027_EOS-700D-18-55mm-IS-STM-3/8596b027_eos-700d-18-55mm-is-stm-3.png?w=420"},
-                "Canon EOS 700D Gehäuse": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"Auto (100-6.400), 100-12.800 (in Drittel-Stufen)", "speed":"30-1/4000 s ", "img":"https://i1.adis.ws/i/canon/8596B014_EOS-700D_2/eos-700d_2.png?w=420"},
-                "Canon EOS 1300D + 18-55mm IS II Objektiv": { "megapixels":18, "lens":"EF/EF-S", "iso":"Auto (100-6.400), 100-6.400 in ganzen Stufen", "speed":"30-1/4.000 s", "img":"https://i1.adis.ws/i/canon/1160C029_EOS-1300D-18-55-IS_2/canon-eos-1300d-18-55mm-is-ii-lens.png?w=420"},
-                "Canon EOS 1300D + 18-55mm III Objektiv": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"Auto (100-6.400), 100-12.800 (in Drittel-Stufen)", "speed":"30-1/4000 s ", "img":"https://i1.adis.ws/i/canon/1160C034_EOS-1300D-18-55_2/canon-eos-1300d-18-55mm-iii-lens.png?w=420"},
-                "Canon EOS 1300D Gehäuse": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"Auto (100-6.400), 100-12.800 (in Drittel-Stufen)", "speed":"30-1/4000 s ", "img":"https://i1.adis.ws/i/canon/1160C017_EOS-1300D_2/canon-eos-1300d-body.png?w=420"},
-                "Canon EOS 100D Gehäuse": { "megapixels":18.0 , "lens":"EF/EF-S", "iso":"Auto (100-6.400), 100-12.800 (in Drittel-Stufen)", "speed":"30-1/4000 s", "img":"https://i1.adis.ws/i/canon/8576B014_EOS-100D_2/eos-100d_2.png?w=420"}
+                "Canon EOS 100D Weiß + 18-55mm STM Objektiv + Stella McCartney Kameratasche „Linda“": { "megapixels":"18", "lens":"EF/EF-S", "iso":"Auto (100-6.400), 100-12.800 (in Drittel-Stufen)", "speed":"30-1/4000 s ", "img":"https://i1.adis.ws/i/canon/9124B029_EOS_100D_+_EF-S_18-55mm_IS_STM_WHITE_ST…NE_3/9124b029_eos_100d_-_ef-s_18-55mm_is_stm_white_stella_done_3.png?w=550", "ref":"9124B028"},
+                "Canon EOS 750D + 18-55mm IS STM Objektiv": { "megapixels":"24.2", "lens":"EF/EF-S", "iso":"Auto (100-6.400), 100-12.800 (in Drittel-Stufen)", "speed":"30-1/4.000 s", "img":"https://i1.adis.ws/i/canon/0592C005_EOS_750D_18-55_IS_7/0592c005_eos_750d_18-55_is_7.png?w=420", "ref":"0592C022"},
+                "Canon EOS 760D Gehäuse": { "megapixels":"24.2", "lens":"EF/EF-S", "iso":"Auto (100-6.400), 100-12.800 (in Drittel-Stufen)", "speed":"30-1/4000 s ", "img":"https://i1.adis.ws/i/canon/image_0021C016_EOS-760D_2/image_0021c016_eos-760d_2.png?w=550", "ref":"0021C017"},
+                "Canon EOS 750D Gehäuse": { "megapixels":"24.2", "lens":"EF/EF-S", "iso":"Auto (100-6.400), 100-12.800 (in Drittel-Stufen)", "speed":"30-1/4000 s ", "img":"https://i1.adis.ws/i/canon/image_0592C014_EOS-750D_2/image_0592c014_eos-750d_2.png?w=420", "ref":"0592C015"},
+                "Canon EOS 700D + 18-55mm IS STM Objektiv": { "megapixels":"18", "lens":"EF/EF-S", "iso":"Auto (100-6.400), 100-12.800 (in Drittel-Stufen)", "speed":"30-1/4000 s ", "img":"https://i1.adis.ws/i/canon/8596B027_EOS-700D-18-55mm-IS-STM-3/8596b027_eos-700d-18-55mm-is-stm-3.png?w=420", "ref":"8596B028"},
+                "Canon EOS 700D Gehäuse": { "megapixels":"18", "lens":"EF/EF-S", "iso":"Auto (100-6.400), 100-12.800 (in Drittel-Stufen)", "speed":"30-1/4000 s ", "img":"https://i1.adis.ws/i/canon/8596B014_EOS-700D_2/eos-700d_2.png?w=420", "ref":"8596B016"},
+                "Canon EOS 1300D + 18-55mm IS II Objektiv": { "megapixels":"18", "lens":"EF/EF-S", "iso":"Auto (100-6.400), 100-6.400 in ganzen Stufen", "speed":"30-1/4.000 s", "img":"https://i1.adis.ws/i/canon/1160C029_EOS-1300D-18-55-IS_2/canon-eos-1300d-18-55mm-is-ii-lens.png?w=420", "ref":"1160C026"},
+                "Canon EOS 100D + 18-55mm IS STM Objektiv": { "megapixels":"18", "lens":"EF/EF-S", "iso":"Auto (100-6.400), 100-12.800 (in Drittel-Stufen)", "speed":"30-1/4000 s ", "img":"https://i1.adis.ws/i/canon/8576B021_EOS_100D_+_EF-S_18-55mm_IS_STM_3/8576b021_eos_100d_-_ef-s_18-55mm_is_stm_3.png?w=420", "ref":"8576B022"},
+                "Canon EOS 1300D + 18-55mm III Objektiv": { "megapixels":"18", "lens":"EF/EF-S", "iso":"Auto (100-6.400), 100-12.800 (in Drittel-Stufen)", "speed":"30-1/4000 s ", "img":"https://i1.adis.ws/i/canon/1160C034_EOS-1300D-18-55_2/canon-eos-1300d-18-55mm-iii-lens.png?w=420", "ref":"1160C031"},
+                "Canon EOS 1300D Gehäuse": { "megapixels":"18", "lens":"EF/EF-S", "iso":"Auto (100-6.400), 100-12.800 (in Drittel-Stufen)", "speed":"30-1/4000 s ", "img":"https://i1.adis.ws/i/canon/1160C017_EOS-1300D_2/canon-eos-1300d-body.png?w=420", "ref":"1160C023"},
+                "Canon EOS 100D Gehäuse": { "megapixels":"18", "lens":"EF/EF-S", "iso":"Auto (100-6.400), 100-12.800 (in Drittel-Stufen)", "speed":"30-1/4000 s", "img":"https://i1.adis.ws/i/canon/8576B014_EOS-100D_2/eos-100d_2.png?w=420", "ref":"8576B015"},
+                "Canon EOS 80D + 18-135mm IS USM Objektiv": { "megapixels":"24.2", "lens":"EF/EF-S", "iso":"Auto (100-16.000), 100-16.000 (in Drittel- oder ganzen Stufen)", "speed":"30-1/8000 s", "img":"https://store.canon.de/canon-eos-80d-18-135mm-is-usm-objektiv/1263C047/", "ref":"1263C042"},
+                "Canon EOS 80D + 18-55mm IS STM Objektiv": { "megapixels":"24.2", "lens":"EF/EF-S", "iso":"Auto (100-16.000), 100-16.000 (in Drittel- oder ganzen Stufen)", "speed":"30-1/8000 s", "img":"https://i1.adis.ws/i/canon/1263C044_EOS-80D-18-55-IS-STM_2/1263c044_eos-80d-18-55-is-stm_2.png?w=420", "ref":"1263C034"},
+                "Canon EOS 5D Mark III Gehäuse": { "megapixels":"22.3", "lens":"EF Objektive (ausgenommen EF-S Objektive)", "iso":"Auto (100-12.800), 100-25.600 (in ganzen oder Drittelstufen)", "speed":"30-1/8000 s", "img":"https://i1.adis.ws/i/canon/5260B019_EOS-5D-MARK-III_2/5260b019_eos-5d-mark-iii_2.png?w=420", "ref":"5260B020"},
+                "Canon EOS 7D Mark II Gehäuse": { "megapixels":"20.2", "lens":"EF/EF-S", "iso":"Auto (100-16.000), 100-16.000 (in Drittelstufen oder ganzen Stufen)", "speed":"30-1/8000 s ", "img":"https://i1.adis.ws/i/canon/9128B043_EOS-7D-Mark-II_2/eos-7d-mark-ii_2.png?w=420", "ref":"9128B040"},
+                "Canon EOS 6D + EF 24-105mm IS STM Objektiv": { "megapixels":"20.2", "lens":"EF (ausgenommen EF-S Objektive)", "iso":"Auto (100-25.600), 100-25.600 (in Drittel- oder ganzen Stufen)", "speed":"30-1/4000 s ", "img":"https://i1.adis.ws/i/canon/8035B126_EOS_6D_+_EF_24-105_STM_6/8035b126_eos_6d_-_ef_24-105_stm_6.png?w=420", "ref":"8035B127"},
+                "Canon EOS 6D Gehäuse": { "megapixels":"20.2", "lens":"EF (ausgenommen EF-S Objektive)", "iso":"Auto (100-25.600), 100-25.600 in Drittel- oder ganzen Stufen)", "speed":"30-1/4000 s", "img":"https://i1.adis.ws/i/canon/8035B022_EOS-6D_1/eos-6d_1.png?w=420", "ref":"8035B024"},
+                "Canon EOS 80D Gehäuse": { "megapixels":"24.2", "lens":"EF/EF-S", "iso":"Auto (100-16.000), 100-16.000 (in Drittel- oder ganzen Stufen)", "speed":"30-1/8000 s", "img":"https://i1.adis.ws/i/canon/1263C036_EOS-80D_7/1263c036_eos-80d_7.png?w=420", "ref":"1263C027"},
+                "Canon EOS 700D + 18-135mm IS STM Objektiv": { "megapixels":"18", "lens":"EF/EF-S", "iso":"Auto (100-6.400), 100-12.800 (in Drittel-Stufen)", "speed":"30-1/4000 s ", "img":"https://i1.adis.ws/i/canon/8596B034_EOS-700D-18-135mm-IS-STM-3/8596b034_eos-700d-18-135mm-is-stm-3.png?w=420", "ref":"8596B035"},
+                "Canon EOS 750D + 18-135mm IS STM Objektiv": { "megapixels":"24.2", "lens":"EF/EF-S", "iso":"Auto (100-6.400), 100-12.800 (in Drittel-Stufen)", "speed":"30-1/4000 s ", "img":"https://i1.adis.ws/i/canon/image_0592C028_EOS_750D_18-135_IS_7/image_0592c028_eos_750d_18-135_is_7.png?w=420", "ref":"0592C029"},
+                "Canon EOS 70D + 18-135mm IS STM Objektiv": { "megapixels":"20.2", "lens":"EF/EF-S", "iso":"Auto (100-12.800), 100-12.800 (in Drittel- oder ganzen Stufen)", "speed":"30-1/8000 s", "img":"https://i1.adis.ws/i/canon/8469B038_EOS_70D_+_EFS_18-135_IS_STM_3/8469b038_eos_70d_-_efs_18-135_is_stm_3.png?w=420", "ref":"8469B039"},
+                "Canon EOS 70D Gehäuse": { "megapixels":"20.2", "lens":"EF/EF-S", "iso":"Auto (100-12.800), 100-12.800 (in Drittel- oder ganzen Stufen)", "speed":"30-1/8000 s", "img":"https://i1.adis.ws/i/canon/8469B024_EOS-70D_2/eos-70d_2.png?w=420", "ref":"8469B025"},
+                "Canon EOS 70D + 18-55mm IS STM Lens": { "megapixels":"18", "lens":"EF/EF-S", "iso":"Auto (100-12.800), 100-12.800 (in Drittel- oder ganzen Stufen)", "speed":"30-1/4000 s", "img":"https://i1.adis.ws/i/canon/8469B031-EOS-70D+18-55-IS-STM-3/8469b031-eos-70d-18-55-is-stm-3.png?w=420", "ref":"8469B032"}
             }
         },
 
@@ -345,6 +357,7 @@
                         price: $.trim($self.find('.price-now').text()),
                         sku: $self.find('.add-to-compare').data('product-id'),
                         desc: '',
+                        outOfStock: $self.find('.stock-availability-out').length !== 0 ? true : false
                     };
 
                 // Get a reference to the product from our main database
@@ -388,6 +401,8 @@
                         break;
 
                     }
+
+                    productData.ref = fromDB.ref;
 
                     productData.image.back = fromDB.img.slice(0,-3);
 
@@ -582,51 +597,52 @@
          */
         createBasketForm: function(productData) {
 
+            // grab some extra data
+            var category = $('.primary-breadcrumb--anchor:eq(3)').text();
+            var subCategory = $('.primary-breadcrumb--anchor').last().text();
+            var parentCategory = $('.primary-breadcrumb .active').text();
+            var refId;
+            var queryJoiner;
+
             if(typeof productData === 'object') {
 
-                return '<form id="addToCart" data-qtylimit="5" name="addToCart" action="' + productData.url + '&amp;_DARGS=/block/catalog/product/product-detail/sku-selection.jsp.addToCart" class="form-inline add-to-basket" method="POST">\
-                            <input name="_dyncharset" value="utf-8" type="hidden">\
-                            <input name="/spindrift/momentum/commerce/order/purchase/CartFormHandler.addItemToOrderErrorURL" value="' + productData.url + '" type="hidden">\
-                            <input name="_D:/spindrift/momentum/commerce/order/purchase/CartFormHandler.addItemToOrderErrorURL" value=" " type="hidden">\
-                            <div class="product-sku-selector js-require" data-js-require="app/blocks/productSkuSelector">\
-                                <div id="sku-variants" style="display:none">\
-                                    <div class="control-group">\
-                                    </div>\
-                                </div>\
-                                <div class="control-group">\
-                                    <input style="display: none;" id="sku-selector" name="/spindrift/momentum/commerce/order/purchase/CartFormHandler.catalogRefIds" value="' + productData.sku + '" type="hidden">\
-                                    <input name="_D:/spindrift/momentum/commerce/order/purchase/CartFormHandler.catalogRefIds" value=" " type="hidden">\
-                                </div>\
-                            </div>\
-                            <div class="control-group ">\
-                            </div>\
-                            <input name="/spindrift/momentum/commerce/order/purchase/CartFormHandler.productId" value="' + productData.sku + '" type="hidden">\
-                            <input name="_D:/spindrift/momentum/commerce/order/purchase/CartFormHandler.productId" value=" " type="hidden">\
-                            <div class="control-group awa-hidden">\
-                                <label class="control-label product-detail--add--control-label product-detail--label-type-1 label-type-1" for="frm-quantity">Quantity</label>\
-                                <div class="controls inline-adjust">\
-                                    <input name="_D:/spindrift/momentum/commerce/order/purchase/CartFormHandler.quantity" value=" " type="hidden">\
-                                    <select min="1" id="frm-quantity" max="5" name="/spindrift/momentum/commerce/order/purchase/CartFormHandler.quantity" class="product-detail--add--input">\
-                                        <option value="1">1</option>\
-                                    </select>\
-                                </div>\
-                            </div>\
-                            <div class="button-block">\
-                                <label class="button-wrapper btn btn-success button-gutter-right btn-success--full-width-mobile product-detail--add-to-cart-button "><i class="icon-basket btn-success--icon"></i>\
-                                <input id="add-to-basket" title="'+AWA.copy[LANG].cartSubmit+'" data-analytics-method="utag.link" data-js-require="app/analytics" data-analytics-custom-props="{&quot;customProps&quot;:[{&quot;propName&quot;:&quot;product.productInfo.quantity&quot;,&quot;getValueID&quot;:&quot;frm-quantity&quot;},{&quot;propName&quot;:&quot;event.eventInfo.eventAction&quot;,&quot;value&quot;:&quot;addToBasket&quot;}]}" name="/spindrift/momentum/commerce/order/purchase/CartFormHandler.addItemToOrder" value="'+AWA.copy[LANG].cartSubmit+'" class="add-to-basket--submit js-require js-analytics-click " data-analytics="{&quot;product&quot;:[{&quot;productInfo&quot;:{&quot;productID&quot;:&quot;' + productData.sku + '&quot;,&quot;productName&quot;:&quot;' + productData.title + '&quot;,&quot;sku&quot;:&quot;' + productData.sku + '&quot;,&quot;quantity&quot;:&quot;1&quot;},&quot;category&quot;:{&quot;primaryCategory&quot;:&quot;Cameras&quot;},&quot;price&quot;:{&quot;priceWithTax&quot;:&quot; ' + productData.price.replace('£','') + '&quot;,&quot;voucherCode&quot;:&quot;&quot;,&quot;voucherDiscount&quot;:&quot;&quot;}}],&quot;cart&quot;:{&quot;cartID&quot;:&quot;o22372641&quot;},&quot;event&quot;:[{&quot;eventInfo&quot;:{&quot;eventAction&quot;:&quot;captureEvent&quot;}}],&quot;version&quot;:&quot;1.0&quot;}" type="submit">\
-                                <input name="_D:/spindrift/momentum/commerce/order/purchase/CartFormHandler.addItemToOrder" value=" " type="hidden"></label>\
-                            </div>\
-                            <div class="product-detail-qty-ajax-alert-basket js-error-block">\
-                              <div class="alert-error">\
-                                <p class="alertBox--para"></p>\
-                              </div>\
-                            </div>\
-                            <input name="_DARGS" value="/block/catalog/product/product-detail/sku-selection.jsp.addToCart" type="hidden">\
+                if(productData.outOfStock) {
+                    return '';
+                }
+
+                if(productData.ref !== undefined) {
+                    refId = productData.ref;
+                } else {
+                    refId = productData.sku;
+                }
+
+                if(productData.url.split('/').pop().slice(0,1) === '?') {
+                    queryJoiner = '&amp;';
+                } else {
+                    queryJoiner = '?';
+                }
+
+                return '<form id="addToCart" data-qtylimit="5" name="addToCart" action="'+ productData.url + queryJoiner + '_DARGS=/block/catalog/product/product-detail-three-columns/sku-selection.jsp.addToCart" class="form-inline add-to-basket" method="POST">\
+                        <input name="_dyncharset" value="utf-8" type="hidden">\
+                        <input name="/spindrift/momentum/commerce/order/purchase/CartFormHandler.catalogRefIds" value="'+ refId +'" type="hidden" style="display: none;">\
+                        <input name="_D:/spindrift/momentum/commerce/order/purchase/CartFormHandler.catalogRefIds" value=" " type="hidden">\
+                        <input name="/spindrift/momentum/commerce/order/purchase/CartFormHandler.productId" value="'+ productData.sku +'" type="hidden">\
+                        <input name="_D:/spindrift/momentum/commerce/order/purchase/CartFormHandler.productId" value=" " type="hidden">\
+                        <input name="_D:/spindrift/momentum/commerce/order/purchase/CartFormHandler.quantity" value=" " type="hidden">\
+                        <input id="frm-quantity" name="/spindrift/momentum/commerce/order/purchase/CartFormHandler.quantity" class="input-mini" type="hidden" value="1">\
+                        <label class="button-wrapper btn btn-success button-gutter-right product-tile--add-to-basket-btn">\
+                        <i class="icon-basket btn-success--icon"></i>\
+                        <input id="add-to-basket" title="'+AWA.copy[LANG].cartSubmit+'" data-analytics-method="utag.link" data-js-require="app/analytics" data-analytics-custom-props="{&quot;customProps&quot;:[{&quot;propName&quot;:&quot;product.productInfo.quantity&quot;,&quot;getValueID&quot;:&quot;frm-quantity&quot;},{&quot;propName&quot;:&quot;event.eventInfo.eventAction&quot;,&quot;value&quot;:&quot;addToBasket&quot;}]}" name="/spindrift/momentum/commerce/order/purchase/CartFormHandler.addItemToOrder" value="'+AWA.copy[LANG].cartSubmit+'" class="add-to-basket--submit js-analytics-click" type="submit" data-analytics="{&quot;product&quot;:[{&quot;productInfo&quot;:{&quot;productID&quot;:&quot;'+ productData.sku +'&quot;,&quot;productName&quot;:&quot;' + productData.title + '&quot;,&quot;sku&quot;:&quot;'+ productData.sku +'&quot;,&quot;quantity&quot;:&quot;1&quot;},&quot;category&quot;:{&quot;primaryCategory&quot;:&quot;'+category+'&quot;,&quot;subCategory&quot;:&quot;'+subCategory+'&quot;,&quot;parentCategory&quot;:&quot;'+parentCategory+'&quot;},&quot;price&quot;:{&quot;priceWithTax&quot;:&quot;' + productData.price.replace('£','') + '&quot;,&quot;voucherCode&quot;:&quot;&quot;,&quot;voucherDiscount&quot;:&quot;&quot;}}],&quot;cart&quot;:{&quot;cartID&quot;:&quot;o25933474&quot;},&quot;event&quot;:[{&quot;eventInfo&quot;:{&quot;eventAction&quot;:&quot;captureEvent&quot;}}],&quot;version&quot;:&quot;1.0&quot;}">\
+                        <span class="visually-hidden">'+AWA.copy[LANG].cartSubmit+'</span></label>\
+                        <input name="_D:/spindrift/momentum/commerce/order/purchase/CartFormHandler.addItemToOrder" value=" " type="hidden"></label>\
+                        <input name="_DARGS" value="/block/catalog/product/product-detail-three-columns/sku-selection.jsp.addToCart" type="hidden">\
                         </form>';
 
-            }
+            } else {
 
-            return '';
+                return '';
+
+            }
 
         },
 
@@ -683,4 +699,4 @@
 
     $('.catalog-image--img-container').on('mouseover mouseout', AWA.imageFlip);
 
-})(jQuery, 'de'); // vwo_$ || optimizely.$
+})(jQuery, 'en'); // vwo_$ || optimizely.$

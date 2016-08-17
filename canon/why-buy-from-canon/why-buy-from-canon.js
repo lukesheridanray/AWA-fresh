@@ -49,10 +49,7 @@
         .product-detail--info-text-block p {\
             float: left;\
             clear: none;\
-        }\
-        .product-detail--info-text-block p + p:before {\
-            content: "|";\
-            color: #666;\
+            margin-bottom: 7px;\
         }\
         .product-detail--info-text-block a {\
             color: #666;\
@@ -61,7 +58,7 @@
         }\
         .product-detail--info-text-block p + p a {\
             margin-right: 0;\
-            margin-left: 14px;\
+            margin-left: 0;\
         }\
         .product-detail--info-text-block a i {\
             display: none;\
@@ -391,4 +388,4 @@
         AWA.moveSavingBand
     );
 
-})(jQuery, 'fr'); // vwo_$ || optimizely.$
+})(jQuery, 'en'); // vwo_$ || optimizely.$
