@@ -56,11 +56,7 @@
     // Data
     AWA.data = {
         'PIXMA iP series': {
-            iP100: '/pixma-ip100-ink-cartridges',
             iP110: '/pixma-ip110-ink-cartridges',
-            iP1200: '/pixma-ip1200-ink-cartridges',
-            iP1300: '/pixma-ip1300-ink-cartridges',
-            iP1600: '/pixma-ip1600-ink-cartridges',
             iP1900: '/pixma-ip1900-ink-cartridges',
             iP2700: '/pixma-ip2700-ink-cartridges',
             iP2702: '/pixma-ip2702-ink-cartridges',

@@ -5,17 +5,13 @@
  * The code has been wrapped in a polling function as in practice we have found that ga is not 
  * always available at the time the variation code runs.
  *
- * @param {string} dimensionValue - The unique value for this variation, e.g. ExperimentName-CountryCode-ExperimentId-Variation
- * @param {string} type - Type of GA event, usually 'user'
+ * @param {string} value - The unique value for this variation
+                           e.g. ExperimentName-CountryCode-ExperimentId-Variation
+ * @param {string} slot - The dimension slot number, can be '11', '27', '28', '29' or '30',
+                          should be unique to any other currently running experiment.
  */
 
-(function(dimensionValue, type) {
-
-    var types = {
-        'hit': '9',
-        'session': '10',
-        'user': '11',
-    };
+(function(value, slot) {
 
     var maxAttempts = 400, attempts = 0;
 
@@ -23,8 +19,8 @@
 
         if(typeof ga === 'function') {
 
-            ga('tealium_0.set', 'dimension'+types[type], dimensionValue);
-            ga('tealium_0.send', 'event', 'E-Commerce', 'Optimizely', dimensionValue, 0, {nonInteraction: true});
+            ga('tealium_0.set', 'dimension'+slot, value);
+            ga('tealium_0.send', 'event', 'E-Commerce', 'Optimizely', value, 0, {nonInteraction: true});
         
             clearInterval(interval);
 
@@ -38,4 +34,4 @@
 
     }, 50);
 
-})('ExperimentName-CountryCode-ExperimentId-Variation', 'user');
+})('ExperimentName-CountryCode-ExperimentId-Variation', '27');
