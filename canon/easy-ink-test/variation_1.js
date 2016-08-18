@@ -78,7 +78,7 @@ exp.vars = {
     },
     text: {
         en: {
-            new_title: 'Ink for your __PRODUCT__ Printer',
+            new_title: 'Ink and paper for your __PRODUCT__ Printer',
             heading_suffix: ' for your __PRODUCT__ Printer',
             genuine_canon_text: 'Genuine Canon inks bring out the best in your Canon printer, so you are always assured of exceptional results.',
             xl_colour_text: 'XL versions provide up to 2.2 times more prints than regular sized cartridges',
@@ -87,7 +87,7 @@ exp.vars = {
             value_packs_tho: 'Value Packs',
         },
         fr: {
-            new_title: 'Encres pour votre imprimante __PRODUCT__', // TODO: Get this signed off
+            new_title: 'Encres et papier pour votre imprimante __PRODUCT__', // TODO: Get this signed off
             heading_suffix: ' pour votre imprimante __PRODUCT__',
             genuine_canon_text: 'Choisir des encres Canon d\'origine maintient la qualité d\'impression et prolonge la durée de vie de votre imprimante.',
             xl_colour_text: 'Les cartouches d’encre XL permettent d’effectuer jusqu’à 2,2 fois plus d’impressions que les cartouches classiques',
@@ -96,7 +96,7 @@ exp.vars = {
             value_packs_tho: 'Multipacks et packs économiques',
         },
         de: {
-            new_title: 'Tinten Für Ihren __PRODUCT__ Drucker', // TODO: Get this signed off
+            new_title: 'Tinten und Papier Für Ihren __PRODUCT__ Drucker', // TODO: Get this signed off
             heading_suffix: ' Für Ihren __PRODUCT__ Drucker',
             genuine_canon_text: 'Nur originale Canon Tinten sind garantiert Ihren Drucker zu schützen und gute Ergebnisse zu liefern',
             xl_colour_text: 'XL Versionen bieten bis auf 2.2 mal mehr Drucke als normale Patronen',
