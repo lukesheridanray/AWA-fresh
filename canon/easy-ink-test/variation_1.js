@@ -29,7 +29,7 @@ exp.log = function (str) {
 };
 
 // Log the experiment, useful when multiple experiments are running
-exp.log('Easy Ink Landing Page - dev 0.6');
+exp.log('Easy Ink Landing Page - dev 0.7');
 
 // Condition
 // If we cannot rely on URL's to target the experiment (always preferred), we can use a unique CSS selector
@@ -58,21 +58,21 @@ exp.vars = {
             multi_and_value_packs: 'Multipacks and Value Packs',
             xl_inks: 'XL Inks',
             paper_heading: 'paper',
-            compatible_inks: ' - Compatible inks',
+            compatible_inks: / ?- ?Compatible inks/,
             black: 'Black',
         },
         fr: {
             multi_and_value_packs: 'Multipacks et packs économiques',
             xl_inks: 'Encres XL',
             paper_heading: 'papier',
-            compatible_inks: ' - Encres compatibles',
+            compatible_inks: / ?- ?Encres compatibles/,
             black: 'noire',
         },
         de: {
             multi_and_value_packs: 'Multipacks und Value Packs',
             xl_inks: 'XL-Tinten',
             paper_heading: 'papier',
-            compatible_inks: ' – Kompatible Tinten',
+            compatible_inks: / ?(?:–|-) ?Kompatible Tinten/,
             black: 'Schwarz',
         },
     },
@@ -228,28 +228,36 @@ exp.func.xl_inks_wording = function(){
 // 4. Turning text links in to buttons
 exp.func.turn_links_into_buttons = function(){
     var buttons_css = ' \
-        .btn.product-tile--add-to-basket-btn, .btn.product-tile--add-to-basket-btn:hover {\
+        .product-tile .btn.product-tile--add-to-basket-btn,\
+        .product-tile .btn.product-tile--add-to-basket-btn:hover {\
             background: #6a963b;\
             color: #fff; \
-        \
-            padding: 5px 0px; \
-            width: 100%; \
-            line-height: 100%; \
-            text-align: left; \
-            margin-bottom: 5px; \
-            border: none; \
+            margin: 10px 5px 10px 0;\
+            padding: 5px 10px;\
         }\
-        .btn.product-tile--add-to-basket-btn .add-to-basket--submit, .btn.product-tile--add-to-basket-btn:hover .add-to-basket--submit {\
+        .product-tile .btn.product-tile--add-to-basket-btn .add-to-basket--submit, \
+        .product-tile .btn.product-tile--add-to-basket-btn:hover .add-to-basket--submit {\
             color: #fff; \
         } \
         .product-tile .btn.product-tile--add-to-basket-btn, .product-tile .btn.product-tile--add-to-basket-btn:hover {\
-            margin: 10px 5px 10px 0;\
-            padding: 5px 10px;\
         }\
         label[for="add-to-wishlist"] {\
             margin: 10px 5px 10px 0;\
             padding: 5px 10px; \
-        }';
+        }\
+        \
+        .product-tile .btn.product-tile--add-to-basket-btn.product-tile--add-to-basket-btn-disabled,\
+        .product-tile .btn.product-tile--add-to-basket-btn.product-tile--add-to-basket-btn-disabled:hover {\
+            background: none;\
+            color: #ccc;\
+            padding: 5px 0;\
+            margin: 0 0 -5px;\
+        }\
+        .product-tile .btn.product-tile--add-to-basket-btn.product-tile--add-to-basket-btn-disabled       .add-to-basket--submit,\
+        .product-tile .btn.product-tile--add-to-basket-btn.product-tile--add-to-basket-btn-disabled:hover .add-to-basket--submit {\
+            color: #ccc;\
+        }\
+        ';
     $('head').append('<style type="text/css">' + buttons_css + '</style>');
 };
 
