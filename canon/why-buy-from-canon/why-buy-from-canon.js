@@ -258,7 +258,7 @@
                 title: 'Warum direkt von Canon kaufen?',
                 range: 'Ein umfangreiches Sortiment an Canon Originalprodukten',
                 gaurantee: 'Mindestens zweijährige Garantie',
-                delivery: 'Kostenlose Liefering - Umstandslose Warenrücksendung'
+                delivery: 'Kostenlose Lieferung - Umstandslose Warenrücksendung'
             },
 
             fr: {
