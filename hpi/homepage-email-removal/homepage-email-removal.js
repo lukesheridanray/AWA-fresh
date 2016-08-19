@@ -1,6 +1,3 @@
-// jshint multistr: true
-// jshint strict: true
-
 (function($) {
 
     'use strict';
@@ -39,6 +36,11 @@
                     margin-left: 21%;\
                 }\
             }\
+            @media (max-width: 370px) {\
+               .vrm-wrapper .input--vrm {\
+                    font-size: 27px;\
+                }\
+            }\
         ',
 
         vars: {
@@ -68,7 +70,7 @@
                     event.preventDefault();
                 }
             });
-        },
+        }
     };
 
     /**
@@ -85,3 +87,4 @@
     $('head').append('<style type="text/css">'+AWA.css+'</style>');
 
 })(jQuery); // vwo_$ || optimizely.$
+
