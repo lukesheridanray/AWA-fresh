@@ -29,8 +29,15 @@
         },
 
         css: '\
-            .col-mn-offset-2half {\
-                margin-left: 21%;\
+            @media (min-width: 480px) {\
+                .col-mn-offset-2half {\
+                    margin-left: 12.666667%;\
+                }\
+            }\
+            @media (min-width: 768px) {\
+                .col-mn-offset-2half {\
+                    margin-left: 21%;\
+                }\
             }\
         ',
 
@@ -48,8 +55,8 @@
         {
             var $form = $('.js-vrm-entry-form');
             var $button = $('button', $form).clone();
-            $('.col-sm-5', $form).addClass('col-sm-7 col-mn-offset-2half').removeClass('col-sm-5 .col-mn-offset-2');
-            $('.input--vrm').addClass('input--button-join').after($button[0]);;
+            $('.col-sm-5', $form).addClass('col-sm-7 col-mn-offset-2half col-mn-9 col-sm-offset-2half').removeClass('col-sm-5 col-mn-offset-2 col-sm-offset-0 col-mn-8');
+            $('.input--vrm').addClass('input--button-join').after($button[0]);
             $('.input--email').parents('.col-mn-8').remove();
         },
 
@@ -60,7 +67,7 @@
                 if($(".vrm .error-message--cta").css("display") == "block" || $('.input--vrm').val() == false) {
                     event.preventDefault();
                 }
-            })
+            });
         },
     };
 
@@ -68,13 +75,13 @@
      * Run the experiment
      */
 
-    // Log it
+    /* Log it */
     AWA.log('Removing Email Field');
     AWA.unbind();
     AWA.manipulate();
     AWA.bind();
 
-    // Append CSS
+    /* Append CSS */
     $('head').append('<style type="text/css">'+AWA.css+'</style>');
 
 })(jQuery); // vwo_$ || optimizely.$
