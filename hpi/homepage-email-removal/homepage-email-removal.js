@@ -1,13 +1,9 @@
 (function($) {
-
     'use strict';
-
     /**
      * Experiment set up
      */
-
     var AWA = {
-
         /**
          * Safely log to console when console is not defined
          * @param {*} value - The value to log
@@ -24,7 +20,6 @@
                 console.log(value);
             }
         },
-
         css: '\
             @media (min-width: 480px) {\
                 .col-mn-offset-2half {\
@@ -37,22 +32,19 @@
                 }\
             }\
             @media (max-width: 370px) {\
-               .vrm-wrapper .input--vrm {\
-                    font-size: 27px;\
+                .vrm-wrapper .input--vrm {\
+                    font-size: 22px;\
                 }\
             }\
         ',
-
         vars: {
         },
-
         unbind: function ()
         {
             $('.vrm-entry-form').unbind();
             $('.input--email').unbind();
             $(".vrm .error-message--cta").css("visibility","visible");
         },
-
         manipulate: function ()
         {
             var $form = $('.js-vrm-entry-form');
@@ -61,7 +53,6 @@
             $('.input--vrm').addClass('input--button-join').after($button[0]);
             $('.input--email').parents('.col-mn-8').remove();
         },
-
         bind: function()
         {
             $('.vrm-entry-form').on("submit", function(event)
@@ -72,19 +63,14 @@
             });
         }
     };
-
     /**
      * Run the experiment
      */
-
     /* Log it */
     AWA.log('Removing Email Field');
     AWA.unbind();
     AWA.manipulate();
     AWA.bind();
-
     /* Append CSS */
     $('head').append('<style type="text/css">'+AWA.css+'</style>');
-
 })(jQuery); // vwo_$ || optimizely.$
-
