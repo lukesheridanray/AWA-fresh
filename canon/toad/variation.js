@@ -313,6 +313,13 @@
         },
         {
             host:        'store.canon.fr',
+            path:        '/canon-boitier-canon-eos-5d-mark-iv/1483C026/',
+            match_type:  MATCH_SIMPLE,
+            language:    FR,
+            banner_type: BANNER_PDP,
+        },
+        {
+            host:        'store.canon.fr',
             path:        '/canon-pixma-pro-',
             match_type:  MATCH_STARTSWITH,
             language:    FR,
@@ -583,7 +590,15 @@
             match_type:  MATCH_REGEX,
             language:    IT,
             banner_type: BANNER_PDP,
-        },        {
+        },
+        {
+            host:        'store.canon.it',
+            path:        '/canon-corpo-canon-eos-5d-mark-iv/1483C026/',
+            match_type:  MATCH_SIMPLE,
+            language:    IT,
+            banner_type: BANNER_PDP,
+        },
+        {
             host:        'store.canon.nl',
             path:        '/cameras/',
             match_type:  MATCH_SIMPLE,
@@ -856,4 +871,4 @@
             break;
     }
 
-})(jQuery); // vwo_$ || optimizely.$
+})(optimizely.$); // vwo_$ || optimizely.$
