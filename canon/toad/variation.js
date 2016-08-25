@@ -793,9 +793,49 @@
         .row--awa-toad--search { \
             margin-bottom: 1em; \
         } \
+        .row--awa-toad--search img { \
+            max-width: 100%; \
+        } \
+        @media screen and (max-width: 559px) {\
+            .row--awa-toad--search img { \
+                max-width: 160%; \
+                margin-left: -50%;\
+            } \
+        }\
         .row--awa-toad--pdp > div { \
             margin-top: 1em; \
         } \
+        .row--awa-toad--pdp img { \
+            max-width: 100%; \
+        } \
+        @media screen and (max-width: 768px) {\
+            .row--awa-toad--pdp img { \
+                max-width: 95%; \
+                margin: 0 auto; \
+                display: block; \
+            } \
+        }\
+        .live-text-banner .awa-toad-link img {\
+            margin-left: 0;\
+            margin-right: -20%;\
+            left: auto;\
+            right: 0;\
+        }\
+        @media screen and (max-width: 768px) {\
+            .live-text-banner .awa-toad-link img {\
+                margin-right: 0;\
+            } \
+        }\
+        @media screen and (max-width: 640px) {\
+            .live-text-banner .awa-toad-link img {\
+                margin-right: -19%;\
+            } \
+        }\
+        @media screen and (max-width: 388px) {\
+            .live-text-banner .awa-toad-link img {\
+                margin-right: -30%;\
+            } \
+        }\
     </style>');
 
     var current_page = resolvePage();
