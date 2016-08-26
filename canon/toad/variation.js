@@ -859,12 +859,14 @@
         return;
     }
 
-    var $banner_row;
+    var $banner_row,
+        $existing_banner;
     switch (current_banner_type) {
         case BANNER_FULLBLEED:
             // Swap the existing FULLBLEED banner with the new one.
-            var $existing_banner = $('.live-text-banner:first'),
-                $existing_link = $existing_banner.find('a'),
+            $existing_banner = $('.live-text-banner:first');
+
+            var $existing_link = $existing_banner.find('a'),
                 $existing_picture = $existing_banner.find('picture');
 
             // Update the link
@@ -897,6 +899,17 @@
                 .replace('__TOAD_IMAGE__', current_image)
             );
             $('.container[role="main"]').prepend($banner_row);
+
+            // If there is a graphical banner already then remove it. We only
+            // want the Toad banner.
+            $existing_banner = $('.live-text-banner');
+            if ($existing_banner.length > 0) {
+                var $container = $existing_banner.parents('.col-lg-12');
+                $container.children().remove();
+
+                var title = $('.primary-breadcrumb li.active').text();
+                $container.append('<h1 class="header-1">'+ title +'</h1>');
+            }
             break;
 
         case BANNER_PDP:
