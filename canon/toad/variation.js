@@ -816,10 +816,14 @@
             } \
         }\
         .live-text-banner .awa-toad-link img {\
-            margin-left: 0;\
-            margin-right: -20%;\
-            left: auto;\
-            right: 0;\
+        }\
+        @media screen and (max-width: 1400px) {\
+            .live-text-banner .awa-toad-link img {\
+                margin-left: 0;\
+                margin-right: -20%;\
+                left: auto;\
+                right: 0;\
+            } \
         }\
         @media screen and (max-width: 768px) {\
             .live-text-banner .awa-toad-link img {\
