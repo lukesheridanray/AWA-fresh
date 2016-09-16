@@ -21,11 +21,17 @@ function (options) {
 
     // Variables
 
-    AWA.varr = {
+    AWA.var = {
         $promoVoucher: $('#promovoucherContainer .voucherField'),
         $giftVoucher: $('#vouchercodeContent .voucherField'),
         inputsTemplate: '<div class="awa-proxy-fields">\
-                            <input class="no-dash-AWA" type="text" value="" data-awa-limit="20" placeholder="ex: xxxxxxxxxxxxxxxxxxxx"/>\
+                            <input type="text" value="" data-awa-limit="4" class="tb0" />\
+                            <span class="awa-proxy-dash">-</span>\
+                            <input type="text" value="" data-awa-limit="4" class="tb1" />\
+                            <span class="awa-proxy-dash">-</span>\
+                            <input type="text" value="" data-awa-limit="4" class="tb2" />\
+                            <span class="awa-proxy-dash">-</span>\
+                            <input type="text" value="" data-awa-limit="4" data-awa-last="1" class="tb3" />\
                             <a href="#" class="button awa-proxy-button">Apply voucher</a>\
                         </div>'
     };
@@ -48,7 +54,7 @@ function (options) {
         }
 
         // add HTML
-        $inputGroup.find('input').eq(0).before(AWA.varr.inputsTemplate);
+        $inputGroup.find('input').eq(0).before(AWA.var.inputsTemplate);
 
         // Add data to parent div
         $inputGroup.find('.awa-proxy-fields').data('awa-proxy-target', $input);
@@ -79,8 +85,6 @@ function (options) {
 
     };
 
-
-
     // Submits the input by triggering a click on the real button
     // @param {object} e DOM event object
     AWA.func.submitFields = function(e) {
@@ -96,17 +100,22 @@ function (options) {
         var $self = $(this);
         var currentVal = $self.val();
 
-        if(currentVal.length < 20) {
+        if(currentVal.length < 4) {
             return;
         }
 
-        if(currentVal.length > 20) {
-            $self.val( currentVal.slice(0,20) );
+        if(currentVal.length > 4) {
+            $self.val( currentVal.slice(0,4) );
         }
 
         $self.nextAll('input').eq(0).focus();
 
     };
+
+
+
+
+
 
 
 
@@ -149,7 +158,7 @@ function (options) {
         padding-bottom: 20px;\
     }\
     .awa-proxy-fields input {\
-        width: 100%;\
+        width: 20%;\
         box-sizing: border-box;\
         margin: 0;\
         font-size: 1.1em;\
@@ -166,11 +175,79 @@ function (options) {
     // Main experiment code
 
 
+    //////******hopeful fix for the voucher
+
+
+    jQuery('#promovoucherContainer').find('.tb1').attr('id', 'mypaste1');
+    jQuery('#promovoucherContainer').find('.tb2').attr('id', 'mypaste2');
+    jQuery('#promovoucherContainer').find('.tb3').attr('id', 'mypaste3');
+
+
+
+
+
 
     // Add the fields
-    AWA.func.addFields(AWA.varr.$promoVoucher);
-    AWA.func.addFields(AWA.varr.$giftVoucher);
+    AWA.func.addFields(AWA.var.$promoVoucher);
+    AWA.func.addFields(AWA.var.$giftVoucher);
+//Fix for first voucher being able to paste in!
 
 })(jQuery); // vwo_$ || optimizely.$
+
+
+
+
+
+
+
+
+
+
+    // give the promovoucherContainer intpus an Id
+    function pasteIn() {
+      jQuery('#promovoucherContainer').find('.tb0').attr('id', 'mypaste0');
+         jQuery('#promovoucherContainer').find('.tb1').attr('id', 'mypaste1');
+    jQuery('#promovoucherContainer').find('.tb2').attr('id', 'mypaste2');
+    jQuery('#promovoucherContainer').find('.tb3').attr('id', 'mypaste3');
+
+    jQuery("#mypaste0").bind("paste",function(){
+ var element = this;
+  setTimeout(function () {
+    var splittedString = $("#mypaste0").val().match(/.{1,4}/g);
+    for(var i=0; i<splittedString.length; i++){
+        $("#mypaste" + i).val(splittedString[i]);
+    }
+    // do something with text
+    }, 0);
+    })
+
+
+
+
+
+  ////////////fixed the voucher problem. Should all work now. Tested on Friday september 16
+      console.log('two-paste-work');
+      jQuery('#vouchercodeContent').find('.tb0').attr('id', 'tb0');
+         jQuery('#vouchercodeContent').find('.tb1').attr('id', 'tb1');
+    jQuery('#vouchercodeContent').find('.tb2').attr('id', 'tb2');
+    jQuery('#vouchercodeContent').find('.tb3').attr('id', 'tb3');
+
+    jQuery("#tb0").bind("paste",function(){
+ var element = this;
+  setTimeout(function () {
+    var splittedString = $("#tb0").val().match(/.{1,4}/g);
+    for(var i=0; i<splittedString.length; i++){
+        $("#tb" + i).val(splittedString[i]);
+    }
+    // do something with text
+    }, 0);
+    })
+
+
+  }
+
+   return pasteIn();
+
+
 
 }
